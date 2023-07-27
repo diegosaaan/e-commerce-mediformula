@@ -44,11 +44,9 @@ If you encounter any issues, have questions, or need assistance with our eCommer
 
 Our eCommerce application is developed and maintained by a team of three talented developers 👨‍💻👩‍💻👩‍💻:
 
-
 - Julia Holadava ([GitHub](https://github.com/juliaholadava), [GitLab](https://gitlab.com/juliaholadava))
 - Aleksandr Dimkov ([GitHub](https://github.com/DiegoKitty), [GitLab](https://gitlab.com/DiegoKitty))
 - Evgeniia Romanchenko ([GitHub](https://github.com/evgeniiyar), [GitLab](https://gitlab.com/EvgeniiyaR))
-
 
 We also want to express our heartfelt gratitude to two wonderful mentors who provided invaluable guidance and support throughout the project:
 

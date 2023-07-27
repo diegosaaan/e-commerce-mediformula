@@ -36,13 +36,10 @@ module.exports = {
     new CleanWebpackPlugin(),
   ],
   module: {
-		rules: [
-			{
+    rules: [
+      {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.html$/i,
@@ -51,19 +48,19 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: 'ts-loader'
+        use: 'ts-loader',
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: 'babel-loader'
-      }
-		],
-	},
+        use: 'babel-loader',
+      },
+    ],
+  },
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'dist'),
     },
     hot: true,
   },
-}
+};
