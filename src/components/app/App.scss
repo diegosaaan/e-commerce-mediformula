@@ -1,0 +1,14 @@
+@font-face {
+	font-family: "Saira Thin";
+	src:
+		url("../../fonts/saira-thin.woff") format("woff"),
+		url("../../fonts/saira-thin.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+
+$color: red;
+.test {
+	font-family: "Saira Thin", Arial, Helvetica, sans-serif;
+	color: $color;
+}

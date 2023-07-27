@@ -4,7 +4,6 @@
     "paths": {
       "@src/*": ["src/*"]
     },
-    "noEmit": true,
     "target": "es2022",
     "module": "commonjs",
     "esModuleInterop": true,

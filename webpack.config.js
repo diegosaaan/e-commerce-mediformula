@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -14,7 +15,7 @@ module.exports = {
   },
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.tsx', '.json', '.scss'],
+    extensions: ['.tsx', '.json', '.scss', '.js'],
     plugins: [
       new TsconfigPathsPlugin({
         configFile: './tsconfig.json',
@@ -33,13 +34,14 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
     }),
+    new ForkTsCheckerWebpackPlugin(),
     new CleanWebpackPlugin(),
   ],
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(s*)css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.html$/i,
@@ -48,12 +50,42 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: 'ts-loader',
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        }
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: 'images/[name].[hash].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff|woff2|ttf)$/,
+        include: path.resolve(__dirname, 'src/fonts'),
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 8192,
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+            publicPath: '../fonts/',
+          },
+        },
       },
     ],
   },
