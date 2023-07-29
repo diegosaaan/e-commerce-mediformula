@@ -4,11 +4,11 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "type": "tsc --noEmit",
-    "precommit": "npm run lint && npm run format && npm run type",
-    "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "precommit": "npm run lint && npm run format && npm run type && npm run test",
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
