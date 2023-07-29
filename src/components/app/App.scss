@@ -1,14 +1,23 @@
 @font-face {
-	font-family: "Saira Thin";
-	src:
-		url("../../fonts/saira-thin.woff") format("woff"),
-		url("../../fonts/saira-thin.woff2") format("woff2");
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'Saira Thin';
+  src:
+    url('../../fonts/saira-thin.woff') format('woff'),
+    url('../../fonts/saira-thin.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 $color: red;
+$color-green: green;
+
 .test {
-	font-family: "Saira Thin", Arial, Helvetica, sans-serif;
-	color: $color;
+  font-family: 'Saira Thin', Arial, Helvetica, sans-serif;
+  color: $color;
+}
+
+.test-back {
+  background-image: url('../../assets/test.jpg');
+  background-size: 500px 500px;
+  width: 500px;
+  height: 500px;
 }

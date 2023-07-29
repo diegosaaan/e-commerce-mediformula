@@ -11,7 +11,6 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[name].[ext]',
   },
   mode: 'development',
   resolve: {
@@ -55,7 +54,7 @@ module.exports = {
           options: {
             transpileOnly: true,
           },
-        }
+        },
       },
       {
         test: /\.(js|jsx)$/,
@@ -64,27 +63,18 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: 'images/[name].[hash].[ext]',
-            },
-          },
-        ],
+        include: path.resolve(__dirname, 'src/assets'),
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name].[hash][ext]',
+        },
       },
       {
         test: /\.(woff|woff2|ttf)$/,
         include: path.resolve(__dirname, 'src/fonts'),
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 8192,
-            name: '[name].[ext]',
-            outputPath: 'fonts/',
-            publicPath: '../fonts/',
-          },
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name].[hash][ext]',
         },
       },
     ],

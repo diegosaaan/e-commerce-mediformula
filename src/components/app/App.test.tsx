@@ -6,6 +6,6 @@ import App from './App';
 test('renders App component', () => {
   render(<App />);
 
-  const headingElement = screen.getByText(/Привет, мир/i);
+  const headingElement = screen.getByText(/Hello, world/i);
   expect(headingElement).toBeInTheDocument();
 });

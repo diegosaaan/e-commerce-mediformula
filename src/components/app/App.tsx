@@ -5,8 +5,10 @@ import img from '../../assets/test.jpg';
 const App = (): React.ReactElement => {
   return (
     <>
-      <h1 className="test">Привет, мир</h1>
-      <img src={img} alt="тест" />
+      <div className="test-back">
+        <h1 className="test">Hello, world</h1>
+      </div>
+      <img src={img} alt="test" />
     </>
   );
 };
