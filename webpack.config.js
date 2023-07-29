@@ -95,7 +95,7 @@ module.exports = {
           filename: ({ filename }) => {
             const extension = path.extname(filename).toLowerCase();
             const directory = extension.slice(1);
-            return `assets/${directory}/[name][ext]`;
+            return `assets/images/${directory}/[name][ext]`;
           },
         },
       },
