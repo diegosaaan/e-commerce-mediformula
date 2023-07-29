@@ -10,9 +10,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
   },
-  mode: 'development',
   resolve: {
     extensions: ['.tsx', '.json', '.scss', '.js'],
     plugins: [
@@ -26,7 +25,7 @@ module.exports = {
       extensions: 'tsx',
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: 'index.css',
       ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({
@@ -66,7 +65,11 @@ module.exports = {
         include: path.resolve(__dirname, 'src/assets'),
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name].[hash][ext]',
+          filename: ({ filename }) => {
+            const extension = path.extname(filename).toLowerCase();
+            const directory = extension.slice(1);
+            return `assets/${directory}/[name][ext]`;
+          },
         },
       },
       {
@@ -74,15 +77,22 @@ module.exports = {
         include: path.resolve(__dirname, 'src/fonts'),
         type: 'asset/resource',
         generator: {
-          filename: 'assets/fonts/[name].[hash][ext]',
+          filename: 'assets/fonts/[name][ext]',
         },
       },
     ],
   },
+  mode: 'development',
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
+    static: 'build',
     hot: true,
+    open: true,
+    port: 8000,
+    liveReload: false,
+    client: {
+      logging: 'none',
+      overlay: false,
+    },
+    historyApiFallback: true,
   },
 };
