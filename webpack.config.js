@@ -7,7 +7,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/App.tsx',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
@@ -19,6 +19,23 @@ module.exports = {
         configFile: './tsconfig.json',
       }),
     ],
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@images': path.resolve(__dirname, 'src/assets/images'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
+      '@containers': path.resolve(__dirname, 'src/containers'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@actions': path.resolve(__dirname, 'src/redux/actions'),
+      '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
+      '@store': path.resolve(__dirname, 'src/redux/store'),
+      '@routes': path.resolve(__dirname, 'src/routes'),
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@types': path.resolve(__dirname, 'src/types'),
+      '@enums': path.resolve(__dirname, 'src/enums'),
+      '@helpers': path.resolve(__dirname, 'src/utils/helpers'),
+      '@hooks': path.resolve(__dirname, 'src/utils/hooks'),
+    },
   },
   plugins: [
     new EslingPlugin({
@@ -39,7 +56,17 @@ module.exports = {
     rules: [
       {
         test: /\.(s*)css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./src/styles/variables.scss', './src/styles/mixins.scss'],
+            },
+          },
+        ],
       },
       {
         test: /\.html$/i,
@@ -62,7 +89,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        include: path.resolve(__dirname, 'src/assets'),
+        include: path.resolve(__dirname, 'src/assets/images'),
         type: 'asset/resource',
         generator: {
           filename: ({ filename }) => {
@@ -74,7 +101,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf)$/,
-        include: path.resolve(__dirname, 'src/fonts'),
+        include: path.resolve(__dirname, 'src/assets/fonts'),
         type: 'asset/resource',
         generator: {
           filename: 'assets/fonts/[name][ext]',
