@@ -10,21 +10,21 @@
     "skipLibCheck": true,
     "jsx": "react",
     "paths": {
-      "@fonts": ["src/assets/fonts/*"],
-      "@images": ["src/assets/images/*"],
-      "@components": ["src/components/*"],
-      "@containers": ["src/containers/*"],
-      "@pages": ["src/pages/*"],
-      "@actions": ["src/redux/actions/*"],
-      "@reducers": ["src/redux/reducers/*"],
-      "@store": ["src/redux/store/*"],
-      "@routes": ["src/routes/*"],
-      "@services": ["src/services/*"],
-      "@styles": ["src/styles/*"],
-      "@types": ["src/types/*"],
-      "@enums": ["src/enums/*"],
-      "@helpers": ["src/utils/helpers/*"],
-      "@hooks": ["src/utils/hooks/*"]
+      "@fonts/*": ["src/assets/fonts/*"],
+      "@images/*": ["src/assets/images/*"],
+      "@components/*": ["src/components/*"],
+      "@containers/*": ["src/containers/*"],
+      "@pages/*": ["src/pages/*"],
+      "@actions/*": ["src/redux/actions/*"],
+      "@reducers/*": ["src/redux/reducers/*"],
+      "@store/*": ["src/redux/store/*"],
+      "@routes/*": ["src/routes/*"],
+      "@services/*": ["src/services/*"],
+      "@styles/*": ["src/styles/*"],
+      "@types/*": ["src/types/*"],
+      "@enums/*": ["src/enums/*"],
+      "@helpers/*": ["src/utils/helpers/*"],
+      "@hooks/*": ["src/utils/hooks/*"]
     }
   }
 }
