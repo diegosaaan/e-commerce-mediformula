@@ -2,8 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "target": "es2022",
-    "module": "commonjs",
+    "module": "es6",
+    "lib": ["es6", "dom"],
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
