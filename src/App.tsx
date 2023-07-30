@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import './index.scss';
+import './App.scss';
+import ExampleHeader from './components/Header/ExampleHeader';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+const App: React.FC = () => {
+  return (
+    <React.StrictMode>
+      <ExampleHeader />
+    </React.StrictMode>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));

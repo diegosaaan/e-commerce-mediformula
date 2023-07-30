@@ -1,0 +1,11 @@
+.test {
+  font-family: 'Saira Thin', Arial, Helvetica, sans-serif;
+  color: $color;
+}
+
+.test-back {
+  background-size: 500px 500px;
+  width: 500px;
+  height: 500px;
+  @include test;
+}
