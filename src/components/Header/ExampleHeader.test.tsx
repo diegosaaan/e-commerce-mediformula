@@ -8,4 +8,10 @@ test('renders ExampleHeader component', () => {
 
   const headingElement = screen.getByText(/Hello, world/i);
   expect(headingElement).toBeInTheDocument();
+
+  const imgElement = screen.getByAltText('test');
+  expect(imgElement).toBeInTheDocument();
+
+  const anotherHeadingElement = screen.getByText(/Hello, world/i, { exact: false });
+  expect(anotherHeadingElement).toBeInTheDocument();
 });
