@@ -19,23 +19,6 @@ module.exports = {
         configFile: './tsconfig.json',
       }),
     ],
-    alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@images': path.resolve(__dirname, 'src/assets/images'),
-      '@styles': path.resolve(__dirname, 'src/styles'),
-      '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
-      '@containers': path.resolve(__dirname, 'src/containers'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@actions': path.resolve(__dirname, 'src/redux/actions'),
-      '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
-      '@store': path.resolve(__dirname, 'src/redux/store'),
-      '@routes': path.resolve(__dirname, 'src/routes'),
-      '@services': path.resolve(__dirname, 'src/services'),
-      '@types': path.resolve(__dirname, 'src/types'),
-      '@enums': path.resolve(__dirname, 'src/enums'),
-      '@helpers': path.resolve(__dirname, 'src/utils/helpers'),
-      '@hooks': path.resolve(__dirname, 'src/utils/hooks'),
-    },
   },
   plugins: [
     new EslingPlugin({
@@ -88,7 +71,7 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|webp)$/,
         include: path.resolve(__dirname, 'src/assets/images'),
         type: 'asset/resource',
         generator: {
