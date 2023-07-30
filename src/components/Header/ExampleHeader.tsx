@@ -1,10 +1,14 @@
 import React from 'react';
-import './ExampleHeader.scss';
+import '@/components/Header/ExampleHeader.scss';
+import img from '@/assets/images/jpg/test.jpg';
 
 const ExampleHeader = (): React.ReactElement => {
   return (
     <>
-      <h1>Hello, world</h1>
+      <div className="test-back">
+        <h1 className="test">Hello, world</h1>
+      </div>
+      <img src={img} alt="test" />
     </>
   );
 };
