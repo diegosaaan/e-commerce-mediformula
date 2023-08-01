@@ -53,7 +53,7 @@ Our eCommerce application is developed and maintained by a team of three talente
 We also want to express our heartfelt gratitude to two wonderful mentors who provided invaluable guidance and support throughout the project:
 
 - Artsiom Fando ([GitHub](https://github.com/artsiomfando), [GitLab](https://gitlab.com/artsiomfando))
-- Vitali Malyshkin ([GitHub](https://github.com/malyshkin-vitali), [GitLab]())
+- Vitali Malyshkin ([GitHub](https://github.com/malyshkin-vitali), [GitLab](https://gitlab.com/imalvit))
 
 ---
 
