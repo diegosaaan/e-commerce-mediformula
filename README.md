@@ -30,7 +30,7 @@ Our eCommerce application brings the following benefits to users:
 
 ## How users can get started with the project
 
-To get started with our eCommerce application, follow this [steps](https://gitlab.com/DiegoKitty/commerce/-/blob/develop/README.md).
+To get started with our eCommerce application, follow this [steps](https://gitlab.com/DiegoKitty/commerce/-/blob/develop/README.md?ref_type=heads).
 
 ## Where users can get help with the project
 
