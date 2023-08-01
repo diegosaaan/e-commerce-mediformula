@@ -14,8 +14,8 @@ Our eCommerce application is developed using the following key technologies:
 - [![ESLint][ESLint-icon]][ESLint-url]
 - [![Prettier][Prettier-icon]][Prettier-url]
 - [![GIT][GIT-icon]][GIT-url]
-- [![Webpack][Webpack-icon]][Webpack-url]
 - [![Husky][Husky-icon]][Husky-url]
+- [![Webpack][Webpack-icon]][Webpack-url]
 - [![CommerceTools][CommerceTools-icon]][CommerceTools-url]
 
 ## Getting Started 🚀
@@ -23,13 +23,13 @@ Our eCommerce application is developed using the following key technologies:
 Clone this repo to your desktop
 
 ```
-git clone https://gitlab.com/your_username_/commerce.git
+git clone https://gitlab.com/DiegoKitty/commerce.git
 ```
 
 Go to its root directory and install dependencies using npm:
 
 ```
-$ cd ../commerce
+$ cd commerce
 $ npm install
 ```
 
@@ -97,13 +97,13 @@ to install Git hooks with Husky. Hooks are scripts that run automatically at cer
 [CSS3-url]: https://www.w3.org/Style/CSS/
 [SASS-icon]: https://img.shields.io/badge/SASS-20232A?style=for-the-badge&logo=SASS&logoColor=cf649a
 [SASS-url]: https://sass-lang.com/documentation/
-[TS-icon]: https://img.shields.io/badge/TS-20232A?style=for-the-badge&logo=TS&logoColor=377cc8
+[TS-icon]: https://img.shields.io/badge/TS-20232A?style=for-the-badge&logo=Typescript&logoColor=377cc8
 [TS-url]: https://www.typescriptlang.org/
 [React.js-icon]: https://img.shields.io/badge/React.js-20232A?style=for-the-badge&logo=React&logoColor=61dafb
 [React.js-url]: https://react.dev
 [Redux-icon]: https://img.shields.io/badge/Redux-20232A?style=for-the-badge&logo=Redux&logoColor=7a50be
 [Redux-url]: https://redux.js.org/
-[Jest-icon]: https://img.shields.io/badge/Jest-20232A?style=for-the-badge&logo=Jest5&logoColor=15c213
+[Jest-icon]: https://img.shields.io/badge/Jest-20232A?style=for-the-badge&logo=Jest&logoColor=9a404e
 [Jest-url]: https://jestjs.io/docs/getting-started
 [ESLint-icon]: https://img.shields.io/badge/ESLint-20232A?style=for-the-badge&logo=ESLint&logoColor=8484f1
 [ESLint-url]: https://eslint.org/docs/latest/
@@ -113,7 +113,7 @@ to install Git hooks with Husky. Hooks are scripts that run automatically at cer
 [GIT-url]: https://git-scm.com/doc
 [Webpack-icon]: https://img.shields.io/badge/Webpack-20232A?style=for-the-badge&logo=Webpack&logoColor=237cc2
 [Webpack-url]: https://webpack.js.org/
-[Husky-icon]: https://img.shields.io/badge/Husky-20232A?style=for-the-badge&logo=Husky&logoColor=557e32
+[Husky-icon]: https://img.shields.io/badge/🐶_Husky-20232A?style=for-the-badge&logo=Husky&logoColor=557e32
 [Husky-url]: https://github.com/typicode/husky#readme
 [CommerceTools-icon]: https://img.shields.io/badge/CommerceTools-20232A?style=for-the-badge&logo=CommerceTools&logoColor=ff761c
 [CommerceTools-url]: https://commercetools.com/
