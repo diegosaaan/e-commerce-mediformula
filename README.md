@@ -23,7 +23,7 @@ Our eCommerce application is developed using the following key technologies:
 Clone this repo to your desktop
 
 ```
-git clone https://gitlab.com/DiegoKitty/commerce.git
+$ git clone https://gitlab.com/DiegoKitty/commerce.git
 ```
 
 Go to its root directory and install dependencies using npm:
