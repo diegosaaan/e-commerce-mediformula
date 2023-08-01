@@ -18,48 +18,6 @@ Our eCommerce application is developed using the following key technologies:
 - [![Husky][Husky-icon]][Husky-url]
 - [![CommerceTools][CommerceTools-icon]][CommerceTools-url]
 
-#### Frontend:
-
-- React.js
-- Redux
-
-#### Type Checking:
-
-- TypeScript
-
-#### Backend:
-
-- Node.js
-
-#### Styling:
-
-- SCSS
-
-#### Testing:
-
-- Jest
-
-#### Code Quality:
-
-- ESLint
-- Prettier
-
-#### Version Control:
-
-- Git
-
-#### Package Bundling:
-
-- Webpack
-
-#### Pre-commit Hooks:
-
-- Husky
-
-#### eCommerce Platform:
-
-- Commercetools
-
 ## Getting Started 🚀
 
 Clone this repo to your desktop
