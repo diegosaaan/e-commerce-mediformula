@@ -7,7 +7,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-  entry: './src/App.tsx',
+  entry: './src/index.tsx',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
