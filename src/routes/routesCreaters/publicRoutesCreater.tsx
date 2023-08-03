@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Route } from 'react-router-dom';
-import { IRouteData } from '@/types/interfaces';
+import publicRoutesData from '../routesData/publicRoutesData';
 
-function publicRoutersCreater(data: IRouteData): ReactElement {
-  return <Route {...data} />;
+function createPublicRoutes(): ReactElement[] {
+  return publicRoutesData.map((data) => <Route {...data} />);
 }
 
-export default publicRoutersCreater;
+export default createPublicRoutes;
