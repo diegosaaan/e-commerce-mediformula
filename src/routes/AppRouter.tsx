@@ -4,13 +4,13 @@ import { IRouteData } from '@/types/interfaces';
 import NotFoundPage from '@/pages/NotFound/NotFound';
 import publicRoutesData from './routesData/publicRoutesData';
 import privateRoutesData from './routesData/privateRoutesData';
-import publicRoutersCreater from './routersCreaters/publicRoutersCreater';
-import privateRoutersCreater from './routersCreaters/privateRoutersCreater';
+import publicRoutesCreater from './routesCreaters/publicRoutesCreater';
+import privateRoutesCreater from './routesCreaters/privateRoutesCreater';
 
 function AppRouter(): ReactElement {
   const isAuthenticated = true; // TODO function geToken
-  const publicRoutes = publicRoutesData.map((data: IRouteData) => publicRoutersCreater(data));
-  const privateRoutes = privateRoutesData.map((data: IRouteData) => privateRoutersCreater(data, isAuthenticated));
+  const publicRoutes = publicRoutesData.map((data: IRouteData) => publicRoutesCreater(data));
+  const privateRoutes = privateRoutesData.map((data: IRouteData) => privateRoutesCreater(data, isAuthenticated));
 
   return (
     <BrowserRouter>
