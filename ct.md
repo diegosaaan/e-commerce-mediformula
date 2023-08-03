@@ -16,3 +16,53 @@ scopes: ['view_cart_discounts:e-shop230731 manage_my_orders:e-shop230731 create_
 fetch,
 };
 ```
+
+# Endpoints
+
+To obtain an access token through the client credentials flow, just issue the following request to the auth service:
+```
+fetch('https://auth.europe-west1.gcp.commercetools.com/oauth/token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    // eslint-disable-next-line no-useless-concat
+    Authorization: `Basic ${btoa('FZwAs7jaRrQUaTngF8DcA9zD' + ':' + 'XTTfvhIr-X8vmA_HEAI5a5T7DvbtZOKV')}`,
+  },
+  body: 'grant_type=client_credentials',
+});
+```
+
+#### Product Catalog
+```
+/product-projections
+```
+This endpoint only returns published (current) Product Projections
+
+```
+/categories
+```
+
+#### Pricing & Discounts
+```
+/cart-discounts
+/discount-codes
+```
+
+#### Carts, Orders & Shopping Lists
+```
+/orders
+/shopping-lists
+/me/payments
+```
+
+#### Quotes
+```
+/quotes
+/quote-requests
+```
+
+#### Customers
+```
+/me
+```
+This endpoint creates and provides access to a Customer profile scoped to a specific Customer.
