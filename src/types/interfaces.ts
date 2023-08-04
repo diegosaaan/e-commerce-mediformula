@@ -5,3 +5,9 @@ export interface IRouteData {
   path: string;
   element: ReactElement;
 }
+
+export interface IAuthContextValue {
+  isUserLoggedIn: boolean;
+  signIn: (cb: () => void) => void;
+  signOut: (cb: () => void) => void;
+}
