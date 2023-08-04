@@ -1,0 +1,133 @@
+%footer-list-items-text-styles {
+  @include GolosRegular;
+  color: $grayscale-600;
+  font-size: 16px;
+}
+
+.footer {
+  margin-top: 100px;
+  padding-top: 80px;
+  padding-bottom: 50px;
+  border-top: 1px solid $grayscale-400;
+
+  &__main-content-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__map {
+    margin-top: 50px;
+  }
+
+  &__list-container {
+    display: flex;
+    margin-top: 80px;
+  }
+
+  &__list-heading {
+    @include GolosMedium;
+    color: $grayscale-900;
+    font-size: 20px;
+  }
+
+  &__numbers-list {
+    display: flex;
+
+    &-link {
+      @include GolosMedium;
+      color: $grayscale-900;
+      font-size: 35px;
+    }
+
+    &-city {
+      @extend %footer-list-items-text-styles;
+      margin-top: 6px;
+    }
+  }
+
+  &__services-list,
+  &__numbers-list-item:last-child {
+    margin-left: 95px;
+  }
+
+  &__services-list-link,
+  &__delivery-list-item,
+  &__services-list-item {
+    @extend %footer-list-items-text-styles;
+  }
+
+  &__services-list-link:not(:first-child),
+  &__delivery-list-item:not(:first-child),
+  &__services-list-item:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  &__services-list-link {
+    font-size: 16px;
+  }
+
+  &__social-networks {
+    padding: 100px 270px 70px 85px;
+    border-radius: 250px;
+    background-color: $grayscale-200;
+    background-image: url('@/assets/images/png/footer-IPhone.png');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+
+    &-heading {
+      @include GolosMedium;
+      color: $grayscale-900;
+    }
+  }
+
+  &__icon-list {
+    display: flex;
+    margin-top: 24px;
+
+    &-item:not(:first-child) {
+      margin-left: 12px;
+    }
+
+    &-item {
+      width: 50px;
+      height: 50px;
+      border-radius: 70px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: $grayscale-50;
+      background-size: 24px 24px;
+
+      &--whatsapp {
+        background-image: url('@/assets/images/svg/footer-whatsapp.svg');
+      }
+
+      &--classmates {
+        background-image: url('@/assets/images/svg/footer-classmates.svg');
+      }
+
+      &--vk {
+        background-image: url('@/assets/images/svg/footer-vk.svg');
+      }
+
+      &--facebook {
+        background-image: url('@/assets/images/svg/footer-facebook.svg');
+      }
+    }
+  }
+
+  &__legal-list-info {
+    display: flex;
+    margin-top: 80px;
+    justify-content: space-between;
+
+    &-item {
+      @extend %footer-list-items-text-styles;
+      font-size: 20px;
+    }
+  }
+}
+
+.ymaps-2-1-79-inner-panes,
+.ymaps-2-1-79-map {
+  border-radius: 50px !important; // yandex map
+}
