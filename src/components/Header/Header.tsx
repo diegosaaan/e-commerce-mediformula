@@ -4,7 +4,7 @@ import PageNav from '@/components/PageNav/PageNav';
 
 const Header = (): ReactElement => {
   return (
-    <header>
+    <header className="header">
       <PageNav />
     </header>
   );
