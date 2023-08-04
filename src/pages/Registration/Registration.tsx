@@ -1,14 +1,15 @@
 import React, { ReactElement } from 'react';
 import '@/pages/Registration/Registration.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function RegistrationPage(): ReactElement {
+  const navigate = useNavigate();
+  const goBack = (): void => navigate(-1);
+
   return (
     <div className="registration-page">
       <h1>Страница регистрации</h1>
-      <Link to="/">
-        <button>На главную</button>
-      </Link>
+      <button onClick={goBack}>Вернуться назад</button>
       <form action="">
         <input type="text" placeholder="Введите имя..." />
         <input type="text" placeholder="Введите фамилию..." />
