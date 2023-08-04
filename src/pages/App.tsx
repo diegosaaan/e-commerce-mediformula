@@ -1,11 +1,12 @@
-import React from 'react';
 import './App.scss';
-import ExampleHeader from '@/components/Header/ExampleHeader';
+import React, { ReactElement } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import AppRouter from '@/routes/AppRouter';
 
-export default function App(): React.JSX.Element {
+export default function App(): ReactElement {
   return (
-    <React.StrictMode>
-      <ExampleHeader />
-    </React.StrictMode>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
