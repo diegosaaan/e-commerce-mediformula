@@ -1,0 +1,31 @@
+@font-face {
+  src:
+    url("@/assets/fonts/Inter-SemiBold.woff2") format("woff2"),
+    url("@/assets/fonts/Inter-SemiBold.woff") format("woff");
+  font-family: "Inter";
+  font-weight: 600;
+}
+
+@font-face {
+  src:
+    url("@/assets/fonts/golos-text_medium.woff2") format("woff2"),
+    url("@/assets/fonts/golos-text_medium.woff") format("woff");
+  font-family: "Golos";
+  font-weight: 500;
+}
+
+@font-face {
+  src:
+    url("@/assets/fonts/golos-text_regular.woff2") format("woff2"),
+    url("@/assets/fonts/golos-text_regular.woff") format("woff");
+  font-family: "Golos";
+  font-weight: 400;
+}
+
+@font-face {
+  src:
+    url("@/assets/fonts/golos-text_bold.woff2") format("woff2"),
+    url("@/assets/fonts/golos-text_bold.woff") format("woff");
+  font-family: "Golos";
+  font-weight: 700;
+}
