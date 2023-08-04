@@ -1,24 +1,47 @@
 import './PageNav.scss';
 import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useAuth from '@/utils/hooks/useAuth';
+
+const setActive = ({ isActive }: { isActive: boolean }): string => (isActive ? 'nav--active' : '');
 
 export default function PageNav(): ReactElement {
+  const { isUserLoggedIn, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogOut = (): void => signOut(() => navigate('/'));
+
   return (
     <nav>
       <ul>
         <li>
-          <Link to="/">
+          <NavLink to="/" className={setActive}>
             <img src="" alt="Logo" />
-          </Link>
+          </NavLink>
         </li>
+
+        {!isUserLoggedIn && (
+          <li>
+            <NavLink to="/login" className={setActive}>
+              Login
+            </NavLink>
+          </li>
+        )}
+
+        {!isUserLoggedIn && (
+          <li>
+            <NavLink to="/registration">Registration</NavLink>
+          </li>
+        )}
+        {isUserLoggedIn && (
+          <li>
+            <button onClick={handleLogOut}>Выйти из аккаунта</button>
+          </li>
+        )}
         <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/registration">Registration</Link>
-        </li>
-        <li>
-          <Link to="/user-profile">Личный кабинет</Link>
+          <NavLink to="/user-profile" className={setActive}>
+            Личный кабинет
+          </NavLink>
         </li>
       </ul>
     </nav>
