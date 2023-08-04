@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { FormEvent, ReactElement, ReactNode } from 'react';
 
 export interface IRouteData {
   key: string;
@@ -17,5 +17,20 @@ export interface IPropsButton {
   text?: string;
   children?: ReactNode;
   className: string;
-  onClick: () => void;
+  onClick?: () => void;
+}
+
+export interface IPropsInput {
+  type: 'search' | 'text' | 'password' | 'email';
+  placeholder?: string;
+  className: string;
+  name: string;
+  onChange: () => void;
+}
+
+export interface IPropsForm {
+  children?: ReactNode;
+  className: string;
+  name: string;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
