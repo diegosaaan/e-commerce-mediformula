@@ -1,0 +1,333 @@
+.header {
+  max-width: 1560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  &__nav {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    padding: 20px;
+    align-items: center;
+  }
+
+  &__button-nav {
+    box-sizing: border-box;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 50px;
+    @include GolosRegular;
+    font-size: 14px;
+    transition: opacity 0.3s;
+  }
+
+  &__button-nav:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &__button-nav_type_register {
+    background-color: $color-register;
+  }
+
+  &__button-nav_type_login {
+    background-color: $color-login;
+  }
+
+  &__logo {
+    width: 310px;
+    height: 67px;
+  }
+
+  &__nav-extra {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 12px 20px;
+    align-items: center;
+  }
+
+  &__nav-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__button-main {
+    box-sizing: border-box;
+    color: #fff;
+    height: 44px;
+    width: 134px;
+    border-radius: 8px;
+    @include GolosMedium;
+    font-size: 16px;
+    transition: opacity 0.3s;
+    background: $primary-liner-green;
+  }
+
+  &__button-main:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &__button-catalog {
+    box-sizing: border-box;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__button-catalog-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('@/assets/images/svg/header-catalogue.svg');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center;
+  }
+
+  &__button-catalog-text {
+    @include GolosMedium;
+    font-size: 16px;
+  }
+
+  &__button-cart {
+    width: 24px;
+    height: 24px;
+    background-image: url('@/assets/images/svg/header-cart.svg');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center;
+    position: relative;
+    transition: opacity 0.3s;
+  }
+
+  &__button-cart:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  &__button-cart-text {
+    @include GolosMedium;
+    font-size: 12px;
+    position: absolute;
+    top: -7px;
+    left: 13px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    background: $primary-liner-green;
+    color: $grayscale-50;
+  }
+
+  &__form-search {
+    position: relative;
+  }
+
+  &__input-search {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 16px;
+    background-color: $grayscale-200;
+    width: 838px;
+  }
+
+  &__input-search::placeholder,
+  &__input-search-mobile::placeholder {
+    font-size: 14px;
+    @include GolosRegular;
+    color: $grayscale-600;
+  }
+
+  &__input-search::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+
+  &__button-search {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 13px;
+    right: 16px;
+    background-image: url('@/assets/images/svg/header-search.svg');
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    transition: background-image 0.3s;
+  }
+
+  &__button-search:hover {
+    cursor: pointer;
+    background-image: url('@/assets/images/svg/header-search-hover.svg');
+  }
+
+  &__mobile {
+    display: none;
+    gap: 16px;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  &__nav-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__nav-container_type_mobile {
+    gap: 10px;
+  }
+
+  &__logo-mobile {
+    width: 140px;
+    height: 29px;
+  }
+
+  &__link {
+    font-size: 14px;
+    @include GolosMedium;
+  }
+
+  &__link_type_login {
+    color: $color-login;
+  }
+
+  &__link_type_register {
+    color: $color-register;
+  }
+
+  &__link_type_login {
+    color: $color-login;
+  }
+
+  &__input-search-mobile {
+    width: 735px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 16px;
+    background-color: $grayscale-200;
+  }
+
+  &__nav-extra-mobile {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 16px;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid $grayscale-200;
+    background-color: $grayscale-50;
+  }
+
+  &__button-main-mobile {
+    width: 55px;
+    height: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__button-main-mobile_type_cart {
+    position: relative;
+  }
+
+  &__button-icon-mobile {
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+  }
+
+  &__button-icon-mobile_type_main {
+    background-image: url('@/assets/images/svg/header-home-mobile.svg');
+  }
+
+  &__button-catalog-icon-mobile_type_catalogue {
+    background-image: url('@/assets/images/svg/header-catalogue-mobile.svg');
+  }
+
+  &__button-icon-mobile_type_about {
+    background-image: url('@/assets/images/svg/header-heart-mobile.svg');
+  }
+
+  &__button-cart-icon-mobile_type_cart {
+    background-image: url('@/assets/images/svg/header-cart-mobile.svg');
+  }
+
+  &__button-cart-text_type_mobile {
+    font-size: 10px;
+    top: -5px;
+    left: 30px;
+  }
+
+  &__button-cart-icon-mobile_type_profile {
+    background-image: url('@/assets/images/svg/header-user-mobile.svg');
+  }
+
+  &__button-text-mobile {
+    font-size: 10px;
+    @include GolosRegular;
+    color: $grayscale-600;
+  }
+}
+
+@media screen and (max-width: 1559px) {
+  .header {
+    max-width: calc(768px + (1560 - 768) * (100vw - 768px) / (1559 - 768));
+
+    &__logo {
+      width: calc(240px + (310 - 240) * (100vw - 768px) / (1559 - 768));
+      height: calc(40px + (67 - 40) * (100vw - 768px) / (1559 - 768));
+    }
+
+    &__nav-extra {
+      flex-direction: column;
+    }
+
+    &__button-main {
+      height: calc(34px + (44 - 34) * (100vw - 768px) / (1559 - 768));
+      width: calc(100px + (134 - 100) * (100vw - 768px) / (1559 - 768));
+      font-size: 12px;
+    }
+
+    &__button-catalog-text {
+      font-size: 12px;
+    }
+
+    &__input-search {
+      width: calc(500px + (838 - 500) * (100vw - 768px) / (1559 - 768));
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    max-width: calc(360px + (768 - 360) * (100vw - 360px) / (767 - 360));
+
+    &__nav {
+      display: none;
+    }
+
+    &__nav-extra {
+      display: none;
+    }
+
+    &__mobile {
+      display: flex;
+    }
+
+    &__input-search-mobile {
+      width: calc(328px + (735 - 328) * (100vw - 360px) / (767 - 360));
+    }
+
+    &__nav-extra-mobile {
+      display: flex;
+    }
+  }
+}
