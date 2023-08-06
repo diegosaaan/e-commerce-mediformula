@@ -4,6 +4,16 @@
   font-size: 16px;
 }
 
+@keyframes rotate-label-map-icon {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
 .footer {
   margin-top: 100px;
   padding-top: 80px;
@@ -15,28 +25,63 @@
     justify-content: space-between;
   }
 
-  &__map {
-    margin-top: 50px;
+  &__label-map-container {
+    display: flex;
+    align-items: flex-end;
   }
 
-  &__list-container {
+  &__map-heading {
+    @include GolosMedium;
+    position: relative;
+    margin-top: 30px;
+    font-size: 36px;
+    color: $grayscale-900;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__map-label-icon {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    background-image: url('@/assets/images/svg/footer-label-on-map.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: rotate-label-map-icon 3s linear infinite;
+    transform-origin: center;
+  }
+
+  &__map {
+    margin-top: 30px;
+  }
+
+  &__accordion-container {
     display: flex;
     margin-top: 80px;
+    margin-bottom: 50px;
   }
 
   &__list-heading {
     @include GolosMedium;
-    color: $grayscale-900;
     font-size: 20px;
+    color: $grayscale-900;
+    transition: 0.2s ease-in-out;
   }
 
   &__numbers-list {
     display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &-item:last-child {
+      margin-left: clamp(45px, 5vw, 95px);
+    }
 
     &-link {
       @include GolosMedium;
-      color: $grayscale-900;
       font-size: 35px;
+      color: $grayscale-900;
+      transition: color 0.25s ease-in-out;
     }
 
     &-city {
@@ -45,30 +90,34 @@
     }
   }
 
-  &__services-list,
-  &__numbers-list-item:last-child {
-    margin-left: 95px;
+  &__services-accordion {
+    margin-left: clamp(25px, 5vw, 95px);
+  }
+
+  &__delivery-list,
+  &__services-list {
+    margin-top: 16px;
+    transition: 0.3s ease-in-out;
+
+    &-item {
+      margin-top: 16px;
+    }
   }
 
   &__services-list-link,
+  &__delivery-list-link,
+  &__legal-list-info-link,
   &__delivery-list-item,
   &__services-list-item {
     @extend %footer-list-items-text-styles;
-  }
-
-  &__services-list-link:not(:first-child),
-  &__delivery-list-item:not(:first-child),
-  &__services-list-item:not(:first-child) {
-    margin-top: 16px;
-  }
-
-  &__services-list-link {
-    font-size: 16px;
+    transition: color 0.25s ease-in-out;
   }
 
   &__social-networks {
-    padding: 100px 270px 70px 85px;
-    border-radius: 250px;
+    margin-left: 10px;
+    padding: 48px clamp(45px, 15vw, 270px) 0px 48px;
+    max-height: 320px;
+    border-radius: 50px;
     background-color: $grayscale-200;
     background-image: url('@/assets/images/png/footer-IPhone.png');
     background-repeat: no-repeat;
@@ -77,6 +126,7 @@
     &-heading {
       @include GolosMedium;
       color: $grayscale-900;
+      font-size: 36px;
     }
   }
 
@@ -89,12 +139,18 @@
     }
 
     &-item {
+      border-radius: 70px;
+      background-color: $grayscale-50;
+      transition: background-color 0.25s ease-in-out;
+    }
+
+    &-link {
+      display: block;
       width: 50px;
       height: 50px;
       border-radius: 70px;
       background-position: center;
       background-repeat: no-repeat;
-      background-color: $grayscale-50;
       background-size: 24px 24px;
 
       &--whatsapp {
@@ -122,12 +178,265 @@
 
     &-item {
       @extend %footer-list-items-text-styles;
+      text-align: center;
       font-size: 20px;
+    }
+
+    &-link {
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .footer {
+    &__label-map-container {
+      justify-content: center;
+    }
+
+    &__map-heading {
+      font-size: 28px;
+    }
+
+    &__services-accordion {
+      margin-left: clamp(0px, 3vw, 95px);
+    }
+
+    &__accordion-container {
+      justify-content: space-between;
+    }
+
+    &__numbers-list {
+      &-item:last-child {
+        margin-left: 0;
+      }
+
+      &-link {
+        font-size: 28px;
+      }
+    }
+
+    &__social-networks {
+      padding: 48px clamp(80px, 8vw, 200px) 70px clamp(30px, 10vw, 60px);
+
+      &-heading {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .footer {
+    padding-top: 40px;
+
+    &__main-content-container {
+      display: block;
+    }
+
+    &__accordion-container {
+      justify-content: start;
+      margin-top: 40px;
+    }
+
+    &__services-accordion {
+      margin-left: 100px;
+    }
+
+    &__numbers-list {
+      justify-content: start;
+
+      &-item:last-child {
+        margin-left: 150px;
+      }
+    }
+
+    &__social-networks {
+      margin-left: 0;
+    }
+  }
+}
+@media screen and (max-width: $tablet) {
+  .footer {
+    &__main-content-container {
+      display: block;
+    }
+
+    &__numbers-list,
+    &__accordion-container {
+      justify-content: space-between;
+    }
+
+    &__services-accordion {
+      margin-left: 0;
+    }
+
+    &__numbers-list {
+      &-item:last-child {
+        margin-left: 0;
+      }
+    }
+
+    &__social-networks {
+      margin-left: 0;
+    }
+
+    &__legal-list-info {
+      flex-direction: column;
+      align-items: start;
+      margin-top: 40px;
+
+      &-item:not(:first-child) {
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .footer {
+    &__map-heading {
+      font-size: 24px;
+    }
+
+    &__map-label-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    &__accordion-container {
+      flex-direction: column;
+      margin-top: 40px;
+    }
+
+    &__list-heading {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      border-top: 1px solid $grayscale-300;
+      border-bottom: 1px solid $grayscale-300;
+      background-image: url('@/assets/images/svg/footer-accordion-close-arrow.svg');
+      background-repeat: no-repeat;
+      background-position: right;
+      background-size: 16px 16px;
+      cursor: pointer;
+    }
+
+    &__numbers-list {
+      display: block;
+
+      &-item {
+        font-size: 24px;
+      }
+
+      &-item:last-child {
+        margin-top: 15px;
+        margin-left: 0;
+      }
+
+      &-link {
+        font-size: 24px;
+      }
+    }
+
+    &__services-accordion {
+      margin-left: 0;
+    }
+
+    &__delivery-list,
+    &__services-list {
+      margin-top: 0;
+      max-height: 0px;
+      overflow: hidden;
+    }
+
+    &__social-networks {
+      margin-top: 30px;
+      margin-left: 0;
+      padding: 50px clamp(15px, 5vw, 50px) 70px clamp(15px, 5vw, 60px);
+      background-size: 80%;
+
+      &-heading {
+        font-size: 24px;
+      }
+    }
+
+    &__icon-list {
+      &-link {
+        width: 34px;
+        height: 34px;
+        background-size: 16px 16px;
+      }
+    }
+
+    &__legal-list-info {
+      display: flex;
+      margin-top: 40px;
+      justify-content: space-between;
+
+      &-item {
+        font-size: 16px;
+      }
+
+      &-link {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .footer__accordion--active {
+    padding-bottom: 16px;
+    max-height: 200px;
+    border-bottom: 1px solid $grayscale-300;
+  }
+
+  .footer__accordion-heading--active {
+    background-image: url('@/assets/images/svg/footer-accordion-open-arrow.svg');
+  }
+
+  @media (hover: hover) {
+    .footer__list-heading:hover {
+      background-color: $grayscale-200;
     }
   }
 }
 
 .ymaps-2-1-79-inner-panes,
 .ymaps-2-1-79-map {
-  border-radius: 50px !important; // yandex map
+  border-radius: 25px; // yandex map
+}
+
+.footer__icon-list-link:focus {
+  outline: 2px solid #ff0000;
+}
+
+.footer__services-list-link:focus,
+.footer__delivery-list-link:focus,
+.footer__numbers-list-link:focus,
+.footer__legal-list-info-link:focus {
+  @include GreyLinkFocus;
+}
+
+@media (hover: hover) {
+  .footer__services-list-link:hover,
+  .footer__delivery-list-link:hover,
+  .footer__numbers-list-link:hover,
+  .footer__legal-list-info-link:hover {
+    @include GreyLinkHover;
+  }
+
+  .footer__icon-list-item:hover {
+    background-color: #1cd5a8;
+  }
+}
+
+.footer__icon-list-link:active {
+  background-color: #ffde71;
+  outline: none;
+}
+
+.footer__services-list-link:active,
+.footer__delivery-list-link:active,
+.footer__numbers-list-link:active,
+.footer__legal-list-info-link:active {
+  @include GreyLinkActive;
 }
