@@ -19,3 +19,10 @@ export interface IPropsButton {
   className: string;
   onClick: () => void;
 }
+
+export interface IPropsIntroCard {
+  header: string;
+  iconPath: string;
+  text: string;
+  label: string;
+}

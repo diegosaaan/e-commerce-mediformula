@@ -1,0 +1,90 @@
+.intro-card {
+  box-sizing: border-box;
+  display: block;
+  height: 188px;
+  width: 368px;
+  background-color: $grayscale-200;
+  border-radius: 24px;
+  padding: 24px 32px 26px;
+
+  &__header-container {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__header {
+    @include GolosMedium;
+    @include font(24px, 115%);
+    color: $grayscale-900;
+  }
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  &__text {
+    @include GolosRegular;
+    @include font(16px, 100%);
+    margin-top: 12px;
+    width: 260px;
+    color: $grayscale-900;
+  }
+
+  &__label-container {
+    display: flex;
+    gap: 68px;
+    margin-top: 36px;
+  }
+
+  &__line {
+    width: 48px;
+    height: 1px;
+    background-color: $grayscale-600;
+  }
+
+  &__label {
+    @include GolosRegular;
+    @include font(10px, 100%);
+    text-transform: uppercase;
+    width: 200px;
+    color: $grayscale-600;
+  }
+
+  @media screen and (max-width: $tablet) {
+    width: calc(244px + (368 - 244) * (100vw - 360px) / (767.9 - 360));
+    height: calc(120px + (188 - 120) * (100vw - 360px) / (767.9 - 360));
+    border-radius: 12px;
+    padding: 16px;
+
+    &__header-container {
+      gap: 4px;
+    }
+
+    &__header {
+      @include font(14px, 115%);
+    }
+
+    &__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    &__text {
+      @include font(12px, 100%);
+      width: 190px;
+    }
+
+    &__label-container {
+      margin-top: 8px;
+    }
+
+    &__line {
+      display: none;
+    }
+
+    &__label {
+      text-transform: none;
+    }
+  }
+}
