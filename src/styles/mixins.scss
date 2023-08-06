@@ -18,7 +18,7 @@
   font-weight: 600;
 }
 
-@mixin font ($size, $height) {
+@mixin font($size, $height) {
   font-size: $size;
   line-height: $height;
 }
