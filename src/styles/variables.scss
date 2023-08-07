@@ -1,8 +1,5 @@
-$color-secondary: linear-gradient(315deg, #10c5fe 0%, #0f7af9 100%);
-$color-secondary-hover: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
-
-$color-primary: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
-$color-primary-hover: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
+$secondary-liner: linear-gradient(315deg, #10c5fe 0%, #0f7af9 100%);
+$primary-liner: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
 
 $grayscale-900: #011f3a;
 $grayscale-600: #99a5b0;
@@ -12,7 +9,9 @@ $grayscale-200: #f6f7fb;
 $grayscale-100: #fafbfd;
 $grayscale-50: #ffffff;
 
-$large-desktop: 1560px;
+$large-desktop: 1559.9px;
+$medium-desktop: 1359.9px;
 $small-desktop: 1023.9px;
 $tablet: 767.9px;
+$portrait-tablet: 567.9px;
 $mobile: 389.9px;

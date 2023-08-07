@@ -14,7 +14,7 @@
 
   &__header {
     @include GolosMedium;
-    @include font(24px, 115%);
+    @include Font(24px, 115%);
     color: $grayscale-900;
   }
 
@@ -25,7 +25,7 @@
 
   &__text {
     @include GolosRegular;
-    @include font(16px, 100%);
+    @include Font(16px, 100%);
     margin-top: 12px;
     width: 260px;
     color: $grayscale-900;
@@ -45,7 +45,7 @@
 
   &__label {
     @include GolosRegular;
-    @include font(10px, 100%);
+    @include Font(10px, 100%);
     text-transform: uppercase;
     width: 200px;
     color: $grayscale-600;
@@ -62,7 +62,7 @@
     }
 
     &__header {
-      @include font(14px, 115%);
+      @include Font(14px, 115%);
     }
 
     &__icon {
@@ -71,7 +71,7 @@
     }
 
     &__text {
-      @include font(12px, 100%);
+      @include Font(12px, 100%);
       width: 190px;
     }
 
