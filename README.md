@@ -17,6 +17,7 @@ Our eCommerce application is developed using the following key technologies:
 - [![Husky][Husky-icon]][Husky-url]
 - [![Webpack][Webpack-icon]][Webpack-url]
 - [![CommerceTools][CommerceTools-icon]][CommerceTools-url]
+- [![Axios][Axios-icon]][Axios-url]
 
 ## Getting Started 🚀
 
@@ -117,3 +118,5 @@ to install Git hooks with Husky. Hooks are scripts that run automatically at cer
 [Husky-url]: https://github.com/typicode/husky#readme
 [CommerceTools-icon]: https://img.shields.io/badge/CommerceTools-20232A?style=for-the-badge&logo=CommerceTools&logoColor=ff761c
 [CommerceTools-url]: https://commercetools.com/
+[Axios-icon]: https://img.shields.io/badge/Axios-20232A?style=for-the-badge&logo=Axios&logoColor=671ddf
+[Axios-url]: https://axios-http.com/docs/intro
