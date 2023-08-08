@@ -1,13 +1,10 @@
-import '@/pages/Main/Main.scss';
 import React, { ReactElement } from 'react';
+import MediaSection from './components/media-section/Media';
 
-function MainPage(): ReactElement {
-  return (
-    <div className="main-page">
-      <h1>Главная Страница</h1>
-      <main></main>
-    </div>
-  );
-}
+const MainPage = (): ReactElement => (
+  <div className="main-page">
+    <MediaSection />
+  </div>
+);
 
 export default MainPage;
