@@ -120,6 +120,7 @@
       margin-bottom: 16px;
       max-width: 100%;
       max-height: 120px;
+      border-radius: 15px;
     }
 
     &-item:not(:last-child).media__list-item--no-border {
@@ -131,10 +132,6 @@
 
 @media (hover: hover) {
   .media {
-    &__intro-photo:hover {
-      background-color: $grayscale-400;
-    }
-
     &__intro-link:hover .media__intro-heading,
     &__list-item:hover .media__list-item-heading,
     &__list-item-heading:hover,
