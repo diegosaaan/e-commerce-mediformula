@@ -16,7 +16,7 @@ export interface IAccordionProps {
   sectionName: string;
   listName: string;
   title: string;
-  children: ReactElement;
+  children: ReactElement[];
   isOpen: boolean;
   onToogleAccordion: () => void;
 }
