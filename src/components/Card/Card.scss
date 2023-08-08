@@ -1,0 +1,215 @@
+.product-card {
+  box-sizing: border-box;
+  display: block;
+  width: 304px;
+  border-radius: 16px;
+  padding: 16px 18px 18px;
+
+  &__image-container {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  &__discount {
+    display: inline-block;
+    background: $discount-liner;
+    padding: 3px 8px 4px;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__discount-text {
+    color: $grayscale-50;
+    @include GolosMedium;
+    @include Font(14px, 100%);
+  }
+
+  &__image {
+    display: block;
+    margin: auto;
+    height: 222px;
+    width: 222px;
+  }
+
+  &__rating-container {
+    display: inline-flex;
+    gap: 2px;
+    margin-top: 8px;
+    padding: 4px 8px 4px 6px;
+    background-color: $grayscale-200;
+    border-radius: 4px;
+  }
+
+  &__rating-icon {
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: url('@/assets/images/svg/card-star.svg');
+  }
+
+  &__rating-text {
+    color: $grayscale-900;
+    @include GolosMedium;
+    @include Font(14px, 100%);
+  }
+
+  &__text {
+    display: block;
+    margin-top: 12px;
+    height: 50px;
+    color: $grayscale-900;
+    @include GolosRegular;
+    @include Font(14px, 100%);
+  }
+
+  &__price-info {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  &__price-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__price {
+    color: $grayscale-900;
+    @include GolosMedium;
+    @include Font(16px, 100%);
+  }
+
+  &__priceBefore {
+    color: $grayscale-600;
+    @include GolosMedium;
+    @include Font(12px, 100%);
+    text-decoration: line-through;
+  }
+
+  &__bonus-container {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__bonus-icon {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url('@/assets/images/svg/card-bonus.svg');
+  }
+
+  &__bonus-text {
+    display: block;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: $bonus-liner;
+    @include GolosMedium;
+    @include Font(14px, 100%);
+  }
+
+  &__button-container {
+    display: none;
+    margin-top: 22px;
+    gap: 24px;
+  }
+
+  &__full-button {
+    display: block;
+    width: 164px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: blue;
+  }
+
+  &__icon-button {
+    display: block;
+    width: 40px;
+    height: 44px;
+    background-color: yellowgreen;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow:
+        0px 5px 40px 0px rgba(1, 31, 58, 0.1),
+        0px 4px 13px 0px rgba(1, 31, 58, 0.04);
+
+      &__button-container {
+        display: flex;
+      }
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    width: calc(160px + (304 - 160) * (100vw - 360px) / (767.9 - 360));
+    border-radius: 0;
+    padding: 0;
+
+    &__discount-text {
+      @include Font(12px, 100%);
+    }
+
+    &__image {
+      height: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
+      width: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
+    }
+
+    &__image-image {
+      height: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
+      width: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
+    }
+
+    &__rating-container {
+      margin-top: 4px;
+    }
+
+    &__rating-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__rating-text {
+      @include Font(12px, 100%);
+    }
+
+    &__text {
+      margin-top: 6px;
+      height: calc(42px + (50 - 42) * (100vw - 360px) / (767.9 - 360));
+      @include GolosRegular;
+      @include Font(12px, 100%);
+    }
+
+    &__price-info {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: flex-end;
+    }
+
+    &__price-container {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 4px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &__priceBefore {
+      @include GolosRegular;
+    }
+
+    &__bonus-text {
+      @include Font(12px, 100%);
+    }
+
+    &__button-container {
+      display: flex;
+    }
+  }
+}

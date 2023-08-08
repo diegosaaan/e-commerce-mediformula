@@ -26,3 +26,14 @@ export interface IPropsIntroCard {
   text: string;
   label: string;
 }
+
+export interface IPropsCard {
+  imagePath: string;
+  rating: number;
+  text: string;
+  price: number;
+  priceBefore?: number;
+  bonus?: number;
+  discount?: number;
+  onClick: () => void;
+}
