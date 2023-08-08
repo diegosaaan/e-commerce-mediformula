@@ -24,13 +24,18 @@
 }
 
 @mixin GreyLinkActive {
-  color: #ff0000;
+  color: #1cd5a8;
   transition: 0.25s ease-in-out;
   outline: none;
 }
 
 @mixin GreyLinkFocus {
-  outline: 2px solid #ff0000;
+  outline: 2px solid #1cd5a8;
   border-radius: 5px;
   color: $grayscale-900;
+}
+
+@mixin MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
 }
