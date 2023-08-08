@@ -1,7 +1,7 @@
-import newsPhotoIntro from '@/assets/images/png/main-media-news-intro.png';
-import articlesPhotoIntro from '@/assets/images/png/main-media-articles-intro.png';
+import newsPhotoIntro from '@/assets/images/jpg/main-media-news-intro.jpg';
+import articlesPhotoIntro from '@/assets/images/jpg/main-media-articles-intro.jpg';
 import videoPhotoIntro from '@/assets/images/jpg/main-media-intro-video.jpg';
-import healthAgePhotoPreview from '@/assets/images/jpg/main-media-health-video.png';
+import healthAgePhotoPreview from '@/assets/images/jpg/main-media-health-video.jpg';
 
 const mediaData = {
   news: {
