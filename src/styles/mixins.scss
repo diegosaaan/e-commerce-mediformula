@@ -39,3 +39,28 @@
   opacity: 0.8;
   cursor: pointer;
 }
+
+@mixin Font($size, $height) {
+  font-size: $size;
+  line-height: $height;
+}
+
+@mixin MainBtnFocus {
+  outline: 2px solid #9f73e8;
+  box-shadow: 0 0 10px #9f73e8;
+}
+
+@mixin MainBtnActive {
+  background: #9f73e8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
+
+@mixin IconBtnActive {
+  box-shadow: none;
+  outline: 2px solid #9f73e8;
+}
+
+@mixin LogoFocus {
+  outline: 2px solid #9f73e8;
+}
