@@ -17,7 +17,7 @@
 .footer {
   margin-top: 100px;
   padding-top: 80px;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
   border-top: 1px solid $grayscale-400;
 
   &__main-content-container {
@@ -55,10 +55,20 @@
     margin-top: 30px;
   }
 
+  &__useful-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 700px;
+  }
+
   &__accordion-container {
     display: flex;
+    justify-content: space-between;
     margin-top: 80px;
     margin-bottom: 50px;
+    width: 100%;
   }
 
   &__list-heading {
@@ -73,8 +83,12 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    &-item:last-child {
-      margin-left: clamp(45px, 5vw, 95px);
+    &-item {
+      min-width: 270px;
+    }
+
+    &-item:first-child {
+      margin-bottom: 10px;
     }
 
     &-link {
@@ -90,8 +104,14 @@
     }
   }
 
+  &__services-accordion,
+  &__delivery-accordion {
+    min-width: 270px;
+  }
+
   &__services-accordion {
-    margin-left: clamp(25px, 5vw, 95px);
+    width: 100%;
+    max-width: 270px;
   }
 
   &__delivery-list,
@@ -114,9 +134,11 @@
   }
 
   &__social-networks {
-    margin-left: 10px;
-    padding: 48px clamp(45px, 15vw, 270px) 0px 48px;
-    max-height: 320px;
+    margin-left: 95px;
+    padding: 50px 0px 70px 50px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 330px;
     border-radius: 50px;
     background-color: $grayscale-200;
     background-image: url('@/assets/images/png/footer-IPhone.png');
@@ -190,34 +212,18 @@
 
 @media screen and (max-width: $medium-desktop) {
   .footer {
-    &__label-map-container {
-      justify-content: center;
-    }
-
     &__map-heading {
       font-size: 28px;
     }
 
-    &__services-accordion {
-      margin-left: clamp(0px, 3vw, 95px);
-    }
-
-    &__accordion-container {
-      justify-content: space-between;
-    }
-
     &__numbers-list {
-      &-item:last-child {
-        margin-left: 0;
-      }
-
       &-link {
         font-size: 28px;
       }
     }
 
     &__social-networks {
-      padding: 48px clamp(80px, 8vw, 200px) 70px clamp(30px, 10vw, 60px);
+      margin-left: 0;
 
       &-heading {
         font-size: 28px;
@@ -228,40 +234,25 @@
 
 @media screen and (max-width: $small-desktop) {
   .footer {
+    margin-top: 50px;
     padding-top: 40px;
 
     &__main-content-container {
       display: block;
     }
 
-    &__accordion-container {
-      justify-content: start;
-      margin-top: 40px;
-    }
-
-    &__services-accordion {
-      margin-left: 100px;
-    }
-
-    &__numbers-list {
-      justify-content: start;
-
-      &-item:last-child {
-        margin-left: 150px;
-      }
-    }
-
     &__social-networks {
-      margin-left: 0;
+      max-width: 100%;
+    }
+
+    &__label-map-container {
+      padding-left: 50px;
     }
   }
 }
+
 @media screen and (max-width: $tablet) {
   .footer {
-    &__main-content-container {
-      display: block;
-    }
-
     &__numbers-list,
     &__accordion-container {
       justify-content: space-between;
@@ -296,12 +287,17 @@
 @media screen and (max-width: $portrait-tablet) {
   .footer {
     &__map-heading {
+      margin-top: 40px;
       font-size: 24px;
     }
 
     &__map-label-icon {
       width: 28px;
       height: 28px;
+    }
+
+    &__useful-links {
+      display: block;
     }
 
     &__accordion-container {
@@ -324,22 +320,19 @@
     &__numbers-list {
       display: block;
 
+      &-link,
       &-item {
         font-size: 24px;
       }
 
       &-item:last-child {
         margin-top: 15px;
-        margin-left: 0;
-      }
-
-      &-link {
-        font-size: 24px;
       }
     }
 
     &__services-accordion {
       margin-left: 0;
+      max-width: 100%;
     }
 
     &__delivery-list,
@@ -349,10 +342,13 @@
       overflow: hidden;
     }
 
+    &__social-networks,
+    &__label-map-container {
+      padding-left: 26px;
+    }
+
     &__social-networks {
-      margin-top: 30px;
-      margin-left: 0;
-      padding: 50px clamp(15px, 5vw, 50px) 70px clamp(15px, 5vw, 60px);
+      padding-left: 26px;
       background-size: 80%;
 
       &-heading {
@@ -362,6 +358,7 @@
 
     &__icon-list {
       &-link {
+        display: block;
         width: 34px;
         height: 34px;
         background-size: 16px 16px;
@@ -373,29 +370,10 @@
       margin-top: 40px;
       justify-content: space-between;
 
+      &-link,
       &-item {
         font-size: 16px;
       }
-
-      &-link {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .footer__accordion--active {
-    padding-bottom: 16px;
-    max-height: 200px;
-    border-bottom: 1px solid $grayscale-300;
-  }
-
-  .footer__accordion-heading--active {
-    background-image: url('@/assets/images/svg/footer-accordion-open-arrow.svg');
-  }
-
-  @media (hover: hover) {
-    .footer__list-heading:hover {
-      background-color: $grayscale-200;
     }
   }
 }
@@ -405,38 +383,49 @@
   border-radius: 25px; // yandex map
 }
 
-.footer__icon-list-link:focus {
-  outline: 2px solid #ff0000;
+.footer__accordion--active {
+  padding-bottom: 16px;
+  max-height: 200px;
+  border-bottom: 1px solid $grayscale-300;
 }
 
-.footer__services-list-link:focus,
-.footer__delivery-list-link:focus,
-.footer__numbers-list-link:focus,
-.footer__legal-list-info-link:focus {
-  @include GreyLinkFocus;
+.footer__accordion-heading--active {
+  background-image: url('@/assets/images/svg/footer-accordion-open-arrow.svg');
 }
 
-@media (hover: hover) {
-  .footer__services-list-link:hover,
-  .footer__delivery-list-link:hover,
-  .footer__numbers-list-link:hover,
-  .footer__legal-list-info-link:hover {
-    @include GreyLinkHover;
+.footer {
+  &__icon-list-link:focus,
+  &__services-list-link:focus,
+  &__delivery-list-link:focus,
+  &__numbers-list-link:focus,
+  &__legal-list-info-link:focus {
+    @include GreyLinkFocus;
   }
 
-  .footer__icon-list-item:hover {
-    background-color: #1cd5a8;
+  @media (hover: hover) {
+    &__icon-list-item:hover {
+      background-color: #1cd5a8;
+    }
+
+    &__list-heading:hover,
+    &__services-list-link:hover,
+    &__delivery-list-link:hover,
+    &__numbers-list-link:hover,
+    &__legal-list-info-link:hover {
+      @include GreyLinkHover;
+    }
   }
-}
 
-.footer__icon-list-link:active {
-  background-color: #ffde71;
-  outline: none;
-}
+  &__icon-list-link:active {
+    border-radius: 70px;
+    background-color: #ffde71;
+    outline: none;
+  }
 
-.footer__services-list-link:active,
-.footer__delivery-list-link:active,
-.footer__numbers-list-link:active,
-.footer__legal-list-info-link:active {
-  @include GreyLinkActive;
+  &__services-list-link:active,
+  &__delivery-list-link:active,
+  &__numbers-list-link:active,
+  &__legal-list-info-link:active {
+    @include GreyLinkActive;
+  }
 }
