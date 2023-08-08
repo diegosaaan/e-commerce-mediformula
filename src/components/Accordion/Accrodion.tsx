@@ -12,10 +12,8 @@ export default function Accordion({
   return (
     <div className={`${sectionName}__${listName}-accordion`}>
       <h6
-        tabIndex={0}
         className={`${sectionName}__list-heading ${isOpen ? `${sectionName}__accordion-heading--active` : ''}`}
         onClick={onToogleAccordion}
-        onKeyDown={onToogleAccordion}
       >
         {title}
       </h6>
