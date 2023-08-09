@@ -19,11 +19,9 @@
   }
 
   &__toogle-btn {
-    @include GolosMedium;
+    @include GolosMedium(36px, 1, $grayscale-600);
     width: 100%;
     text-align: left;
-    color: $grayscale-600;
-    font-size: 36px;
     cursor: pointer;
     transition: color 0.25s ease-in-out;
   }
@@ -52,13 +50,10 @@
     margin-right: 50px;
     width: 100%;
     max-width: 500px;
-    color: $grayscale-900;
   }
 
   &__intro-heading {
-    @include GolosRegular;
-    font-size: 36px;
-    line-height: 1.1;
+    @include GolosRegular(36px, 1.1, $grayscale-900);
     transition: 0.25s ease-in-out;
   }
 
@@ -101,9 +96,7 @@
     max-width: 320px;
 
     &-item-heading {
-      @include GolosRegular;
-      font-size: 20px;
-      color: $grayscale-900;
+      @include GolosRegular(20px, 1, $grayscale-900);
       transition: 0.25s ease-in-out;
     }
 
@@ -117,6 +110,7 @@
     }
 
     &-item-preview {
+      display: block;
       margin-bottom: 16px;
       max-width: 100%;
       max-height: 120px;
@@ -128,41 +122,9 @@
       border-bottom: none;
     }
   }
-}
 
-@media (hover: hover) {
-  .media {
-    &__intro-link:hover .media__intro-heading,
-    &__list-item:hover .media__list-item-heading,
-    &__list-item-heading:hover,
-    &__toogle-btn:hover {
-      @include GreyLinkHover;
-    }
-  }
-}
-
-.media {
-  &__intro-link:focus,
-  &__list-link-container:focus .media__list-item-heading,
-  &__toogle-btn:focus {
-    @include GreyLinkFocus;
-  }
-
-  &__list-link-container:focus .media__list-item-heading {
-    outline: none; // bug
-  }
-
-  &__toogle-btn:focus.media__toogle-btn--active {
-    outline: none;
-    border-radius: 0;
-  }
-
-  &__intro-link:active .media__intro-heading,
-  &__list-item:active .media__list-item-heading,
-  &__toogle-btn:active,
-  &__media__intro-photo:active {
-    @include GreyLinkActive;
-    outline: none;
+  &__list-link-container {
+    display: block;
   }
 }
 
@@ -195,6 +157,8 @@
 
     &__toogle-btns-container {
       flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
       max-width: 100%;
       border-right: none;
     }
@@ -328,5 +292,36 @@
     &__list-video {
       flex-direction: column;
     }
+  }
+}
+
+.media {
+  @media (hover: hover) {
+    &__intro-link:hover .media__intro-heading,
+    &__list-item:hover .media__list-item-heading,
+    &__list-item-heading:hover,
+    &__toogle-btn:hover {
+      @include GreyLinkHover;
+    }
+  }
+
+  &__toogle-btn:focus {
+    color: #1cd5a8;
+    outline: none;
+  }
+
+  &__intro-link:focus,
+  &__list-link-container:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__intro-link:focus:active,
+  &__intro-link:focus:active .media__intro-heading,
+  &__list-link-container:focus:active,
+  &__list-link-container:focus:active .media__list-item-heading,
+  &__toogle-btn:focus:active,
+  &__media__intro-photo:focus:active {
+    @extend %GreyLinkActive;
+    outline: none;
   }
 }

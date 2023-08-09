@@ -1,7 +1,5 @@
 %footer-list-items-text-styles {
-  @include GolosRegular;
-  color: $grayscale-600;
-  font-size: 16px;
+  @include GolosRegular(16px, 1, $grayscale-600);
 }
 
 @keyframes rotate-label-map-icon {
@@ -31,11 +29,9 @@
   }
 
   &__map-heading {
-    @include GolosMedium;
+    @include GolosMedium(36px, 1, $grayscale-900);
     position: relative;
     margin-top: 30px;
-    font-size: 36px;
-    color: $grayscale-900;
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -72,9 +68,7 @@
   }
 
   &__list-heading {
-    @include GolosMedium;
-    font-size: 20px;
-    color: $grayscale-900;
+    @include GolosMedium(20px, 1, $grayscale-900);
     transition: 0.2s ease-in-out;
   }
 
@@ -92,9 +86,8 @@
     }
 
     &-link {
-      @include GolosMedium;
+      @include GolosMedium(35px, 1, $grayscale-900);
       font-size: 35px;
-      color: $grayscale-900;
       transition: color 0.25s ease-in-out;
     }
 
@@ -146,9 +139,7 @@
     background-position: bottom right;
 
     &-heading {
-      @include GolosMedium;
-      color: $grayscale-900;
-      font-size: 36px;
+      @include GolosMedium(36px, 1, $grayscale-900);
     }
   }
 
@@ -394,14 +385,6 @@
 }
 
 .footer {
-  &__icon-list-link:focus,
-  &__services-list-link:focus,
-  &__delivery-list-link:focus,
-  &__numbers-list-link:focus,
-  &__legal-list-info-link:focus {
-    @include GreyLinkFocus;
-  }
-
   @media (hover: hover) {
     &__icon-list-item:hover {
       background-color: #1cd5a8;
@@ -415,16 +398,28 @@
     }
   }
 
-  &__icon-list-link:active {
+  &__icon-list-link:focus {
     border-radius: 70px;
-    background-color: #ffde71;
-    outline: none;
   }
 
-  &__services-list-link:active,
-  &__delivery-list-link:active,
-  &__numbers-list-link:active,
-  &__legal-list-info-link:active {
-    @include GreyLinkActive;
+  &__icon-list-link:focus,
+  &__services-list-link:focus,
+  &__delivery-list-link:focus,
+  &__numbers-list-link:focus,
+  &__legal-list-info-link:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__icon-list-link:active {
+    background-color: #ffde71;
+    outline: none;
+    transition: 0.25s ease-in-out;
+  }
+
+  &__services-list-link:focus:active,
+  &__delivery-list-link:focus:active,
+  &__numbers-list-link:focus:active,
+  &__legal-list-info-link:focus:active {
+    @extend %GreyLinkActive;
   }
 }
