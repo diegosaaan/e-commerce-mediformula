@@ -42,10 +42,10 @@ const Footer = (): ReactElement => {
                   isOpen={activeAccordion === listName}
                   onToogleAccordion={(): void => handleToogleAccordion(listName)}
                 >
-                  {items.map((item, index) => (
-                    <li key={index} className={`footer__${listName}-list-item`}>
-                      <a className={`footer__${listName}-list-link" href={item.link}`} target="_blank">
-                        {item.label}
+                  {items.map(({ label, link, key }) => (
+                    <li key={key} className={`footer__${listName}-list-item`}>
+                      <a className={`footer__${listName}-list-link`} href={link} target="_blank">
+                        {label}
                       </a>
                     </li>
                   ))}
