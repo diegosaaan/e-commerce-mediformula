@@ -1,43 +1,29 @@
-@mixin GolosMedium {
+@mixin GolosMedium($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 500;
+  font-size: $fontSize;
+  color: $fontColor;
 }
 
-@mixin GolosRegular {
+@mixin GolosRegular($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 400;
+  font-size: $fontSize;
+  color: $fontColor;
 }
 
-@mixin GolosBold {
+@mixin GolosBold($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 700;
+  font-size: $fontSize;
+  color: $fontColor;
 }
 
-@mixin InterSemiBold {
+@mixin InterSemiBold($fontSize, $line-height, $fontColor) {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-weight: 600;
-}
-
-@mixin GreyLinkHover {
-  color: #0400ff;
-  transition: 0.25s ease-in-out;
-}
-
-@mixin GreyLinkActive {
-  color: #1cd5a8;
-  transition: 0.25s ease-in-out;
-  outline: none;
-}
-
-@mixin GreyLinkFocus {
-  outline: 2px solid #1cd5a8;
-  border-radius: 5px;
-  color: $grayscale-900;
-}
-
-@mixin MainBtnHover {
-  opacity: 0.8;
-  cursor: pointer;
+  font-size: $fontSize;
+  color: $fontColor;
 }
 
 @mixin Font($size, $height) {
@@ -45,22 +31,12 @@
   line-height: $height;
 }
 
-@mixin MainBtnFocus {
-  outline: 2px solid #9f73e8;
-  box-shadow: 0 0 10px #9f73e8;
-}
-
-@mixin MainBtnActive {
-  background: #9f73e8;
+@mixin GreyLinkHover {
+  color: #0400ff;
   transition: 0.25s ease-in-out;
-  outline: none;
 }
 
-@mixin IconBtnActive {
-  box-shadow: none;
-  outline: 2px solid #9f73e8;
-}
-
-@mixin LogoFocus {
-  outline: 2px solid #9f73e8;
+@mixin MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
 }
