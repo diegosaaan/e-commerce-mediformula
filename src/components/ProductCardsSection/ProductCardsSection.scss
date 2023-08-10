@@ -1,0 +1,36 @@
+.cardsSection {
+  margin-top: 80px;
+
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  &__header {
+    @include GolosMedium(36px, 110%, $grayscale-900);
+  }
+
+  &__counter {
+    @include GolosRegular(20px, 100%, $grayscale-600);
+    margin-left: 8px;
+  }
+
+  &__cards-container {
+    display: flex;
+    margin-top: 32px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    margin-top: 40px;
+
+    &__header {
+      @include GolosMedium(20px, 115%, $grayscale-900);
+    }
+
+    &__cards-container {
+      margin-top: 16px;
+      gap: 8px;
+    }
+  }
+}
