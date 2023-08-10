@@ -6,25 +6,79 @@
 
   &__nav {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    justify-content: flex-end;
     padding: 20px;
     align-items: center;
   }
 
+  &__nav-container-auth {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__nav-container-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__link:focus {
+    outline: none;
+  }
+
+  &__item-reg {
+    grid-area: reg;
+  }
+
+  &__item-log {
+    grid-area: log;
+  }
+
+  &__item-profile {
+    grid-area: profile;
+  }
+
+  &__item-logo {
+    grid-area: logo;
+  }
+
+  &__item-about {
+    grid-area: about;
+  }
+
+  &__item-catalog {
+    grid-area: catalog;
+  }
+
+  &__item-input-search {
+    grid-area: input;
+  }
+
+  &__item-cart {
+    grid-area: cart;
+  }
+
   &__button-nav {
     box-sizing: border-box;
-    color: #fff;
     padding: 4px 12px;
     border-radius: 50px;
-    @include GolosRegular;
-    font-size: 14px;
+    @include GolosRegular(14px, normal, $grayscale-50);
     transition: opacity 0.3s;
   }
 
+  &__button-nav:focus {
+    @extend %MainBtnFocus;
+  }
+
   &__button-nav:hover {
-    opacity: 0.8;
-    cursor: pointer;
+    @include MainBtnHover;
+  }
+
+  &__button-nav:active {
+    @extend %MainBtnActive;
   }
 
   &__button-nav_type_register {
@@ -40,35 +94,30 @@
     height: 67px;
   }
 
-  &__nav-extra {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    padding: 12px 20px;
-    align-items: center;
-  }
-
-  &__nav-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  &__logo-link:focus {
+    @extend %LogoFocus;
   }
 
   &__button-main {
     box-sizing: border-box;
-    color: #fff;
     height: 44px;
     width: 134px;
     border-radius: 8px;
-    @include GolosMedium;
-    font-size: 16px;
+    @include GolosMedium(16px, 1, $grayscale-50);
     transition: opacity 0.3s;
-    background: $primary-liner-green;
+    background: $primary-liner;
   }
 
   &__button-main:hover {
-    opacity: 0.8;
-    cursor: pointer;
+    @include MainBtnHover;
+  }
+
+  &__button-main:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__button-main:active {
+    @extend %MainBtnActive;
   }
 
   &__button-catalog {
@@ -80,6 +129,7 @@
   }
 
   &__button-catalog-icon {
+    padding: 0;
     width: 24px;
     height: 24px;
     background-image: url('@/assets/images/svg/header-catalogue.svg');
@@ -89,8 +139,7 @@
   }
 
   &__button-catalog-text {
-    @include GolosMedium;
-    font-size: 16px;
+    @include GolosMedium(16px, 1, $grayscale-50);
   }
 
   &__button-cart {
@@ -105,20 +154,25 @@
   }
 
   &__button-cart:hover {
-    cursor: pointer;
-    opacity: 0.8;
+    @include MainBtnHover;
+  }
+
+  &__button-cart:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__button-cart:active {
+    @extend %IconBtnActive;
   }
 
   &__button-cart-text {
-    @include GolosMedium;
-    font-size: 12px;
+    @include GolosMedium(12px, normal, $grayscale-50);
     position: absolute;
     top: -7px;
     left: 13px;
     padding: 2px 5px;
     border-radius: 50%;
-    background: $primary-liner-green;
-    color: $grayscale-50;
+    background: $primary-liner;
   }
 
   &__form-search {
@@ -131,18 +185,23 @@
     border-radius: 8px;
     padding: 13px 16px;
     background-color: $grayscale-200;
-    width: 838px;
+    width: 800px;
   }
 
-  &__input-search::placeholder,
-  &__input-search-mobile::placeholder {
-    font-size: 14px;
-    @include GolosRegular;
-    color: $grayscale-600;
+  &__input-search::placeholder {
+    @include GolosRegular(14px, 1, $grayscale-600);
   }
 
   &__input-search::-webkit-search-cancel-button {
     -webkit-appearance: none;
+  }
+
+  &__input-search:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__input-search:active {
+    @extend %MainBtnActive;
   }
 
   &__button-search {
@@ -163,52 +222,21 @@
     background-image: url('@/assets/images/svg/header-search-hover.svg');
   }
 
-  &__mobile {
+  &__button-search:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__button-search:active {
+    @extend %IconBtnActive;
+  }
+
+  &__item-logo-mobile {
     display: none;
-    gap: 16px;
-    flex-direction: column;
-    padding: 16px;
-  }
-
-  &__nav-mobile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__nav-container_type_mobile {
-    gap: 10px;
   }
 
   &__logo-mobile {
     width: 140px;
     height: 29px;
-  }
-
-  &__link {
-    font-size: 14px;
-    @include GolosMedium;
-  }
-
-  &__link_type_login {
-    color: $color-login;
-  }
-
-  &__link_type_register {
-    color: $color-register;
-  }
-
-  &__link_type_login {
-    color: $color-login;
-  }
-
-  &__input-search-mobile {
-    width: 735px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 8px;
-    padding: 13px 16px;
-    background-color: $grayscale-200;
   }
 
   &__nav-extra-mobile {
@@ -230,10 +258,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+  }
+
+  &__button-main-mobile:hover {
+    cursor: pointer;
+  }
+
+  &__button-main-mobile:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__button-main-mobile:active {
+    @extend %MainBtnActive;
   }
 
   &__button-main-mobile_type_cart {
     position: relative;
+  }
+
+  &__link_active &__button-icon-mobile,
+  &__link_active &__button-text-mobile {
+    filter: brightness(0.4);
   }
 
   &__button-icon-mobile {
@@ -271,28 +317,22 @@
   }
 
   &__button-text-mobile {
-    font-size: 10px;
-    @include GolosRegular;
-    color: $grayscale-600;
+    @include GolosRegular(10px, normal, $grayscale-600);
   }
 }
 
-@media screen and (max-width: 1559px) {
+@media screen and (max-width: $large-desktop) {
   .header {
-    max-width: calc(768px + (1560 - 768) * (100vw - 768px) / (1559 - 768));
+    max-width: calc(1024px + (1560 - 1024) * (100vw - 1024px) / (1559 - 1024));
 
     &__logo {
-      width: calc(240px + (310 - 240) * (100vw - 768px) / (1559 - 768));
-      height: calc(40px + (67 - 40) * (100vw - 768px) / (1559 - 768));
-    }
-
-    &__nav-extra {
-      flex-direction: column;
+      width: calc(240px + (310 - 240) * (100vw - 1024px) / (1559 - 1024));
+      height: calc(40px + (67 - 40) * (100vw - 1024px) / (1559 - 1024));
     }
 
     &__button-main {
-      height: calc(34px + (44 - 34) * (100vw - 768px) / (1559 - 768));
-      width: calc(100px + (134 - 100) * (100vw - 768px) / (1559 - 768));
+      height: 34px;
+      width: 100px;
       font-size: 12px;
     }
 
@@ -300,34 +340,98 @@
       font-size: 12px;
     }
 
+    &__button-catalog-icon {
+      width: 20px;
+      height: 20px;
+      background-size: 20px 20px;
+    }
+
     &__input-search {
-      width: calc(500px + (838 - 500) * (100vw - 768px) / (1559 - 768));
+      width: calc(400px + (800 - 400) * (100vw - 1024px) / (1559 - 1024));
     }
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: $small-desktop) {
+  .header {
+    max-width: calc(768px + (1024 - 768) * (100vw - 768px) / (1023 - 768));
+
+    &__nav-container-main {
+      display: grid;
+      align-items: center;
+      grid-template-areas:
+        'logo about catalog . . .'
+        'input input input input input cart';
+    }
+
+    &__input-search {
+      width: 600px;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
   .header {
     max-width: calc(360px + (768 - 360) * (100vw - 360px) / (767 - 360));
 
-    &__nav {
+    &__item-profile {
       display: none;
     }
 
-    &__nav-extra {
+    &__item-about {
       display: none;
     }
 
-    &__mobile {
+    &__item-catalog {
+      display: none;
+    }
+
+    &__item-cart {
+      display: none;
+    }
+
+    &__item-logo {
+      display: none;
+    }
+
+    &__item-logo-mobile {
+      display: flex;
+      margin-right: calc(0px + (260 - 0) * (100vw - 390px) / (767 - 390));
+    }
+
+    &__nav-container-main {
       display: flex;
     }
 
-    &__input-search-mobile {
-      width: calc(328px + (735 - 328) * (100vw - 360px) / (767 - 360));
+    &__nav-container-auth {
+      gap: 10px;
+      align-items: flex-start;
+      align-self: center;
+    }
+
+    &__input-search {
+      width: calc(328px + (600 - 328) * (100vw - 360px) / (767 - 360));
     }
 
     &__nav-extra-mobile {
       display: flex;
+    }
+  }
+
+  @media (hover: hover) {
+    &__button-nav:hover,
+    &__button-main:hover,
+    &__button-cart:hover {
+      @include MainBtnHover;
+    }
+
+    &__button-search:hover {
+      cursor: pointer;
+      background-image: url('@/assets/images/svg/header-search-hover.svg');
+    }
+
+    &__button-main-mobile:hover {
+      cursor: pointer;
     }
   }
 }
