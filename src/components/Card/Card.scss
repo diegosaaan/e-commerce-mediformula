@@ -22,9 +22,7 @@
   }
 
   &__discount-text {
-    color: $grayscale-50;
-    @include GolosMedium;
-    @include Font(14px, 100%);
+    @include GolosMedium(14px, 100%, $grayscale-50);
   }
 
   &__image {
@@ -51,18 +49,14 @@
   }
 
   &__rating-text {
-    color: $grayscale-900;
-    @include GolosMedium;
-    @include Font(14px, 100%);
+    @include GolosMedium(14px, 100%, $grayscale-900);
   }
 
   &__text {
     display: block;
     margin-top: 12px;
     height: 50px;
-    color: $grayscale-900;
-    @include GolosRegular;
-    @include Font(14px, 100%);
+    @include GolosRegular(14px, 100%, $grayscale-900);
   }
 
   &__price-info {
@@ -79,15 +73,11 @@
   }
 
   &__price {
-    color: $grayscale-900;
-    @include GolosMedium;
-    @include Font(16px, 100%);
+    @include GolosMedium(16px, 100%, $grayscale-900);
   }
 
   &__priceBefore {
-    color: $grayscale-600;
-    @include GolosMedium;
-    @include Font(12px, 100%);
+    @include GolosMedium(12px, 100%, $grayscale-600);
     text-decoration: line-through;
   }
 
@@ -105,12 +95,10 @@
 
   &__bonus-text {
     display: block;
-    color: transparent;
+    @include GolosMedium(14px, 100%, transparent);
     -webkit-background-clip: text;
     background-clip: text;
     background-image: $bonus-liner;
-    @include GolosMedium;
-    @include Font(14px, 100%);
   }
 
   &__button-container {
@@ -152,7 +140,7 @@
     padding: 0;
 
     &__discount-text {
-      @include Font(12px, 100%);
+      @include GolosMedium(12px, 100%, $grayscale-50);
     }
 
     &__image {
@@ -175,14 +163,13 @@
     }
 
     &__rating-text {
-      @include Font(12px, 100%);
+      @include GolosMedium(12px, 100%, $grayscale-900);
     }
 
     &__text {
       margin-top: 6px;
       height: calc(42px + (50 - 42) * (100vw - 360px) / (767.9 - 360));
-      @include GolosRegular;
-      @include Font(12px, 100%);
+      @include GolosRegular(12px, 100%, $grayscale-900);
     }
 
     &__price-info {
@@ -201,11 +188,11 @@
     }
 
     &__priceBefore {
-      @include GolosRegular;
+      @include GolosRegular(12px, 100%, $grayscale-600);
     }
 
     &__bonus-text {
-      @include Font(12px, 100%);
+      @include GolosMedium(12px, 100%, transparent);
     }
 
     &__button-container {

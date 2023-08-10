@@ -14,17 +14,21 @@
   }
 
   &__promo-text {
-    color: $grayscale-50;
-    @include GolosRegular;
-    font-size: clamp(12px, calc(12px + (16 - 12) * (100vw - 360px) / (1560 - 360)), 16px);
+    @include GolosRegular(
+      clamp(12px, calc(12px + (16 - 12) * (100vw - 360px) / (1560 - 360)), 16px),
+      100%,
+      $grayscale-50
+    );
   }
 
   &__header {
     width: 40%;
-    color: $grayscale-50;
     margin-top: 24px;
-    @include GolosMedium;
-    font-size: clamp(26px, calc(26px + (60 - 26) * (100vw - 360px) / (1560 - 360)), 60px);
+    @include GolosMedium(
+      clamp(26px, calc(26px + (60 - 26) * (100vw - 360px) / (1560 - 360)), 60px),
+      110%,
+      $grayscale-50
+    );
   }
 
   &__image-container {
@@ -66,13 +70,8 @@
       border-radius: 12px;
     }
 
-    // &__promo-text {
-    //   @include Font(12px, 100%);
-    // }
-
     &__header {
       margin-top: 8px;
-      // @include Font(26px, 110%);
     }
 
     &__cards-block {

@@ -13,9 +13,7 @@
   }
 
   &__header {
-    @include GolosMedium;
-    @include Font(24px, 115%);
-    color: $grayscale-900;
+    @include GolosMedium(24px, 115%, $grayscale-900);
   }
 
   &__icon-container {
@@ -29,11 +27,9 @@
   }
 
   &__text {
-    @include GolosRegular;
-    @include Font(16px, 100%);
+    @include GolosRegular(16px, 100%, $grayscale-900);
     margin-top: 12px;
     width: 260px;
-    color: $grayscale-900;
   }
 
   &__label-container {
@@ -49,11 +45,9 @@
   }
 
   &__label {
-    @include GolosRegular;
-    @include Font(10px, 100%);
+    @include GolosRegular(10px, 100%, $grayscale-600);
     text-transform: uppercase;
     width: 200px;
-    color: $grayscale-600;
   }
 
   @media screen and (max-width: $tablet) {
@@ -67,7 +61,7 @@
     }
 
     &__header {
-      @include Font(14px, 115%);
+      @include GolosMedium(14px, 115%, $grayscale-900);
     }
 
     &__icon-container {
@@ -76,7 +70,7 @@
     }
 
     &__text {
-      @include Font(12px, 100%);
+      @include GolosRegular(12px, 100%, $grayscale-900);
       width: 190px;
     }
 
