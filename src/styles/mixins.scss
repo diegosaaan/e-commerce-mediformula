@@ -1,19 +1,46 @@
-@mixin GolosMedium {
+@mixin GolosMedium($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 500;
+  font-size: $fontSize;
+  line-height: $line-height;
+  color: $fontColor;
 }
 
-@mixin GolosRegular {
+@mixin GolosRegular($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 400;
+  font-size: $fontSize;
+  line-height: $line-height;
+  color: $fontColor;
 }
 
-@mixin GolosBold {
+@mixin GolosBold($fontSize, $line-height, $fontColor) {
   font-family: 'Golos', Arial, Helvetica, sans-serif;
   font-weight: 700;
+  font-size: $fontSize;
+  line-height: $line-height;
+  color: $fontColor;
 }
 
-@mixin InterSemiBold {
+@mixin InterSemiBold($fontSize, $line-height, $fontColor) {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-weight: 600;
+  font-size: $fontSize;
+  line-height: $line-height;
+  color: $fontColor;
+}
+
+@mixin Font($size, $height) {
+  font-size: $size;
+  line-height: $height;
+}
+
+@mixin GreyLinkHover {
+  color: #0400ff;
+  transition: 0.25s ease-in-out;
+}
+
+@mixin MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
 }
