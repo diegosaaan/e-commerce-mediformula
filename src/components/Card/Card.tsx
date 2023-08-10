@@ -1,8 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import '@/components/Card/Card.scss';
 import { IPropsCard } from '@/types/interfaces';
+import Button from '../Button/Button';
 
 const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount, onClick }: IPropsCard): ReactElement => {
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <div className="product-card" onClick={onClick}>
       <div className="product-card__image-container">
@@ -29,8 +32,21 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount, on
         </div>
       </div>
       <div className="product-card__button-container">
-        <div className="product-card__full-button"></div>
-        <div className="product-card__icon-button"></div>
+        <Button
+          className="button"
+          type="button"
+          text="В корзину"
+          onClick={(): void => {
+            console.log('Clicked button!');
+          }}
+        />
+        <Button
+          className={`iconButton ${isSelected ? 'iconButton__selected' : ''}`}
+          type="button"
+          onClick={(): void => {
+            setIsSelected(!isSelected);
+          }}
+        />
       </div>
     </div>
   );

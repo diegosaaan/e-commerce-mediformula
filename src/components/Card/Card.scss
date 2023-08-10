@@ -107,21 +107,6 @@
     gap: 24px;
   }
 
-  &__full-button {
-    display: block;
-    width: 164px;
-    height: 44px;
-    border-radius: 4px;
-    background-color: blue;
-  }
-
-  &__icon-button {
-    display: block;
-    width: 40px;
-    height: 44px;
-    background-color: yellowgreen;
-  }
-
   @media (hover: hover) {
     &:hover {
       box-shadow:
@@ -197,6 +182,8 @@
 
     &__button-container {
       display: flex;
+      margin-top: 10px;
+      gap: 8px;
     }
   }
 }
