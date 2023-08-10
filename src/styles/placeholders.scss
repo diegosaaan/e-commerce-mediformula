@@ -1,0 +1,20 @@
+%MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+%MainBtnFocus {
+  outline: 2px solid #9f73e8;
+  box-shadow: 0 0 10px #9f73e8;
+}
+
+%MainBtnActive {
+  background: #9f73e8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
+
+%IconBtnActive {
+  box-shadow: none;
+  outline: 2px solid #9f73e8;
+}
