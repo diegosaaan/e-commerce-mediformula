@@ -13,7 +13,7 @@ const Intro = (): ReactElement => {
     <section className="_container intro">
       <div className="intro__banner">
         <div className="intro__text-container">
-          <p className="intro__promo-text">10 000 медицинских товаров с доставкой до 3 дней</p>
+          <p className="intro__promo-text">10 000 медицинских товаров с&nbsp;доставкой до 3 дней</p>
           <h1 className="intro__header">Медицинская техника</h1>
         </div>
         <div className="intro__image-container">
