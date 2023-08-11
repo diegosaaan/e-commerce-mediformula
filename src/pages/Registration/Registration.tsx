@@ -3,9 +3,10 @@ import '@/pages/Registration/Registration.scss';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
 import { AddressType } from '@/types/types';
-import Input from '@/components/Input/Input';
+import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
+import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 
-function RegistrationPage(): ReactElement {
+const RegistrationPage = (): ReactElement => {
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
@@ -212,76 +213,14 @@ function RegistrationPage(): ReactElement {
           {!isShippingAddress && (
             <>
               <button className="auth__button-add" type="button" onClick={handleOpenAddressShipping}></button>
-              <ul className="auth__list-address">
-                {shippingAddresses.map((item, index) => (
-                  <li className="auth__item-address" key={index}>
-                    <Input
-                      className="auth__input-address"
-                      classNameLabel="auth__label-address"
-                      type="radio"
-                      name="shipping"
-                      onChange={handleExampleChange}
-                      checked={true}
-                    >
-                      <span className="auth__span"></span>
-                      <ul className="auth__list-address-value">
-                        <li>Страна: {item.country}</li>
-                        <li>Город: {item.city}</li>
-                        <li>Индекс: {item.index}</li>
-                        <li>Улица: {item.street}</li>
-                      </ul>
-                    </Input>
-                  </li>
-                ))}
-              </ul>
+              <ListAddress name="shipping" onChange={handleExampleChange} addresses={shippingAddresses} />
             </>
           )}
         </li>
 
         {isShippingAddress && (
           <>
-            <ul className="auth__list auth__list_active">
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Страна*"
-                  name="country"
-                  htmlFor="country"
-                  onChange={handleShippingChange}
-                  value={shippingAddress.country}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Город*"
-                  name="city"
-                  htmlFor="city"
-                  onChange={handleShippingChange}
-                  value={shippingAddress.city}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Почтовый индекс*"
-                  name="index"
-                  htmlFor="index"
-                  onChange={handleShippingChange}
-                  value={shippingAddress.index}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Улица*"
-                  name="street"
-                  htmlFor="street"
-                  onChange={handleShippingChange}
-                  value={shippingAddress.street}
-                />
-              </li>
-            </ul>
+            <AddressFields address={shippingAddress} onChange={handleShippingChange} />
             <button className="auth__button auth__button_type_add" type="button" onClick={handleAddShippingAddress}>
               Добавить
             </button>
@@ -293,76 +232,14 @@ function RegistrationPage(): ReactElement {
           {!isBillingAddress && (
             <>
               <button className="auth__button-add" type="button" onClick={handleOpenAddressBilling}></button>
-              <ul className="auth__list-address">
-                {billingAddresses.map((item, index) => (
-                  <li className="auth__item-address" key={index}>
-                    <Input
-                      className="auth__input-address"
-                      classNameLabel="auth__label-address"
-                      type="radio"
-                      name="billing"
-                      onChange={handleExampleChange}
-                      checked={true}
-                    >
-                      <span className="auth__span"></span>
-                      <ul className="auth__list-address-value">
-                        <li>Страна: {item.country}</li>
-                        <li>Город: {item.city}</li>
-                        <li>Индекс: {item.index}</li>
-                        <li>Улица: {item.street}</li>
-                      </ul>
-                    </Input>
-                  </li>
-                ))}
-              </ul>
+              <ListAddress name="billing" onChange={handleExampleChange} addresses={billingAddresses} />
             </>
           )}
         </li>
 
         {isBillingAddress && (
           <>
-            <ul className="auth__list auth__list_active">
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Страна*"
-                  name="country"
-                  htmlFor="country"
-                  onChange={handleBillingChange}
-                  value={billingAddress.country}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Город*"
-                  name="city"
-                  htmlFor="city"
-                  onChange={handleBillingChange}
-                  value={billingAddress.city}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Почтовый индекс*"
-                  name="index"
-                  htmlFor="index"
-                  onChange={handleBillingChange}
-                  value={billingAddress.index}
-                />
-              </li>
-              <li>
-                <AuthInput
-                  type="text"
-                  placeholder="Улица*"
-                  name="street"
-                  htmlFor="street"
-                  onChange={handleBillingChange}
-                  value={billingAddress.street}
-                />
-              </li>
-            </ul>
+            <AddressFields address={billingAddress} onChange={handleBillingChange} />
             <button className="auth__button auth__button_type_add" type="button" onClick={handleAddBillingAddress}>
               Добавить
             </button>
@@ -371,6 +248,6 @@ function RegistrationPage(): ReactElement {
       </ul>
     </AuthForm>
   );
-}
+};
 
 export default RegistrationPage;

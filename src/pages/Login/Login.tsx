@@ -5,7 +5,7 @@ import useAuth from '@/utils/hooks/useAuth';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
 
-function LoginPage(): ReactElement {
+const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,6 +67,6 @@ function LoginPage(): ReactElement {
       </ul>
     </AuthForm>
   );
-}
+};
 
 export default LoginPage;
