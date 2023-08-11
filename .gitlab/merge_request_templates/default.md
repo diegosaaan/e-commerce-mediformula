@@ -10,20 +10,16 @@
 
 1. [Task](*insert link to task here*);
 
-2. [Linked items]() (for tasks, that was marked as **dependency**);
-      - [task](*insert link to task here*);
-      - [task](*insert link to task here*).
-
-3. <details><summary>Screenshot;</summary>
+2. <details><summary>Screenshot;</summary>
    insert a screenshot of the result of the task here
    </details>
 
-4. Additional information;
+3. Additional information;
 
-5. To-Do (optional):
+4. To-Do (optional):
 
-6. Done: **01.08.2023** / Deadline: **01.08.2023**;
+5. Done: **01.08.2023** / Deadline: **01.08.2023**;
 
-7. [Deploy link](*insert link todeploy here*) (optional);
+6. [Deploy link](*insert link todeploy here*) (optional);
 
-8. Score: **YOUR_SCORE**/**MAX_SCORE** (optional).
+7. Score: **YOUR_SCORE**/**MAX_SCORE** (optional).
