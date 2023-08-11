@@ -24,6 +24,15 @@ function RegistrationPage(): ReactElement {
     street: '',
   });
 
+  const [info, setInfo] = useState({
+    firstname: '',
+    lastname: '',
+    date: '',
+    email: '',
+    password: '',
+    passwordrepeat: '',
+  });
+
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
@@ -91,6 +100,16 @@ function RegistrationPage(): ReactElement {
     }));
   };
 
+  const handleInfoChange = (e: FormEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const target = e.target as HTMLInputElement;
+    const { name, value } = target;
+    setInfo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleExampleChange = (e: FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
   };
@@ -111,13 +130,37 @@ function RegistrationPage(): ReactElement {
     >
       <ul className={`auth__list auth__list_type_main ${isAddAddress ? 'auth__list_inactive' : 'auth__list_active'}`}>
         <li>
-          <AuthInput type="text" placeholder="Имя*" name="first-name" htmlFor="first-name" isInputPassword={false} />
+          <AuthInput
+            type="text"
+            placeholder="Имя*"
+            name="firstname"
+            htmlFor="firstname"
+            isInputPassword={false}
+            onChange={handleInfoChange}
+            value={info.firstname}
+          />
         </li>
         <li>
-          <AuthInput type="text" placeholder="Фамилия*" name="last-name" htmlFor="last-name" isInputPassword={false} />
+          <AuthInput
+            type="text"
+            placeholder="Фамилия*"
+            name="lastname"
+            htmlFor="lastname"
+            isInputPassword={false}
+            onChange={handleInfoChange}
+            value={info.lastname}
+          />
         </li>
         <li>
-          <AuthInput type="date" placeholder="Дата рождения*" name="date" htmlFor="date" isInputPassword={false} />
+          <AuthInput
+            type="date"
+            placeholder="Дата рождения*"
+            name="date"
+            htmlFor="date"
+            isInputPassword={false}
+            onChange={handleInfoChange}
+            value={info.date}
+          />
         </li>
         <li>
           <AuthInput
@@ -127,18 +170,30 @@ function RegistrationPage(): ReactElement {
             htmlFor="email"
             isInputPassword={false}
             textError="Неправильный email"
+            onChange={handleInfoChange}
+            value={info.email}
           />
         </li>
         <li>
-          <AuthInput type="password" placeholder="Пароль*" name="password" htmlFor="password" isInputPassword={true} />
+          <AuthInput
+            type="password"
+            placeholder="Пароль*"
+            name="password"
+            htmlFor="password"
+            isInputPassword={true}
+            onChange={handleInfoChange}
+            value={info.password}
+          />
         </li>
         <li>
           <AuthInput
             type="password"
             placeholder="Повторите пароль*"
-            name="password-repeat"
-            htmlFor="password-repeat"
+            name="passwordrepeat"
+            htmlFor="passwordrepeat"
             isInputPassword={true}
+            onChange={handleInfoChange}
+            value={info.passwordrepeat}
           />
         </li>
       </ul>
