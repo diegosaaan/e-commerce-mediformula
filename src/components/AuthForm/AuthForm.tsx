@@ -38,7 +38,7 @@ const AuthForm = ({
           <h1 className="auth__heading">{title}</h1>
           {isAddAddress && <button className="auth__button-prev" type="button" onClick={handlePrevRegister}></button>}
         </div>
-        <form className="auth__form" name={name} onSubmit={onSubmit}>
+        <form className="auth__form" name={name} onSubmit={onSubmit} autoComplete="off">
           {children}
           {!isAddAddress && (
             <button className="auth__button" type="submit" disabled={disabled}>
