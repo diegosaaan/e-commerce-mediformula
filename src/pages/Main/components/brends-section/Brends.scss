@@ -13,7 +13,7 @@
 
     &-link {
       display: block;
-      min-height: 80px;
+      height: 80px;
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
@@ -58,7 +58,7 @@
     margin-top: 50px;
 
     &__list {
-      grid-template-columns: repeat(4, 100px);
+      grid-template-columns: repeat(4, clamp(60px, 10vw, 100px));
       grid-row-gap: 25px;
     }
   }
@@ -67,18 +67,10 @@
 @media screen and (max-width: $tablet) {
   .brends {
     &__list {
-      &-link {
-        min-height: 60px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: $portrait-tablet) {
-  .brends {
-    &__list {
       margin-top: 16px;
-      grid-template-columns: repeat(4, 60px);
+      &-link {
+        height: 60px;
+      }
     }
   }
 }
