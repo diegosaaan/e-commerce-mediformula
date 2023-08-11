@@ -1,0 +1,138 @@
+.category {
+  margin-top: 100px;
+  overflow: hidden;
+
+  &__header {
+    @include GolosMedium(36px, 110%, $grayscale-900);
+  }
+
+  &__card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  &__card {
+    height: 340px;
+    width: 752px;
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 38.3% auto;
+    gap: 32px;
+  }
+
+  &__card1 {
+    background: $category-type1 url('@/assets/images/svg/categories-blob-type1.svg') no-repeat left top;
+  }
+
+  &__card2 {
+    background: $category-type2 url('@/assets/images/svg/categories-blob-type2.svg') no-repeat left top;
+  }
+
+  &__card3 {
+    background: $category-type3 url('@/assets/images/svg/categories-blob-type3.svg') no-repeat left top;
+  }
+
+  &__card4 {
+    background: $category-type4 url('@/assets/images/svg/categories-blob-type4.svg') no-repeat left top;
+  }
+
+  &__image-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__content {
+    display: block;
+    padding: 60px 62px 105px 0;
+  }
+
+  &__cardHeader {
+    @include GolosMedium(28px, 110%, $grayscale-50);
+  }
+
+  &__tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  @media screen and (max-width: $large-desktop) {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+
+    &__card-container {
+      gap: calc(8px + (16 - 8) * (100vw - 360px) / (1559.9 - 360));
+      margin-top: calc(16px + (40 - 16) * (100vw - 360px) / (1559.9 - 360));
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__header {
+      @include GolosMedium(20px, 115%, $grayscale-900);
+    }
+
+    &__card {
+      height: 160px;
+      width: 320px;
+      border-radius: 12px;
+      display: block;
+      position: relative;
+    }
+
+    &__card1 {
+      background: $category-type1 url('@/assets/images/svg/categories-blob-type1.svg') no-repeat 450% 80%;
+    }
+
+    &__card2 {
+      background: $category-type2 url('@/assets/images/svg/categories-blob-type2.svg') no-repeat 450% 80%;
+    }
+
+    &__card3 {
+      background: $category-type3 url('@/assets/images/svg/categories-blob-type3.svg') no-repeat 450% 80%;
+    }
+
+    &__card4 {
+      background: $category-type4 url('@/assets/images/svg/categories-blob-type4.svg') no-repeat 450% 80%;
+    }
+
+    &__image-container {
+      position: absolute;
+      top: -20px;
+      right: 10px;
+      width: 132px;
+      height: 160px;
+      z-index: 1;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    &__cardHeader {
+      @include GolosMedium(18px, 115%, $grayscale-50);
+      width: 175px;
+    }
+
+    &__tagsContainer {
+      height: 52px;
+      width: 290px;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: flex-end;
+    }
+  }
+}
