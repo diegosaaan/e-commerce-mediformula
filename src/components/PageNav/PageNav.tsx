@@ -11,7 +11,7 @@ import Form from '@/components/Form/Form';
 const setActive = ({ isActive }: { isActive: boolean }): string =>
   isActive ? 'header__link header__link_active' : 'header__link';
 
-export default function PageNav(): ReactElement {
+const PageNav = (): ReactElement => {
   const { isUserLoggedIn, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -164,4 +164,6 @@ export default function PageNav(): ReactElement {
       </nav>
     </>
   );
-}
+};
+
+export default PageNav;
