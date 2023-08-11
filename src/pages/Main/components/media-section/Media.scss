@@ -212,12 +212,19 @@
 
     &__list {
       margin-top: 32px;
-      padding-top: 20px;
       max-width: 100%;
       border-top: 1px solid $grayscale-400;
 
       &-item:not(:first-child) {
         margin-top: 0;
+      }
+
+      &-item {
+        padding-top: 16px;
+      }
+
+      &-item:not(:last-child) {
+        padding-bottom: 16px;
       }
 
       &-item-heading {
