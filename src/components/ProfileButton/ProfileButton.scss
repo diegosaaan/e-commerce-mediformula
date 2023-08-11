@@ -10,8 +10,15 @@
   }
 
   &__profile-button:hover {
-    cursor: pointer;
-    opacity: 0.8;
+    @include MainBtnHover;
+  }
+
+  &__profile-button:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &__profile-button:active {
+    @extend %MainBtnActive;
   }
 
   &__profile-icon {
@@ -29,7 +36,7 @@
     align-items: center;
     padding: 3px 8px;
     border-radius: 999px;
-    background: linear-gradient(333deg, #14b2f2 0%, #d222cb 100%);
+    background: $bonus-liner;
   }
 
   &__profile-bonus-icon {
@@ -42,8 +49,12 @@
   }
 
   &__profile-bonus-price {
-    font-size: 12px;
-    @include GolosMedium;
-    color: #fff;
+    @include GolosMedium(12px, normal, $grayscale-50);
+  }
+
+  @media (hover: hover) {
+    &__profile-button:hover {
+      @include MainBtnHover;
+    }
   }
 }
