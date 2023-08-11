@@ -1,4 +1,5 @@
 import { FormEvent, ReactElement, ReactNode } from 'react';
+import { AddressType } from './types';
 
 export interface IRouteData {
   key: string;
@@ -63,4 +64,15 @@ export interface IPropsAuthForm {
   isAddAddress?: boolean;
   handlePrevRegister?: () => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+export interface IPropsListAddress {
+  name: string;
+  addresses: AddressType[];
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+export interface IPropsAddressFields {
+  address: AddressType;
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
 }
