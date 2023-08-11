@@ -37,3 +37,15 @@ export interface IPropsCard {
   discount?: number;
   onClick: () => void;
 }
+
+export interface IPropsTag {
+  title: string;
+}
+
+export interface IPropsCardsSection {
+  header: string;
+  counter: number;
+  products?: IPropsProduct[];
+}
+
+export interface IPropsProduct {}
