@@ -1,6 +1,7 @@
 import './Advantages.scss';
 import React, { ReactElement } from 'react';
 import ourTeamPhoto from '@/assets/images/png/main-advantages-our-team.png';
+import advantagesData from './advantagesData';
 
 const Advantages = (): ReactElement => (
   <section className="advantages">
@@ -17,30 +18,14 @@ const Advantages = (): ReactElement => (
           <img className="advantages__leader-card-img" alt="Our team" src={ourTeamPhoto}></img>
         </div>
         <ul className="advantages__leader-card-list">
-          <li className="advantages__leader-card-list-item">
-            <p className="advantages__leader-card-list-item-text">
-              {'>'} 10 000 сделок
-              <span className="advantages__leader-card-list-item-text--gray">с оборотом от 1 млн руб. в месяц</span>
-            </p>
-          </li>
-          <li className="advantages__leader-card-list-item">
-            <p className="advantages__leader-card-list-item-text">
-              {'>'} 20 лет
-              <span className="advantages__leader-card-list-item-text--gray">работы в сфере медтехники</span>
-            </p>
-          </li>
-          <li className="advantages__leader-card-list-item">
-            <p className="advantages__leader-card-list-item-text">
-              {'>'} 10 000 товаров
-              <span className="advantages__leader-card-list-item-text--gray">в наличии и под заказ</span>
-            </p>
-          </li>
-          <li className="advantages__leader-card-list-item">
-            <p className="advantages__leader-card-list-item-text">
-              {'>'} по всей России
-              <span className="advantages__leader-card-list-item-text--gray">бесплатная доставка от 2990 руб.</span>
-            </p>
-          </li>
+          {advantagesData.map((item, index) => (
+            <li key={index} className="advantages__leader-card-list-item">
+              <p className="advantages__leader-card-list-item-text">
+                {item.text}
+                <span className="advantages__leader-card-list-item-text--gray">{item.grayText}</span>
+              </p>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
