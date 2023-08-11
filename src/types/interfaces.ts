@@ -21,16 +21,46 @@ export interface IPropsButton {
 }
 
 export interface IPropsInput {
-  type: 'search' | 'text' | 'password' | 'email';
+  type: 'search' | 'text' | 'password' | 'email' | 'radio';
   placeholder?: string;
   className: string;
+  classNameLabel?: string;
+  title?: string;
   name: string;
-  onChange: () => void;
+  children?: ReactNode;
+  checked?: boolean;
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 export interface IPropsForm {
   children?: ReactNode;
   className: string;
   name: string;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+export interface IPropsAuthInput {
+  type: 'search' | 'text' | 'password' | 'email' | 'date' | 'radio';
+  placeholder?: string;
+  name: string;
+  htmlFor: string;
+  isInputPassword?: boolean;
+  textError?: string;
+  value?: string;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+export interface IPropsAuthForm {
+  children?: ReactNode;
+  name: string;
+  title: string;
+  text: string;
+  textLink: string;
+  textButton: string;
+  path: string;
+  isRegister?: boolean;
+  disabled?: boolean;
+  isAddAddress?: boolean;
+  handlePrevRegister?: () => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
