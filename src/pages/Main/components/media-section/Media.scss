@@ -1,0 +1,338 @@
+.media {
+  margin-top: 100px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    padding: 48px;
+    border-radius: 24px;
+    background-color: $grayscale-200;
+  }
+
+  &__toogle-btns-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    max-width: clamp(100px, 20vw, 300px);
+    border-right: 1px solid $grayscale-400;
+  }
+
+  &__toogle-btn {
+    @include GolosMedium(36px, 1, $grayscale-600);
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.25s ease-in-out;
+  }
+
+  &__toogle-btn:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  &__toogle-btn--active {
+    color: $grayscale-900;
+    border-right: 2px solid $grayscale-900;
+  }
+
+  &__article-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: clamp(16px, 7vw, 140px);
+    width: 100%;
+    height: 470px;
+  }
+
+  &__intro-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 50px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  &__intro-heading {
+    @include GolosRegular(36px, 1.1, $grayscale-900);
+    transition: 0.25s ease-in-out;
+  }
+
+  &__date {
+    display: block;
+    margin-top: 20px;
+    color: $grayscale-600;
+  }
+
+  &__intro-photo {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 24px;
+    width: 100%;
+    max-width: 260px;
+    height: 200px;
+    border-radius: 100px;
+    background-color: $grayscale-50;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
+    transition: 0.25s ease-in-out;
+  }
+
+  &__intro-photo-video-preview {
+    border-radius: 25px;
+    max-width: 350px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__intro-link-arrow {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__list {
+    width: 100%;
+    max-width: 320px;
+
+    &-item-heading {
+      @include GolosRegular(20px, 1, $grayscale-900);
+      transition: 0.25s ease-in-out;
+    }
+
+    &-item:not(:first-child) {
+      margin-top: 36px;
+    }
+
+    &-item:not(:last-child) {
+      padding-bottom: 36px;
+      border-bottom: 1px solid $grayscale-400;
+    }
+
+    &-item-preview {
+      display: block;
+      margin-bottom: 16px;
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 15px;
+    }
+
+    &-item:not(:last-child).media__list-item--no-border {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  &__list-link-container {
+    display: block;
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .media {
+    &__toogle-btn,
+    &__intro-heading {
+      font-size: 28px;
+    }
+
+    &__intro-content-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    &__list-item-heading {
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: $large-desktop) {
+  .media {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .media {
+    &__container {
+      flex-direction: column;
+      padding: 32px;
+    }
+
+    &__toogle-btns-container {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 100%;
+      border-right: none;
+    }
+
+    &__toogle-btn {
+      padding-bottom: 16px;
+      text-align: center;
+      border-bottom: 2px solid $grayscale-400;
+    }
+
+    &__toogle-btn:not(:first-child) {
+      margin-top: 0;
+    }
+
+    &__toogle-btn--active {
+      border-right: none;
+      border-bottom: 2px solid $grayscale-900;
+    }
+
+    &__article-container {
+      justify-content: space-around;
+      margin-top: 24px;
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .media {
+    &__container {
+      padding: 32px;
+    }
+
+    &__toogle-btn {
+      font-weight: 700;
+    }
+
+    &__article-container {
+      flex-direction: column;
+      height: auto;
+    }
+
+    &__intro-link {
+      margin-right: 0;
+      max-width: 100%;
+    }
+
+    &__intro-photo {
+      margin-top: 50px;
+    }
+
+    &__list {
+      margin-top: 32px;
+      max-width: 100%;
+      border-top: 1px solid $grayscale-400;
+
+      &-item:not(:first-child) {
+        margin-top: 0;
+      }
+
+      &-item {
+        padding-top: 16px;
+      }
+
+      &-item:not(:last-child) {
+        padding-bottom: 16px;
+      }
+
+      &-item-heading {
+        color: $grayscale-900;
+      }
+
+      &-video-item {
+        margin-right: 15px;
+      }
+    }
+
+    &__list-video {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .media {
+    &__container {
+      padding: 16px;
+    }
+
+    &__toogle-btn {
+      font-size: 20px;
+    }
+
+    &__video-intro-link {
+      flex-direction: column-reverse;
+      align-items: start;
+    }
+
+    &__intro-heading {
+      font-size: 20px;
+    }
+
+    &__intro-photo {
+      padding-right: 8px;
+      max-width: 125px;
+      max-height: 100px;
+      background-size: 100px;
+    }
+
+    &__intro-photo-video-preview {
+      margin: 0;
+      margin-bottom: 32px;
+      max-width: 240px;
+      max-height: 120px;
+      background-size: cover;
+    }
+
+    &__intro-link-arrow {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__list {
+      &-item-heading {
+        font-size: 16px;
+      }
+
+      &-video-item {
+        margin-right: 0;
+      }
+
+      &-video-item:last-child {
+        margin-top: 32px;
+      }
+    }
+
+    &__list-video {
+      flex-direction: column;
+    }
+  }
+}
+
+.media {
+  @media (hover: hover) {
+    &__intro-link:hover .media__intro-heading,
+    &__list-item:hover .media__list-item-heading,
+    &__list-item-heading:hover,
+    &__toogle-btn:hover {
+      @include GreyLinkHover;
+    }
+  }
+
+  &__toogle-btn:focus {
+    color: #1cd5a8;
+    outline: none;
+  }
+
+  &__intro-link:focus,
+  &__list-link-container:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__intro-link:focus:active,
+  &__intro-link:focus:active .media__intro-heading,
+  &__list-link-container:focus:active,
+  &__list-link-container:focus:active .media__list-item-heading,
+  &__toogle-btn:focus:active,
+  &__media__intro-photo:focus:active {
+    @extend %GreyLinkActive;
+    outline: none;
+  }
+}
