@@ -146,10 +146,14 @@
   }
 }
 
+@media screen and (max-width: $large-desktop) {
+  .media {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
 @media screen and (max-width: $small-desktop) {
   .media {
-    margin-top: 50px;
-
     &__container {
       flex-direction: column;
       padding: 32px;

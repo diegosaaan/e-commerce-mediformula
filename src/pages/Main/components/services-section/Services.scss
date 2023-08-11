@@ -96,6 +96,12 @@
   }
 }
 
+@media screen and (max-width: $large-desktop) {
+  .services {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
 @media screen and (max-width: $medium-desktop) {
   .services {
     &__card {
@@ -122,8 +128,6 @@
 
 @media screen and (max-width: $small-desktop) {
   .services {
-    margin-top: 50px;
-
     &__container {
       flex-wrap: wrap;
     }

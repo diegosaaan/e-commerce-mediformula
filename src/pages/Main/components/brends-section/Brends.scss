@@ -53,10 +53,14 @@
   }
 }
 
+@media screen and (max-width: $large-desktop) {
+  .brends {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
 @media screen and (max-width: $small-desktop) {
   .brends {
-    margin-top: 50px;
-
     &__list {
       grid-template-columns: repeat(4, clamp(60px, 10vw, 100px));
       grid-row-gap: 25px;

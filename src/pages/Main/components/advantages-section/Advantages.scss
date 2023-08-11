@@ -64,6 +64,12 @@
   }
 }
 
+@media screen and (max-width: $large-desktop) {
+  .advantages {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
 @media screen and (max-width: $medium-desktop) {
   .advantages {
     &__leader-card {
@@ -106,8 +112,6 @@
 
 @media screen and (max-width: $small-desktop) {
   .advantages {
-    margin-top: 50px;
-
     &__leader-card {
       margin-top: 50px;
       background-image: none;
