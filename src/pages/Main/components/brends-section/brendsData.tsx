@@ -22,6 +22,7 @@ const brendsData = [
   {
     link: 'https://www.morris-health.com/',
     classModifier: 'morris-health',
+    key: 'morris-health',
   },
   {
     link: 'https://www.forgingnewlives.com/',
