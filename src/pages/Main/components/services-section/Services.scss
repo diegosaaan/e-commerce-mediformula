@@ -161,9 +161,9 @@
 
       &-brends-list {
         display: flex;
-        justify-content: space-between;
+        column-gap: 24px;
         width: 100%;
-        max-width: calc(100% - 350px);
+        max-width: calc(100% - 320px);
         margin-right: 0;
       }
     }
@@ -200,6 +200,8 @@
 
       &-brends-list {
         max-width: 150px;
+        column-gap: 0px;
+        row-gap: 16px;
 
         &-item {
           width: 70px;
