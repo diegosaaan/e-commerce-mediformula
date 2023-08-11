@@ -1,35 +1,72 @@
 import '@/pages/Login/Login.scss';
-import React, { FormEvent, ReactElement } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { FormEvent, ReactElement, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '@/utils/hooks/useAuth';
+import AuthInput from '@/components/AuthInput/AuthInput';
+import AuthForm from '@/components/AuthForm/AuthForm';
 
-function LoginPage(): ReactElement {
+const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '/';
 
-  const goBack = (): void => navigate(-1);
+  const [infoLogin, setInfoLogin] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+  const handleInfoChange = (e: FormEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const target = e.target as HTMLInputElement;
+    const { name, value } = target;
+    setInfoLogin((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     signIn(() => navigate(fromPage));
   };
 
   return (
-    <div className="login-page">
-      <h1>Страница логина</h1>
-      <button onClick={goBack}>Вернуться назад</button>
-      <form action="" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Введите email..." />
-        <input type="text" placeholder="Введите пароль..." />
-        <button type="submit">Войти</button>
-        <p>
-          Еще не зарегистрированы? <Link to="/registration">Зарегистрироваться</Link>
-        </p>
-      </form>
-    </div>
+    <AuthForm
+      onSubmit={handleLogin}
+      name="form-login"
+      text="Еще не зарегистрированы?"
+      textLink="Регистрация"
+      textButton="Войти"
+      path="/registration"
+      title="Вход"
+    >
+      <ul className="auth__list auth__list_active">
+        <li>
+          <AuthInput
+            type="email"
+            placeholder="Email*"
+            name="email"
+            htmlFor="email"
+            isInputPassword={false}
+            onChange={handleInfoChange}
+            value={infoLogin.email}
+          />
+        </li>
+        <li>
+          <AuthInput
+            type="password"
+            placeholder="Пароль*"
+            name="password"
+            htmlFor="password"
+            isInputPassword={true}
+            onChange={handleInfoChange}
+            value={infoLogin.password}
+          />
+        </li>
+      </ul>
+    </AuthForm>
   );
-}
+};
 
 export default LoginPage;
