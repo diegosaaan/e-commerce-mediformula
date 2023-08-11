@@ -2,10 +2,8 @@
   display: inline-block;
   height: 44px;
   width: 164px;
-  @include GolosMedium;
-  @include font(16px, 100%);
+  @include GolosMedium(16px, 100%, $color-light);
   background-color: $color-secondary;
-  color: $color-light;
   text-align: center;
   border-radius: 8px;
 
