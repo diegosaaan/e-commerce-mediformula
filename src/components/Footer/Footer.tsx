@@ -14,7 +14,7 @@ const Footer = (): ReactElement => {
 
   return (
     <footer className="footer">
-      <div className="container footer__container">
+      <div className="_container footer__container">
         <div className="footer__main-content-container">
           <div className="footer__useful-links">
             <ul className="footer__numbers-list">

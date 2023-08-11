@@ -3,8 +3,8 @@ import React, { ReactElement } from 'react';
 import brandsData from './brendsData';
 
 const Services = (): ReactElement => (
-  <section className="services">
-    <div className="container services__container">
+  <section className="services _container">
+    <div className="services__container">
       <div className="services__card">
         <h2 className="services__card-heading services__card-heading--white">
           Комплексное оснащение медицинских кабинетов

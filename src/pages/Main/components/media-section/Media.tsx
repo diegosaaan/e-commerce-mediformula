@@ -14,7 +14,7 @@ const MediaSection = (): ReactElement => {
   };
 
   return (
-    <section className="media container">
+    <section className="media _container">
       <div className="media__container">
         <div className="media__toogle-btns-container">
           {mediaButtons.map((btn) => (

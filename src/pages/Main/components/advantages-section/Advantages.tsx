@@ -5,7 +5,7 @@ import advantagesData from './advantagesData';
 
 const Advantages = (): ReactElement => (
   <section className="advantages">
-    <div className="container avantages__container">
+    <div className="_container avantages__container">
       <div className="advantages__leader-card">
         <div className="advantages__leader-card-description">
           <h3 className="advantages__leader-card-heading">Один из лидеров российского рынка</h3>

@@ -4,8 +4,8 @@ import brendsData from './brendsData';
 
 const Brends = (): ReactElement => {
   return (
-    <div className="brends container">
-      <h2 className="heading brends_heading">Популярные бренды</h2>
+    <div className="brends _container">
+      <h2 className="_heading brends__heading">Популярные бренды</h2>
       <ul className="brends__list">
         {brendsData.map(
           ({ link, classModifier, key }): ReactElement => (
