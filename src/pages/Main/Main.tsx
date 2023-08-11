@@ -1,11 +1,15 @@
 import '@/pages/Main/Main.scss';
 import React, { ReactElement } from 'react';
+import Intro from './components/Intro';
+import ProductCardsSection from '@/components/ProductCardsSection/ProductCardsSection';
+import CategoryCards from './components/CategoryCards';
 
 function MainPage(): ReactElement {
   return (
     <div className="main-page">
-      <h1>Главная Страница</h1>
-      <main></main>
+      <Intro />
+      <ProductCardsSection header="Популярное" counter={15} />
+      <CategoryCards />
     </div>
   );
 }
