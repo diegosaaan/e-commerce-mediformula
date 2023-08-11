@@ -1,0 +1,122 @@
+.auth {
+  &__subtitle {
+    @include GolosMedium(16px, 1.1, $grayscale-600);
+  }
+
+  &__button-add {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    border: 2px solid $plus-button;
+    border-radius: 16px;
+    background-image: url('@/assets/images/svg/auth-plus.svg');
+    background-position: center;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: $grayscale-200;
+    transition: border 1s;
+    margin: 15px 0;
+  }
+
+  &__button-add:hover {
+    cursor: pointer;
+    border: 2px solid $plus-button-hover;
+  }
+
+  &__list-address {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__item-address {
+    box-sizing: border-box;
+    position: relative;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: $grayscale-200;
+  }
+
+  &__label-address {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__list-address-value {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    @include GolosRegular(12px, 1.1, $grayscale-900);
+  }
+
+  &__input-address {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  &__span {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  &__span::before {
+    content: '';
+    box-sizing: border-box;
+    border: 2px solid $plus-button;
+    border-radius: 16px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: border 1s;
+  }
+
+  &__input-address:not(:disabled):not(:checked) + &__span:hover::before {
+    cursor: pointer;
+    border: 2px solid $plus-button-hover;
+  }
+
+  &__input-address:not(:disabled):active + &__span::before {
+    @extend %GreyLinkActive;
+  }
+
+  &__input-address:focus + &__span::before {
+    @extend %GreyLinkFocus;
+    border-radius: 16px;
+  }
+
+  &__input-address:focus:not(:checked) + &__span::before {
+    @extend %GreyLinkFocus;
+    border-radius: 16px;
+  }
+
+  &__input-address:checked + &__span::before {
+    border: 2px solid $plus-button-hover;
+  }
+
+  &__input-address:disabled + &__span::before {
+    border: 2px solid $color-disabled;
+  }
+
+  @media (hover: hover) {
+    &__button-add:hover {
+      cursor: pointer;
+      border: 2px solid $plus-button-hover;
+    }
+
+    &__input-address:not(:disabled):not(:checked) + &__span:hover::before {
+      cursor: pointer;
+      border: 2px solid $plus-button-hover;
+    }
+  }
+}

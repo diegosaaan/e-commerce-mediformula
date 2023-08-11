@@ -1,0 +1,198 @@
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.auth {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  padding: 40px 0;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 102, 255, 0.9);
+    opacity: 0.6;
+    z-index: -9;
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -99;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__container {
+    border-radius: 16px;
+    background-color: $grayscale-50;
+    box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.05);
+    padding: 30px 40px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    z-index: 99;
+  }
+
+  &__container-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__button-prev {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-image: url('@/assets/images/svg/auth-arrow-left.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px 25px;
+    background-color: $grayscale-400;
+  }
+
+  &__button-prev {
+    @include MainBtnHover;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15.5px;
+  }
+
+  &__heading {
+    @include GolosMedium(28px, 1.1, $grayscale-900);
+  }
+
+  &__button {
+    @include GolosMedium(16px, 1, $grayscale-50);
+    height: 56px;
+    width: 100%;
+    background: $secondary-liner;
+    border-radius: 8px;
+    transition: opacity 0.3s;
+  }
+
+  &__button_type_add {
+    background: $primary-liner;
+  }
+
+  &__button:hover {
+    @include MainBtnHover;
+  }
+
+  &__button:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__button:active {
+    @extend %GreyLinkActive;
+  }
+
+  &__button:disabled {
+    background: $color-disabled;
+    color: $grayscale-50;
+  }
+
+  &__text {
+    @include GolosRegular(14px, 1, $grayscale-600);
+    padding: 8.5px 0 10.5px;
+    text-align: center;
+  }
+
+  &__container-link {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__arrow {
+    width: 24px;
+    height: 24px;
+    background-image: url('@/assets/images/svg/auth-arrow.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+  }
+
+  &__link {
+    @include GolosRegular(16px, 1, $grayscale-900);
+    transition: color 0.3s;
+  }
+
+  &__link:hover {
+    color: $color-primary-hover;
+  }
+
+  &__link:hover + &__arrow {
+    animation: shake 2s ease infinite;
+  }
+
+  &__link:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__link:active {
+    @extend %GreyLinkActive;
+  }
+
+  @media screen and (max-width: $portrait-tablet) {
+    &__container {
+      padding: 16px 16px 24px;
+      width: 296px;
+    }
+
+    &__heading {
+      @include GolosMedium(18px, 1.15, $grayscale-900);
+    }
+  }
+
+  @media (hover: hover) {
+    &__button:hover {
+      @include MainBtnHover;
+    }
+
+    &__link:hover {
+      color: $color-primary-hover;
+    }
+
+    &__link:hover + &__arrow {
+      animation: shake 2s ease infinite;
+    }
+  }
+}

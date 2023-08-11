@@ -44,3 +44,8 @@
   opacity: 0.8;
   cursor: pointer;
 }
+
+@mixin font ($size, $height) {
+  font-size: $size;
+  line-height: $height;
+}

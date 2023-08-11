@@ -1,4 +1,5 @@
 import { FormEvent, ReactElement, ReactNode } from 'react';
+import { AddressType } from './types';
 
 export interface IRouteData {
   key: string;
@@ -30,11 +31,15 @@ export interface IPropsButton {
 }
 
 export interface IPropsInput {
-  type: 'search' | 'text' | 'password' | 'email';
+  type: 'search' | 'text' | 'password' | 'email' | 'radio';
   placeholder?: string;
   className: string;
+  classNameLabel?: string;
+  title?: string;
   name: string;
-  onChange: () => void;
+  children?: ReactNode;
+  checked?: boolean;
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 export interface IPropsForm {
@@ -68,4 +73,41 @@ export interface IPropsCard {
   bonus?: number;
   discount?: number;
   onClick: () => void;
+}
+
+export interface IPropsAuthInput {
+  type: 'search' | 'text' | 'password' | 'email' | 'date' | 'radio';
+  placeholder?: string;
+  name: string;
+  htmlFor: string;
+  isInputPassword?: boolean;
+  textError?: string;
+  value?: string;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+export interface IPropsAuthForm {
+  children?: ReactNode;
+  name: string;
+  title: string;
+  text: string;
+  textLink: string;
+  textButton: string;
+  path: string;
+  isRegister?: boolean;
+  disabled?: boolean;
+  isAddAddress?: boolean;
+  handlePrevRegister?: () => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+export interface IPropsListAddress {
+  name: string;
+  addresses: AddressType[];
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+export interface IPropsAddressFields {
+  address: AddressType;
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
 }

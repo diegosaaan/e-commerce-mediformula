@@ -9,6 +9,24 @@ $grayscale-50: #ffffff;
 $primary-liner: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
 $secondary-liner: linear-gradient(315deg, #10c5fe 5.07%, #0f7af9 100%);
 
+$grayscale-200: #f6f7fb;
+$grayscale-50: #ffffff;
+
+$color-login: #1098fb;
+$color-register: #2cc379;
+
+$primary-liner: linear-gradient(315deg, #14d7f2 5.07%, #1cd5a8 55.39%, #22d26d 100%);
+$secondary-liner: linear-gradient(315deg, #10c5fe 0%, #0f7af9 100%);
+
+$color-secondary: #109ffc;
+$color-secondary-hover: #109efc;
+
+$color-primary: #1ed497;
+$color-primary-hover: #1aba8b;
+
+$color-disabled: #eff1f5;
+$color-light: #ffffff;
+
 $large-desktop: 1559.9px;
 $medium-desktop: 1359.9px;
 $small-desktop: 1023.9px;
@@ -18,3 +36,7 @@ $mobile: 389.9px;
 
 $discount-liner: linear-gradient(108deg, #9554ff 0%, #b080ff 100%);
 $bonus-liner: linear-gradient(333deg, #14b2f2 0%, #d222cb 100%);
+
+$error-input: #ff004d;
+$plus-button: #1bf9ec;
+$plus-button-hover: #c614f2;
