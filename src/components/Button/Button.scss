@@ -2,48 +2,64 @@
   display: inline-block;
   height: 44px;
   width: 164px;
-  @include GolosMedium;
-  @include font(16px, 100%);
-  background-color: $color-secondary;
-  color: $color-light;
+  @include GolosMedium(16px, 100%, $grayscale-50);
+  background: $secondary-liner;
   text-align: center;
   border-radius: 8px;
 
-  &:hover {
-    background-color: $color-secondary-hover;
+  @media (hover: hover) {
+    &:hover {
+      @include MainBtnHover;
+    }
+  }
+
+  &:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &:active {
+    @extend %MainBtnActive;
   }
 
   &:disabled {
-    background-color: $color-disabled;
+    background-color: $grayscale-300;
   }
 }
 
-.nav-button {
-  width: 134px;
-  background-color: $color-primary;
+.iconButton {
+  display: inline-block;
+  height: 44px;
+  width: 44px;
+  background-image: url('@/assets/images/svg/button-heart.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 
-  &:hover {
-    background-color: $color-primary-hover;
+  &__selected {
+    background-image: url('@/assets/images/svg/button-heart-red.svg');
+    transition: 0.25s ease-in-out;
   }
 }
 
-.log-button {
-  height: 24px;
-  width: 108px;
-  background-color: $color-secondary;
+.textButton {
+  @include GolosRegular(16px, 100%, $grayscale-900);
 
-  &:hover {
-    background-color: $color-secondary-hover;
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+      color: #1cd5a8;
+    }
   }
-}
 
-.reg-button {
-  height: 24px;
-  width: 108px;
-  @include font(14px, 100%);
-  background-color: $color-primary;
+  &:focus {
+    @extend %TextBtnFocus;
+  }
 
-  &:hover {
-    background-color: $color-primary-hover;
+  &:active {
+    @extend %TextBtnActive;
+  }
+
+  @media screen and (max-width: $tablet) {
+    display: none;
   }
 }
