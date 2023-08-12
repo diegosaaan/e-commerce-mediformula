@@ -78,7 +78,7 @@ const PageNav = (): ReactElement => {
               </Link>
             </li>
             <li className="header__item-about">
-              <Link className="header__link" to="/about">
+              <Link className="header__link" to="/about-us">
                 <Button className="header__button-main" type="button" text="О нас" />
               </Link>
             </li>
@@ -128,7 +128,7 @@ const PageNav = (): ReactElement => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/about" className={setActive}>
+            <NavLink to="/about-us" className={setActive}>
               <Button className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-icon-mobile_type_about"></div>
                 <p className="header__button-text-mobile">О нас</p>
