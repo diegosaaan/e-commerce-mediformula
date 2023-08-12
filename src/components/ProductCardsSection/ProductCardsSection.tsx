@@ -10,7 +10,7 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
   return (
     <section className="_container cardsSection">
       <div className="cardsSection__header-container">
-        <h2 className="cardsSection__header">
+        <h2 className="_heading">
           {header}
           <sup className="cardsSection__counter">{counter}</sup>
         </h2>
