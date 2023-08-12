@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import '@/pages/Main/components/Intro.scss';
+import '@/pages/Main/components/intro-section/Intro.scss';
 import '@/pages/App.scss';
 import IntroCard from './IntroCard';
 import imagePath from '@/assets/images/png/intro-image.png';

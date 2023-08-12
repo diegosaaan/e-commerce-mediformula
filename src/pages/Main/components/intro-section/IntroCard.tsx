@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import '@/pages/Main/components/IntroCard.scss';
+import '@/pages/Main/components/intro-section/IntroCard.scss';
 import '@/pages/App.scss';
 import { IPropsIntroCard } from '@/types/interfaces';
 

@@ -1,10 +1,6 @@
 .category {
-  margin-top: 100px;
+  margin-top: 34px;
   overflow: hidden;
-
-  &__header {
-    @include GolosMedium(36px, 110%, $grayscale-900);
-  }
 
   &__card-container {
     display: flex;
@@ -65,7 +61,7 @@
   }
 
   @media screen and (max-width: $large-desktop) {
-    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+    margin-top: calc(48px + (34 - 48) * (100vw - 360px) / (1559.9 - 360));
 
     &__card-container {
       gap: calc(8px + (16 - 8) * (100vw - 360px) / (1559.9 - 360));

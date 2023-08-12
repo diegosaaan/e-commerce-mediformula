@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import '@/pages/Main/components/CategoryCards.scss';
+import '@/pages/Main/components/category-section/CategoryCards.scss';
 import '@/pages/App.scss';
 import Tag from '@/components/Tag/Tag';
 import img1Path from '@/assets/images/png/categories-blood-pressure-cuff.png';
@@ -10,7 +10,7 @@ import img4Path from '@/assets/images/png/categories-crutch.png';
 const CategoryCards = (): ReactElement => {
   return (
     <section className="_container category">
-      <h2 className="category__header">Популярные категории</h2>
+      <h2 className="_heading">Популярные категории</h2>
       <div className="category__card-container">
         <div className="category__card category__card1">
           <div className="category__image-container">

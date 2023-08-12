@@ -1,8 +1,8 @@
 import '@/pages/Main/Main.scss';
 import React, { ReactElement } from 'react';
-import Intro from './components/Intro';
+import Intro from './components/intro-section/Intro';
 import ProductCardsSection from '@/components/ProductCardsSection/ProductCardsSection';
-import CategoryCards from './components/CategoryCards';
+import CategoryCards from './components/category-section/CategoryCards';
 
 function MainPage(): ReactElement {
   return (
@@ -10,6 +10,7 @@ function MainPage(): ReactElement {
       <Intro />
       <ProductCardsSection header="Популярное" counter={15} />
       <CategoryCards />
+      <ProductCardsSection header="Специальные предложения" counter={15} />
     </div>
   );
 }
