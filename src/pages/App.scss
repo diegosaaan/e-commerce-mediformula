@@ -7,3 +7,19 @@
   max-width: 1560px;
   padding: 0px 20px;
 }
+
+._heading {
+  @include GolosMedium(36px, 1.1, $grayscale-900);
+}
+
+@media screen and (max-width: $medium-desktop) {
+  ._heading {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  ._heading {
+    font-size: 20px;
+  }
+}
