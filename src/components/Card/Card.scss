@@ -4,6 +4,7 @@
   width: 304px;
   border-radius: 16px;
   padding: 16px 18px 18px;
+  transition: box-shadow 0.3s;
 
   &__image-container {
     display: block;
@@ -102,9 +103,11 @@
   }
 
   &__button-container {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
     margin-top: 22px;
-    gap: 24px;
+    gap: calc(8px + (24 - 8) * (100vw - 360px) / (1559.9 - 360));
   }
 
   @media (hover: hover) {
@@ -113,7 +116,10 @@
         0px 5px 40px 0px rgba(1, 31, 58, 0.1),
         0px 4px 13px 0px rgba(1, 31, 58, 0.04);
 
-      &__button-container {
+      &:hover .product-card__button-container {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.3s;
         display: flex;
       }
     }
@@ -181,6 +187,8 @@
     }
 
     &__button-container {
+      visibility: visible;
+      opacity: 1;
       display: flex;
       margin-top: 10px;
       gap: 8px;
