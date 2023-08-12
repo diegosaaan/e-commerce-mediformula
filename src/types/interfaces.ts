@@ -1,12 +1,6 @@
 import { FormEvent, ReactElement, ReactNode } from 'react';
 import { AddressType } from './types';
 
-export interface IRouteData {
-  key: string;
-  path: string;
-  element: ReactElement;
-}
-
 export interface IAuthContextValue {
   isUserLoggedIn: boolean;
   signIn: (cb: () => void) => void;
