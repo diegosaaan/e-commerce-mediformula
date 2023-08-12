@@ -1,6 +1,6 @@
 import '@/pages/Login/Login.scss';
 import React, { FormEvent, ReactElement, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '@/utils/hooks/useAuth';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
@@ -8,8 +8,6 @@ import AuthForm from '@/components/AuthForm/AuthForm';
 const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const fromPage = location.state?.from?.pathname || '/';
 
   const [infoLogin, setInfoLogin] = useState({
     email: '',
@@ -28,7 +26,7 @@ const LoginPage = (): ReactElement => {
 
   const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    signIn(() => navigate(fromPage));
+    signIn(() => navigate('/'));
   };
 
   return (
