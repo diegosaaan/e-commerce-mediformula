@@ -10,11 +10,10 @@
   }
 
   &__card {
-    height: 340px;
-    width: 752px;
+    flex: 1 0 calc(50% - 16px);
     border-radius: 24px;
-    display: grid;
-    grid-template-columns: 38.3% auto;
+    display: flex;
+    justify-content: space-between;
     gap: 32px;
   }
 
@@ -37,11 +36,13 @@
   &__image-container {
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   &__image {
     width: 100%;
-    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   &__content {
@@ -69,33 +70,64 @@
     }
   }
 
+  @media screen and (max-width: $medium-desktop) {
+    &__card {
+      gap: 16px;
+    }
+
+    &__content {
+      display: block;
+      padding: 40px 40px 80px 0;
+    }
+
+    &__cardHeader {
+      @include GolosMedium(24px, 110%, $grayscale-50);
+    }
+
+    &__tagsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+  }
+
+  @media screen and (max-width: $small-desktop) {
+    &__card {
+      flex: 1 0 100%;
+    }
+
+    &__image {
+      max-width: 200px;
+    }
+  }
+
   @media screen and (max-width: $tablet) {
     &__header {
       @include GolosMedium(20px, 115%, $grayscale-900);
     }
 
     &__card {
-      height: 160px;
-      width: 320px;
+      flex: 1 0 100%;
       border-radius: 12px;
       display: block;
       position: relative;
     }
 
     &__card1 {
-      background: $category-type1 url('@/assets/images/svg/categories-blob-type1.svg') no-repeat 450% 80%;
+      background: $category-type1 url('@/assets/images/svg/categories-blob-type1.svg') no-repeat 110% 80%;
     }
 
     &__card2 {
-      background: $category-type2 url('@/assets/images/svg/categories-blob-type2.svg') no-repeat 450% 80%;
+      background: $category-type2 url('@/assets/images/svg/categories-blob-type2.svg') no-repeat 130% 80%;
     }
 
     &__card3 {
-      background: $category-type3 url('@/assets/images/svg/categories-blob-type3.svg') no-repeat 450% 80%;
+      background: $category-type3 url('@/assets/images/svg/categories-blob-type3.svg') no-repeat 110% 70%;
     }
 
     &__card4 {
-      background: $category-type4 url('@/assets/images/svg/categories-blob-type4.svg') no-repeat 450% 80%;
+      background: $category-type4 url('@/assets/images/svg/categories-blob-type4.svg') no-repeat 110% 70%;
     }
 
     &__image-container {

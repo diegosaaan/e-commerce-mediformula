@@ -8,6 +8,12 @@
     @include GolosRegular(16px, 100%, $grayscale-50);
   }
 
+  @media screen and (max-width: $medium-desktop) {
+    &__tagText {
+      @include GolosRegular(14px, 100%, $grayscale-50);
+    }
+  }
+
   @media screen and (max-width: $tablet) {
     padding: 4px 8px 5px;
 
