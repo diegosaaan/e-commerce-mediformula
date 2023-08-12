@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import '@/pages/Main/components/IntroCard.scss';
+import '@/pages/App.scss';
 import { IPropsIntroCard } from '@/types/interfaces';
 
 const IntroCard = ({ header, iconPath, text, label }: IPropsIntroCard): ReactElement => {
@@ -13,7 +14,7 @@ const IntroCard = ({ header, iconPath, text, label }: IPropsIntroCard): ReactEle
       </div>
       <p className="intro-card__text">{text}</p>
       <div className="intro-card__label-container">
-        <hr className="intro-card__line"></hr>
+        <div className="intro-card__line"></div>
         <p className="intro-card__label">{label}</p>
       </div>
     </div>

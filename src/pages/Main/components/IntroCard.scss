@@ -1,11 +1,11 @@
 .intro-card {
-  box-sizing: border-box;
-  display: block;
-  height: 188px;
-  width: 368px;
+  flex: 1 0 calc(25% - 16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: $grayscale-200;
   border-radius: 24px;
-  padding: 24px 32px 26px;
+  padding: 24px 20px 26px 32px;
 
   &__header-container {
     display: flex;
@@ -29,12 +29,12 @@
   &__text {
     @include GolosRegular(16px, 100%, $grayscale-900);
     margin-top: 12px;
-    width: 260px;
+    max-width: 260px;
   }
 
   &__label-container {
     display: flex;
-    gap: 68px;
+    justify-content: space-between;
     margin-top: 36px;
   }
 
@@ -47,12 +47,25 @@
   &__label {
     @include GolosRegular(10px, 100%, $grayscale-600);
     text-transform: uppercase;
-    width: 200px;
+    max-width: 200px;
+  }
+
+  @media screen and (max-width: $large-desktop) {
+    width: calc(244px + (368 - 244) * (100vw - 360px) / (1559.9 - 360));
+  }
+
+  @media screen and (max-width: $medium-desktop) {
+    &__line {
+      display: none;
+    }
+    padding: 24px 20px 26px 20px;
+  }
+
+  @media screen and (max-width: $small-desktop) {
+    flex: 1 0 calc(50% - 16px);
   }
 
   @media screen and (max-width: $tablet) {
-    width: calc(244px + (368 - 244) * (100vw - 360px) / (767.9 - 360));
-    height: calc(120px + (188 - 120) * (100vw - 360px) / (767.9 - 360));
     border-radius: 12px;
     padding: 16px;
 
@@ -85,5 +98,10 @@
     &__label {
       text-transform: none;
     }
+  }
+
+  @media screen and (max-width: $mobile) {
+    flex: 1 0 100%;
+    max-width: 100%;
   }
 }
