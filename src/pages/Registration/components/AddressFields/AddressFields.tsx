@@ -2,47 +2,70 @@ import React, { ReactElement } from 'react';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import { IPropsAddressFields } from '@/types/interfaces';
 
-const AddressFields = ({ address, onChange }: IPropsAddressFields): ReactElement => {
+const AddressFields = ({
+  name,
+  onChange,
+  country,
+  city,
+  index,
+  street,
+  countryErrors,
+  cityErrors,
+  indexErrors,
+  streetErrors,
+  countryTouched,
+  cityTouched,
+  indexTouched,
+  streetTouched,
+}: IPropsAddressFields): ReactElement => {
   return (
     <ul className="auth__list auth__list_active">
       <li>
         <AuthInput
           type="text"
           placeholder="Страна*"
-          name="country"
-          htmlFor="country"
+          name={`${name}Country`}
+          htmlFor={`${name}Country`}
           onChange={onChange}
-          value={address.country}
+          value={country}
+          errors={countryErrors}
+          touched={countryTouched}
         />
       </li>
       <li>
         <AuthInput
           type="text"
           placeholder="Город*"
-          name="city"
-          htmlFor="city"
+          name={`${name}City`}
+          htmlFor={`${name}City`}
           onChange={onChange}
-          value={address.city}
+          value={city}
+          errors={cityErrors}
+          touched={cityTouched}
         />
       </li>
       <li>
         <AuthInput
           type="text"
           placeholder="Почтовый индекс*"
-          name="index"
-          htmlFor="index"
+          name={`${name}Index`}
+          htmlFor={`${name}Index`}
           onChange={onChange}
-          value={address.index}
+          value={index}
+          errors={indexErrors}
+          touched={indexTouched}
         />
       </li>
       <li>
         <AuthInput
           type="text"
           placeholder="Улица*"
-          name="street"
-          htmlFor="street"
+          name={`${name}Street`}
+          htmlFor={`${name}Street`}
           onChange={onChange}
-          value={address.street}
+          value={street}
+          errors={streetErrors}
+          touched={streetTouched}
         />
       </li>
     </ul>
