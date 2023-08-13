@@ -10,7 +10,6 @@ import backgroundFive from '@/assets/images/jpg/auth-background-5.jpg';
 import backgroundSix from '@/assets/images/jpg/auth-background-6.jpg';
 
 const AuthForm = ({
-  onSubmit,
   children,
   name,
   text,
@@ -38,7 +37,7 @@ const AuthForm = ({
           <h1 className="auth__heading">{title}</h1>
           {isAddAddress && <button className="auth__button-prev" type="button" onClick={handlePrevRegister}></button>}
         </div>
-        <form className="auth__form" name={name} onSubmit={onSubmit} autoComplete="off">
+        <form className="auth__form" name={name} autoComplete="off" noValidate>
           {children}
           {!isAddAddress && (
             <button className="auth__button" type="submit" disabled={disabled}>
