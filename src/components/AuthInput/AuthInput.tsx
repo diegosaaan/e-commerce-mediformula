@@ -8,9 +8,10 @@ const AuthInput = ({
   name,
   htmlFor,
   isInputPassword,
-  textError,
   onChange,
   value,
+  errors,
+  touched,
 }: IPropsAuthInput): ReactElement => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -31,7 +32,7 @@ const AuthInput = ({
             {placeholder}
           </label>
           <input
-            className="auth__input"
+            className={`auth__input ${errors ? 'auth__input_error' : ''}`}
             id={htmlFor}
             name={name}
             type={isShowPassword ? 'text' : type}
@@ -50,7 +51,7 @@ const AuthInput = ({
           ></button>
         )}
       </div>
-      <p className="auth__input-error">{textError}</p>
+      <p className="auth__input-error">{errors ? errors || touched : ''}</p>
     </>
   );
 };
