@@ -1,5 +1,6 @@
 import { FormEvent, ReactElement, ReactNode } from 'react';
-import { AddressType } from './types';
+import { ObjectSchema } from 'yup';
+import { AddressType, LoginSchemaType } from './types';
 
 export interface IAuthContextValue {
   isUserLoggedIn: boolean;
@@ -33,7 +34,8 @@ export interface IPropsInput {
   name: string;
   children?: ReactNode;
   checked?: boolean;
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 export interface IPropsForm {
@@ -75,8 +77,9 @@ export interface IPropsAuthInput {
   name: string;
   htmlFor: string;
   isInputPassword?: boolean;
-  textError?: string;
   value?: string;
+  errors?: string;
+  touched?: boolean;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
@@ -91,17 +94,32 @@ export interface IPropsAuthForm {
   isRegister?: boolean;
   disabled?: boolean;
   isAddAddress?: boolean;
+  validationSchema?: ObjectSchema<LoginSchemaType>;
+  initialValues?: LoginSchemaType;
   handlePrevRegister?: () => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 export interface IPropsListAddress {
   name: string;
   addresses: AddressType[];
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 export interface IPropsAddressFields {
-  address: AddressType;
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  name: string;
+  country?: string;
+  city?: string;
+  index?: string;
+  street?: string;
+  countryErrors?: string;
+  cityErrors?: string;
+  indexErrors?: string;
+  streetErrors?: string;
+  countryTouched?: boolean;
+  cityTouched?: boolean;
+  indexTouched?: boolean;
+  streetTouched?: boolean;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
