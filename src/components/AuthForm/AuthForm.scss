@@ -123,8 +123,8 @@
   }
 
   &__button:disabled {
-    background: $color-disabled;
-    color: $grayscale-50;
+    background: $grayscale-300;
+    color: $grayscale-600;
   }
 
   &__text {
