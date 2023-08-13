@@ -13,7 +13,7 @@ const ListAddress = ({ addresses, name, onChange }: IPropsListAddress): ReactEle
             type="radio"
             name={name}
             onChange={onChange}
-            checked={true}
+            value={String(index)}
           >
             <span className="auth__span"></span>
             <ul className="auth__list-address-value">
