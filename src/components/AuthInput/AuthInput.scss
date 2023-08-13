@@ -39,6 +39,10 @@
     @include GolosRegular(16px, 1, $grayscale-900);
   }
 
+  &__input_error {
+    color: $error-input;
+  }
+
   &__input::placeholder {
     @include GolosRegular(16px, 1, $grayscale-600);
   }
