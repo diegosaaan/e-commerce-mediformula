@@ -250,6 +250,7 @@
     align-items: center;
     border-top: 1px solid $grayscale-200;
     background-color: $grayscale-50;
+    z-index: 15;
   }
 
   &__button-main-mobile {
