@@ -1,0 +1,19 @@
+.carousel__container {
+  display: flex;
+  align-items: center;
+}
+
+.carousel__window {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel__cards-container {
+  height: 100%;
+  display: flex;
+}
+
+.carousel__arrow {
+  cursor: pointer;
+}

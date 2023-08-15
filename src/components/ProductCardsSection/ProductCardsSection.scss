@@ -13,7 +13,6 @@
   }
 
   &__cards-container {
-    display: flex;
     margin-top: 32px;
   }
 
@@ -22,7 +21,6 @@
 
     &__cards-container {
       margin-top: 16px;
-      gap: 8px;
     }
   }
 }
