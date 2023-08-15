@@ -42,6 +42,11 @@ export interface IPropsTag {
   title: string;
 }
 
+export interface IPropsCarousel {
+  children: ReactNode;
+  cardWidth: number;
+}
+
 export interface IPropsCardsSection {
   header: string;
   counter: number;
