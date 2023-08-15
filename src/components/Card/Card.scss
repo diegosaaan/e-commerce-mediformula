@@ -1,5 +1,5 @@
 .product-card {
-  box-sizing: border-box;
+  cursor: pointer;
   display: block;
   width: 304px;
   border-radius: 16px;
@@ -107,7 +107,6 @@
     opacity: 0;
     transition: opacity 0.3s;
     margin-top: 22px;
-    gap: calc(8px + (24 - 8) * (100vw - 360px) / (1559.9 - 360));
   }
 
   @media (hover: hover) {
@@ -191,7 +190,6 @@
       opacity: 1;
       display: flex;
       margin-top: 10px;
-      gap: 8px;
     }
   }
 }
