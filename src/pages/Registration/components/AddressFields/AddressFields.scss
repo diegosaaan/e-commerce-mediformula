@@ -28,4 +28,14 @@
     align-items: center;
     gap: 10px;
   }
+
+  &__select:hover {
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    &__select:hover {
+      cursor: pointer;
+    }
+  }
 }
