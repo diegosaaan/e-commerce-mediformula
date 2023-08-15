@@ -1,3 +1,4 @@
+import '@/pages/Registration/components/AddressFields/AddressFields.scss';
 import React, { ReactElement } from 'react';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import { IPropsAddressFields } from '@/types/interfaces';
@@ -21,7 +22,7 @@ const AddressFields = ({
   return (
     <ul className="auth__list auth__list_active">
       <li>
-        <AuthInput
+        {/* <AuthInput
           type="text"
           placeholder="Страна*"
           name={`${name}Country`}
@@ -30,7 +31,16 @@ const AddressFields = ({
           value={country}
           errors={countryErrors}
           touched={countryTouched}
-        />
+        /> */}
+        <select className="auth__select" name={`${name}Country`}>
+          <option value={country}>Австрия</option>
+          <option value={country}>Германия</option>
+          <option value={country}>Франция</option>
+          <option value={country}>США</option>
+          <option value={country}>Польша</option>
+          <option value={country}>Бельгия</option>
+        </select>
+        <p className="auth__input-error">{countryErrors ? countryErrors || countryTouched : ''}</p>
       </li>
       <li>
         <AuthInput
