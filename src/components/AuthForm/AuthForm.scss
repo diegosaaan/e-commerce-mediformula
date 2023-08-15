@@ -87,6 +87,14 @@
     @include MainBtnHover;
   }
 
+  &__button-prev:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__button-prev:active {
+    @extend %GreyLinkActive;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
