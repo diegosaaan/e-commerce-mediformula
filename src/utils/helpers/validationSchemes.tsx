@@ -77,7 +77,7 @@ export const RegisterSchema = Yup.object().shape({
   shippingCountry: Yup.string().required('Поле обязательно к заполнению'),
   shippingCity: Yup.string()
     .required('Поле обязательно к заполнению')
-    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Некорректное название города'),
+    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
   shippingIndex: Yup.string().required('Поле обязательно к заполнению'),
   shippingStreet: Yup.string()
     .required('Поле обязательно к заполнению')
@@ -86,7 +86,7 @@ export const RegisterSchema = Yup.object().shape({
   billingCountry: Yup.string().required('Поле обязательно к заполнению'),
   billingCity: Yup.string()
     .required('Поле обязательно к заполнению')
-    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Некорректное название города'),
+    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
   billingIndex: Yup.string().required('Поле обязательно к заполнению'),
   billingStreet: Yup.string()
     .required('Поле обязательно к заполнению')
