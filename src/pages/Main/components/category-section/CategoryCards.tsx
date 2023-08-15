@@ -13,7 +13,7 @@ const CategoryCards = (): ReactElement => {
       <h2 className="_heading">Популярные категории</h2>
       <div className="category__card-container">
         <div className="category__card category__card1">
-          <div className="category__image-container">
+          <div className="category__image-container category__image-background1">
             <img className="category__image" src={img1Path} alt="Blood Pressure Cuff" />
           </div>
           <div className="category__content">
@@ -28,7 +28,7 @@ const CategoryCards = (): ReactElement => {
           </div>
         </div>
         <div className="category__card category__card2">
-          <div className="category__image-container">
+          <div className="category__image-container category__image-background2">
             <img className="category__image" src={img2Path} alt="Insoles" />
           </div>
           <div className="category__content">
@@ -43,7 +43,7 @@ const CategoryCards = (): ReactElement => {
           </div>
         </div>
         <div className="category__card category__card3">
-          <div className="category__image-container">
+          <div className="category__image-container category__image-background3">
             <img className="category__image" src={img3Path} alt="Massager" />
           </div>
           <div className="category__content">
@@ -58,7 +58,7 @@ const CategoryCards = (): ReactElement => {
           </div>
         </div>
         <div className="category__card category__card4">
-          <div className="category__image-container">
+          <div className="category__image-container category__image-background4">
             <img className="category__image" src={img4Path} alt="Insoles" />
           </div>
           <div className="category__content">
