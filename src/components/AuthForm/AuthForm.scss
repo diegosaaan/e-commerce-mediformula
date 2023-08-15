@@ -83,7 +83,7 @@
     background-color: $grayscale-400;
   }
 
-  &__button-prev {
+  &__button-prev:hover {
     @include MainBtnHover;
   }
 
@@ -155,6 +155,14 @@
     transition: color 0.3s;
   }
 
+  &__link_type_main {
+    padding: 4px 12px;
+    background-color: $color-login;
+    color: $grayscale-50;
+    border-radius: 50px;
+    transition: opacity 0.3s;
+  }
+
   &__link:hover {
     color: $color-primary-hover;
   }
@@ -171,6 +179,11 @@
     @extend %GreyLinkActive;
   }
 
+  &__link_type_main:hover {
+    @include MainBtnHover;
+    color: $grayscale-50;
+  }
+
   @media screen and (max-width: $portrait-tablet) {
     &__container {
       padding: 16px 16px 24px;
@@ -183,6 +196,10 @@
   }
 
   @media (hover: hover) {
+    &__button-prev:hover {
+      @include MainBtnHover;
+    }
+
     &__button:hover {
       @include MainBtnHover;
     }
@@ -193,6 +210,11 @@
 
     &__link:hover + &__arrow {
       animation: shake 2s ease infinite;
+    }
+
+    &__link_type_main:hover {
+      @include MainBtnHover;
+      color: $grayscale-50;
     }
   }
 }
