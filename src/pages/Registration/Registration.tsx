@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import '@/pages/Registration/Registration.scss';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Formik } from 'formik';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
@@ -7,6 +8,39 @@ import { AddressType, RegisterSchemaType, SetFieldValueType } from '@/types/type
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/validationSchemes';
+
+// const countries = {
+//   poland: {
+//     postalCode: /^[0-9]{2}-[0-9]{3}$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XX-XXX.',
+//     name: 'Poland',
+//   },
+//   belgium: {
+//     postalCode: /^[0-9]{3,3}0$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XXX0.',
+//     name: 'Belgium',
+//   },
+//   germany: {
+//     postalCode: /^\d{5}$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XXXXX.',
+//     name: 'Germany',
+//   },
+//   austria: {
+//     postalCode: /^\d{4}$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XXXX.',
+//     name: 'Austria',
+//   },
+//   usa: {
+//     postalCode: /^\d{5}(?:-\d{4})?$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XXXXX, либо XXXXX-XXXX.',
+//     name: 'USA',
+//   },
+//   france: {
+//     postalCode: /^\d{4}$/,
+//     errorMessage: 'Почтовый индекс должен иметь формат XXXX.',
+//     name: 'France',
+//   },
+// };
 
 const RegistrationPage = (): ReactElement => {
   const [isAddAddress, setIsAddAddress] = useState(false);
@@ -17,7 +51,6 @@ const RegistrationPage = (): ReactElement => {
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
   const handleRegister = (values: RegisterSchemaType): void => {
-    console.log(values);
   };
 
   const handleAddAddresses = (): void => {
