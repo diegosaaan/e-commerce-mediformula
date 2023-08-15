@@ -39,6 +39,11 @@
     @include GolosRegular(16px, 1, $grayscale-900);
   }
 
+  &__input::-ms-reveal,
+  &__input::-ms-clear {
+    display: none;
+  }
+
   &__input_error {
     color: $error-input;
   }
@@ -61,7 +66,7 @@
     background-image: url('@/assets/images/svg/auth-password.svg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 20px 20px;
+    background-size: 15px 15px;
     width: 20px;
     height: 20px;
     transition: background-image 0.3s;
