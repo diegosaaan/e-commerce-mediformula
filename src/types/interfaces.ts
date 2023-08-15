@@ -104,6 +104,8 @@ export interface IPropsListAddress {
   name: string;
   addresses: AddressType[];
   value?: string;
+  setAddresses?: React.Dispatch<React.SetStateAction<AddressType[]>>;
+  setAddressesAnother?: React.Dispatch<React.SetStateAction<AddressType[]>>;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
