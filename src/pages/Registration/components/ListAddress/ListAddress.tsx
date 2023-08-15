@@ -23,6 +23,10 @@ const ListAddress = ({ addresses, name, onChange }: IPropsListAddress): ReactEle
               <li>Улица: {item.street}</li>
             </ul>
           </Input>
+          <div>
+            <button type="button">x</button>
+            <input type="checkbox" name={String(index)} />
+          </div>
         </li>
       ))}
     </ul>
