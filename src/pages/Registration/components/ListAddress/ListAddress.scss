@@ -1,0 +1,67 @@
+.auth {
+  &__item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__button-delete {
+    width: 10px;
+    height: 10px;
+    background-image: url('@/assets/images/svg/auth-delete.svg');
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    background-position: center;
+    transition: background-image 0.3s;
+  }
+
+  &__button-delete:hover {
+    cursor: pointer;
+    background-image: url('@/assets/images/svg/auth-delete-hover.svg');
+  }
+
+  &__button-delete:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__button-delete:active {
+    @extend %GreyLinkActive;
+  }
+
+  &__button-copy {
+    width: 15px;
+    height: 15px;
+    background-image: url('@/assets/images/svg/auth-copy.svg');
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: center;
+    transition: background-image 0.3s;
+  }
+
+  &__button-copy:hover {
+    cursor: pointer;
+    background-image: url('@/assets/images/svg/auth-copy-hover.svg');
+  }
+
+  &__button-copy:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__button-copy:active {
+    @extend %GreyLinkActive;
+  }
+
+  @media (hover: hover) {
+    &__button-delete:hover {
+      cursor: pointer;
+      background-image: url('@/assets/images/svg/auth-delete-hover.svg');
+    }
+
+    &__button-copy:hover {
+      cursor: pointer;
+      background-image: url('@/assets/images/svg/auth-copy-hover.svg');
+    }
+  }
+}

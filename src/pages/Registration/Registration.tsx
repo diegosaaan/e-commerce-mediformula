@@ -217,7 +217,13 @@ const RegistrationPage = (): ReactElement => {
               {!isShippingAddress && (
                 <>
                   <button className="auth__button-add" type="button" onClick={handleOpenAddressShipping}></button>
-                  <ListAddress name="shipping" onChange={handleChange} addresses={shippingAddresses} />
+                  <ListAddress
+                    name="shipping"
+                    onChange={handleChange}
+                    addresses={shippingAddresses}
+                    setAddresses={setShippingAddresses}
+                    setAddressesAnother={setBillingAddresses}
+                  />
                   <p className="auth__input-error">{errors.shipping && errors.shipping}</p>
                 </>
               )}
@@ -268,7 +274,13 @@ const RegistrationPage = (): ReactElement => {
               {!isBillingAddress && (
                 <>
                   <button className="auth__button-add" type="button" onClick={handleOpenAddressBilling}></button>
-                  <ListAddress name="billing" onChange={handleChange} addresses={billingAddresses} />
+                  <ListAddress
+                    name="billing"
+                    onChange={handleChange}
+                    addresses={billingAddresses}
+                    setAddresses={setBillingAddresses}
+                    setAddressesAnother={setShippingAddresses}
+                  />
                   <p className="auth__input-error">{errors.billing && errors.billing}</p>
                 </>
               )}
