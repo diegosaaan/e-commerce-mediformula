@@ -213,14 +213,14 @@ const RegistrationPage = (): ReactElement => {
 
           <ul className={`auth__list ${isAddAddress ? 'auth__list_active' : 'auth__list_inactive'}`}>
             <li>
-              <h2 className="auth__subtitle">Добавьте адреса для доставок и выберите адрес по умолчанию</h2>
+              <h2 className="auth__subtitle">Добавьте адреса для доставок</h2>
               {!isShippingAddress && (
                 <>
                   <button className="auth__button-add" type="button" onClick={handleOpenAddressShipping}></button>
                   <ListAddress name="shipping" onChange={handleChange} addresses={shippingAddresses} />
+                  <p className="auth__input-error">{errors.shipping && errors.shipping}</p>
                 </>
               )}
-              <p className="auth__input-error">{errors.shipping && errors.shipping}</p>
             </li>
 
             {isShippingAddress && (
@@ -264,14 +264,14 @@ const RegistrationPage = (): ReactElement => {
             )}
 
             <li>
-              <h2 className="auth__subtitle">Добавьте адрес для выставления счетов и выберите адрес по умолчанию</h2>
+              <h2 className="auth__subtitle">Добавьте адреса для выставления счетов</h2>
               {!isBillingAddress && (
                 <>
                   <button className="auth__button-add" type="button" onClick={handleOpenAddressBilling}></button>
                   <ListAddress name="billing" onChange={handleChange} addresses={billingAddresses} />
+                  <p className="auth__input-error">{errors.billing && errors.billing}</p>
                 </>
               )}
-              <p className="auth__input-error">{errors.billing && errors.billing}</p>
             </li>
 
             {isBillingAddress && (
