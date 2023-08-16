@@ -1,16 +1,16 @@
+import './AuthPreloader.scss';
 import React, { ReactElement } from 'react';
-import './Preloader.scss';
 
-const Preloader = (): ReactElement => {
+const LoginPreloader = (): ReactElement => {
   return (
-    <>
+    <div className="auth-preloader">
       <div className="preloader">
         <div className="preloader__container">
           <span className="preloader__round"></span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Preloader;
+export default LoginPreloader;

@@ -2,16 +2,24 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
+import { loader } from '@/components/AuthForm/AuthForm';
 import PrivateRoute from './PrivateRoute';
-import { MainPage, NotFoundPage, CartPage, CatalogPage, UserProfilePage, AboutUsPage } from './lazyPages';
-
-import LoginPage from '@/pages/Login/Login';
-import RegistrationPage from '@/pages/Registration/Registration';
+import {
+  MainPage,
+  NotFoundPage,
+  CartPage,
+  CatalogPage,
+  UserProfilePage,
+  AboutUsPage,
+  LoginPage,
+  RegistrationPage,
+} from './lazyPages';
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <PrivateRoute>{<LoginPage />}</PrivateRoute>,
+    loader,
   },
   {
     path: '/registration',

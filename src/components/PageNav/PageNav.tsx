@@ -15,6 +15,12 @@ const PageNav = (): ReactElement => {
   const { isUserLoggedIn, signOut } = useAuth();
   const navigate = useNavigate();
 
+  const handleScrollToTop = (): void => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
   const handleLogOut = (): void => signOut(() => navigate('/'));
 
   const handleExampleSumbit = (e: FormEvent<HTMLFormElement>): void => {
@@ -121,7 +127,7 @@ const PageNav = (): ReactElement => {
         <ul className="header__nav-extra-mobile">
           <li>
             <NavLink to="/" className={setActive}>
-              <Button className="header__button-main-mobile" type="button">
+              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-icon-mobile_type_main"></div>
                 <p className="header__button-text-mobile">Главная</p>
               </Button>
@@ -129,7 +135,7 @@ const PageNav = (): ReactElement => {
           </li>
           <li>
             <NavLink to="/about-us" className={setActive}>
-              <Button className="header__button-main-mobile" type="button">
+              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-icon-mobile_type_about"></div>
                 <p className="header__button-text-mobile">О нас</p>
               </Button>
@@ -137,7 +143,7 @@ const PageNav = (): ReactElement => {
           </li>
           <li>
             <NavLink to="/catalog" className={setActive}>
-              <Button className="header__button-main-mobile" type="button">
+              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-catalog-icon-mobile_type_catalogue"></div>
                 <p className="header__button-text-mobile">Каталог</p>
               </Button>
@@ -145,7 +151,11 @@ const PageNav = (): ReactElement => {
           </li>
           <li>
             <NavLink to="/cart" className={setActive}>
-              <Button className="header__button-main-mobile header__button-main-mobile_type_cart" type="button">
+              <Button
+                onClick={handleScrollToTop}
+                className="header__button-main-mobile header__button-main-mobile_type_cart"
+                type="button"
+              >
                 <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_cart"></div>
                 <p className="header__button-text-mobile">Корзина</p>
                 <p className="header__button-cart-text header__button-cart-text_type_mobile">3</p>
@@ -154,7 +164,7 @@ const PageNav = (): ReactElement => {
           </li>
           <li>
             <NavLink to="/user-profile" className={setActive}>
-              <Button className="header__button-main-mobile" type="button">
+              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
                 <p className="header__button-text-mobile">Профиль</p>
               </Button>

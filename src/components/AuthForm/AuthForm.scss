@@ -25,6 +25,9 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   &::before {
     content: '';
@@ -38,7 +41,7 @@
     height: 100%;
     background-color: rgba(0, 102, 255, 0.9);
     opacity: 0.6;
-    z-index: -9;
+    z-index: 1;
   }
 
   &__background {
