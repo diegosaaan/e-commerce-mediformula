@@ -13,20 +13,31 @@ const RegistrationPage = (): ReactElement => {
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
 
-  const [accordionShippingTitle, setAcordionShippingTitle] = useState('Польша');
-  const [postalCodeShippingValue, setPostalCodeShippingValue] = useState('');
-  const [isPostalCodeShippingError, setIsPostalCodeShippingError] = useState(true);
+  const [shippingState, setShippingState] = useState({
+    countryValue: 'Польша',
+    cityValue: '',
+    isCityError: true,
+    streetValue: '',
+    isStreetError: true,
+    postalCodeValue: '',
+    isPostalCodeError: true,
+  });
 
-  const [accordionBillingTitle, setAcordionBillingTitle] = useState('Польша');
-  const [postalCodeBillingValue, setPostalCodeBillingValue] = useState('');
-  const [isPostalCodeBillingError, setIsPostalCodeBillingError] = useState(true);
+  const [billingState, setBillingState] = useState({
+    countryValue: 'Польша',
+    cityValue: '',
+    isCityError: true,
+    streetValue: '',
+    isStreetError: true,
+    postalCodeValue: '',
+    isPostalCodeError: true,
+  });
 
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
   const handleRegister = (values: RegisterSchemaType): void => {
     console.log(values);
-    console.log(1);
   };
 
   const handleAddAddresses = (): void => {
@@ -56,10 +67,10 @@ const RegistrationPage = (): ReactElement => {
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: accordionShippingTitle,
-        city: values.shippingCity,
-        index: postalCodeShippingValue,
-        street: values.shippingStreet,
+        country: shippingState.countryValue,
+        city: shippingState.cityValue,
+        index: shippingState.postalCodeValue,
+        street: shippingState.streetValue,
       },
     ]);
   };
@@ -73,10 +84,10 @@ const RegistrationPage = (): ReactElement => {
     setBillingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: accordionBillingTitle,
-        city: values.billingCity,
-        index: postalCodeBillingValue,
-        street: values.billingStreet,
+        country: billingState.countryValue,
+        city: billingState.cityValue,
+        index: billingState.postalCodeValue,
+        street: billingState.streetValue,
       },
     ]);
   };
@@ -139,10 +150,10 @@ const RegistrationPage = (): ReactElement => {
                 name="firstName"
                 htmlFor="firstName"
                 isInputPassword={false}
-                onChange={handleChange}
                 value={values.firstName}
                 errors={errors.firstName}
                 touched={touched.firstName}
+                onChange={handleChange}
               />
             </li>
             <li>
@@ -152,10 +163,10 @@ const RegistrationPage = (): ReactElement => {
                 name="lastName"
                 htmlFor="lastName"
                 isInputPassword={false}
-                onChange={handleChange}
                 value={values.lastName}
                 errors={errors.lastName}
                 touched={touched.lastName}
+                onChange={handleChange}
               />
             </li>
             <li>
@@ -243,25 +254,14 @@ const RegistrationPage = (): ReactElement => {
                 <AddressFields
                   onChange={handleChange}
                   name="shipping"
-                  city={values.shippingCity}
-                  street={values.shippingStreet}
-                  cityErrors={errors.shippingCity}
-                  streetErrors={errors.shippingStreet}
-                  cityTouched={touched.shippingCity}
-                  streetTouched={touched.shippingStreet}
-                  setIsPostalCodeError={setIsPostalCodeShippingError}
-                  accordionTitle={accordionShippingTitle}
-                  setAcordionTitle={setAcordionShippingTitle}
-                  postalCodeValue={postalCodeShippingValue}
-                  setPostalCodeValue={setPostalCodeShippingValue}
+                  addressesState={shippingState}
+                  setAddressesState={setShippingState}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(isPostalCodeShippingError || errors.shippingCity || errors.shippingStreet) ||
-                    !values.shippingCity ||
-                    !values.shippingStreet
+                    !!(shippingState.isPostalCodeError || shippingState.isCityError || shippingState.isStreetError)
                   }
                   onClick={(): void => handleAddShippingAddress(values, setFieldValue)}
                 >
@@ -292,25 +292,14 @@ const RegistrationPage = (): ReactElement => {
                 <AddressFields
                   onChange={handleChange}
                   name="billing"
-                  city={values.billingCity}
-                  street={values.billingStreet}
-                  cityErrors={errors.billingCity}
-                  streetErrors={errors.billingStreet}
-                  cityTouched={touched.billingCity}
-                  streetTouched={touched.billingStreet}
-                  setIsPostalCodeError={setIsPostalCodeBillingError}
-                  accordionTitle={accordionBillingTitle}
-                  setAcordionTitle={setAcordionBillingTitle}
-                  postalCodeValue={postalCodeBillingValue}
-                  setPostalCodeValue={setPostalCodeBillingValue}
+                  addressesState={billingState}
+                  setAddressesState={setBillingState}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(isPostalCodeBillingError || errors.billingCity || errors.billingStreet) ||
-                    !values.billingCity ||
-                    !values.billingStreet
+                    !!(billingState.isPostalCodeError || billingState.isCityError || billingState.isStreetError)
                   }
                   onClick={(): void => handleAddBillingAddress(values, setFieldValue)}
                 >

@@ -7,51 +7,127 @@ import selectData from '../fieldsData/selectData';
 
 const AddressFields = ({
   name,
-  onChange,
-  city,
-  street,
-  cityErrors,
-  streetErrors,
-  cityTouched,
-  setIsPostalCodeError,
-  streetTouched,
-  accordionTitle,
-  setAcordionTitle,
-  postalCodeValue,
-  setPostalCodeValue,
+  addressesState: { countryValue, cityValue, streetValue, postalCodeValue },
+  setAddressesState,
 }: IPropsAddressFields): ReactElement => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('Поле обязательно к заполнению');
+  const [errorMessages, setErrorMessages] = useState({
+    cityErrorValue: '',
+    streetErrorValue: '',
+    postalCodeErrorValue: '',
+    emptyErrorMessage: '',
+    defaultErrorMessage: 'Поле обязательно к заполнению',
+    cityErrorMessage: 'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр.',
+    streetErrorMessage: 'Поле должно содержать хотя бы один символ',
+  });
 
-  const handlePostalCodeError = (): void => {
+  const checkIsValidPostalCodeValue = (): void => {
     if (!postalCodeValue) {
-      setErrorMessage('Поле обязательно к заполнению');
+      setErrorMessages((prevState) => ({
+        ...prevState,
+        postalCodeErrorValue: errorMessages.defaultErrorMessage,
+      }));
       return;
     }
 
-    const matchingItem = selectData.find(({ ruName }) => ruName === accordionTitle);
+    const matchingItem = selectData.find(({ ruName }) => ruName === countryValue);
 
-    setErrorMessage(
-      matchingItem && matchingItem.postalCode.test(postalCodeValue)
-        ? ''
-        : `${matchingItem?.errorMessage}, где Х - цифра` || ''
-    );
+    setErrorMessages((prevState) => ({
+      ...prevState,
+      postalCodeErrorValue:
+        matchingItem && matchingItem.postalCode.test(postalCodeValue)
+          ? ''
+          : `${matchingItem?.errorMessage}, где Х - цифра` || '',
+    }));
+  };
+
+  const checkIsValidCityValue = (): void => {
+    if (!cityValue) {
+      setErrorMessages((prevState) => ({
+        ...prevState,
+        cityErrorValue: errorMessages.defaultErrorMessage,
+      }));
+      return;
+    }
+
+    if (/^[^\d!@#$%^&*]*$/.test(cityValue)) {
+      setErrorMessages((prevState) => ({
+        ...prevState,
+        cityErrorValue: errorMessages.emptyErrorMessage,
+      }));
+      return;
+    }
+
+    if (!/^[^\d!@#$%^&*]*$/.test(cityValue)) {
+      setErrorMessages((prevState) => ({
+        ...prevState,
+        cityErrorValue: errorMessages.cityErrorMessage,
+      }));
+    }
+  };
+
+  const checkIsValidStreetValue = (): void => {
+    if (!streetValue) {
+      setErrorMessages((prevState) => ({
+        ...prevState,
+        streetErrorValue: errorMessages.defaultErrorMessage,
+      }));
+      return;
+    }
+
+    setErrorMessages((prevState) => ({
+      ...prevState,
+      streetErrorValue: errorMessages.emptyErrorMessage,
+    }));
+  };
+
+  const checkIsValidValues = (): void => {
+    checkIsValidPostalCodeValue();
+    checkIsValidCityValue();
+    checkIsValidStreetValue();
   };
 
   const handlePostalCodeValue = (event: FormEvent): void => {
     const eventTarget = event.target as HTMLInputElement;
-    setPostalCodeValue(eventTarget.value);
+    setAddressesState((prevState) => ({
+      ...prevState,
+      postalCodeValue: eventTarget.value,
+    }));
+  };
+
+  const handleCityValue = (event: FormEvent): void => {
+    const eventTarget = event.target as HTMLInputElement;
+    setAddressesState((prevState) => ({
+      ...prevState,
+      cityValue: eventTarget.value,
+    }));
+  };
+
+  const handleStreetValue = (event: FormEvent): void => {
+    const eventTarget = event.target as HTMLInputElement;
+    setAddressesState((prevState) => ({
+      ...prevState,
+      streetValue: eventTarget.value,
+    }));
   };
 
   const handleChooseAccordionItem = (event: MouseEvent | KeyboardEvent): void => {
     const target = event.target as HTMLLIElement;
+    const newCountry = target.textContent || '';
 
     if (target && target.textContent) {
       if (event.type === 'keydown' && (event as KeyboardEvent).key === 'Enter') {
-        setAcordionTitle(target.textContent);
+        setAddressesState((prevState) => ({
+          ...prevState,
+          countryValue: newCountry,
+        }));
+
         setIsAccordionOpen(!isAccordionOpen);
       } else if (event.type === 'click') {
-        setAcordionTitle(target.textContent);
+        setAddressesState((prevState) => ({
+          ...prevState,
+          countryValue: newCountry,
+        }));
         setIsAccordionOpen(!isAccordionOpen);
       }
     }
@@ -68,9 +144,22 @@ const AddressFields = ({
   };
 
   useEffect(() => {
-    handlePostalCodeError();
-    setIsPostalCodeError(!!errorMessage);
-  }, [postalCodeValue, accordionTitle, errorMessage]);
+    checkIsValidValues();
+    setAddressesState((prevState) => ({
+      ...prevState,
+      isPostalCodeError: !!errorMessages.postalCodeErrorValue,
+      isCityError: !!errorMessages.cityErrorValue,
+      isStreetError: !!errorMessages.streetErrorValue,
+    }));
+  }, [
+    countryValue,
+    cityValue,
+    streetValue,
+    postalCodeValue,
+    errorMessages.postalCodeErrorValue,
+    errorMessages.cityErrorValue,
+    errorMessages.streetErrorValue,
+  ]);
 
   return (
     <ul className="auth__list auth__list_active">
@@ -78,13 +167,13 @@ const AddressFields = ({
         <Accordion
           sectionName="auth"
           listName="select"
-          title={accordionTitle}
+          title={countryValue}
           onClickAccordion={handleClickAccordion}
           onKeydownAccordion={handleKeydownAccordion}
           isOpen={isAccordionOpen}
         >
           {selectData
-            .filter(({ ruName }) => accordionTitle !== ruName)
+            .filter(({ ruName }) => countryValue !== ruName)
             .map(({ ruName, engName }) => (
               <li
                 className="auth__select-list-item"
@@ -105,10 +194,9 @@ const AddressFields = ({
           placeholder="Город*"
           name={`${name}City`}
           htmlFor={`${name}City`}
-          onChange={onChange}
-          value={city}
-          errors={cityErrors}
-          touched={cityTouched}
+          onChange={handleCityValue}
+          value={cityValue}
+          errors={errorMessages.cityErrorValue}
         />
       </li>
       <li>
@@ -119,7 +207,7 @@ const AddressFields = ({
           htmlFor={`${name}Index`}
           onChange={handlePostalCodeValue}
           value={postalCodeValue}
-          errors={errorMessage}
+          errors={errorMessages.postalCodeErrorValue}
         />
       </li>
       <li>
@@ -128,10 +216,9 @@ const AddressFields = ({
           placeholder="Улица*"
           name={`${name}Street`}
           htmlFor={`${name}Street`}
-          onChange={onChange}
-          value={street}
-          errors={streetErrors}
-          touched={streetTouched}
+          onChange={handleStreetValue}
+          value={streetValue}
+          errors={errorMessages.streetErrorValue}
         />
       </li>
     </ul>
