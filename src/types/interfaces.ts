@@ -35,7 +35,7 @@ export interface IPropsCard {
   priceBefore?: number;
   bonus?: number;
   discount?: number;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export interface IPropsTag {
