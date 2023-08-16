@@ -1,10 +1,11 @@
 .product-card {
-  cursor: pointer;
+  position: relative;
   display: block;
-  width: 304px;
   border-radius: 16px;
-  padding: 16px 18px 18px;
-  transition: box-shadow 0.3s;
+  padding: 20px;
+  margin: 0px 10px;
+  height: fit-content;
+  cursor: pointer;
 
   &__image-container {
     display: block;
@@ -27,10 +28,8 @@
   }
 
   &__image {
-    display: block;
-    margin: auto;
-    height: 222px;
-    width: 222px;
+    display: flex;
+    justify-content: center;
   }
 
   &__rating-container {
@@ -112,39 +111,20 @@
   @media (hover: hover) {
     &:hover {
       box-shadow:
-        0px 5px 40px 0px rgba(1, 31, 58, 0.1),
-        0px 4px 13px 0px rgba(1, 31, 58, 0.04);
+        0px 5px 15px 0px rgba(1, 31, 58, 0.1),
+        0px 5px 15px 0px rgba(1, 31, 58, 0.04);
 
       &:hover .product-card__button-container {
         visibility: visible;
         opacity: 1;
-        transition: opacity 0.3s;
         display: flex;
       }
     }
   }
 
   @media screen and (max-width: $tablet) {
-    width: calc(160px + (304 - 160) * (100vw - 360px) / (767.9 - 360));
-    border-radius: 0;
-    padding: 0;
-
     &__discount-text {
       @include GolosMedium(12px, 100%, $grayscale-50);
-    }
-
-    &__image {
-      height: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
-      width: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
-    }
-
-    &__image-image {
-      height: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
-      width: calc(144px + (222 - 144) * (100vw - 360px) / (767.9 - 360));
-    }
-
-    &__rating-container {
-      margin-top: 4px;
     }
 
     &__rating-icon {
@@ -189,7 +169,7 @@
       visibility: visible;
       opacity: 1;
       display: flex;
-      margin-top: 10px;
+      margin-top: 24px;
     }
   }
 }
