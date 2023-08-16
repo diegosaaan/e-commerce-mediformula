@@ -2,10 +2,10 @@ import React, { ReactElement, useLayoutEffect, useRef, useState } from 'react';
 import '@/components/ProductCardsSection/ProductCardsSection.scss';
 import '@/pages/App.scss';
 import Card from '@/components/Card/Card';
-import imagePath from '@/assets/images/png/card-product-image-example.png';
 import { IPropsCardsSection } from '@/types/interfaces';
 import Button from '@/components/Button/Button';
 import Carousel from '../Carousel/Carousel';
+import ProductCardsData from './ProductCardsData';
 
 const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElement => {
   console.log('I am');
@@ -14,11 +14,13 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
 
   useLayoutEffect(() => {
     console.log('useLayoutEffect is running');
-    if (cardRef.current) {
-      const width = cardRef.current.offsetWidth;
-      console.log('Width inside useLayoutEffect:', width);
-      setCardWidth(width);
-    }
+    setTimeout(() => {
+      if (cardRef.current) {
+        const width = cardRef.current.offsetWidth;
+        console.log('Width inside useLayoutEffect:', width);
+        setCardWidth(width);
+      }
+    }, 100);
   }, []);
 
   return (
@@ -39,127 +41,22 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
       </div>
       <div className="cardsSection__cards-container">
         <Carousel cardWidth={cardWidth}>
-          <Card
-            ref={cardRef}
-            imagePath={imagePath}
-            rating={4.8}
-            text="1Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="2Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="3Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="4Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="5Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="6Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
-          <Card
-            imagePath={imagePath}
-            rating={4.8}
-            text="Кислородный концентратор JAY-10 двухпоточный"
-            price={81938}
-            priceBefore={85348}
-            bonus={450}
-            discount={10}
-            onClick={(): void => {
-              console.log('Clicked!');
-            }}
-          />
+          {ProductCardsData.map((card, index) => (
+            <Card
+              key={index}
+              ref={index === 0 ? cardRef : null}
+              imagePath={card.imagePath}
+              rating={card.rating}
+              text={card.text}
+              price={card.price}
+              priceBefore={card.priceBefore}
+              bonus={card.bonus}
+              discount={card.discount}
+              onClick={(): void => {
+                console.log('Clicked!');
+              }}
+            />
+          ))}
         </Carousel>
       </div>
     </section>
