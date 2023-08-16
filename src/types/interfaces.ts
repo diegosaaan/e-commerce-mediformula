@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, ReactNode } from 'react';
+import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch, SetStateAction } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
 
@@ -14,7 +14,8 @@ export interface IAccordionProps {
   title: string;
   children: ReactElement[];
   isOpen: boolean;
-  onToogleAccordion: () => void;
+  onClickAccordion: (event: MouseEvent) => void;
+  onKeydownAccordion?: (event: KeyboardEvent) => void;
 }
 
 export interface IPropsButton {
@@ -72,7 +73,7 @@ export interface IPropsCard {
 }
 
 export interface IPropsAuthInput {
-  type: 'search' | 'text' | 'password' | 'email' | 'date' | 'radio';
+  type: string;
   placeholder?: string;
   name: string;
   htmlFor: string;
@@ -111,17 +112,16 @@ export interface IPropsListAddress {
 
 export interface IPropsAddressFields {
   name: string;
-  country?: string;
   city?: string;
-  index?: string;
   street?: string;
-  countryErrors?: string;
   cityErrors?: string;
-  indexErrors?: string;
   streetErrors?: string;
-  countryTouched?: boolean;
+  setIsPostalCodeError: Dispatch<SetStateAction<boolean>>;
   cityTouched?: boolean;
-  indexTouched?: boolean;
   streetTouched?: boolean;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  accordionTitle: string;
+  setAcordionTitle: Dispatch<SetStateAction<string>>;
+  postalCodeValue: string;
+  setPostalCodeValue: Dispatch<SetStateAction<string>>;
 }
