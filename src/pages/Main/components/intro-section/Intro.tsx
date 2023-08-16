@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import '@/pages/Main/components/intro-section/Intro.scss';
 import '@/pages/App.scss';
+import { Link } from 'react-router-dom';
 import IntroCard from './IntroCard';
-import imagePath from '@/assets/images/png/intro-image.png';
+import imagePath from '@/assets/images/png/intro-image-banner.png';
 import svgShieldPath from '@/assets/images/svg/intro-card-shield.svg';
 import svgLikePath from '@/assets/images/svg/intro-card-like.svg';
 import svgHandsShieldPath from '@/assets/images/svg/intro-card-hands-shield.svg';
@@ -13,8 +14,10 @@ const Intro = (): ReactElement => {
     <section className="_container intro">
       <div className="intro__banner">
         <div className="intro__text-container">
-          <p className="intro__promo-text">10 000 медицинских товаров с&nbsp;доставкой до 3 дней</p>
-          <h1 className="intro__header">Медицинская техника</h1>
+          <p className="intro__promo-text">Акция действует до 31 декабря 2023</p>
+          <Link className="intro__banner-text" to="/promo">
+            Скидка на массажные накидки MEDISANA до 15%
+          </Link>
         </div>
         <div className="intro__image-container">
           <img className="intro__image" src={`${imagePath}`} alt="Intro image" />
