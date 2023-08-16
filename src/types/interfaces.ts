@@ -1,4 +1,4 @@
-import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch, SetStateAction } from 'react';
+import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
 
@@ -110,18 +110,19 @@ export interface IPropsListAddress {
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
+export interface IAuthAddressesState {
+  countryValue: string;
+  cityValue: string;
+  isCityError: boolean;
+  streetValue: string;
+  isStreetError: boolean;
+  postalCodeValue: string;
+  isPostalCodeError: boolean;
+}
+
 export interface IPropsAddressFields {
   name: string;
-  city?: string;
-  street?: string;
-  cityErrors?: string;
-  streetErrors?: string;
-  setIsPostalCodeError: Dispatch<SetStateAction<boolean>>;
-  cityTouched?: boolean;
-  streetTouched?: boolean;
+  addressesState: IAuthAddressesState;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
-  accordionTitle: string;
-  setAcordionTitle: Dispatch<SetStateAction<string>>;
-  postalCodeValue: string;
-  setPostalCodeValue: Dispatch<SetStateAction<string>>;
+  setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
 }
