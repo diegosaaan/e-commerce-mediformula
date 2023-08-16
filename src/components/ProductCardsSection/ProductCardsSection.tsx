@@ -17,18 +17,18 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
   const nextRef = useRef(null);
 
   return (
-    <section className="_container cardsSection">
-      <div className="cardsSection__header-container">
+    <section className="_container cards-section">
+      <div className="cards-section__header-container">
         <h2 className="_heading">
           {header}
-          <sup className="cardsSection__counter">{counter}</sup>
+          <sup className="cards-section__counter">{counter}</sup>
         </h2>
-        <Link className="textButton" to="/catalog">
+        <Link className="text-button" to="/catalog">
           ⟶ Смотреть все
         </Link>
       </div>
-      <div className="cardsSection__cards-container">
-        <button className="arrow arrow--prev">
+      <div className="cards-section__cards-container">
+        <button className="arrow-swiper arrow--prev">
           <img src={arrowLeftPath} ref={prevRef} alt="Shevron Left" />
         </button>
         <Swiper
@@ -74,7 +74,7 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
             </SwiperSlide>
           ))}
         </Swiper>
-        <button ref={nextRef} className="arrow arrow--next">
+        <button ref={nextRef} className="arrow-swiper arrow--next">
           <img src={arrowRightPath} alt="Shevron Right" />
         </button>
       </div>

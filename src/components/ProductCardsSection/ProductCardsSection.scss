@@ -1,4 +1,4 @@
-.cardsSection {
+.cards-section {
   margin-top: 80px;
 
   &__header-container {
@@ -31,4 +31,24 @@
   padding: 20px 0px !important;
   width: fit-content !important;
   max-width: 100% !important;
+}
+
+.arrow-swiper {
+  height: 36px;
+  align-self: center;
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+
+  &:focus {
+    @extend %TextBtnFocus;
+  }
+
+  &:active {
+    @extend %IconBtnActive;
+  }
 }

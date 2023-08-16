@@ -41,7 +41,7 @@
   }
 }
 
-.textButton {
+.text-button {
   @include GolosRegular(16px, 100%, $grayscale-900);
 
   @media (hover: hover) {
