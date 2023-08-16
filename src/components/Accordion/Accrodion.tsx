@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { KeyboardEvent, ReactElement } from 'react';
 import { IAccordionProps } from '@/types/interfaces';
 
 export default function Accordion({
@@ -7,13 +7,16 @@ export default function Accordion({
   title,
   children,
   isOpen,
-  onToogleAccordion,
+  onClickAccordion,
+  onKeydownAccordion,
 }: IAccordionProps): ReactElement {
   return (
-    <div className={`${sectionName}__${listName}-accordion`}>
+    <div className={`${sectionName}__${listName}`}>
       <h6
+        tabIndex={0}
         className={`${sectionName}__list-heading ${isOpen ? `${sectionName}__accordion-heading--active` : ''}`}
-        onClick={onToogleAccordion}
+        onClick={onClickAccordion}
+        onKeyDown={onKeydownAccordion ? (event: KeyboardEvent): void => onKeydownAccordion(event) : undefined}
       >
         {title}
       </h6>
