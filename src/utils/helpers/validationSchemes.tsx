@@ -5,7 +5,10 @@ const MINIMUM_AGE = 13;
 export const LoginSchema = Yup.object().shape({
   email: Yup.string()
     .required('Поле обязательно к заполнению')
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Неправильный формат адреса электронной почты')
+    .matches(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      'Поле должно содержать адрес электронной почты (например, example@email.com)'
+    )
     .test(
       'no-leading-trailing-spaces',
       'Адрес электронной почты не должен содержать начальных или завершающих пробелов',
@@ -28,12 +31,18 @@ export const LoginSchema = Yup.object().shape({
 export const RegisterSchema = Yup.object().shape({
   firstName: Yup.string()
     .required('Поле обязательно к заполнению')
-    .min(1, 'Имя пользователя должно содержать хоты бы 1 букву')
-    .matches(/^[A-Za-zА-Яа-я]+$/u, 'Имя пользователя должно содержать только буквы'),
+    .min(1, 'Поле должно содержать хотя бы один символ')
+    .matches(
+      /^[A-Za-zА-Яа-я]+$/u,
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр'
+    ),
   lastName: Yup.string()
     .required('Поле обязательно к заполнению')
-    .min(1, 'Фамилия пользователя должна содержать хоты бы 1 букву')
-    .matches(/^[A-Za-zА-Яа-я]+$/u, 'Фамилия пользователя должна содержать только буквы'),
+    .min(1, 'Поле должно содержать хотя бы один символ')
+    .matches(
+      /^[A-Za-zА-Яа-я]+$/u,
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр'
+    ),
   date: Yup.string()
     .required('Поле обязательно к заполнению')
     .test('valid-age', `Вы должны быть старше ${MINIMUM_AGE} лет`, (value) => {
@@ -44,7 +53,10 @@ export const RegisterSchema = Yup.object().shape({
     }),
   email: Yup.string()
     .required('Поле обязательно к заполнению')
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Неправильный формат адреса электронной почты')
+    .matches(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      'Поле должно содержать адрес электронной почты (например, example@email.com)'
+    )
     .test(
       'no-leading-trailing-spaces',
       'Адрес электронной почты не должен содержать начальных или завершающих пробелов',
@@ -67,8 +79,7 @@ export const RegisterSchema = Yup.object().shape({
     .test('password-match', 'Пароли не совпадают', (value, testContext) => {
       const parentPassword = testContext.parent.password;
       return value === parentPassword;
-    })
-    .min(8, 'Пароль должен содержать не менее 8 символов'),
+    }),
 
   shipping: Yup.string().required('Выберите вариант доставки по умолчанию'),
   billing: Yup.string().required('Выберите вариант выставления счета по умолчанию'),
