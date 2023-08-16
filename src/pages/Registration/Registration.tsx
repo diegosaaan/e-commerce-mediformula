@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import '@/pages/Registration/Registration.scss';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Formik } from 'formik';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
@@ -9,49 +8,19 @@ import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/validationSchemes';
 
-// const countries = {
-//   poland: {
-//     postalCode: /^[0-9]{2}-[0-9]{3}$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XX-XXX.',
-//     name: 'Poland',
-//   },
-//   belgium: {
-//     postalCode: /^[0-9]{3,3}0$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XXX0.',
-//     name: 'Belgium',
-//   },
-//   germany: {
-//     postalCode: /^\d{5}$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XXXXX.',
-//     name: 'Germany',
-//   },
-//   austria: {
-//     postalCode: /^\d{4}$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XXXX.',
-//     name: 'Austria',
-//   },
-//   usa: {
-//     postalCode: /^\d{5}(?:-\d{4})?$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XXXXX, либо XXXXX-XXXX.',
-//     name: 'USA',
-//   },
-//   france: {
-//     postalCode: /^\d{4}$/,
-//     errorMessage: 'Почтовый индекс должен иметь формат XXXX.',
-//     name: 'France',
-//   },
-// };
-
 const RegistrationPage = (): ReactElement => {
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
+  const [accordionTitle, setAcordionTitle] = useState('Польша');
+  const [postalCodeValue, setPostalCodeValue] = useState('');
+  const [isPostalCodeError, setIsPostalCodeError] = useState(true);
 
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
-  const handleRegister = (values: RegisterSchemaType): void => {
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleRegister = (values: RegisterSchemaType): void => {};
 
   const handleAddAddresses = (): void => {
     setIsAddAddress(true);
@@ -80,9 +49,9 @@ const RegistrationPage = (): ReactElement => {
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: values.shippingCountry,
+        country: accordionTitle,
         city: values.shippingCity,
-        index: values.shippingIndex,
+        index: postalCodeValue,
         street: values.shippingStreet,
       },
     ]);
@@ -267,32 +236,24 @@ const RegistrationPage = (): ReactElement => {
                 <AddressFields
                   onChange={handleChange}
                   name="shipping"
-                  country={values.shippingCountry}
                   city={values.shippingCity}
-                  index={values.shippingIndex}
                   street={values.shippingStreet}
-                  countryErrors={errors.shippingCountry}
                   cityErrors={errors.shippingCity}
-                  indexErrors={errors.shippingIndex}
                   streetErrors={errors.shippingStreet}
-                  countryTouched={touched.shippingCountry}
                   cityTouched={touched.shippingCity}
-                  indexTouched={touched.shippingIndex}
                   streetTouched={touched.shippingStreet}
+                  setIsPostalCodeError={setIsPostalCodeError}
+                  accordionTitle={accordionTitle}
+                  setAcordionTitle={setAcordionTitle}
+                  postalCodeValue={postalCodeValue}
+                  setPostalCodeValue={setPostalCodeValue}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(
-                      errors.shippingCity ||
-                      errors.shippingCountry ||
-                      errors.shippingIndex ||
-                      errors.shippingStreet
-                    ) ||
+                    !!(isPostalCodeError || errors.shippingCity || errors.shippingStreet) ||
                     !values.shippingCity ||
-                    !values.shippingCountry ||
-                    !values.shippingIndex ||
                     !values.shippingStreet
                   }
                   onClick={(): void => handleAddShippingAddress(values, setFieldValue)}
@@ -324,27 +285,24 @@ const RegistrationPage = (): ReactElement => {
                 <AddressFields
                   onChange={handleChange}
                   name="billing"
-                  country={values.billingCountry}
                   city={values.billingCity}
-                  index={values.billingIndex}
                   street={values.billingStreet}
-                  countryErrors={errors.billingCountry}
                   cityErrors={errors.billingCity}
-                  indexErrors={errors.billingIndex}
                   streetErrors={errors.billingStreet}
-                  countryTouched={touched.billingCountry}
                   cityTouched={touched.billingCity}
-                  indexTouched={touched.billingIndex}
                   streetTouched={touched.billingStreet}
+                  setIsPostalCodeError={setIsPostalCodeError}
+                  accordionTitle={accordionTitle}
+                  setAcordionTitle={setAcordionTitle}
+                  postalCodeValue={postalCodeValue}
+                  setPostalCodeValue={setPostalCodeValue}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(errors.billingCity || errors.billingCountry || errors.billingIndex || errors.billingStreet) ||
+                    !!(isPostalCodeError || errors.billingCity || errors.billingStreet) ||
                     !values.billingCity ||
-                    !values.billingCountry ||
-                    !values.billingIndex ||
                     !values.billingStreet
                   }
                   onClick={(): void => handleAddBillingAddress(values, setFieldValue)}
