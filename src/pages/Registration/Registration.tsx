@@ -12,9 +12,14 @@ const RegistrationPage = (): ReactElement => {
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
-  const [accordionTitle, setAcordionTitle] = useState('Польша');
-  const [postalCodeValue, setPostalCodeValue] = useState('');
-  const [isPostalCodeError, setIsPostalCodeError] = useState(true);
+
+  const [accordionShippingTitle, setAcordionShippingTitle] = useState('Польша');
+  const [postalCodeShippingValue, setPostalCodeShippingValue] = useState('');
+  const [isPostalCodeShippingError, setIsPostalCodeShippingError] = useState(true);
+
+  const [accordionBillingTitle, setAcordionBillingTitle] = useState('Польша');
+  const [postalCodeBillingValue, setPostalCodeBillingValue] = useState('');
+  const [isPostalCodeBillingError, setIsPostalCodeBillingError] = useState(true);
 
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
@@ -49,9 +54,9 @@ const RegistrationPage = (): ReactElement => {
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: accordionTitle,
+        country: accordionShippingTitle,
         city: values.shippingCity,
-        index: postalCodeValue,
+        index: postalCodeShippingValue,
         street: values.shippingStreet,
       },
     ]);
@@ -66,9 +71,9 @@ const RegistrationPage = (): ReactElement => {
     setBillingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: values.billingCountry,
+        country: accordionBillingTitle,
         city: values.billingCity,
-        index: values.billingIndex,
+        index: postalCodeBillingValue,
         street: values.billingStreet,
       },
     ]);
@@ -242,17 +247,17 @@ const RegistrationPage = (): ReactElement => {
                   streetErrors={errors.shippingStreet}
                   cityTouched={touched.shippingCity}
                   streetTouched={touched.shippingStreet}
-                  setIsPostalCodeError={setIsPostalCodeError}
-                  accordionTitle={accordionTitle}
-                  setAcordionTitle={setAcordionTitle}
-                  postalCodeValue={postalCodeValue}
-                  setPostalCodeValue={setPostalCodeValue}
+                  setIsPostalCodeError={setIsPostalCodeShippingError}
+                  accordionTitle={accordionShippingTitle}
+                  setAcordionTitle={setAcordionShippingTitle}
+                  postalCodeValue={postalCodeShippingValue}
+                  setPostalCodeValue={setPostalCodeShippingValue}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(isPostalCodeError || errors.shippingCity || errors.shippingStreet) ||
+                    !!(isPostalCodeShippingError || errors.shippingCity || errors.shippingStreet) ||
                     !values.shippingCity ||
                     !values.shippingStreet
                   }
@@ -291,17 +296,17 @@ const RegistrationPage = (): ReactElement => {
                   streetErrors={errors.billingStreet}
                   cityTouched={touched.billingCity}
                   streetTouched={touched.billingStreet}
-                  setIsPostalCodeError={setIsPostalCodeError}
-                  accordionTitle={accordionTitle}
-                  setAcordionTitle={setAcordionTitle}
-                  postalCodeValue={postalCodeValue}
-                  setPostalCodeValue={setPostalCodeValue}
+                  setIsPostalCodeError={setIsPostalCodeBillingError}
+                  accordionTitle={accordionBillingTitle}
+                  setAcordionTitle={setAcordionBillingTitle}
+                  postalCodeValue={postalCodeBillingValue}
+                  setPostalCodeValue={setPostalCodeBillingValue}
                 />
                 <button
                   className="auth__button auth__button_type_add"
                   type="button"
                   disabled={
-                    !!(isPostalCodeError || errors.billingCity || errors.billingStreet) ||
+                    !!(isPostalCodeBillingError || errors.billingCity || errors.billingStreet) ||
                     !values.billingCity ||
                     !values.billingStreet
                   }
