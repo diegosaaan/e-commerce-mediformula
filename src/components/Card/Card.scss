@@ -1,26 +1,26 @@
 .product-card {
   position: relative;
+  height: fit-content;
+  margin: 0px 10px;
+  padding: 20px;
   display: block;
   border-radius: 16px;
-  padding: 20px;
-  margin: 0px 10px;
-  height: fit-content;
   cursor: pointer;
 
   &__image-container {
-    display: block;
-    width: 100%;
     position: relative;
+    width: 100%;
+    display: block;
   }
 
   &__discount {
-    display: inline-block;
-    background: $discount-liner;
-    padding: 3px 8px 4px;
-    border-radius: 4px;
     position: absolute;
     top: 0;
     left: 0;
+    display: inline-block;
+    padding: 3px 8px 4px;
+    border-radius: 4px;
+    background: $discount-liner;
   }
 
   &__discount-text {
@@ -37,8 +37,8 @@
     gap: 2px;
     margin-top: 8px;
     padding: 4px 8px 4px 6px;
-    background-color: $grayscale-200;
     border-radius: 4px;
+    background-color: $grayscale-200;
   }
 
   &__rating-icon {
@@ -54,16 +54,16 @@
 
   &__text {
     display: block;
-    margin-top: 12px;
     height: 50px;
+    margin-top: 12px;
     @include GolosRegular(14px, 100%, $grayscale-900);
   }
 
   &__price-info {
     display: flex;
+    align-items: center;
     gap: 12px;
     margin-top: 16px;
-    align-items: center;
   }
 
   &__price-container {
