@@ -17,19 +17,6 @@ export type RegisterSchemaType = {
   email: string;
   password: string;
   passwordRepeat: string;
-
   shipping: string;
   billing: string;
-
-  // shippingCountry: string;
-  shippingCity: string;
-  // shippingIndex: string;
-  shippingStreet: string;
-
-  // billingCountry: string;
-  billingCity: string;
-  // billingIndex: string;
-  billingStreet: string;
 };
-
-export type SetFieldValueType = (field: string, value: string, shouldValidate?: boolean) => void;

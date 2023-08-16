@@ -3,7 +3,7 @@ import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
-import { AddressType, RegisterSchemaType, SetFieldValueType } from '@/types/types';
+import { AddressType, RegisterSchemaType } from '@/types/types';
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/validationSchemes';
@@ -38,6 +38,10 @@ const RegistrationPage = (): ReactElement => {
 
   const handleRegister = (values: RegisterSchemaType): void => {
     console.log(values);
+    console.log(shippingAddresses);
+    console.log(shippingAddresses[Number(values.shipping)]);
+    console.log(billingAddresses);
+    console.log(billingAddresses[Number(values.billing)]);
   };
 
   const handleAddAddresses = (): void => {
@@ -58,12 +62,8 @@ const RegistrationPage = (): ReactElement => {
     setIsBillingAddress(true);
   };
 
-  const handleAddShippingAddress = (values: RegisterSchemaType, setFieldValue: SetFieldValueType): void => {
+  const handleAddShippingAddress = (): void => {
     setIsShippingAddress(false);
-    setFieldValue('shippingCountry', '');
-    setFieldValue('shippingCity', '');
-    setFieldValue('shippingIndex', '');
-    setFieldValue('shippingStreet', '');
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
@@ -75,12 +75,8 @@ const RegistrationPage = (): ReactElement => {
     ]);
   };
 
-  const handleAddBillingAddress = (values: RegisterSchemaType, setFieldValue: SetFieldValueType): void => {
+  const handleAddBillingAddress = (): void => {
     setIsBillingAddress(false);
-    setFieldValue('billingCountry', '');
-    setFieldValue('billingCity', '');
-    setFieldValue('billingIndex', '');
-    setFieldValue('billingStreet', '');
     setBillingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
@@ -103,19 +99,11 @@ const RegistrationPage = (): ReactElement => {
         passwordRepeat: '',
         shipping: '',
         billing: '',
-        // shippingCountry: '',
-        shippingCity: '',
-        // shippingIndex: '',
-        shippingStreet: '',
-        // billingCountry: '',
-        billingCity: '',
-        // billingIndex: '',
-        billingStreet: '',
       }}
       validationSchema={RegisterSchema}
       onSubmit={handleRegister}
     >
-      {({ values, errors, touched, handleChange, dirty, setFieldValue }): JSX.Element => (
+      {({ values, errors, touched, handleChange, dirty }): JSX.Element => (
         <AuthForm
           name="form-register"
           text="Уже зарегистрированы?"
@@ -263,7 +251,7 @@ const RegistrationPage = (): ReactElement => {
                   disabled={
                     !!(shippingState.isPostalCodeError || shippingState.isCityError || shippingState.isStreetError)
                   }
-                  onClick={(): void => handleAddShippingAddress(values, setFieldValue)}
+                  onClick={(): void => handleAddShippingAddress()}
                 >
                   Добавить
                 </button>
@@ -301,7 +289,7 @@ const RegistrationPage = (): ReactElement => {
                   disabled={
                     !!(billingState.isPostalCodeError || billingState.isCityError || billingState.isStreetError)
                   }
-                  onClick={(): void => handleAddBillingAddress(values, setFieldValue)}
+                  onClick={(): void => handleAddBillingAddress()}
                 >
                   Добавить
                 </button>

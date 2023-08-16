@@ -13,7 +13,6 @@ export const LoginSchema = Yup.object().shape({
         return value === value.trim();
       }
     ),
-  // не получается вывести ошибку о наличии пробелов в конце и в начале строки
   password: Yup.string()
     .required('Поле обязательно к заполнению')
     .min(8, 'Пароль должен содержать не менее 8 символов')
@@ -59,7 +58,7 @@ export const RegisterSchema = Yup.object().shape({
     .matches(/[A-ZА-ЯЁ]/, 'Пароль должен содержать хотя бы одну заглавную букву')
     .matches(/[a-zа-яё]/, 'Пароль должен содержать хотя бы одну строчную букву')
     .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
-    .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ') // ?
+    .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ')
     .test('no-leading-trailing-spaces', 'Пароль не должен содержать начальных или завершающих пробелов', (value) => {
       return value === value.trim();
     }),
@@ -73,20 +72,4 @@ export const RegisterSchema = Yup.object().shape({
 
   shipping: Yup.string().required('Выберите вариант доставки по умолчанию'),
   billing: Yup.string().required('Выберите вариант выставления счета по умолчанию'),
-
-  // shippingCountry: Yup.string().required('Поле обязательно к заполнению'),
-  shippingCity: Yup.string()
-    .min(0, 'Поле обязательно к заполнению')
-    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
-  // shippingIndex: Yup.string().required('Поле обязательно к заполнению'),
-  shippingStreet: Yup.string()
-    .min(0, 'Поле обязательно к заполнению')
-    .min(1, 'Улица должна содержать хоты бы 1 символ'),
-
-  // billingCountry: Yup.string().required('Поле обязательно к заполнению'),
-  billingCity: Yup.string()
-    .min(0, 'Поле обязательно к заполнению')
-    .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
-  // billingIndex: Yup.string().required('Поле обязательно к заполнению'),
-  billingStreet: Yup.string().min(0, 'Поле обязательно к заполнению').min(1, 'Улица должна содержать хоты бы 1 символ'),
 });
