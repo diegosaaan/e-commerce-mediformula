@@ -119,8 +119,8 @@ const AddressFields = ({
           htmlFor={`${name}Index`}
           onChange={handlePostalCodeValue}
           value={postalCodeValue}
+          errors={errorMessage}
         />
-        <p className="auth__input-error">{errorMessage}</p>
       </li>
       <li>
         <AuthInput

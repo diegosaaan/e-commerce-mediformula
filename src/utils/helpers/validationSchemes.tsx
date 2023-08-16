@@ -74,21 +74,19 @@ export const RegisterSchema = Yup.object().shape({
   shipping: Yup.string().required('Выберите вариант доставки по умолчанию'),
   billing: Yup.string().required('Выберите вариант выставления счета по умолчанию'),
 
-  shippingCountry: Yup.string().required('Поле обязательно к заполнению'),
+  // shippingCountry: Yup.string().required('Поле обязательно к заполнению'),
   shippingCity: Yup.string()
-    .required('Поле обязательно к заполнению')
+    .min(0, 'Поле обязательно к заполнению')
     .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
-  shippingIndex: Yup.string().required('Поле обязательно к заполнению'),
+  // shippingIndex: Yup.string().required('Поле обязательно к заполнению'),
   shippingStreet: Yup.string()
-    .required('Поле обязательно к заполнению')
+    .min(0, 'Поле обязательно к заполнению')
     .min(1, 'Улица должна содержать хоты бы 1 символ'),
 
-  billingCountry: Yup.string().required('Поле обязательно к заполнению'),
+  // billingCountry: Yup.string().required('Поле обязательно к заполнению'),
   billingCity: Yup.string()
-    .required('Поле обязательно к заполнению')
+    .min(0, 'Поле обязательно к заполнению')
     .matches(/^(?=.*[a-zA-Zа-яА-Я])[^\d!@#$%^&*]*$/, 'Поле не должно содержать спецсимволов и цифр'),
-  billingIndex: Yup.string().required('Поле обязательно к заполнению'),
-  billingStreet: Yup.string()
-    .required('Поле обязательно к заполнению')
-    .min(1, 'Улица должна содержать хоты бы 1 символ'),
+  // billingIndex: Yup.string().required('Поле обязательно к заполнению'),
+  billingStreet: Yup.string().min(0, 'Поле обязательно к заполнению').min(1, 'Улица должна содержать хоты бы 1 символ'),
 });

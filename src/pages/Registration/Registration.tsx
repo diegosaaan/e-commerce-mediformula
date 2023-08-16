@@ -24,8 +24,10 @@ const RegistrationPage = (): ReactElement => {
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleRegister = (values: RegisterSchemaType): void => {};
+  const handleRegister = (values: RegisterSchemaType): void => {
+    console.log(values);
+    console.log(1);
+  };
 
   const handleAddAddresses = (): void => {
     setIsAddAddress(true);
@@ -90,13 +92,13 @@ const RegistrationPage = (): ReactElement => {
         passwordRepeat: '',
         shipping: '',
         billing: '',
-        shippingCountry: '',
+        // shippingCountry: '',
         shippingCity: '',
-        shippingIndex: '',
+        // shippingIndex: '',
         shippingStreet: '',
-        billingCountry: '',
+        // billingCountry: '',
         billingCity: '',
-        billingIndex: '',
+        // billingIndex: '',
         billingStreet: '',
       }}
       validationSchema={RegisterSchema}

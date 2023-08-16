@@ -21,14 +21,14 @@ export type RegisterSchemaType = {
   shipping: string;
   billing: string;
 
-  shippingCountry: string;
+  // shippingCountry: string;
   shippingCity: string;
-  shippingIndex: string;
+  // shippingIndex: string;
   shippingStreet: string;
 
-  billingCountry: string;
+  // billingCountry: string;
   billingCity: string;
-  billingIndex: string;
+  // billingIndex: string;
   billingStreet: string;
 };
 
