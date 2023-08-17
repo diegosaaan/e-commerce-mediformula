@@ -1,5 +1,6 @@
 import '@/pages/Login/Login.scss';
 import React, { ReactElement } from 'react';
+import { notification, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import { LoginSchema } from '@/utils/helpers/validationSchemes';
@@ -7,15 +8,71 @@ import useAuth from '@/utils/hooks/useAuth';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
 import { LoginSchemaType } from '@/types/types';
+import * as userAuth from '@/services/auth-user';
+import exit from '@/assets/images/svg/auth-exit.svg';
 
 const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
+  notification.config({
+    maxCount: 5,
+    placement: 'bottomLeft',
+    duration: 10,
+    closeIcon: (
+      <span className="ant-notification-close-x">
+        <span role="img" aria-label="close" className="anticon anticon-close ant-notification-close-icon">
+          <img className="auth__exit-btn" src={exit} alt="close" />
+        </span>
+      </span>
+    ),
+  });
+
+  message.config({
+    duration: 2,
+    maxCount: 1,
+  });
+
   const handleLogin = (values: LoginSchemaType): void => {
     const { email, password } = values;
-    console.log(email, password);
-    signIn(() => navigate('/'));
+    userAuth
+      .login(email, password)
+      .then((res) => {
+        console.log(res);
+        userAuth
+          .getToken(email, password)
+          .then((result) => {
+            if (result !== null && typeof result === 'object' && 'access_token' in result) {
+              const accessToken: string = result.access_token as string;
+              console.log(result);
+              message.info({
+                content: 'Добро пожаловать!',
+              });
+              signIn(() => navigate('/'));
+              localStorage.setItem('token', String(accessToken));
+            }
+          })
+          .catch((err) => console.log(`Возникла ошибка: ${err}`));
+      })
+      .catch((err) => {
+        if (err === 400) {
+          notification.error({
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: <p className="auth__notification">Вы ввели неправильный логин или пароль</p>,
+          });
+        } else if (err === 500) {
+          notification.error({
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: <p className="auth__notification">500 Ошибка сервера, повторите запрос позднее</p>,
+          });
+        } else {
+          notification.error({
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: <p className="auth__notification">При авторизации возникла ошибка</p>,
+          });
+        }
+        console.log(`Возникла ошибка: ${err}`);
+      });
   };
 
   return (

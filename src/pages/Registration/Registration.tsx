@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const RegistrationPage = (): ReactElement => {
   notification.config({
     maxCount: 5,
     placement: 'bottomLeft',
-    duration: 5,
+    duration: 10,
     closeIcon: (
       <span className="ant-notification-close-x">
         <span role="img" aria-label="close" className="anticon anticon-close ant-notification-close-icon">
@@ -28,6 +28,11 @@ const RegistrationPage = (): ReactElement => {
         </span>
       </span>
     ),
+  });
+
+  message.config({
+    duration: 2,
+    maxCount: 1,
   });
 
   const [isAddAddress, setIsAddAddress] = useState(false);
@@ -99,16 +104,27 @@ const RegistrationPage = (): ReactElement => {
         indexesOfBilling
       )
       .then((res) => {
-        notification.success({
-          message: <div>Регистрация прошла успешно!</div>,
-        });
-        signIn(() => navigate('/'));
+        userAuth
+          .getToken(values.email, values.password)
+          .then((result) => {
+            if (result !== null && typeof result === 'object' && 'access_token' in result) {
+              const accessToken: string = result.access_token as string;
+              console.log(result);
+              message.info({
+                content: 'Регистрация прошла успешно!',
+              });
+              signIn(() => navigate('/'));
+              localStorage.setItem('token', String(accessToken));
+            }
+          })
+          .catch((err) => console.log(`Возникла ошибка: ${err}`));
         console.log(res);
       })
       .catch((err) => {
         if (err === 400) {
           notification.error({
-            message: (
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: (
               <p className="auth__notification">
                 Пользователь с таким email уже существует!
                 <a className="auth__link auth__link_type_notification" href="/login">
@@ -121,11 +137,13 @@ const RegistrationPage = (): ReactElement => {
           });
         } else if (err === 500) {
           notification.error({
-            message: <p className="auth__notification">500 Ошибка сервера, повторите запрос позднее</p>,
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: <p className="auth__notification">500 Ошибка сервера, повторите запрос позднее</p>,
           });
         } else {
           notification.error({
-            message: <p className="auth__notification">При регистрации возникла ошибка</p>,
+            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
+            description: <p className="auth__notification">При регистрации возникла ошибка</p>,
           });
         }
         console.log(`Возникла ошибка: ${err}`);
