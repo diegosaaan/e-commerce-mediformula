@@ -12,17 +12,15 @@ import svgCasePath from '@/assets/images/svg/intro-card-case.svg';
 const Intro = (): ReactElement => {
   return (
     <section className="_container intro">
-      <div className="intro__banner">
+      <Link to="/" className="intro__banner">
         <div className="intro__text-container">
           <p className="intro__promo-text">Акция действует до 31 декабря 2023</p>
-          <Link className="intro__banner-text" to="/promo">
-            Скидка на массажные накидки MEDISANA до 15%
-          </Link>
+          <p className="intro__banner-text">Скидка на массажные накидки MEDISANA до 15%</p>
         </div>
         <div className="intro__image-container">
           <img className="intro__image" src={`${imagePath}`} alt="Intro image" />
         </div>
-      </div>
+      </Link>
       <div className="intro__cards-block">
         <IntroCard
           header="Надежность"
