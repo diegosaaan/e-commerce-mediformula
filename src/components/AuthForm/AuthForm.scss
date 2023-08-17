@@ -188,6 +188,19 @@
     }
   }
 
+  &__exit-btn {
+    width: 15px;
+    height: 15px;
+  }
+
+  &__notification {
+    @include GolosRegular(16px, 1, $grayscale-900);
+  }
+
+  &__notification_type_main {
+    @include GolosRegular(18px, 1, $error-input);
+  }
+
   @media screen and (max-width: $portrait-tablet) {
     &__container {
       padding: 16px 16px 24px;
