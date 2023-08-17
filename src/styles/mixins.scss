@@ -34,3 +34,8 @@
   opacity: 0.8;
   cursor: pointer;
 }
+
+@mixin GreyLinkHover {
+  color: #0400ff;
+  transition: 0.25s ease-in-out;
+}
