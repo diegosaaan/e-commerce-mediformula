@@ -10,9 +10,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -22,9 +20,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -34,9 +30,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -46,9 +40,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -58,9 +50,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -70,9 +60,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -82,9 +70,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
   {
     imagePath,
@@ -94,9 +80,7 @@ const ProductCardsData: IPropsCard[] = [
     priceBefore: 85348,
     bonus: 450,
     discount: 10,
-    onClick: (): void => {
-      console.log('Clicked!');
-    },
+    onClick: (): void => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
 ];
 

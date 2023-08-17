@@ -23,7 +23,11 @@ const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsS
           {header}
           <sup className="cards-section__counter">{counter}</sup>
         </h2>
-        <Link className="text-button" to="/catalog">
+        <Link
+          className="text-button"
+          to="/catalog"
+          onClick={(): void => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
           ⟶ Смотреть все
         </Link>
       </div>
