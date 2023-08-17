@@ -1,6 +1,4 @@
-const path = require('path');
-const fs = require('fs'); 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
