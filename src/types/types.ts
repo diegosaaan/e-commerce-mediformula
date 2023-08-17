@@ -1,8 +1,8 @@
 export type AddressType = {
   country: string;
   city: string;
-  index: string;
-  street: string;
+  postalCode: string;
+  streetName: string;
 };
 
 export type LoginSchemaType = {
