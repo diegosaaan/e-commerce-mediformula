@@ -50,6 +50,7 @@ export interface IPropsCarousel {
 export interface IPropsCardsSection {
   header: string;
   counter: number;
+  sectionClassName: string;
   products?: IPropsProduct[];
 }
 
