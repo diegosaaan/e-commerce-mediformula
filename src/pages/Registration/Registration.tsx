@@ -1,20 +1,41 @@
 import React, { ReactElement, useState } from 'react';
+import { notification } from 'antd';
 import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
 import { AddressType, RegisterSchemaType } from '@/types/types';
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/validationSchemes';
+import useAuth from '@/utils/hooks/useAuth';
+import * as userAuth from '@/services/auth-user';
+import exit from '@/assets/images/svg/auth-exit.svg';
 
 const RegistrationPage = (): ReactElement => {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
+  notification.config({
+    maxCount: 5,
+    placement: 'bottomLeft',
+    duration: 5,
+    closeIcon: (
+      <span className="ant-notification-close-x">
+        <span role="img" aria-label="close" className="anticon anticon-close ant-notification-close-icon">
+          <img className="auth__exit-btn" src={exit} alt="close" />
+        </span>
+      </span>
+    ),
+  });
+
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
 
   const [shippingState, setShippingState] = useState({
-    countryValue: 'Польша',
+    countryValue: 'Польша (PL)',
     cityValue: '',
     isCityError: true,
     streetValue: '',
@@ -24,7 +45,7 @@ const RegistrationPage = (): ReactElement => {
   });
 
   const [billingState, setBillingState] = useState({
-    countryValue: 'Польша',
+    countryValue: 'Польша (PL)',
     cityValue: '',
     isCityError: true,
     streetValue: '',
@@ -37,11 +58,78 @@ const RegistrationPage = (): ReactElement => {
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
   const handleRegister = (values: RegisterSchemaType): void => {
-    console.log(values);
-    console.log(shippingAddresses);
-    console.log(shippingAddresses[Number(values.shipping)]);
-    console.log(billingAddresses);
-    console.log(billingAddresses[Number(values.billing)]);
+    const uniqueArray = Array.from(
+      new Set([...shippingAddresses, ...billingAddresses].map((item) => JSON.stringify(item)))
+    ).map((i) => JSON.parse(i));
+    const objShipping = shippingAddresses[Number(values.shipping)];
+    const objBilling = billingAddresses[Number(values.billing)];
+
+    const shippingJson = JSON.stringify(objShipping);
+    const indexShipping = uniqueArray.findIndex((item) => JSON.stringify(item) === shippingJson);
+
+    const billingJson = JSON.stringify(objBilling);
+    const indexBilling = uniqueArray.findIndex((item) => JSON.stringify(item) === billingJson);
+
+    const indexesOfShipping = shippingAddresses.map((address) => {
+      const jsonStringShipping = JSON.stringify(address);
+      const indexInUniqueArray = uniqueArray.findIndex(
+        (jsonString) => JSON.stringify(jsonString) === jsonStringShipping
+      );
+      return indexInUniqueArray;
+    });
+
+    const indexesOfBilling = billingAddresses.map((address) => {
+      const jsonStringShipping = JSON.stringify(address);
+      const indexInUniqueArray = uniqueArray.findIndex(
+        (jsonString) => JSON.stringify(jsonString) === jsonStringShipping
+      );
+      return indexInUniqueArray;
+    });
+    userAuth
+      .register(
+        values.email,
+        values.firstName,
+        values.lastName,
+        values.password,
+        values.date,
+        uniqueArray,
+        indexShipping,
+        indexBilling,
+        indexesOfShipping,
+        indexesOfBilling
+      )
+      .then((res) => {
+        notification.success({
+          message: <div>Регистрация прошла успешно!</div>,
+        });
+        signIn(() => navigate('/'));
+        console.log(res);
+      })
+      .catch((err) => {
+        if (err === 400) {
+          notification.error({
+            message: (
+              <p className="auth__notification">
+                Пользователь с таким email уже существует!
+                <a className="auth__link auth__link_type_notification" href="/login">
+                  {' '}
+                  Войдите{' '}
+                </a>
+                на сайт либо введите другой email
+              </p>
+            ),
+          });
+        } else if (err === 500) {
+          notification.error({
+            message: <p className="auth__notification">500 Ошибка сервера, повторите запрос позднее</p>,
+          });
+        } else {
+          notification.error({
+            message: <p className="auth__notification">При регистрации возникла ошибка</p>,
+          });
+        }
+        console.log(`Возникла ошибка: ${err}`);
+      });
   };
 
   const handleAddAddresses = (): void => {
@@ -64,26 +152,30 @@ const RegistrationPage = (): ReactElement => {
 
   const handleAddShippingAddress = (): void => {
     setIsShippingAddress(false);
+    const countryMatch = shippingState.countryValue.match(/\((.*?)\)/);
+    const country = countryMatch ? countryMatch[1] : '';
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: shippingState.countryValue,
+        country,
         city: shippingState.cityValue,
-        index: shippingState.postalCodeValue,
-        street: shippingState.streetValue,
+        postalCode: shippingState.postalCodeValue,
+        streetName: shippingState.streetValue,
       },
     ]);
   };
 
   const handleAddBillingAddress = (): void => {
     setIsBillingAddress(false);
+    const countryMatch = billingState.countryValue.match(/\((.*?)\)/);
+    const country = countryMatch ? countryMatch[1] : '';
     setBillingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: billingState.countryValue,
+        country,
         city: billingState.cityValue,
-        index: billingState.postalCodeValue,
-        street: billingState.streetValue,
+        postalCode: billingState.postalCodeValue,
+        streetName: billingState.streetValue,
       },
     ]);
   };
