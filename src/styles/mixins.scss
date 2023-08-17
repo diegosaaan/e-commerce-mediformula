@@ -35,7 +35,17 @@
   cursor: pointer;
 }
 
+@mixin Font($size, $height) {
+  font-size: $size;
+  line-height: $height;
+}
+
 @mixin GreyLinkHover {
   color: #0400ff;
   transition: 0.25s ease-in-out;
+}
+
+@mixin font($size, $height) {
+  font-size: $size;
+  line-height: $height;
 }

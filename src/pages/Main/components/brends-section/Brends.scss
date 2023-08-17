@@ -1,0 +1,100 @@
+.brends {
+  margin-top: 100px;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 100px);
+    justify-content: space-between;
+    margin-top: 40px;
+
+    &-item {
+      transition: 0.25s ease-in-out;
+    }
+
+    &-link {
+      display: block;
+      height: 80px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      &-cnbce {
+        background-image: url('@/assets/images/jpg/main-brends-cnbce-logo.jpg');
+      }
+
+      &-abena {
+        background-image: url('@/assets/images/jpg/main-brends-abena-logo.jpg');
+      }
+
+      &-omron {
+        background-image: url('@/assets/images/jpg/main-brends-omron-logo.jpg');
+      }
+
+      &-avon {
+        background-image: url('@/assets/images/jpg/main-brends-avon-logo.jpg');
+      }
+
+      &-morris-health {
+        background-image: url('@/assets/images/jpg/main-brends-morris-health-logo.jpg');
+      }
+
+      &-and {
+        background-image: url('@/assets/images/jpg/main-brends-and-logo.jpg');
+      }
+
+      &-forgingnew {
+        background-image: url('@/assets/images/jpg/main-brends-forgingnew-logo.jpg');
+      }
+
+      &-bbalance {
+        background-image: url('@/assets/images/jpg/main-brends-bbalance.jpg');
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $large-desktop) {
+  .brends {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .brends {
+    &__list {
+      grid-template-columns: repeat(4, clamp(60px, 10vw, 100px));
+      grid-row-gap: 25px;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .brends {
+    &__list {
+      margin-top: 16px;
+      &-link {
+        height: 60px;
+      }
+    }
+  }
+}
+
+.brends {
+  @media (hover: hover) {
+    &__list {
+      &-item:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__list {
+    &-link:focus {
+      @extend %GreyLinkFocus;
+    }
+
+    &-link:focus:active {
+      outline: none;
+    }
+  }
+}

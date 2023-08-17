@@ -3,7 +3,7 @@
   height: 44px;
   width: 164px;
   @include GolosMedium(16px, 100%, $grayscale-50);
-  background: $secondary-liner;
+  background-color: $color-secondary;
   text-align: center;
   border-radius: 8px;
 
