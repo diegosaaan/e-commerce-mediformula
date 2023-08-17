@@ -30,6 +30,11 @@
   color: $fontColor;
 }
 
+@mixin MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 @mixin Font($size, $height) {
   font-size: $size;
   line-height: $height;
@@ -38,11 +43,6 @@
 @mixin GreyLinkHover {
   color: #0400ff;
   transition: 0.25s ease-in-out;
-}
-
-@mixin MainBtnHover {
-  opacity: 0.8;
-  cursor: pointer;
 }
 
 @mixin font($size, $height) {

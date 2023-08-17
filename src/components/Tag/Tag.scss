@@ -1,0 +1,24 @@
+.tag {
+  display: inline-flex;
+  border: 1px solid $grayscale-50;
+  border-radius: 4px;
+  padding: 6px 10px 7px;
+
+  &__tagText {
+    @include GolosRegular(16px, 100%, $grayscale-50);
+  }
+
+  @media screen and (max-width: $medium-desktop) {
+    &__tagText {
+      @include GolosRegular(14px, 100%, $grayscale-50);
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    padding: 4px 8px 5px;
+
+    &__tagText {
+      @include GolosRegular(12px, 100%, $grayscale-50);
+    }
+  }
+}

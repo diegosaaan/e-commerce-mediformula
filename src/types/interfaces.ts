@@ -72,6 +72,24 @@ export interface IPropsCard {
   onClick: () => void;
 }
 
+export interface IPropsTag {
+  title: string;
+}
+
+export interface IPropsCarousel {
+  children: ReactNode;
+  cardWidth: number;
+}
+
+export interface IPropsCardsSection {
+  header: string;
+  counter: number;
+  sectionClassName: string;
+  products?: IPropsProduct[];
+}
+
+export interface IPropsProduct {}
+
 export interface IPropsAuthInput {
   type: string;
   placeholder?: string;

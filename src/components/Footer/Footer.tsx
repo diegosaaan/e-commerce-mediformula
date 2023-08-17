@@ -81,7 +81,11 @@ const Footer = (): ReactElement => {
             </a>
           </li>
           <li className="footer__legal-list-info-item">
-            <Link className="footer__legal-list-info-link" to="/abouts-us">
+            <Link
+              onClick={(): void => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="footer__legal-list-info-link"
+              to="/about-us"
+            >
               О разработчиках сайта
             </Link>
           </li>

@@ -1,0 +1,90 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 900px;
+  height: 100%;
+
+  &__info-container {
+    display: flex;
+    flex-direction: column;
+    min-width: clamp(280px, 25vw, 520px);
+  }
+
+  &__error-image {
+    display: block;
+    width: 100%;
+    height: clamp(170px, 25vw, 430px);
+  }
+
+  &__heading {
+    @include GolosMedium(60px, 1.1, $grayscale-900);
+  }
+
+  &__text,
+  &__button {
+    @include GolosRegular(16px, 1.1, $grayscale-900);
+    margin-top: 32px;
+    transition: 0.25s ease-in-out;
+  }
+
+  &__text {
+    max-width: 380px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $grayscale-50;
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .not-found {
+    margin-top: 40px;
+  }
+
+  .not-found__heading {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .not-found__heading {
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .not-found {
+    display: block;
+    margin-top: 32px;
+
+    &__heading {
+      font-size: 26px;
+    }
+
+    &__error-image,
+    &__text,
+    &__button {
+      margin-top: 16px;
+    }
+
+    &__text {
+      max-width: 100%;
+    }
+  }
+}
+
+.not-found__button:hover {
+  @include MainBtnHover;
+}
+
+.not-found__button:focus {
+  @extend %MainBtnFocus;
+}
+
+.not-found__button:active {
+  @extend %MainBtnActive;
+}

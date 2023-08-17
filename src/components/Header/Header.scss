@@ -22,6 +22,9 @@
   &__nav-container-main {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
     gap: 20px;
   }
 
@@ -228,6 +231,7 @@
     align-items: center;
     border-top: 1px solid $grayscale-200;
     background-color: $grayscale-50;
+    z-index: 15;
   }
 
   &__button-main-mobile {
@@ -332,6 +336,8 @@
     &__nav-container-main {
       display: grid;
       align-items: center;
+      justify-content: baseline;
+      width: fit-content;
       grid-template-areas:
         'logo about catalog . . .'
         'input input input input input cart';

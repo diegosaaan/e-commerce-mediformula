@@ -1,0 +1,175 @@
+.product-card {
+  position: relative;
+  height: fit-content;
+  margin: 0px 10px;
+  padding: 20px;
+  display: block;
+  border-radius: 16px;
+  cursor: pointer;
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    display: block;
+  }
+
+  &__discount {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    padding: 3px 8px 4px;
+    border-radius: 4px;
+    background: $discount-liner;
+  }
+
+  &__discount-text {
+    @include GolosMedium(14px, 100%, $grayscale-50);
+  }
+
+  &__image {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__rating-container {
+    display: inline-flex;
+    gap: 2px;
+    margin-top: 8px;
+    padding: 4px 8px 4px 6px;
+    border-radius: 4px;
+    background-color: $grayscale-200;
+  }
+
+  &__rating-icon {
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: url('@/assets/images/svg/card-star.svg');
+  }
+
+  &__rating-text {
+    @include GolosMedium(14px, 100%, $grayscale-900);
+  }
+
+  &__text {
+    display: block;
+    height: 50px;
+    margin-top: 12px;
+    @include GolosRegular(14px, 100%, $grayscale-900);
+  }
+
+  &__price-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  &__price-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__price {
+    @include GolosMedium(16px, 100%, $grayscale-900);
+  }
+
+  &__priceBefore {
+    @include GolosMedium(12px, 100%, $grayscale-600);
+    text-decoration: line-through;
+  }
+
+  &__bonus-container {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__bonus-icon {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url('@/assets/images/svg/card-bonus.svg');
+  }
+
+  &__bonus-text {
+    display: block;
+    @include GolosMedium(14px, 100%, transparent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: $bonus-liner;
+  }
+
+  &__button-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-top: 22px;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow:
+        0px 5px 15px 0px rgba(1, 31, 58, 0.1),
+        0px 5px 15px 0px rgba(1, 31, 58, 0.04);
+
+      &:hover .product-card__button-container {
+        visibility: visible;
+        opacity: 1;
+        display: flex;
+      }
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__discount-text {
+      @include GolosMedium(12px, 100%, $grayscale-50);
+    }
+
+    &__rating-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__rating-text {
+      @include GolosMedium(12px, 100%, $grayscale-900);
+    }
+
+    &__text {
+      margin-top: 6px;
+      height: calc(42px + (50 - 42) * (100vw - 360px) / (767.9 - 360));
+      @include GolosRegular(12px, 100%, $grayscale-900);
+    }
+
+    &__price-info {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: flex-end;
+    }
+
+    &__price-container {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 4px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &__priceBefore {
+      @include GolosRegular(12px, 100%, $grayscale-600);
+    }
+
+    &__bonus-text {
+      @include GolosMedium(12px, 100%, transparent);
+    }
+
+    &__button-container {
+      visibility: visible;
+      opacity: 1;
+      display: flex;
+      margin-top: 24px;
+    }
+  }
+}
