@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from 'formik';
 import '@/components/AuthForm/AuthForm.scss';
@@ -39,10 +39,15 @@ const AuthForm = ({
   isAddAddress,
   handlePrevRegister,
 }: IPropsAuthForm): ReactElement => {
-  const createRandomIndex = (): number => Math.floor(Math.random() * backgroundImagesPaths.length);
+  const [background, setBackground] = useState('');
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * backgroundImagesPaths.length);
+    setBackground(backgroundImagesPaths[randomIndex]);
+  }, []);
 
   return (
-    <section className="auth" style={{ backgroundImage: `url(${backgroundImagesPaths[createRandomIndex()]})` }}>
+    <section className="auth" style={{ backgroundImage: `url(${background})` }}>
       <div className="auth__container">
         <div className="auth__container-heading">
           <h1 className="auth__heading">{title}</h1>
