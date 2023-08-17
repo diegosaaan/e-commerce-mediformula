@@ -69,7 +69,7 @@ const mediaData = {
         videoPreviewImg: healthAgePhotoPreview,
       },
       {
-        heading: 'V Международный конгресс Health Age...',
+        heading: 'V Международный конгресс Health Age..',
         date: '5 августа 2023',
         link: '',
         videoPreviewImg: healthAgePhotoPreview,
