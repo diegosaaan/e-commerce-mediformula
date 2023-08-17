@@ -7,7 +7,7 @@ import MediaSection from './components/media-section/Media';
 import Advantages from './components/advantages-section/Advantages';
 import Services from './components/services-section/Services';
 
-function MainPage(): ReactElement {
+const MainPage = (): ReactElement => {
   return (
     <div className="main-page">
       <Intro />
@@ -20,6 +20,6 @@ function MainPage(): ReactElement {
       <MediaSection />
     </div>
   );
-}
+};
 
 export default MainPage;

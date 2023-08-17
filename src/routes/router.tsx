@@ -24,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: '/registration',
     element: <PrivateRoute>{<RegistrationPage />}</PrivateRoute>,
+    loader,
   },
   {
     path: '/',
