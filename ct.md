@@ -8,10 +8,10 @@ https://mc.europe-west1.gcp.commercetools.com/e-shop230731/welcome
 host: 'https://auth.europe-west1.gcp.commercetools.com'
 projectKey: 'e-shop230731'
 credentials: {
-  clientId: "FZwAs7jaRrQUaTngF8DcA9zD",
-  clientSecret: "XTTfvhIr-X8vmA_HEAI5a5T7DvbtZOKV",
+  clientId: "ilGjRPUuSz9INMW6zL1pqJtl",
+  clientSecret: "hhIZg0aLIDghQAX2aSCyqZ3kZhEsd50K",
 }
-scopes: ['view_cart_discounts:e-shop230731 manage_my_orders:e-shop230731 create_anonymous_token:e-shop230731 view_published_products:e-shop230731 view_discount_codes:e-shop230731 manage_my_payments:e-shop230731 view_categories:e-shop230731 manage_my_quotes:e-shop230731 manage_my_quote_requests:e-shop230731 manage_my_profile:e-shop230731 manage_my_shopping_lists:e-shop230731 manage_my_business_units:e-shop230731']
+scopes: ['manage_my_orders:e-shop230731 create_anonymous_token:e-shop230731 manage_discount_codes:e-shop230731 view_published_products:e-shop230731 manage_customers:e-shop230731 manage_my_payments:e-shop230731 manage_cart_discounts:e-shop230731 manage_my_quote_requests:e-shop230731 manage_my_profile:e-shop230731 manage_my_shopping_lists:e-shop230731 introspect_oauth_tokens:e-shop230731 manage_my_business_units:e-shop230731 manage_categories:e-shop230731 manage_my_quotes:e-shop230731']
 ```
 
 # Endpoints
@@ -26,7 +26,7 @@ axios
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa('FZwAs7jaRrQUaTngF8DcA9zD:XTTfvhIr-X8vmA_HEAI5a5T7DvbtZOKV')}`,
+        Authorization: `Basic ${btoa('ilGjRPUuSz9INMW6zL1pqJtl:hhIZg0aLIDghQAX2aSCyqZ3kZhEsd50K')}`,
       },
     }
   );
