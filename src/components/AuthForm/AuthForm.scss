@@ -99,6 +99,19 @@
     gap: 15.5px;
   }
 
+  &__list {
+    flex-direction: column;
+    gap: 16.5px;
+  }
+
+  &__list_inactive {
+    display: none;
+  }
+
+  &__list_active {
+    display: flex;
+  }
+
   &__heading {
     @include GolosMedium(28px, 1.1, $grayscale-900);
   }
@@ -164,6 +177,10 @@
     transition: opacity 0.3s;
   }
 
+  &__link_type_notification {
+    @include GolosRegular(16px, 1, $color-primary-hover);
+  }
+
   &__link:focus {
     @extend %GreyLinkFocus;
     &:active {
@@ -202,6 +219,10 @@
     &__link_type_main:hover {
       @include MainBtnHover;
       color: $grayscale-50;
+    }
+
+    &__link_type_notification:hover {
+      @include MainBtnHover;
     }
   }
 }
