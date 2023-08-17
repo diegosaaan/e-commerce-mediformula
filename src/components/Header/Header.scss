@@ -71,14 +71,9 @@
 
   &__button-nav:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__button-nav:hover {
-    @include MainBtnHover;
-  }
-
-  &__button-nav:active {
-    @extend %MainBtnActive;
+    &:active {
+      @extend %MainBtnActive;
+    }
   }
 
   &__button-nav_type_register {
@@ -108,16 +103,11 @@
     background: $primary-liner;
   }
 
-  &__button-main:hover {
-    @include MainBtnHover;
-  }
-
   &__button-main:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__button-main:active {
-    @extend %MainBtnActive;
+    &:active {
+      @extend %MainBtnActive;
+    }
   }
 
   &__button-catalog {
@@ -153,16 +143,11 @@
     transition: opacity 0.3s;
   }
 
-  &__button-cart:hover {
-    @include MainBtnHover;
-  }
-
   &__button-cart:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__button-cart:active {
-    @extend %IconBtnActive;
+    &:active {
+      @extend %IconBtnActive;
+    }
   }
 
   &__button-cart-text {
@@ -198,10 +183,9 @@
 
   &__input-search:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__input-search:active {
-    @extend %MainBtnActive;
+    &:active {
+      @extend %MainBtnActive;
+    }
   }
 
   &__button-search {
@@ -217,17 +201,11 @@
     transition: background-image 0.3s;
   }
 
-  &__button-search:hover {
-    cursor: pointer;
-    background-image: url('@/assets/images/svg/header-search-hover.svg');
-  }
-
   &__button-search:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__button-search:active {
-    @extend %IconBtnActive;
+    &:active {
+      @extend %IconBtnActive;
+    }
   }
 
   &__item-logo-mobile {
@@ -261,16 +239,11 @@
     justify-content: center;
   }
 
-  &__button-main-mobile:hover {
-    cursor: pointer;
-  }
-
   &__button-main-mobile:focus {
     @extend %MainBtnFocus;
-  }
-
-  &__button-main-mobile:active {
-    @extend %MainBtnActive;
+    &:active {
+      @extend %MainBtnActive;
+    }
   }
 
   &__button-main-mobile_type_cart {
@@ -416,21 +389,21 @@
       display: flex;
     }
   }
+}
 
-  @media (hover: hover) {
-    &__button-nav:hover,
-    &__button-main:hover,
-    &__button-cart:hover {
-      @include MainBtnHover;
-    }
+@media (hover: hover) {
+  .header__button-nav:hover,
+  .header__button-main:hover,
+  .header__button-cart:hover {
+    @include MainBtnHover;
+  }
 
-    &__button-search:hover {
-      cursor: pointer;
-      background-image: url('@/assets/images/svg/header-search-hover.svg');
-    }
+  .header__button-search:hover {
+    cursor: pointer;
+    background-image: url('@/assets/images/svg/header-search-hover.svg');
+  }
 
-    &__button-main-mobile:hover {
-      cursor: pointer;
-    }
+  .header__button-main-mobile:hover {
+    cursor: pointer;
   }
 }

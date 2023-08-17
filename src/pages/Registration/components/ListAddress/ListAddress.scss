@@ -21,17 +21,11 @@
     transition: background-image 0.3s;
   }
 
-  &__button-delete:hover {
-    cursor: pointer;
-    background-image: url('@/assets/images/svg/auth-delete-hover.svg');
-  }
-
   &__button-delete:focus {
     @extend %GreyLinkFocus;
-  }
-
-  &__button-delete:active {
-    @extend %GreyLinkActive;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   &__button-copy {
@@ -48,10 +42,9 @@
   &__button-copy:focus {
     transform: scale(1.2);
     outline: none;
-  }
-
-  &__button-copy:active {
-    @extend %GreyLinkActive;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   @media (hover: hover) {

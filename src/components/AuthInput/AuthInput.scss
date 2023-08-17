@@ -54,10 +54,9 @@
 
   &__input:focus {
     outline: none;
-  }
-
-  &__input:active {
-    @extend %GreyLinkActive;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   &__button-pass {
@@ -70,11 +69,6 @@
     width: 20px;
     height: 20px;
     transition: background-image 0.3s;
-  }
-
-  &__button-pass:hover {
-    cursor: pointer;
-    background-image: url('@/assets/images/svg/auth-password-active.svg');
   }
 
   &__button-pass_active {
