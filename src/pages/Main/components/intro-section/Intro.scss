@@ -81,6 +81,10 @@
   @extend %GreyLinkFocus;
 }
 
+.intro__banner:focus:active {
+  outline: none;
+}
+
 .intro__banner:focus:active .intro__promo-text,
 .intro__banner:focus:active .intro__banner-text {
   @extend %GreyLinkActive;
