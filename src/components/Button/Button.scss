@@ -43,20 +43,22 @@
 
 .text-button {
   @include GolosRegular(16px, 100%, $grayscale-900);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (hover: hover) {
     &:hover {
-      cursor: pointer;
-      color: #1cd5a8;
+      @include GreyLinkHover;
     }
   }
 
   &:focus {
-    @extend %TextBtnFocus;
+    @extend %GreyLinkFocus;
   }
 
-  &:active {
-    @extend %TextBtnActive;
+  &:focus:active {
+    @extend %GreyLinkActive;
   }
 
   @media screen and (max-width: $tablet) {
