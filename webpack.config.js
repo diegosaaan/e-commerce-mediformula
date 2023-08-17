@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs'); 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -8,10 +9,12 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
+
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'build'),
   },
+
   resolve: {
     extensions: ['.tsx', '.json', '.scss', '.js'],
     plugins: [
@@ -20,12 +23,32 @@ module.exports = {
       }),
     ],
   },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        libs: {
+          test: /[\\/]node_modules[\\/]/,
+          name: (module) => {
+            const packageNameMatch = module.context && module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+            if (packageNameMatch) {
+              const packageName = packageNameMatch[1];
+              return `libs/${packageName}/bundle`;
+            }
+            return 'common';
+          },
+          chunks: 'all',
+        },
+      },
+    },
+  },
+
   plugins: [
     new EslingPlugin({
       extensions: 'tsx',
     }),
     new MiniCssExtractPlugin({
-      filename: 'index.css',
+      filename: '[name].css',
       ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({

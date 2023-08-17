@@ -20,40 +20,40 @@ const LazyComponent = (
 
 export const LoginPage = LazyComponent(<LoginPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/Login/Login');
+  return import(/* webpackChunkName: "pages/login/login" */ '@/pages/Login/Login');
 });
 
 export const RegistrationPage = LazyComponent(<LoginPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/Registration/Registration');
+  return import(/* webpackChunkName: "pages/registration/registration" */ '@/pages/Registration/Registration');
 });
 
 export const MainPage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/Main/Main');
+  return import(/* webpackChunkName: "pages/main/main" */ '@/pages/Main/Main');
 });
 
 export const AboutUsPage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/AboutUs/AboutsUs');
+  return import(/* webpackChunkName: "pages/about-us/about-us" */ '@/pages/AboutUs/AboutUs');
 });
 
 export const CatalogPage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/Catalog/Catalog');
+  return import(/* webpackChunkName: "pages/catalog/catalog" */ '@/pages/Catalog/Catalog');
 });
 
 export const CartPage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/Cart/Cart');
+  return import(/* webpackChunkName: "pages/cart/cart" */ '@/pages/Cart/Cart');
 });
 
 export const NotFoundPage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/NotFound/NotFound');
+  return import(/* webpackChunkName: "pages/not-found/not-found" */ '@/pages/NotFound/NotFound');
 });
 
 export const UserProfilePage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
-  return import('@/pages/UserProfile/UserProfile');
+  return import(/* webpackChunkName: "pages/user-profile/user-profile" */ '@/pages/UserProfile/UserProfile');
 });
