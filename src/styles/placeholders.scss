@@ -31,3 +31,16 @@
   transition: 0.25s ease-in-out;
   outline: none;
 }
+
+%GreyLinkFocus {
+  outline: 2px solid #1cd5a8;
+  outline-offset: 4px;
+  border-radius: 5px;
+  color: $grayscale-900;
+}
+
+%GreyLinkActive {
+  color: #1cd5a8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
