@@ -12,7 +12,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElement => {
+const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsSection): ReactElement => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -28,20 +28,28 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
         </Link>
       </div>
       <div className="cards-section__cards-container">
-        <button className="arrow-swiper arrow--prev">
-          <img src={arrowLeftPath} ref={prevRef} alt="Shevron Left" />
+        <button className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--prev`}>
+          <img
+            className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
+            src={arrowLeftPath}
+            ref={prevRef}
+            alt="Shevron Left"
+          />
         </button>
         <Swiper
           modules={[Navigation]}
           loop={true}
           slidesPerView={4}
           navigation={{
-            prevEl: '.arrow--prev',
-            nextEl: '.arrow--next',
+            prevEl: `.${sectionClassName}__swiper-arrow--prev`,
+            nextEl: `.${sectionClassName}__swiper-arrow--next`,
           }}
           breakpoints={{
             320: {
               slidesPerView: 1,
+            },
+            467: {
+              slidesPerView: 1.5,
             },
             567: {
               slidesPerView: 2,
@@ -57,8 +65,8 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
             },
           }}
         >
-          {ProductCardsData.map((card) => (
-            <SwiperSlide>
+          {ProductCardsData.map((card, index) => (
+            <SwiperSlide key={index}>
               <Card
                 imagePath={card.imagePath}
                 rating={card.rating}
@@ -74,8 +82,15 @@ const ProductCardsSection = ({ header, counter }: IPropsCardsSection): ReactElem
             </SwiperSlide>
           ))}
         </Swiper>
-        <button ref={nextRef} className="arrow-swiper arrow--next">
-          <img src={arrowRightPath} alt="Shevron Right" />
+        <button
+          ref={nextRef}
+          className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--next`}
+        >
+          <img
+            className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
+            src={arrowRightPath}
+            alt="Shevron Right"
+          />
         </button>
       </div>
     </section>
