@@ -1,6 +1,7 @@
 import './PageNav.scss';
 import React, { FormEvent, ReactElement } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import logo from '@/assets/images/svg/header-logo.svg';
 import ProfileButton from '@/components/ProfileButton/ProfileButton';
@@ -15,13 +16,24 @@ const PageNav = (): ReactElement => {
   const { isUserLoggedIn, signOut } = useAuth();
   const navigate = useNavigate();
 
+  message.config({
+    duration: 2,
+    maxCount: 1,
+  });
+
   const handleScrollToTop = (): void => {
     window.scrollTo({
       top: 0,
     });
   };
 
-  const handleLogOut = (): void => signOut(() => navigate('/'));
+  const handleLogOut = (): void => {
+    signOut(() => navigate('/'));
+    localStorage.removeItem('token');
+    message.info({
+      content: 'До встречи!',
+    });
+  };
 
   const handleExampleSumbit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
