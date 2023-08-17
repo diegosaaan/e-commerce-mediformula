@@ -1,4 +1,5 @@
 node_modules
+.husky
 build
 package-lock.json
 
