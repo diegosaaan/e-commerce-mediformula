@@ -1,8 +1,28 @@
+import '@/pages/Registration/components/ListAddress/ListAddress.scss';
 import React, { ReactElement } from 'react';
 import Input from '@/components/Input/Input';
 import { IPropsListAddress } from '@/types/interfaces';
 
-const ListAddress = ({ addresses, name, onChange }: IPropsListAddress): ReactElement => {
+const ListAddress = ({
+  addresses,
+  name,
+  onChange,
+  setAddresses,
+  setAddressesAnother,
+}: IPropsListAddress): ReactElement => {
+  const handleDeleteAddress = (index: number): void => {
+    const updatedAddresses = addresses.filter((_, i) => i !== index);
+    if (setAddresses) {
+      setAddresses(updatedAddresses);
+    }
+  };
+
+  const handleCopyAddress = (index: number): void => {
+    if (setAddressesAnother) {
+      setAddressesAnother((prevAddresses) => [...prevAddresses, addresses[index]]);
+    }
+  };
+
   return (
     <ul className="auth__list-address">
       {addresses.map((item, index) => (
@@ -13,7 +33,7 @@ const ListAddress = ({ addresses, name, onChange }: IPropsListAddress): ReactEle
             type="radio"
             name={name}
             onChange={onChange}
-            checked={true}
+            value={String(index)}
           >
             <span className="auth__span"></span>
             <ul className="auth__list-address-value">
@@ -23,6 +43,16 @@ const ListAddress = ({ addresses, name, onChange }: IPropsListAddress): ReactEle
               <li>Улица: {item.street}</li>
             </ul>
           </Input>
+          <div className="auth__item-container">
+            {addresses.length !== 1 && (
+              <button
+                className="auth__button-delete"
+                type="button"
+                onClick={(): void => handleDeleteAddress(index)}
+              ></button>
+            )}
+            <button className="auth__button-copy" type="button" onClick={(): void => handleCopyAddress(index)}></button>
+          </div>
         </li>
       ))}
     </ul>

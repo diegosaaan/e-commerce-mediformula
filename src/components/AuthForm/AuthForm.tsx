@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { Form } from 'formik';
 import '@/components/AuthForm/AuthForm.scss';
 import { IPropsAuthForm } from '@/types/interfaces';
 import background1 from '@/assets/images/jpg/auth-background-1.jpg';
@@ -27,7 +28,6 @@ export const loader = (): null => {
 };
 
 const AuthForm = ({
-  onSubmit,
   children,
   name,
   text,
@@ -46,9 +46,15 @@ const AuthForm = ({
       <div className="auth__container">
         <div className="auth__container-heading">
           <h1 className="auth__heading">{title}</h1>
-          {isAddAddress && <button className="auth__button-prev" type="button" onClick={handlePrevRegister}></button>}
+          {isAddAddress ? (
+            <button className="auth__button-prev" type="button" onClick={handlePrevRegister}></button>
+          ) : (
+            <Link className="auth__link auth__link_type_main" to="/">
+              На главную
+            </Link>
+          )}
         </div>
-        <form className="auth__form" name={name} onSubmit={onSubmit} autoComplete="off">
+        <Form className="auth__form" name={name} autoComplete="off" noValidate>
           {children}
           {!isAddAddress && (
             <button className="auth__button" type="submit" disabled={disabled}>
@@ -62,7 +68,7 @@ const AuthForm = ({
             </Link>
             <div className="auth__arrow"></div>
           </div>
-        </form>
+        </Form>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ import { accordionListData, socialIconsListData } from './linksData';
 const Footer = (): ReactElement => {
   const [activeAccordion, setActiveAccordion] = useState('');
 
-  const handleToogleAccordion = (listName: string): void => {
+  const handleClickAccordion = (listName: string): void => {
     setActiveAccordion((prevActiveAccordion) => (prevActiveAccordion === listName ? '' : listName));
   };
 
@@ -40,7 +40,7 @@ const Footer = (): ReactElement => {
                   listName={listName}
                   title={title}
                   isOpen={activeAccordion === listName}
-                  onToogleAccordion={(): void => handleToogleAccordion(listName)}
+                  onClickAccordion={(): void => handleClickAccordion(listName)}
                 >
                   {items.map(({ label, link, key }) => (
                     <li key={key} className={`footer__${listName}-list-item`}>

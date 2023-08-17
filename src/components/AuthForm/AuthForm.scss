@@ -86,8 +86,11 @@
     background-color: $grayscale-400;
   }
 
-  &__button-prev {
-    @include MainBtnHover;
+  &__button-prev:focus {
+    @extend %GreyLinkFocus;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   &__form {
@@ -113,21 +116,16 @@
     background: $primary-liner;
   }
 
-  &__button:hover {
-    @include MainBtnHover;
-  }
-
   &__button:focus {
     @extend %GreyLinkFocus;
-  }
-
-  &__button:active {
-    @extend %GreyLinkActive;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   &__button:disabled {
-    background: $color-disabled;
-    color: $grayscale-50;
+    background: $grayscale-300;
+    color: $grayscale-600;
   }
 
   &__text {
@@ -158,20 +156,19 @@
     transition: color 0.3s;
   }
 
-  &__link:hover {
-    color: $color-primary-hover;
-  }
-
-  &__link:hover + &__arrow {
-    animation: shake 2s ease infinite;
+  &__link_type_main {
+    padding: 4px 12px;
+    background-color: $color-login;
+    color: $grayscale-50;
+    border-radius: 50px;
+    transition: opacity 0.3s;
   }
 
   &__link:focus {
     @extend %GreyLinkFocus;
-  }
-
-  &__link:active {
-    @extend %GreyLinkActive;
+    &:active {
+      @extend %GreyLinkActive;
+    }
   }
 
   @media screen and (max-width: $portrait-tablet) {
@@ -186,6 +183,10 @@
   }
 
   @media (hover: hover) {
+    &__button-prev:hover {
+      @include MainBtnHover;
+    }
+
     &__button:hover {
       @include MainBtnHover;
     }
@@ -196,6 +197,11 @@
 
     &__link:hover + &__arrow {
       animation: shake 2s ease infinite;
+    }
+
+    &__link_type_main:hover {
+      @include MainBtnHover;
+      color: $grayscale-50;
     }
   }
 }

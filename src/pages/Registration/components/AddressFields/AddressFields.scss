@@ -1,0 +1,100 @@
+.auth {
+  &__list-heading {
+    align-items: center;
+    padding: 18px 22px 18px 16px;
+    gap: 10px;
+    height: 56px;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-family: 'Golos', Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    color: $grayscale-900;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url('@/assets/images/svg/footer-accordion-close-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 22px);
+    background-size: 16px 16px;
+    border-radius: 8px;
+    background-color: $grayscale-200;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  &__select-accordion {
+    position: relative;
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  &__select-list {
+    position: absolute;
+    margin-top: 0;
+    padding: 0px 16px;
+    width: 100%;
+    max-width: 320px;
+    max-height: 0px;
+    background-color: $grayscale-200;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+
+    &-item {
+      @include GolosRegular(16px, 1, $grayscale-900);
+      margin-top: 16px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+  }
+
+  &__accordion--active {
+    padding-bottom: 16px;
+    max-height: 200px;
+    border-top: 1px solid $grayscale-900;
+  }
+
+  &__accordion-heading--active {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-image: url('@/assets/images/svg/footer-accordion-open-arrow.svg');
+    background-color: $grayscale-300;
+  }
+}
+
+@media (hover: hover) {
+  .auth {
+    &__list-heading:hover {
+      background-color: $grayscale-300;
+    }
+
+    &__select-list {
+      &-item:hover {
+        @include GreyLinkHover;
+      }
+    }
+  }
+}
+
+.auth__select-list-item:focus {
+  @extend %GreyLinkFocus;
+}
+
+.auth__list-heading:focus {
+  background-color: $grayscale-400;
+}
+
+.auth__accordion-heading--active:focus {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  outline: none;
+}
+
+.auth__select-list-item:focus:active,
+.auth__accordion-heading--active:focus:active {
+  @extend %GreyLinkActive;
+}

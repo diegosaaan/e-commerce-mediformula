@@ -1,5 +1,6 @@
-import { FormEvent, ReactElement, ReactNode } from 'react';
-import { AddressType } from './types';
+import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
+import { ObjectSchema } from 'yup';
+import { AddressType, LoginSchemaType } from './types';
 
 export interface IAuthContextValue {
   isUserLoggedIn: boolean;
@@ -13,7 +14,8 @@ export interface IAccordionProps {
   title: string;
   children: ReactElement[];
   isOpen: boolean;
-  onToogleAccordion: () => void;
+  onClickAccordion: (event: MouseEvent) => void;
+  onKeydownAccordion?: (event: KeyboardEvent) => void;
 }
 
 export interface IPropsButton {
@@ -33,7 +35,8 @@ export interface IPropsInput {
   name: string;
   children?: ReactNode;
   checked?: boolean;
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 export interface IPropsForm {
@@ -88,13 +91,14 @@ export interface IPropsCardsSection {
 export interface IPropsProduct {}
 
 export interface IPropsAuthInput {
-  type: 'search' | 'text' | 'password' | 'email' | 'date' | 'radio';
+  type: string;
   placeholder?: string;
   name: string;
   htmlFor: string;
   isInputPassword?: boolean;
-  textError?: string;
   value?: string;
+  errors?: string;
+  touched?: boolean;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
@@ -109,17 +113,34 @@ export interface IPropsAuthForm {
   isRegister?: boolean;
   disabled?: boolean;
   isAddAddress?: boolean;
+  validationSchema?: ObjectSchema<LoginSchemaType>;
+  initialValues?: LoginSchemaType;
   handlePrevRegister?: () => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 export interface IPropsListAddress {
   name: string;
   addresses: AddressType[];
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  value?: string;
+  setAddresses?: React.Dispatch<React.SetStateAction<AddressType[]>>;
+  setAddressesAnother?: React.Dispatch<React.SetStateAction<AddressType[]>>;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+export interface IAuthAddressesState {
+  countryValue: string;
+  cityValue: string;
+  isCityError: boolean;
+  streetValue: string;
+  isStreetError: boolean;
+  postalCodeValue: string;
+  isPostalCodeError: boolean;
 }
 
 export interface IPropsAddressFields {
-  address: AddressType;
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  name: string;
+  addressesState: IAuthAddressesState;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
 }

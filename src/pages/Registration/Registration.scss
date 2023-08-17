@@ -14,13 +14,14 @@
     background-size: 25px 25px;
     background-repeat: no-repeat;
     background-color: $grayscale-200;
-    transition: border 1s;
+    transition:
+      border 1s,
+      background-image 1s;
     margin: 15px 0;
   }
 
-  &__button-add:hover {
-    cursor: pointer;
-    border: 2px solid $plus-button-hover;
+  &__button-add:focus {
+    outline: none;
   }
 
   &__list-address {
@@ -30,19 +31,22 @@
   }
 
   &__item-address {
-    box-sizing: border-box;
     position: relative;
-    padding: 10px;
-    border-radius: 16px;
-    background-color: $grayscale-200;
+    display: flex;
+    gap: 10px;
   }
 
   &__label-address {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: $grayscale-200;
   }
 
   &__list-address-value {
@@ -81,23 +85,8 @@
     transition: border 1s;
   }
 
-  &__input-address:not(:disabled):not(:checked) + &__span:hover::before {
-    cursor: pointer;
-    border: 2px solid $plus-button-hover;
-  }
-
   &__input-address:not(:disabled):active + &__span::before {
     @extend %GreyLinkActive;
-  }
-
-  &__input-address:focus + &__span::before {
-    @extend %GreyLinkFocus;
-    border-radius: 16px;
-  }
-
-  &__input-address:focus:not(:checked) + &__span::before {
-    @extend %GreyLinkFocus;
-    border-radius: 16px;
   }
 
   &__input-address:checked + &__span::before {
@@ -112,6 +101,7 @@
     &__button-add:hover {
       cursor: pointer;
       border: 2px solid $plus-button-hover;
+      background-image: url('@/assets/images/svg/auth-plus-hover.svg');
     }
 
     &__input-address:not(:disabled):not(:checked) + &__span:hover::before {

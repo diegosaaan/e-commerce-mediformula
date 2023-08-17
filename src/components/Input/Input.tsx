@@ -11,6 +11,7 @@ const Input = ({
   name,
   checked,
   children,
+  value,
   onChange,
 }: IPropsInput): ReactElement => {
   return (
@@ -23,6 +24,7 @@ const Input = ({
         name={name}
         onChange={onChange}
         checked={checked}
+        value={value}
       />
       {children}
     </label>

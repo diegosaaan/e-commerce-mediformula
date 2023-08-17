@@ -1,69 +1,73 @@
 import '@/pages/Login/Login.scss';
-import React, { FormEvent, ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
+import { LoginSchema } from '@/utils/helpers/validationSchemes';
 import useAuth from '@/utils/hooks/useAuth';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
+import { LoginSchemaType } from '@/types/types';
 
 const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const [infoLogin, setInfoLogin] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleInfoChange = (e: FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-    const target = e.target as HTMLInputElement;
-    const { name, value } = target;
-    setInfoLogin((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+  const handleLogin = (values: LoginSchemaType): void => {
+    const { email, password } = values;
+    console.log(email, password);
     signIn(() => navigate('/'));
   };
 
   return (
-    <AuthForm
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={LoginSchema}
       onSubmit={handleLogin}
-      name="form-login"
-      text="Еще не зарегистрированы?"
-      textLink="Регистрация"
-      textButton="Войти"
-      path="/registration"
-      title="Вход"
     >
-      <ul className="auth__list auth__list_active">
-        <li>
-          <AuthInput
-            type="email"
-            placeholder="Email*"
-            name="email"
-            htmlFor="email"
-            isInputPassword={false}
-            onChange={handleInfoChange}
-            value={infoLogin.email}
-          />
-        </li>
-        <li>
-          <AuthInput
-            type="password"
-            placeholder="Пароль*"
-            name="password"
-            htmlFor="password"
-            isInputPassword={true}
-            onChange={handleInfoChange}
-            value={infoLogin.password}
-          />
-        </li>
-      </ul>
-    </AuthForm>
+      {({ values, errors, touched, handleChange, isValid, dirty }): JSX.Element => (
+        <AuthForm
+          name="form-login"
+          text="Еще не зарегистрированы?"
+          textLink="Регистрация"
+          textButton="Войти"
+          path="/registration"
+          title="Вход"
+          disabled={!isValid || !dirty}
+        >
+          <ul className="auth__list auth__list_active">
+            <li>
+              <AuthInput
+                type="email"
+                placeholder="Email*"
+                name="email"
+                htmlFor="email"
+                isInputPassword={false}
+                onChange={handleChange}
+                value={values.email}
+                errors={errors.email}
+                touched={touched.email}
+              />
+            </li>
+            <li>
+              <AuthInput
+                type="password"
+                placeholder="Пароль*"
+                name="password"
+                htmlFor="password"
+                isInputPassword={true}
+                onChange={handleChange}
+                value={values.password}
+                errors={errors.password}
+                touched={touched.password}
+              />
+            </li>
+          </ul>
+        </AuthForm>
+      )}
+    </Formik>
   );
 };
 
