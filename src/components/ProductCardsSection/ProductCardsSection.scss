@@ -33,22 +33,29 @@
   max-width: 100% !important;
 }
 
-.arrow-swiper {
+.swiper-arrow {
+  padding: 0;
   height: 36px;
   align-self: center;
-
-  @media (hover: hover) {
-    &:hover {
-      cursor: pointer;
-      opacity: 0.8;
-    }
-  }
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 
   &:focus {
-    @extend %TextBtnFocus;
+    outline: none;
   }
 
-  &:active {
-    @extend %IconBtnActive;
+  &:focus .swiper-arrow-img {
+    transform: scale(1.5);
+  }
+}
+
+.swiper-arrow-img {
+  display: block;
+  transition: 0.3s ease-in-out;
+}
+
+@media (hover: hover) {
+  .swiper-arrow-img:hover {
+    transform: scale(1.5);
   }
 }
