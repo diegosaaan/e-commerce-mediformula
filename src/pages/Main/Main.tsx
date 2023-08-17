@@ -8,9 +8,9 @@ function MainPage(): ReactElement {
   return (
     <div className="main-page">
       <Intro />
-      <ProductCardsSection header="Популярное" counter={15} />
+      <ProductCardsSection header="Популярное" counter={15} sectionClassName="popular" />
       <CategoryCards />
-      <ProductCardsSection header="Специальные предложения" counter={15} />
+      <ProductCardsSection header="Специальные предложения" sectionClassName="special-offers" counter={15} />
     </div>
   );
 }
