@@ -1,7 +1,7 @@
 import './AddressFields.scss';
 import React, { MouseEvent, KeyboardEvent, ReactElement, useState, useEffect, FormEvent } from 'react';
 import AuthInput from '@/components/AuthInput/AuthInput';
-import { IPropsAddressFields } from '@/types/interfaces';
+import { IPropsAddressFields } from '@/types/componentsInrefaces';
 import Accordion from '@/components/Accordion/Accrodion';
 import selectData from '../fieldsData/selectData';
 

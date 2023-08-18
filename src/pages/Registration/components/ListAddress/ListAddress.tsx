@@ -1,7 +1,7 @@
 import '@/pages/Registration/components/ListAddress/ListAddress.scss';
 import React, { ReactElement } from 'react';
 import Input from '@/components/Input/Input';
-import { IPropsListAddress } from '@/types/interfaces';
+import { IPropsListAddress } from '@/types/componentsInrefaces';
 
 const ListAddress = ({
   addresses,

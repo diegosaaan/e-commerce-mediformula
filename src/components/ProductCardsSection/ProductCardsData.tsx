@@ -1,4 +1,4 @@
-import { IPropsCard } from '@/types/interfaces';
+import { IPropsCard } from '@/types/componentsInrefaces';
 import imagePath from '@/assets/images/png/card-product-image-example.png';
 
 const ProductCardsData: IPropsCard[] = [

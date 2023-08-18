@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import linkArrow from '@/assets/images/svg/main-media-link-arrow.svg';
-import { IMediaItemData } from '@/types/interfaces';
+import { IMediaItemData } from '@/types/componentsInrefaces';
 
 export const MediaIntroItem = ({
   introData: { heading, date, link, img, videoPreviewImg },

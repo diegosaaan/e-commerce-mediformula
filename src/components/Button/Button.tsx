@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import '@/components/Button/Button.scss';
-import { IPropsButton } from '@/types/interfaces';
+import { IPropsButton } from '@/types/componentsInrefaces';
 
 const Button = ({ type, text, onClick, className, children }: IPropsButton): ReactElement => {
   return (

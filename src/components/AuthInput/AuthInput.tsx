@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import '@/components/AuthInput/AuthInput.scss';
-import { IPropsAuthInput } from '@/types/interfaces';
+import { IPropsAuthInput } from '@/types/componentsInrefaces';
 
 const AuthInput = ({
   type,

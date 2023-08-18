@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import './Card.scss';
-import { IPropsCard } from '@/types/interfaces';
+import { IPropsCard } from '@/types/componentsInrefaces';
 import Button from '../Button/Button';
 
 const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount }: IPropsCard): ReactElement => {

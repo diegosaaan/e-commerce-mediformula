@@ -1,39 +1,23 @@
-import React, { ReactElement, useState } from 'react';
-import { notification, message } from 'antd';
 import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
+import React, { ReactElement, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
+import { AddressType, RegisterSchemaType } from '@/types/types';
+import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
-import { AddressType, RegisterSchemaType } from '@/types/types';
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
-import { RegisterSchema } from '@/utils/helpers/validationSchemes';
+import { RegisterSchema } from '@/utils/helpers/yup/validationSchemes';
 import useAuth from '@/utils/hooks/useAuth';
-import * as userAuth from '@/services/auth-user';
-import exit from '@/assets/images/svg/auth-exit.svg';
+import * as userAuth from '@/services/userAuth';
+import { IUserTokenData } from '@/types/apiInterfaces';
+import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 
 const RegistrationPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
-
-  notification.config({
-    maxCount: 5,
-    placement: 'bottomLeft',
-    duration: 10,
-    closeIcon: (
-      <span className="ant-notification-close-x">
-        <span role="img" aria-label="close" className="anticon anticon-close ant-notification-close-icon">
-          <img className="auth__exit-btn" src={exit} alt="close" />
-        </span>
-      </span>
-    ),
-  });
-
-  message.config({
-    duration: 2,
-    maxCount: 1,
-  });
 
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
@@ -66,13 +50,10 @@ const RegistrationPage = (): ReactElement => {
     const uniqueArray = Array.from(
       new Set([...shippingAddresses, ...billingAddresses].map((item) => JSON.stringify(item)))
     ).map((i) => JSON.parse(i));
-    const objShipping = shippingAddresses[Number(values.shipping)];
-    const objBilling = billingAddresses[Number(values.billing)];
+    const shippingJson = JSON.stringify(shippingAddresses[Number(values.shipping)]);
+    const billingJson = JSON.stringify(billingAddresses[Number(values.billing)]);
 
-    const shippingJson = JSON.stringify(objShipping);
     const indexShipping = uniqueArray.findIndex((item) => JSON.stringify(item) === shippingJson);
-
-    const billingJson = JSON.stringify(objBilling);
     const indexBilling = uniqueArray.findIndex((item) => JSON.stringify(item) === billingJson);
 
     const indexesOfShipping = shippingAddresses.map((address) => {
@@ -90,63 +71,41 @@ const RegistrationPage = (): ReactElement => {
       );
       return indexInUniqueArray;
     });
+
+    const { email, firstName, lastName, password, date } = values;
+
     userAuth
       .register(
-        values.email,
-        values.firstName,
-        values.lastName,
-        values.password,
-        values.date,
+        email,
+        firstName,
+        lastName,
+        password,
+        date,
         uniqueArray,
         indexShipping,
         indexBilling,
         indexesOfShipping,
         indexesOfBilling
       )
-      .then((res) => {
-        userAuth
-          .getToken(values.email, values.password)
-          .then((result) => {
-            if (result !== null && typeof result === 'object' && 'access_token' in result) {
-              const accessToken: string = result.access_token as string;
-              console.log(result);
-              message.info({
-                content: 'Регистрация прошла успешно!',
-              });
-              signIn(() => navigate('/'));
-              localStorage.setItem('token', String(accessToken));
-            }
-          })
-          .catch((err) => console.log(`Возникла ошибка: ${err}`));
-        console.log(res);
+      .then(() => {
+        createNewUserToken(values.email, values.password).then((result) => {
+          if (result !== null && typeof result === 'object') {
+            message.info({
+              content: 'Регистрация прошла успешно!',
+            });
+            signIn(() => navigate('/'));
+            saveUserToken(result as IUserTokenData);
+          }
+        });
       })
-      .catch((err) => {
-        if (err === 400) {
-          notification.error({
-            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
-            description: (
-              <p className="auth__notification">
-                Пользователь с таким email уже существует!
-                <a className="auth__link auth__link_type_notification" href="/login">
-                  {' '}
-                  Войдите{' '}
-                </a>
-                на сайт либо введите другой email
-              </p>
-            ),
-          });
-        } else if (err === 500) {
-          notification.error({
-            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
-            description: <p className="auth__notification">500 Ошибка сервера, повторите запрос позднее</p>,
-          });
-        } else {
-          notification.error({
-            message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
-            description: <p className="auth__notification">При регистрации возникла ошибка</p>,
-          });
-        }
-        console.log(`Возникла ошибка: ${err}`);
+      .catch((error) => {
+        const {
+          response: {
+            data: { statusCode, message: errorMessage },
+          },
+        } = error;
+
+        handleErrors(statusCode, errorMessage);
       });
   };
 

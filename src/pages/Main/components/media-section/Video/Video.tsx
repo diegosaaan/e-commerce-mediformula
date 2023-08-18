@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import mediaData from '../mediaHelpers/mediaData';
-import { IMediaItemData } from '@/types/interfaces';
+import { IMediaItemData } from '@/types/componentsInrefaces';
 import { MediaIntroItem, MediaListItem } from '../mediaHelpers/MediaItems';
 
 const Video = (): ReactElement => {
