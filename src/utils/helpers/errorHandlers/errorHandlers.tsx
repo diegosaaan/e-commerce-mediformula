@@ -2,33 +2,39 @@ import { notification } from 'antd';
 import React from 'react';
 import { CommonErrors } from '@/enums/apiErrors';
 
-const handleErrors = (status: number, errorMessage: string): void => {
-  let description = <p className="auth__notification">При регистрации возникла ошибка</p>;
+interface ErrorMessages {
+  [key: string]: string;
+}
 
-  if (errorMessage === CommonErrors.EmailExists) {
-    description = (
-      <p className="auth__notification">
-        Пользователь с таким email уже существует! Войдите на сайт либо введите другой email
-      </p>
-    );
+const errorMessages: ErrorMessages = {
+  [CommonErrors.EmailExists]: 'Пользователь с таким email уже существует! Войдите на сайт либо введите другой email',
+  [CommonErrors.CredentialsNotFound]: 'Вы ввели неправильный логин или пароль',
+  [CommonErrors.ServerError]: 'Ошибка сервера, повторите запрос позднее',
+  [CommonErrors.ServiceUnavailable]: 'На данный момент сервер перегружен, повторите запрос позднее',
+};
+
+const getErrorMessage = (status: number, errorMessage: string): string => {
+  if (errorMessage in errorMessages) {
+    return errorMessages[errorMessage];
   }
 
-  if (errorMessage === CommonErrors.CredentialsNotFound) {
-    description = <p className="auth__notification">Вы ввели неправильный логин или пароль</p>;
+  if (status.toString() in errorMessages) {
+    return errorMessages[status.toString()];
   }
 
-  if (status === CommonErrors.ServerError) {
-    description = <p className="auth__notification">Ошибка сервера, повторите запрос позднее</p>;
-  }
+  return 'Произошла ошибка';
+};
 
-  if (status === CommonErrors.ServiceUnavailable) {
-    description = <p className="auth__notification">На данный момент сервер перегружен, повторите запрос позднее</p>;
-  }
-
+const showNotification = (description: string): void => {
   notification.error({
     message: <p className="auth__notification auth__notification_type_main">Возникла ошибка!</p>,
-    description,
+    description: <p className="auth__notification">{description}</p>,
   });
+};
+
+const handleErrors = (status: number, errorMessage: string): void => {
+  const description = getErrorMessage(status, errorMessage);
+  showNotification(description);
 };
 
 export default handleErrors;
