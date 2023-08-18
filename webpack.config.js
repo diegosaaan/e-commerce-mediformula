@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const proxy = require('http-proxy-middleware');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -94,6 +95,12 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
+    proxy: {
+      '/api': {
+        target: 'https://api.europe-west1.gcp.commercetools.com',
+        changeOrigin: true,
+      },
+    },
     static: 'build',
     hot: true,
     open: true,

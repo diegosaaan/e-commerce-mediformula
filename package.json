@@ -1,5 +1,6 @@
 {
   "name": "e-commerce",
+  "proxy": "http://localhost:8000/",
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write .",
