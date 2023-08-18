@@ -1,5 +1,6 @@
 import React, { ReactElement, createContext, useState } from 'react';
-import { IAuthContextValue } from '@/types/interfaces';
+import { isUserToken, isTokenActive } from '@/services/tokenHelpers';
+import { IAuthContextValue } from '@/types/componentsInrefaces';
 
 const defaultAuthContextValue: IAuthContextValue = {
   isUserLoggedIn: false,
@@ -9,8 +10,10 @@ const defaultAuthContextValue: IAuthContextValue = {
 
 export const AuthContext = createContext<IAuthContextValue>(defaultAuthContextValue);
 
-export function AuthProvider({ children }: { children: ReactElement }): ReactElement {
-  const [isUserLoggedIn, setUser] = useState(JSON.parse(localStorage.getItem('isUserLoggedIn') || 'false'));
+export const AuthProvider = ({ children }: { children: ReactElement }): ReactElement => {
+  const wasUserLoggedIn = JSON.parse(localStorage.getItem('isUserLoggedIn') || 'false');
+
+  const [isUserLoggedIn, setUser] = useState(isUserToken() && wasUserLoggedIn ? isTokenActive() : false);
 
   const signIn = (cb: () => void): void => {
     localStorage.setItem('isUserLoggedIn', JSON.stringify(true));
@@ -27,4 +30,4 @@ export function AuthProvider({ children }: { children: ReactElement }): ReactEle
   const value: IAuthContextValue = { isUserLoggedIn, signIn, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+};
