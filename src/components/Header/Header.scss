@@ -344,7 +344,7 @@
     }
 
     &__input-search {
-      width: 600px;
+      width: calc(683px + (939 - 683) * (100vw - 768px) / (1023 - 768));
     }
   }
 }
@@ -388,11 +388,23 @@
     }
 
     &__input-search {
-      width: calc(328px + (600 - 328) * (100vw - 360px) / (767 - 360));
+      width: calc(350px + (727 - 350) * (100vw - 390px) / (767 - 390));
     }
 
     &__nav-extra-mobile {
       display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .header {
+    &__nav-container-auth {
+      flex-wrap: wrap;
+    }
+
+    &__item-logo-mobile {
+      width: 280px;
     }
   }
 }
