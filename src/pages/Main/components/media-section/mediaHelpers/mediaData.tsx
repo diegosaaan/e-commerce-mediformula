@@ -71,7 +71,7 @@ const mediaData = {
       },
       {
         heading: 'Медицинская конференция АМАР. Онко...',
-        date: '5 августа 2023',
+        date: '30 апреля 2023',
         link: 'https://www.youtube.com/watch?v=OI997bfHJ_Q',
         videoPreviewImg: onkoPhotoPreview,
       },
