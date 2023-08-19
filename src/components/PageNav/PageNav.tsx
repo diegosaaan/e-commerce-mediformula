@@ -48,7 +48,7 @@ const PageNav = (): ReactElement => {
       <nav>
         <ul className="header__nav">
           <ul className="header__nav-container-auth">
-            <li className="header__item-logo-mobile">
+            <li className={`header__item-logo-mobile ${isUserLoggedIn ? 'header__item-logo-mobile_type_login' : ''}`}>
               <Link className="header__logo-link" to="/">
                 <img className="header__logo-mobile" src={logo} alt="Logo" />
               </Link>
