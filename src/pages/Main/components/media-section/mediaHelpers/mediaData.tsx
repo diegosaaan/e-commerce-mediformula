@@ -2,6 +2,7 @@ import newsPhotoIntro from '@/assets/images/jpg/main-media-news-intro.jpg';
 import articlesPhotoIntro from '@/assets/images/jpg/main-media-articles-intro.jpg';
 import videoPhotoIntro from '@/assets/images/jpg/main-media-intro-video.jpg';
 import healthAgePhotoPreview from '@/assets/images/jpg/main-media-health-video.jpg';
+import onkoPhotoPreview from '@/assets/images/jpg/main-media-onko-video.jpg';
 
 const mediaData = {
   news: {
@@ -69,10 +70,10 @@ const mediaData = {
         videoPreviewImg: healthAgePhotoPreview,
       },
       {
-        heading: 'V Международный конгресс Health Age..',
+        heading: 'Медицинская конференция АМАР. Онко...',
         date: '5 августа 2023',
-        link: '',
-        videoPreviewImg: healthAgePhotoPreview,
+        link: 'https://www.youtube.com/watch?v=OI997bfHJ_Q',
+        videoPreviewImg: onkoPhotoPreview,
       },
     ],
   },
