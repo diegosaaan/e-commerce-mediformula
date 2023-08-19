@@ -51,6 +51,7 @@
     "sass-resources-loader": "^2.2.5",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",
@@ -60,6 +61,7 @@
   "dependencies": {
     "@pbe/react-yandex-maps": "^1.2.4",
     "antd": "^5.8.3",
+    "@testing-library/user-event": "^14.4.3",
     "axios": "^1.4.0",
     "formik": "^2.4.3",
     "react": "^18.2.0",
@@ -67,7 +69,7 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.2",
     "redux": "^4.2.1",
-    "swiper": "^8.0.0",
+    "swiper": "^7.0.5",
     "yup": "^1.2.0"
   }
 }
