@@ -7,6 +7,7 @@ enum ApiEndpoints {
   URL_CUSTOMERS = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/customers',
   URL_AUTH_CUSTOMERS_TOKEN = 'https://auth.europe-west1.gcp.commercetools.com/oauth/e-shop230731/customers/token',
   URL_AUTH_INTROSPECT = 'https://auth.europe-west1.gcp.commercetools.com/oauth/introspect',
+  URL_AUTH_TOKEN_ADMIN = `https://auth.europe-west1.gcp.commercetools.com/oauth/token`,
 }
 
 export default ApiEndpoints;
