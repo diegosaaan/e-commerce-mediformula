@@ -29,7 +29,7 @@ const PageNav = (): ReactElement => {
 
   const handleLogOut = (): void => {
     signOut(() => navigate('/'));
-    localStorage.removeItem('token');
+    localStorage.removeItem('1SortUserToken');
     message.info({
       content: 'До встречи!',
     });
