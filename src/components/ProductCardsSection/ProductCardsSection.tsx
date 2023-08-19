@@ -1,4 +1,8 @@
 import './ProductCardsSection.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/free-mode';
+
 import React, { ReactElement, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -8,9 +12,6 @@ import { IPropsCardsSection } from '@/types/interfaces';
 import ProductCardsData from './ProductCardsData';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/free-mode';
 
 const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsSection): ReactElement => {
   const prevRef = useRef(null);
@@ -79,9 +80,7 @@ const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsS
                 priceBefore={card.priceBefore}
                 bonus={card.bonus}
                 discount={card.discount}
-                onClick={(): void => {
-                  console.log('Clicked!');
-                }}
+                onClick={(): void => {}}
               />
             </SwiperSlide>
           ))}
