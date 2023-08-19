@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { AddressType } from '@/types/types';
-import { JSON_HEADERS } from './headers';
+import { createAdminJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
 
 export const checkResponse = (res: AxiosResponse): Promise<unknown> => {
@@ -36,8 +36,9 @@ export const register = async (
   };
 
   const res = await axios.post(ApiEndpoints.URL_CUSTOMERS, requestData, {
-    headers: JSON_HEADERS,
+    headers: await createAdminJSONHeaders(),
   });
+
   return checkResponse(res);
 };
 
@@ -48,7 +49,8 @@ export const login = async (email: string, password: string): Promise<unknown> =
   };
 
   const res = await axios.post(ApiEndpoints.URL_LOGIN, requestData, {
-    headers: JSON_HEADERS,
+    headers: await createAdminJSONHeaders(),
   });
+
   return checkResponse(res);
 };
