@@ -120,13 +120,13 @@
     @include GolosMedium(16px, 1, $grayscale-50);
     height: 56px;
     width: 100%;
-    background: $secondary-liner;
+    background-color: $color-secondary;
     border-radius: 8px;
     transition: opacity 0.3s;
   }
 
   &__button_type_add {
-    background: $primary-liner;
+    background-color: $color-primary;
   }
 
   &__button:focus {

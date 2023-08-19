@@ -103,7 +103,7 @@
     border-radius: 8px;
     @include GolosMedium(16px, 1, $grayscale-50);
     transition: opacity 0.3s;
-    background: $primary-liner;
+    background-color: $color-primary;
   }
 
   &__button-main:focus {
@@ -160,7 +160,7 @@
     left: 13px;
     padding: 2px 5px;
     border-radius: 50%;
-    background: $primary-liner;
+    background-color: $color-primary;
   }
 
   &__form-search {
