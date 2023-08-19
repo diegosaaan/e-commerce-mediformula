@@ -65,7 +65,7 @@ const LoginPage = (): ReactElement => {
           <ul className="auth__list auth__list_active">
             <li>
               <AuthInput
-                type="email"
+                type="text"
                 placeholder="Email*"
                 name="email"
                 htmlFor="email"

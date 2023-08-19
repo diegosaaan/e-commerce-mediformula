@@ -241,7 +241,7 @@ const RegistrationPage = (): ReactElement => {
             </li>
             <li>
               <AuthInput
-                type="email"
+                type="text"
                 placeholder="Email*"
                 name="email"
                 htmlFor="email"
