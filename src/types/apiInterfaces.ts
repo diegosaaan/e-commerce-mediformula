@@ -20,3 +20,7 @@ export interface IApiIntrospectData {
   exp?: number;
   client_id?: string;
 }
+
+export interface IAuthResponseTokenAdmin {
+  access_token: string;
+}

@@ -3,7 +3,12 @@ import axios from 'axios';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { URLENCODED_HEADERS, createUserJSONHeaders } from './headers';
 import { checkResponse } from './userAuth';
-import { ILocalStorageUserTokenData, IApiIntrospectData, IUserTokenData } from '@/types/apiInterfaces';
+import {
+  ILocalStorageUserTokenData,
+  IApiIntrospectData,
+  IUserTokenData,
+  IAuthResponseTokenAdmin,
+} from '@/types/apiInterfaces';
 
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
 
@@ -74,4 +79,15 @@ export const getUserInfoByToken = async (): Promise<unknown> => {
   });
 
   return checkResponse(res);
+};
+
+export const getAdminToken = async (): Promise<string> => {
+  const requestData = new URLSearchParams();
+  requestData.append('grant_type', 'client_credentials');
+
+  const res = await axios.post<IAuthResponseTokenAdmin>(ApiEndpoints.URL_AUTH_TOKEN_ADMIN, requestData.toString(), {
+    headers: URLENCODED_HEADERS,
+  });
+
+  return res.data.access_token;
 };
