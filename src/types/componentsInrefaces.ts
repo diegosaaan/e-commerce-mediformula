@@ -126,6 +126,7 @@ export interface IPropsListAddress {
   setAddresses?: React.Dispatch<React.SetStateAction<AddressType[]>>;
   setAddressesAnother?: React.Dispatch<React.SetStateAction<AddressType[]>>;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  isAddress?: boolean;
 }
 
 export interface IAuthAddressesState {

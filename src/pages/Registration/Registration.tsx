@@ -300,6 +300,7 @@ const RegistrationPage = (): ReactElement => {
                     addresses={shippingAddresses}
                     setAddresses={setShippingAddresses}
                     setAddressesAnother={setBillingAddresses}
+                    isAddress={isBillingAddress}
                   />
                   <p className="auth__input-error">{errors.shipping && errors.shipping}</p>
                 </>
@@ -338,6 +339,7 @@ const RegistrationPage = (): ReactElement => {
                     addresses={billingAddresses}
                     setAddresses={setBillingAddresses}
                     setAddressesAnother={setShippingAddresses}
+                    isAddress={isShippingAddress}
                   />
                   <p className="auth__input-error">{errors.billing && errors.billing}</p>
                 </>

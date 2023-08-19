@@ -9,6 +9,7 @@ const ListAddress = ({
   onChange,
   setAddresses,
   setAddressesAnother,
+  isAddress,
 }: IPropsListAddress): ReactElement => {
   const handleDeleteAddress = (index: number): void => {
     const updatedAddresses = addresses.filter((_, i) => i !== index);
@@ -44,14 +45,20 @@ const ListAddress = ({
             </ul>
           </Input>
           <div className="auth__item-container">
-            {addresses.length !== 1 && (
+            {!isAddress && addresses.length !== 1 && (
               <button
                 className="auth__button-delete"
                 type="button"
                 onClick={(): void => handleDeleteAddress(index)}
               ></button>
             )}
-            <button className="auth__button-copy" type="button" onClick={(): void => handleCopyAddress(index)}></button>
+            {!isAddress && (
+              <button
+                className="auth__button-copy"
+                type="button"
+                onClick={(): void => handleCopyAddress(index)}
+              ></button>
+            )}
           </div>
         </li>
       ))}
