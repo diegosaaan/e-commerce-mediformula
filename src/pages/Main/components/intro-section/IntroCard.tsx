@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import '@/pages/Main/components/intro-section/IntroCard.scss';
 import '@/pages/App.scss';
-import { IPropsIntroCard } from '@/types/interfaces';
+import { IPropsIntroCard } from '@/types/componentsInrefaces';
 
 const IntroCard = ({ header, iconPath, text, label }: IPropsIntroCard): ReactElement => {
   return (

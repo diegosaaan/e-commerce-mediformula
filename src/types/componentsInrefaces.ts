@@ -3,7 +3,7 @@ import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
 
 export interface IAuthContextValue {
-  isUserLoggedIn: boolean;
+  isUserLoggedIn: Promise<boolean> | boolean;
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
 }

@@ -1,7 +1,7 @@
 import '@/pages/Registration/components/ListAddress/ListAddress.scss';
 import React, { ReactElement } from 'react';
 import Input from '@/components/Input/Input';
-import { IPropsListAddress } from '@/types/interfaces';
+import { IPropsListAddress } from '@/types/componentsInrefaces';
 
 const ListAddress = ({
   addresses,
@@ -39,8 +39,8 @@ const ListAddress = ({
             <ul className="auth__list-address-value">
               <li>Страна: {item.country}</li>
               <li>Город: {item.city}</li>
-              <li>Индекс: {item.index}</li>
-              <li>Улица: {item.street}</li>
+              <li>Индекс: {item.postalCode}</li>
+              <li>Улица: {item.streetName}</li>
             </ul>
           </Input>
           <div className="auth__item-container">

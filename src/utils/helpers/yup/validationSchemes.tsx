@@ -7,7 +7,7 @@ export const LoginSchema = Yup.object().shape({
     .required('Поле обязательно к заполнению')
     .matches(
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      'Поле должно содержать адрес электронной почты (например, example@email.com)'
+      'Поле должно содержать адрес электронной почты (test@test.com) и не содержать пробелов'
     )
     .test(
       'no-leading-trailing-spaces',
@@ -55,7 +55,7 @@ export const RegisterSchema = Yup.object().shape({
     .required('Поле обязательно к заполнению')
     .matches(
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      'Поле должно содержать адрес электронной почты (например, example@email.com)'
+      'Поле должно содержать адрес электронной почты (test@test.com) и не содержать пробелов'
     )
     .test(
       'no-leading-trailing-spaces',

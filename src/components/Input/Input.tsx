@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import '@/components/Input/Input.scss';
-import { IPropsInput } from '@/types/interfaces';
+import { IPropsInput } from '@/types/componentsInrefaces';
 
 const Input = ({
   className,

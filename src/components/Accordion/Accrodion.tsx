@@ -1,5 +1,5 @@
 import React, { KeyboardEvent, ReactElement } from 'react';
-import { IAccordionProps } from '@/types/interfaces';
+import { IAccordionProps } from '@/types/componentsInrefaces';
 
 export default function Accordion({
   sectionName,

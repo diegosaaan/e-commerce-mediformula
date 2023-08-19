@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
 import Card from '@/components/Card/Card';
-import { IPropsCardsSection } from '@/types/interfaces';
+import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import ProductCardsData from './ProductCardsData';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';

@@ -99,6 +99,19 @@
     gap: 15.5px;
   }
 
+  &__list {
+    flex-direction: column;
+    gap: 16.5px;
+  }
+
+  &__list_inactive {
+    display: none;
+  }
+
+  &__list_active {
+    display: flex;
+  }
+
   &__heading {
     @include GolosMedium(28px, 1.1, $grayscale-900);
   }
@@ -164,11 +177,28 @@
     transition: opacity 0.3s;
   }
 
+  &__link_type_notification {
+    @include GolosRegular(16px, 1, $color-primary-hover);
+  }
+
   &__link:focus {
     @extend %GreyLinkFocus;
     &:active {
       @extend %GreyLinkActive;
     }
+  }
+
+  &__exit-btn {
+    width: 15px;
+    height: 15px;
+  }
+
+  &__notification {
+    @include GolosRegular(16px, 1, $grayscale-900);
+  }
+
+  &__notification_type_main {
+    @include GolosRegular(18px, 1, $error-input);
   }
 
   @media screen and (max-width: $portrait-tablet) {
@@ -202,6 +232,10 @@
     &__link_type_main:hover {
       @include MainBtnHover;
       color: $grayscale-50;
+    }
+
+    &__link_type_notification:hover {
+      @include MainBtnHover;
     }
   }
 }

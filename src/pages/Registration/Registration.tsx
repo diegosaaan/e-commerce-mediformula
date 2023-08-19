@@ -1,20 +1,30 @@
-import React, { ReactElement, useState } from 'react';
 import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
+import React, { ReactElement, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
+import { AddressType, RegisterSchemaType } from '@/types/types';
+import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
-import { AddressType, RegisterSchemaType } from '@/types/types';
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
-import { RegisterSchema } from '@/utils/helpers/validationSchemes';
+import { RegisterSchema } from '@/utils/helpers/yup/validationSchemes';
+import useAuth from '@/utils/hooks/useAuth';
+import * as userAuth from '@/services/userAuth';
+import { IUserTokenData } from '@/types/apiInterfaces';
+import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 
 const RegistrationPage = (): ReactElement => {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(false);
 
   const [shippingState, setShippingState] = useState({
-    countryValue: 'Польша',
+    countryValue: 'Польша (PL)',
     cityValue: '',
     isCityError: true,
     streetValue: '',
@@ -24,7 +34,7 @@ const RegistrationPage = (): ReactElement => {
   });
 
   const [billingState, setBillingState] = useState({
-    countryValue: 'Польша',
+    countryValue: 'Польша (PL)',
     cityValue: '',
     isCityError: true,
     streetValue: '',
@@ -37,11 +47,66 @@ const RegistrationPage = (): ReactElement => {
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
   const handleRegister = (values: RegisterSchemaType): void => {
-    console.log(values);
-    console.log(shippingAddresses);
-    console.log(shippingAddresses[Number(values.shipping)]);
-    console.log(billingAddresses);
-    console.log(billingAddresses[Number(values.billing)]);
+    const uniqueArray = Array.from(
+      new Set([...shippingAddresses, ...billingAddresses].map((item) => JSON.stringify(item)))
+    ).map((i) => JSON.parse(i));
+    const shippingJson = JSON.stringify(shippingAddresses[Number(values.shipping)]);
+    const billingJson = JSON.stringify(billingAddresses[Number(values.billing)]);
+
+    const indexShipping = uniqueArray.findIndex((item) => JSON.stringify(item) === shippingJson);
+    const indexBilling = uniqueArray.findIndex((item) => JSON.stringify(item) === billingJson);
+
+    const indexesOfShipping = shippingAddresses.map((address) => {
+      const jsonStringShipping = JSON.stringify(address);
+      const indexInUniqueArray = uniqueArray.findIndex(
+        (jsonString) => JSON.stringify(jsonString) === jsonStringShipping
+      );
+      return indexInUniqueArray;
+    });
+
+    const indexesOfBilling = billingAddresses.map((address) => {
+      const jsonStringShipping = JSON.stringify(address);
+      const indexInUniqueArray = uniqueArray.findIndex(
+        (jsonString) => JSON.stringify(jsonString) === jsonStringShipping
+      );
+      return indexInUniqueArray;
+    });
+
+    const { email, firstName, lastName, password, date } = values;
+
+    userAuth
+      .register(
+        email,
+        firstName,
+        lastName,
+        password,
+        date,
+        uniqueArray,
+        indexShipping,
+        indexBilling,
+        indexesOfShipping,
+        indexesOfBilling
+      )
+      .then(() => {
+        createNewUserToken(values.email, values.password).then((result) => {
+          if (result !== null && typeof result === 'object') {
+            message.info({
+              content: 'Регистрация прошла успешно!',
+            });
+            signIn(() => navigate('/'));
+            saveUserToken(result as IUserTokenData);
+          }
+        });
+      })
+      .catch((error) => {
+        const {
+          response: {
+            data: { statusCode, message: errorMessage },
+          },
+        } = error;
+
+        handleErrors(statusCode, errorMessage);
+      });
   };
 
   const handleAddAddresses = (): void => {
@@ -64,26 +129,30 @@ const RegistrationPage = (): ReactElement => {
 
   const handleAddShippingAddress = (): void => {
     setIsShippingAddress(false);
+    const countryMatch = shippingState.countryValue.match(/\((.*?)\)/);
+    const country = countryMatch ? countryMatch[1] : '';
     setShippingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: shippingState.countryValue,
+        country,
         city: shippingState.cityValue,
-        index: shippingState.postalCodeValue,
-        street: shippingState.streetValue,
+        postalCode: shippingState.postalCodeValue,
+        streetName: shippingState.streetValue,
       },
     ]);
   };
 
   const handleAddBillingAddress = (): void => {
     setIsBillingAddress(false);
+    const countryMatch = billingState.countryValue.match(/\((.*?)\)/);
+    const country = countryMatch ? countryMatch[1] : '';
     setBillingAddresses((prevAddresses) => [
       ...prevAddresses,
       {
-        country: billingState.countryValue,
+        country,
         city: billingState.cityValue,
-        index: billingState.postalCodeValue,
-        street: billingState.streetValue,
+        postalCode: billingState.postalCodeValue,
+        streetName: billingState.streetValue,
       },
     ]);
   };
@@ -172,7 +241,7 @@ const RegistrationPage = (): ReactElement => {
             </li>
             <li>
               <AuthInput
-                type="email"
+                type="text"
                 placeholder="Email*"
                 name="email"
                 htmlFor="email"

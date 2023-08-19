@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import '@/components/Form/Form.scss';
-import { IPropsForm } from '@/types/interfaces';
+import { IPropsForm } from '@/types/componentsInrefaces';
 
 const Form = ({ className, name, onSubmit, children }: IPropsForm): ReactElement => {
   return (

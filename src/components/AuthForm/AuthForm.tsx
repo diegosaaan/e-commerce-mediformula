@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from 'formik';
 import '@/components/AuthForm/AuthForm.scss';
-import { IPropsAuthForm } from '@/types/interfaces';
+import { IPropsAuthForm } from '@/types/componentsInrefaces';
 import background1 from '@/assets/images/jpg/auth-background-1.jpg';
 import background2 from '@/assets/images/jpg/auth-background-2.jpg';
 import background3 from '@/assets/images/jpg/auth-background-3.jpg';

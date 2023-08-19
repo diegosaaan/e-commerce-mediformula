@@ -1,5 +1,6 @@
 {
   "name": "e-commerce",
+  "proxy": "http://localhost:8000/",
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -59,6 +60,7 @@
   },
   "dependencies": {
     "@pbe/react-yandex-maps": "^1.2.4",
+    "antd": "^5.8.3",
     "@testing-library/user-event": "^14.4.3",
     "axios": "^1.4.0",
     "formik": "^2.4.3",

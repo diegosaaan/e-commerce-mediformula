@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { MediaIntroItem, MediaListItem } from '../mediaHelpers/MediaItems';
 import mediaData from '../mediaHelpers/mediaData';
-import { IMediaItemData } from '@/types/interfaces';
+import { IMediaItemData } from '@/types/componentsInrefaces';
 
 const News = (): ReactElement => {
   const { introData, listData } = mediaData.news;

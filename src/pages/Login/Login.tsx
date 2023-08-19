@@ -1,12 +1,17 @@
 import '@/pages/Login/Login.scss';
 import React, { ReactElement } from 'react';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
-import { LoginSchema } from '@/utils/helpers/validationSchemes';
+import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
+import { LoginSchema } from '@/utils/helpers/yup/validationSchemes';
 import useAuth from '@/utils/hooks/useAuth';
 import AuthInput from '@/components/AuthInput/AuthInput';
 import AuthForm from '@/components/AuthForm/AuthForm';
 import { LoginSchemaType } from '@/types/types';
+import * as userAuth from '@/services/userAuth';
+import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
+import { IUserTokenData } from '@/types/apiInterfaces';
 
 const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
@@ -14,8 +19,28 @@ const LoginPage = (): ReactElement => {
 
   const handleLogin = (values: LoginSchemaType): void => {
     const { email, password } = values;
-    console.log(email, password);
-    signIn(() => navigate('/'));
+    userAuth
+      .login(email, password)
+      .then(() => {
+        createNewUserToken(email, password).then((result) => {
+          if (result !== null && typeof result === 'object') {
+            message.info({
+              content: 'Добро пожаловать!',
+            });
+            signIn(() => navigate('/'));
+            saveUserToken(result as IUserTokenData);
+          }
+        });
+      })
+      .catch((error) => {
+        const {
+          response: {
+            data: { statusCode, message: errorMessage },
+          },
+        } = error;
+
+        handleErrors(statusCode, errorMessage);
+      });
   };
 
   return (
@@ -40,7 +65,7 @@ const LoginPage = (): ReactElement => {
           <ul className="auth__list auth__list_active">
             <li>
               <AuthInput
-                type="email"
+                type="text"
                 placeholder="Email*"
                 name="email"
                 htmlFor="email"
