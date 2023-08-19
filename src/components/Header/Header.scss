@@ -378,6 +378,10 @@
       margin-right: calc(0px + (390 - 0) * (100vw - 390px) / (767 - 390));
     }
 
+    &__item-logo-mobile_type_login {
+      margin-right: calc(130px + (510 - 130) * (100vw - 390px) / (767 - 390));
+    }
+
     &__nav-container-main {
       display: flex;
     }
