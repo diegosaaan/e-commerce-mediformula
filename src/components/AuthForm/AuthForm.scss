@@ -131,8 +131,10 @@
 
   &__button:focus {
     @extend %GreyLinkFocus;
+    color: $grayscale-50;
     &:active {
       @extend %GreyLinkActive;
+      color: $grayscale-50;
     }
   }
 
@@ -183,8 +185,10 @@
 
   &__link:focus {
     @extend %GreyLinkFocus;
+    border-radius: 50px;
     &:active {
       @extend %GreyLinkActive;
+      color: $grayscale-900;
     }
   }
 
