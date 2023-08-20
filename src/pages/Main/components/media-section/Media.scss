@@ -52,6 +52,10 @@
     max-width: 500px;
   }
 
+  &__video-intro-link {
+    padding-bottom: 20px;
+  }
+
   &__intro-heading {
     @include GolosRegular(36px, 1.1, $grayscale-900);
     transition: 0.25s ease-in-out;
@@ -208,6 +212,10 @@
     &__intro-link {
       margin-right: 0;
       max-width: 100%;
+    }
+
+    &__video-intro-link {
+      padding-bottom: 0;
     }
 
     &__intro-photo {
