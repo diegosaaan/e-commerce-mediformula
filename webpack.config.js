@@ -94,7 +94,7 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|webp)$/,
+        test: /\.(png|jpg|jpeg|gif|ico|svg|webp)$/,
         include: path.resolve(__dirname, 'src/assets/images'),
         type: 'asset/resource',
         generator: {
