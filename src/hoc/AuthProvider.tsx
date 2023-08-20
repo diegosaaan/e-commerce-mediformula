@@ -13,14 +13,14 @@ export const AuthContext = createContext<IAuthContextValue>(defaultAuthContextVa
 
 export const AuthProvider = ({ children }: { children: ReactElement }): ReactElement => {
   const wasUserLoggedIn = JSON.parse(localStorage.getItem('isUserLoggedIn') || 'false');
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(isUserToken() && wasUserLoggedIn);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isContentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
     const loadData = async (): Promise<void> => {
       if (wasUserLoggedIn) {
-        setIsUserLoggedIn(isUserToken() && wasUserLoggedIn ? await getUserToken() : false);
+        setIsUserLoggedIn(isUserToken() && wasUserLoggedIn ? !!(await getUserToken()) : false);
       }
       setContentLoaded(true);
     };
