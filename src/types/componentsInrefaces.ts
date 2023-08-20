@@ -4,6 +4,7 @@ import { AddressType, LoginSchemaType } from './types';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
+  isContentLoaded: boolean;
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
 }

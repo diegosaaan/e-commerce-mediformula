@@ -13,7 +13,7 @@ const setActive = ({ isActive }: { isActive: boolean }): string =>
   isActive ? 'header__link header__link_active' : 'header__link';
 
 const PageNav = (): ReactElement => {
-  const { isUserLoggedIn, signOut } = useAuth();
+  const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
   const navigate = useNavigate();
 
   message.config({
@@ -53,7 +53,7 @@ const PageNav = (): ReactElement => {
                 <img className="header__logo-mobile" src={logo} alt="Logo" />
               </Link>
             </li>
-            {!isUserLoggedIn && (
+            {!isUserLoggedIn && isContentLoaded && (
               <>
                 <li className="header__item-reg">
                   <Link className="header__link" to="/registration">
@@ -71,7 +71,7 @@ const PageNav = (): ReactElement => {
                 </li>
               </>
             )}
-            {isUserLoggedIn && (
+            {isUserLoggedIn && isContentLoaded && (
               <li className="header__item-log">
                 <Link className="header__link" to="/">
                   <Button
