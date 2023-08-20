@@ -13,14 +13,17 @@ import {
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
 
 export const isTokenActive = async (): Promise<boolean> => {
-  const { access_token }: ILocalStorageUserTokenData = JSON.parse(localStorage.getItem('1SortUserToken') || '');
-  const {
-    data: { active },
-  }: { data: IApiIntrospectData } = await axios.post(`${ApiEndpoints.URL_AUTH_INTROSPECT}`, `token=${access_token}`, {
-    headers: URLENCODED_HEADERS,
-  });
-
-  return active;
+  const dataFromLocalStorage = localStorage.getItem('1SortUserToken');
+  if (dataFromLocalStorage) {
+    const { access_token }: ILocalStorageUserTokenData = JSON.parse(dataFromLocalStorage);
+    const {
+      data: { active },
+    }: { data: IApiIntrospectData } = await axios.post(`${ApiEndpoints.URL_AUTH_INTROSPECT}`, `token=${access_token}`, {
+      headers: URLENCODED_HEADERS,
+    });
+    return active;
+  }
+  return false;
 };
 
 export const saveUserToken = ({ access_token, refresh_token, expires_in }: ILocalStorageUserTokenData): void => {
