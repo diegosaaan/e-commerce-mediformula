@@ -9,6 +9,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    padding-bottom: 0;
     align-items: center;
   }
 
@@ -70,6 +71,16 @@
     border-radius: 50px;
     @include GolosRegular(14px, normal, $grayscale-50);
     transition: opacity 0.3s;
+
+    &_hidden {
+      display: none;
+    }
+
+    &-skeleton {
+      color: transparent;
+      background-color: #4e4c4c;
+      opacity: 0.2;
+    }
   }
 
   &__button-nav:focus {
@@ -83,8 +94,24 @@
     background-color: $color-register;
   }
 
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   &__button-nav_type_login {
+    width: 64px !important;
     background-color: $color-login;
+  }
+
+  &__button-nav_type_logout {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
   }
 
   &__logo {
@@ -376,11 +403,11 @@
 
     &__item-logo-mobile {
       display: flex;
-      margin-right: calc(0px + (390 - 0) * (100vw - 390px) / (767 - 390));
+      margin-right: calc(-5px + (390 - 0) * (100vw - 390px) / (767 - 390));
     }
 
     &__item-logo-mobile_type_login {
-      margin-right: calc(130px + (510 - 130) * (100vw - 390px) / (767 - 390));
+      margin-right: calc(100px + (510 - 130) * (100vw - 390px) / (767 - 390));
     }
 
     &__nav-container-main {
@@ -393,7 +420,7 @@
     }
 
     &__input-search {
-      width: calc(350px + (727 - 350) * (100vw - 390px) / (767 - 390));
+      width: calc(340px + (727 - 350) * (100vw - 390px) / (767 - 390));
     }
 
     &__nav-extra-mobile {

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import './PageNav.scss';
 import React, { FormEvent, ReactElement } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
@@ -53,29 +54,44 @@ const PageNav = (): ReactElement => {
                 <img className="header__logo-mobile" src={logo} alt="Logo" />
               </Link>
             </li>
-            {!isUserLoggedIn && isContentLoaded && (
-              <>
-                <li className="header__item-reg">
-                  <Link className="header__link" to="/registration">
-                    <Button
-                      className="header__button-nav header__button-nav_type_register"
-                      type="button"
-                      text="Регистрация"
-                    />
-                  </Link>
-                </li>
-                <li className="header__item-log">
-                  <Link className="header__link" to="/login">
-                    <Button className="header__button-nav header__button-nav_type_login" type="button" text="Войти" />
-                  </Link>
-                </li>
-              </>
-            )}
+
+            <>
+              <li className="header__item-reg">
+                <Link className="header__link" to="/registration">
+                  <Button
+                    className={`header__button-nav header__button-nav_type_register ${
+                      isContentLoaded && isUserLoggedIn
+                        ? 'header__button-nav_hidden'
+                        : !isContentLoaded
+                        ? 'header__button-nav-skeleton'
+                        : ''
+                    }`}
+                    type="button"
+                    text="Регистрация"
+                  />
+                </Link>
+              </li>
+              <li className="header__item-log">
+                <Link className="header__link" to="/login">
+                  <Button
+                    className={`header__button-nav header__button-nav_type_login ${
+                      isContentLoaded && isUserLoggedIn
+                        ? 'header__button-nav_hidden'
+                        : !isContentLoaded
+                        ? 'header__button-nav-skeleton'
+                        : ''
+                    }`}
+                    type="button"
+                    text="Войти"
+                  />
+                </Link>
+              </li>
+            </>
             {isUserLoggedIn && isContentLoaded && (
               <li className="header__item-log">
                 <Link className="header__link" to="/">
                   <Button
-                    className="header__button-nav header__button-nav_type_login"
+                    className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
                     type="button"
                     onClick={handleLogOut}
                     text="Выйти"

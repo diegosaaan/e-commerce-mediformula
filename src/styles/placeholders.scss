@@ -18,7 +18,8 @@
 
 %MainBtnFocus {
   outline: 2px solid #9f73e8;
-  box-shadow: 0 0 10px #9f73e8;
+  outline-offset: 2px;
+  border-radius: 10px;
 }
 
 %MainBtnActive {
@@ -47,4 +48,6 @@
 
 %LogoFocus {
   outline: 2px solid #9f73e8;
+  outline-offset: 4px;
+  border-radius: 25px;
 }
