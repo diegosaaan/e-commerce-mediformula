@@ -18,15 +18,14 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
   const [isContentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
-    const loadData = async (): Promise<void> => {
-      if (wasUserLoggedIn) {
-        setIsUserLoggedIn(isUserToken() && wasUserLoggedIn ? !!(await getUserToken()) : false);
-      }
-      setContentLoaded(true);
-    };
-
-    window.addEventListener('load', loadData, { once: true });
-  }, [wasUserLoggedIn, isUserToken, getUserToken, setIsUserLoggedIn]);
+    if (wasUserLoggedIn) {
+      (async (): Promise<void> => {
+        const userToken = await getUserToken();
+        setIsUserLoggedIn(isUserToken() && wasUserLoggedIn && userToken);
+      })();
+    }
+    setContentLoaded(true);
+  }, []);
 
   const signIn = (cb: () => void): void => {
     localStorage.setItem('isUserLoggedIn', JSON.stringify(true));
