@@ -4,9 +4,10 @@ import React from 'react';
 import { fireEvent, render, screen, cleanup } from '@testing-library/react';
 import MockLink from '@/__mocks__/MockLink';
 import swiperMocks from '@/__mocks__/MockSwiper';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import Accordion from '@/components/Accordion/Accrodion';
+import Footer from '@/components/Footer/Footer';
 
 afterEach(cleanup);
 
@@ -88,5 +89,27 @@ describe('Accordion component', () => {
     const titleElement = screen.getByText('Test Title');
     fireEvent.keyDown(titleElement, { key: 'Enter', code: 'Enter' });
     expect(props.onKeydownAccordion).toHaveBeenCalledWith(expect.objectContaining({ key: 'Enter', code: 'Enter' }));
+  });
+});
+
+describe('Footer component', () => {
+  beforeEach(() => {
+    window.scrollTo = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('scroll to top of the page when link is clicked', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Footer />
+      </MemoryRouter>
+    );
+
+    const link = getByText('О разработчиках сайта');
+    fireEvent.click(link);
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
 });
