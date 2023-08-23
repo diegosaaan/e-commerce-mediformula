@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { notification } from 'antd';
@@ -27,15 +27,17 @@ describe('Login Page', () => {
     expect(getByPlaceholderText('Пароль*')).toBeInTheDocument();
   });
 
-  test('Login button is disabled if the fields are empty', () => {
+  test('Login button is disabled if the fields are empty', async () => {
     const { getByPlaceholderText, getByText } = render(
       <MemoryRouter>
         <LoginPage />
       </MemoryRouter>
     );
 
-    fireEvent.change(getByPlaceholderText('Email*'), { target: { value: '' } });
-    fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: '' } });
+    waitFor(() => {
+      fireEvent.change(getByPlaceholderText('Email*'), { target: { value: '' } });
+      fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: '' } });
+    });
 
     expect(getByText('Войти')).toBeDisabled();
   });
@@ -47,10 +49,11 @@ describe('Login Page', () => {
       </MemoryRouter>
     );
 
-    fireEvent.change(getByPlaceholderText('Email*'), { target: { value: 'correct@email.com' } });
-    fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: 'correct-password' } });
-
-    fireEvent.click(getByText('Войти'));
+    waitFor(() => {
+      fireEvent.change(getByPlaceholderText('Email*'), { target: { value: 'correct@email.com' } });
+      fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: 'correct-password' } });
+      fireEvent.click(getByText('Войти'));
+    });
   });
 
   test('does not allow the user to log in with invalid credentials', () => {
@@ -60,9 +63,10 @@ describe('Login Page', () => {
       </MemoryRouter>
     );
 
-    fireEvent.change(getByPlaceholderText('Email*'), { target: { value: 'wrong@email.com' } });
-    fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: 'wrong-password' } });
-
-    fireEvent.click(getByText('Войти'));
+    waitFor(() => {
+      fireEvent.change(getByPlaceholderText('Email*'), { target: { value: 'wrong@email.com' } });
+      fireEvent.change(getByPlaceholderText('Пароль*'), { target: { value: 'wrong-password' } });
+      fireEvent.click(getByText('Войти'));
+    });
   });
 });

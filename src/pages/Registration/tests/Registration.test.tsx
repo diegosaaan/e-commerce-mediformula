@@ -1,3 +1,4 @@
+/* eslint-disable no-global-assign */
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@testing-library/jest-dom';
@@ -297,10 +298,10 @@ describe('Checking redirect to main/login pages work correctly', () => {
   });
 });
 
-describe('Get user data form local storage', () => {
+describe('Get user data from local storage', () => {
   const mock = new MockAdapter(axios);
   const mockLocalStorage = new MockLocalStorage();
-  const originalLocalStorage = global.localStorage;
+  const originalLocalStorage = localStorage;
 
   const localStorageTokenData: ILocalStorageUserTokenData = {
     access_token: 'mock access token',
@@ -309,9 +310,9 @@ describe('Get user data form local storage', () => {
   };
 
   beforeAll(() => {
-    jest.spyOn(Object.getPrototypeOf(global.localStorage), 'setItem');
+    jest.spyOn(Object.getPrototypeOf(localStorage), 'setItem');
     mock.onPost(ApiEndpoints.URL_AUTH_CUSTOMERS_TOKEN).reply(200, localStorageTokenData);
-    global.localStorage = mockLocalStorage;
+    localStorage = mockLocalStorage;
   });
 
   beforeEach(() => {
@@ -323,7 +324,7 @@ describe('Get user data form local storage', () => {
   });
 
   afterAll(() => {
-    global.localStorage = originalLocalStorage;
+    localStorage = originalLocalStorage;
   });
 
   afterEach(() => {
