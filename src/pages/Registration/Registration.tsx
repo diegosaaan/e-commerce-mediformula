@@ -52,11 +52,24 @@ const RegistrationPage = (): ReactElement => {
       new Set([...shippingAddresses, ...billingAddresses].map((item) => JSON.stringify(item)))
     ).map((i) => JSON.parse(i));
 
-    const shippingJson = JSON.stringify(shippingAddresses[Number(values.shipping)]);
-    const billingJson = JSON.stringify(billingAddresses[Number(values.billing)]);
+    let shippingJson: string;
+    let billingJson: string;
+    let indexShipping;
+    let indexBilling;
 
-    const indexShipping = uniqueArray.findIndex((item) => JSON.stringify(item) === shippingJson);
-    const indexBilling = uniqueArray.findIndex((item) => JSON.stringify(item) === billingJson);
+    if (values.shipping !== '') {
+      shippingJson = JSON.stringify(shippingAddresses[Number(values.shipping)]);
+      indexShipping = uniqueArray.findIndex((item) => JSON.stringify(item) === shippingJson);
+    } else {
+      indexShipping = values.shipping;
+    }
+
+    if (values.billing !== '') {
+      billingJson = JSON.stringify(billingAddresses[Number(values.billing)]);
+      indexBilling = uniqueArray.findIndex((item) => JSON.stringify(item) === billingJson);
+    } else {
+      indexBilling = values.billing;
+    }
 
     const indexesOfShipping = shippingAddresses.map((address) => {
       const jsonStringShipping = JSON.stringify(address);
@@ -186,10 +199,12 @@ const RegistrationPage = (): ReactElement => {
               errors.date ||
               errors.email ||
               errors.password ||
-              errors.passwordRepeat ||
-              errors.shipping ||
-              errors.billing
+              errors.passwordRepeat
             )
+            // ||
+            // errors.shipping ||
+            // errors.billing
+            // )
           }
           isAddAddress={isAddAddress}
           handlePrevRegister={handlePrevRegister}
@@ -299,7 +314,9 @@ const RegistrationPage = (): ReactElement => {
                     setAddressesAnother={setBillingAddresses}
                     isAddress={isBillingAddress}
                   />
-                  <p className="auth__input-error">{errors.shipping && errors.shipping}</p>
+                  <p className="auth__help">
+                    Чтобы выбрать адрес для доставки по умолчанию кликните на карточку с адресом
+                  </p>
                 </>
               )}
             </li>
@@ -338,7 +355,9 @@ const RegistrationPage = (): ReactElement => {
                     setAddressesAnother={setShippingAddresses}
                     isAddress={isShippingAddress}
                   />
-                  <p className="auth__input-error">{errors.billing && errors.billing}</p>
+                  <p className="auth__help">
+                    Чтобы выбрать адрес для выставления счета по умолчанию кликните на карточку с адресом
+                  </p>
                 </>
               )}
             </li>
