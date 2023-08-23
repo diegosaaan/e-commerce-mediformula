@@ -1,14 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { AddressType } from '@/types/types';
 import { createAdminJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
-
-export const checkResponse = (res: AxiosResponse): Promise<unknown> => {
-  if (res.status === 200 || res.status === 201) {
-    return Promise.resolve(res.data);
-  }
-  return Promise.reject(res.status);
-};
 
 export const register = async (
   email: string,
@@ -39,7 +32,7 @@ export const register = async (
     headers: await createAdminJSONHeaders(),
   });
 
-  return checkResponse(res);
+  return res;
 };
 
 export const login = async (email: string, password: string): Promise<unknown> => {
@@ -52,5 +45,5 @@ export const login = async (email: string, password: string): Promise<unknown> =
     headers: await createAdminJSONHeaders(),
   });
 
-  return checkResponse(res);
+  return res;
 };
