@@ -97,6 +97,11 @@
     border: 2px solid $color-disabled;
   }
 
+  &__help {
+    @include GolosRegular(10px, normal, $grayscale-900);
+    height: 12px;
+  }
+
   @media (hover: hover) {
     &__button-add:hover {
       cursor: pointer;
