@@ -93,3 +93,21 @@
 .intro__banner:focus:active .intro__banner-text {
   @extend %GreyLinkActive;
 }
+
+// дублирование
+
+.intro__link-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+
+.header__button-main--duplicate {
+  margin-top: 16px; 
+}
+
+.intro__links-list:first-child {
+  margin-right: 16px;
+}
