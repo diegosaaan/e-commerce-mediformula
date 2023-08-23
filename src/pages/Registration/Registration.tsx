@@ -14,6 +14,7 @@ import useAuth from '@/utils/hooks/useAuth';
 import { register } from '@/services/userAuth';
 import { IUserTokenData } from '@/types/apiInterfaces';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
+import getMinDateForRegister from '@/utils/helpers/getMinDateForRegister';
 
 const RegistrationPage = (): ReactElement => {
   const { signIn } = useAuth();
@@ -158,7 +159,7 @@ const RegistrationPage = (): ReactElement => {
       initialValues={{
         firstName: '',
         lastName: '',
-        date: '',
+        date: `${getMinDateForRegister()}`,
         email: '',
         password: '',
         passwordRepeat: '',
