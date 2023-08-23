@@ -1,0 +1,223 @@
+.services {
+  margin-top: 100px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__card:first-child {
+    margin-right: 25px;
+    background: linear-gradient(150deg, rgba(6, 19, 31, 0.4) 0%, rgba(6, 19, 31, 0) 100%),
+      url('@/assets/images/jpg/main-services-card-1.jpg');
+    background-size: cover;
+  }
+
+  &__card:last-child {
+    background: $grayscale-200 url('@/assets/images/png/main-services-laptop.png');
+    background-size: 270px;
+    background-position: right bottom;
+  }
+
+  &__card {
+    position: relative;
+    padding: 48px;
+    width: 100%;
+    max-width: 750px;
+    min-height: 480px;
+    border-radius: 30px;
+    background-repeat: no-repeat !important;
+
+    &-heading {
+      @include GolosMedium(36px, 1.1, $grayscale-900);
+    }
+
+    &-text {
+      @include GolosRegular(16px, 1.5, $grayscale-900);
+      margin-top: 16px;
+    }
+
+    &-text--white,
+    &-heading--white {
+      color: $grayscale-50;
+    }
+
+    &-text--white {
+      max-width: 380px;
+    }
+
+    &-list-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+    }
+
+    &-brends-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      max-width: 350px;
+
+      &-item {
+        width: 110px;
+        height: 48px;
+      }
+
+      &-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        transition: 0.25s ease-out;
+      }
+
+      &-link-johnson {
+        background-image: url('@/assets/images/png/main-services-johnson-logo.png');
+      }
+
+      &-link-philips {
+        background-image: url('@/assets/images/png/main-services-philips-logo.png');
+      }
+
+      &-link-omron {
+        background-image: url('@/assets/images/png/main-services-omron-logo.png');
+      }
+
+      &-link-healthcare {
+        background-image: url('@/assets/images/png/main-services-healthcare-logo.png');
+      }
+
+      &-link-and {
+        background-image: url('@/assets/images/png/main-services-and-logo.png');
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $large-desktop) {
+  .services {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .services {
+    &__card {
+      &-heading {
+        font-size: 28px;
+      }
+
+      &-text--white {
+        max-width: 380px;
+      }
+
+      &-list-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &-brends-list {
+        max-width: 250px;
+        margin-right: 200px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .services {
+    &__container {
+      flex-wrap: wrap;
+    }
+
+    &__card:first-child {
+      margin-right: 0;
+      background-position: center;
+    }
+
+    &__card:last-child {
+      margin-top: 32px;
+    }
+
+    &__card {
+      padding: 32px;
+      max-width: 100%;
+      min-height: 380px;
+
+      &-list-container {
+        margin-top: 16px;
+      }
+
+      &-heading,
+      &-text {
+        max-width: 540px;
+      }
+
+      &-text {
+        max-width: 450px;
+      }
+
+      &-brends-list {
+        display: flex;
+        column-gap: 24px;
+        width: 100%;
+        max-width: calc(100% - 320px);
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .services {
+    &__card:first-child {
+      background-image: '@/assets/images/jpg/main-services-card-1-568px.jpg';
+      min-height: 210px;
+    }
+
+    &__card:last-child {
+      background-size: clamp(150px, 35vw, 270px);
+      min-height: 320px;
+    }
+
+    &__card {
+      padding: 16px;
+
+      &-heading,
+      &-text {
+        max-width: 300px;
+      }
+
+      &-heading {
+        font-size: 20px;
+      }
+
+      &-text {
+        font-size: 14px;
+      }
+
+      &-brends-list {
+        max-width: 150px;
+        column-gap: 0px;
+        row-gap: 16px;
+
+        &-item {
+          width: 70px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .services__card-brends-list-link:hover {
+    transform: scale(1.2);
+  }
+}
+
+.services__card-brends-list-link:focus {
+  @extend %GreyLinkFocus;
+}

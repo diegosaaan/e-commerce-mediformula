@@ -1,0 +1,67 @@
+.button {
+  display: inline-block;
+  height: 44px;
+  width: 164px;
+  @include GolosMedium(16px, 100%, $grayscale-50);
+  background-color: $color-secondary;
+  text-align: center;
+  border-radius: 8px;
+
+  @media (hover: hover) {
+    &:hover {
+      @include MainBtnHover;
+    }
+  }
+
+  &:focus {
+    @extend %MainBtnFocus;
+  }
+
+  &:active {
+    @extend %MainBtnActive;
+  }
+
+  &:disabled {
+    background-color: $grayscale-300;
+  }
+}
+
+.iconButton {
+  display: inline-block;
+  height: 44px;
+  width: 44px;
+  background-image: url('@/assets/images/svg/button-heart.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+
+  &__selected {
+    background-image: url('@/assets/images/svg/button-heart-red.svg');
+    transition: 0.25s ease-in-out;
+  }
+}
+
+.text-button {
+  @include GolosRegular(16px, 100%, $grayscale-900);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (hover: hover) {
+    &:hover {
+      @include GreyLinkHover;
+    }
+  }
+
+  &:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &:focus:active {
+    @extend %GreyLinkActive;
+  }
+
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
+}

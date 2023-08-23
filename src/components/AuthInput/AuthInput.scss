@@ -1,0 +1,89 @@
+.auth {
+  &__container-field {
+    box-sizing: border-box;
+    display: flex;
+    padding: 18px 22px 18px 16px;
+    border-radius: 8px;
+    background-color: $grayscale-200;
+    height: 56px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__container-field_active {
+    padding: 8px 16px 11px 16px;
+  }
+
+  &__container-input {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__label {
+    box-sizing: border-box;
+    display: none;
+    width: 100%;
+    @include GolosRegular(10px, normal, $grayscale-600);
+  }
+
+  &__label_active {
+    display: flex;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    @include GolosRegular(16px, 1, $grayscale-900);
+  }
+
+  &__input::-ms-reveal,
+  &__input::-ms-clear {
+    display: none;
+  }
+
+  &__input_error {
+    color: $error-input;
+  }
+
+  &__input::placeholder {
+    @include GolosRegular(16px, 1, $grayscale-600);
+  }
+
+  &__input:focus {
+    outline: none;
+    &:active {
+      @extend %GreyLinkActive;
+    }
+  }
+
+  &__button-pass {
+    border: none;
+    background-color: transparent;
+    background-image: url('@/assets/images/svg/auth-password.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    width: 20px;
+    height: 20px;
+    transition: background-image 0.3s;
+  }
+
+  &__button-pass_active {
+    background-image: url('@/assets/images/svg/auth-password-active.svg');
+  }
+
+  &__input-error {
+    @include GolosRegular(10px, normal, $error-input);
+    height: 12px;
+  }
+
+  @media (hover: hover) {
+    &__button-pass:hover {
+      cursor: pointer;
+      background-image: url('@/assets/images/svg/auth-password-active.svg');
+    }
+  }
+}

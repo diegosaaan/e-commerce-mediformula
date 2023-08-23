@@ -1,0 +1,53 @@
+%MainBtnHover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+%GreyLinkFocus {
+  outline: 2px solid #1cd5a8;
+  outline-offset: 4px;
+  border-radius: 5px;
+  color: $grayscale-900;
+}
+
+%GreyLinkActive {
+  color: #1cd5a8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
+
+%MainBtnFocus {
+  outline: 2px solid #9f73e8;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+%MainBtnActive {
+  background: #9f73e8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
+
+%IconBtnActive {
+  box-shadow: none;
+  outline: 2px solid #9f73e8;
+}
+
+%TextBtnFocus {
+  outline: 2px solid #1cd5a8;
+  outline-offset: 4px;
+  border-radius: 5px;
+  color: $grayscale-900;
+}
+
+%TextBtnActive {
+  color: #1cd5a8;
+  transition: 0.25s ease-in-out;
+  outline: none;
+}
+
+%LogoFocus {
+  outline: 2px solid #9f73e8;
+  outline-offset: 4px;
+  border-radius: 25px;
+}

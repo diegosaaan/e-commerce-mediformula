@@ -1,6 +1,16 @@
+import '@/index.scss';
+import '@/pages/App.scss';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '@/pages/App';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import router from './routes/router';
+import { AuthProvider } from './hoc/AuthProvider';
 
-const root = document.getElementById('root');
-ReactDOM.render(<App />, root);
+const container = document.getElementById('root');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
+);

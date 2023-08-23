@@ -1,0 +1,113 @@
+.intro {
+  margin-top: 40px;
+
+  &__banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 600px;
+    padding: 40px 0 0 56px;
+    border-radius: 24px;
+    background: $secondary-liner;
+  }
+
+  &__text-container {
+    align-self: flex-start;
+  }
+
+  &__promo-text {
+    @include GolosRegular(
+      clamp(12px, calc(12px + (16 - 12) * (100vw - 360px) / (1560 - 360)), 16px),
+      100%,
+      $grayscale-50
+    );
+  }
+
+  &__banner-text {
+    display: block;
+    margin-top: 24px;
+    @include GolosBold(clamp(20px, calc(20px + (48 - 20) * (100vw - 360px) / (1560 - 360)), 48px), 105%, $grayscale-50);
+  }
+
+  @media (hover: hover) {
+    &__banner:hover .intro__banner-text {
+      opacity: 0.8;
+    }
+  }
+
+  &__image-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+  }
+
+  &__image {
+    min-width: 180px;
+  }
+
+  &__cards-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  @media screen and (max-width: $large-desktop) {
+    &__banner {
+      height: calc(240px + (600 - 240) * (100vw - 360px) / (1559.9 - 360));
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &__banner {
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    &__header {
+      margin-top: 8px;
+    }
+
+    &__image-container {
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    &__cards-block {
+      gap: calc(8px + (16 - 8) * (100vw - 360px) / (1559.9 - 360));
+      margin-top: 8px;
+    }
+  }
+}
+
+.intro__banner:focus {
+  @extend %GreyLinkFocus;
+  border-radius: 24px;
+}
+
+.intro__banner:focus:active {
+  outline: none;
+}
+
+.intro__banner:focus:active .intro__promo-text,
+.intro__banner:focus:active .intro__banner-text {
+  @extend %GreyLinkActive;
+}
+
+// дублирование
+
+.intro__link-list-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+
+.header__button-main--duplicate {
+  margin-top: 16px;
+}
+
+.intro__links-list:first-child {
+  margin-right: 16px;
+}

@@ -1,7 +1,49 @@
-@font-face {
-  font-family: 'Saira Thin';
-  src: 
-    url('@/assets/fonts/saira-thin.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+._container {
+  margin: 0 auto;
+  max-width: 1560px;
+  padding: 0px 20px;
+}
+
+._heading {
+  @include GolosMedium(36px, 1.1, $grayscale-900);
+}
+
+@media screen and (max-width: $medium-desktop) {
+  ._heading {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  ._heading {
+    font-size: 20px;
+  }
 }
