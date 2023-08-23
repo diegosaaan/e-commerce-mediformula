@@ -1,5 +1,5 @@
 .media {
-  margin-top: 100px;
+  margin-top: 16px;
 
   &__container {
     display: flex;
@@ -147,12 +147,6 @@
     &__list-item-heading {
       font-size: 20px;
     }
-  }
-}
-
-@media screen and (max-width: $large-desktop) {
-  .media {
-    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
   }
 }
 
