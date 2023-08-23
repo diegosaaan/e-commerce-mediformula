@@ -10,23 +10,74 @@ export const register = async (
   password: string,
   dateOfBirth: string,
   addresses: AddressType[],
-  defaultShippingAddress: number,
-  defaultBillingAddress: number,
+  defaultShippingAddress: number | string,
+  defaultBillingAddress: number | string,
   shippingAddresses: number[],
   billingAddresses: number[]
 ): Promise<unknown> => {
-  const requestData = {
-    email,
-    firstName,
-    lastName,
-    password,
-    dateOfBirth,
-    addresses,
-    defaultShippingAddress,
-    defaultBillingAddress,
-    shippingAddresses,
-    billingAddresses,
-  };
+  // let requestData = {
+  //   email,
+  //   firstName,
+  //   lastName,
+  //   password,
+  //   dateOfBirth,
+  //   addresses,
+  //   defaultShippingAddress,
+  //   defaultBillingAddress,
+  //   shippingAddresses,
+  //   billingAddresses,
+  // };
+
+  let requestData;
+  if (defaultShippingAddress === '' && defaultBillingAddress === '') {
+    requestData = {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateOfBirth,
+      addresses,
+      shippingAddresses,
+      billingAddresses,
+    };
+  } else if (defaultShippingAddress === '') {
+    requestData = {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateOfBirth,
+      addresses,
+      defaultBillingAddress,
+      shippingAddresses,
+      billingAddresses,
+    };
+  } else if (defaultBillingAddress === '') {
+    requestData = {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateOfBirth,
+      addresses,
+      defaultShippingAddress,
+      shippingAddresses,
+      billingAddresses,
+    };
+  } else {
+    requestData = {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateOfBirth,
+      addresses,
+      defaultShippingAddress,
+      defaultBillingAddress,
+      shippingAddresses,
+      billingAddresses,
+    };
+  }
 
   const res = await axios.post(ApiEndpoints.URL_CUSTOMERS, requestData, {
     headers: await createAdminJSONHeaders(),
