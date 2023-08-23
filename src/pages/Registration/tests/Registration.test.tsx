@@ -4,6 +4,8 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, fireEvent, waitFor, Matcher } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import RegistrationPage from '../Registration';
 import {
   validRegistrationFormData,
@@ -12,6 +14,12 @@ import {
   invalidAddressFormData,
   IFormData,
 } from './testCases';
+import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
+import { createAdminJSONHeaders } from '@/services/headers';
+import { register } from '@/services/userAuth';
+import { ILocalStorageUserTokenData, IUserTokenData } from '@/types/apiInterfaces';
+import ApiEndpoints from '@/enums/apiEndpoints';
+import MockLocalStorage from '@/__mocks__/mockLocalStorage';
 
 const addDataToFieldAndCheckBtnWorkCorrect = (
   registrationFormData: IFormData[],
@@ -176,7 +184,7 @@ describe('Check country select work correctly', () => {
     );
   });
 
-  const openCountrySelectAndChoose = (
+  const openCountrySelectAndChooseCity = (
     selectMethod: {
       (element: Element): boolean;
       (element: Element): boolean;
@@ -206,15 +214,31 @@ describe('Check country select work correctly', () => {
   };
 
   test('open country select and choose country by click', () => {
-    openCountrySelectAndChoose(fireEvent.click, 'Бельгия (BE)');
+    openCountrySelectAndChooseCity(fireEvent.click, 'Бельгия (BE)');
   });
 
   test('open country select and choose country by keydown', () => {
-    openCountrySelectAndChoose((element: Element) => fireEvent.keyDown(element, { key: 'Enter' }), 'Германия (DE)');
+    openCountrySelectAndChooseCity((element: Element) => fireEvent.keyDown(element, { key: 'Enter' }), 'Германия (DE)');
   });
 });
 
 describe('Register new user', () => {
+  const mock = new MockAdapter(axios);
+
+  const mockTokenData: IUserTokenData = {
+    access_token: 'mock access token',
+    refresh_token: 'mock refresh token',
+    expires_in: 10000,
+    scope: 'mock scopes',
+    token_type: 'mock token type',
+  };
+
+  beforeAll(() => {
+    mock.onPost(ApiEndpoints.URL_CUSTOMERS).reply(200, 'was registered');
+    mock.onPost(ApiEndpoints.URL_AUTH_TOKEN_ADMIN).reply(200, 'admin token');
+    mock.onPost(ApiEndpoints.URL_AUTH_CUSTOMERS_TOKEN).reply(200, mockTokenData);
+  });
+
   beforeEach(() => {
     render(
       <BrowserRouter>
@@ -223,43 +247,30 @@ describe('Register new user', () => {
     );
   });
 
-  test('fake register new user', async () => {
-    // const mockAddressesObject = {
-    //   ...validAddressFormData,
-    //   country: 'PL',
-    // };
+  test('register new user', async () => {
+    waitFor(async () => {
+      await register(
+        'Mops', // firstName
+        'Carvi', // lastName
+        '1990-09-09', // date
+        'mops@gmail.com', // email
+        'Mops12345@', // password
+        [], // uniqueArray
+        0, // indexShipping
+        0, // indexBilling
+        [0], // indexesOfShipping
+        [0] // indexesOfBilling
+      );
 
-    // const mockTokenData: IUserTokenData = {
-    //   access_token: 'mock access token',
-    //   refresh_token: 'mock refresh token',
-    //   expires_in: 10000,
-    //   scope: 'mock scopes',
-    //   token_type: 'mock token type',
-    // };
+      await createAdminJSONHeaders();
+      await createNewUserToken('mock email', 'mock password');
 
-    await waitFor(() => {
-      addDataToFieldAndCheckBtnWorkCorrect(validRegistrationFormData, validAddressFormData, 0);
-      const registerButton = screen.getByText('Зарегистрироваться');
-      expect(registerButton).toBeInTheDocument();
-      expect(registerButton).not.toBeDisabled();
-      // fireEvent.click(registerButton);
-
-      // // eslint-disable-next-line global-require
-      // expect(require('@/services/userAuth').register).toHaveBeenCalledWith(
-      //   validRegistrationFormData[0].fieldValue, // firstName
-      //   validRegistrationFormData[1].fieldValue, // lastName
-      //   validRegistrationFormData[2].fieldValue, // date
-      //   validRegistrationFormData[3].fieldValue, // email
-      //   validRegistrationFormData[5].fieldValue, // password
-      //   validRegistrationFormData[6].fieldValue, // repeate password
-      //   [mockAddressesObject],
-      //   0,
-      //   0,
-      //   0,
-      //   0
-      // );
-
-      // expect(createNewUserToken).toHaveBeenCalled();
+      expect(register).toHaveReturnedWith('was registered');
+      expect(createNewUserToken).toHaveReturnedWith(mockTokenData);
+      expect(createAdminJSONHeaders).toHaveReturnedWith({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${'admin token'}`,
+      });
     });
   });
 });
@@ -273,15 +284,72 @@ describe('Checking redirect to main/login pages work correctly', () => {
     );
   });
 
-  test('render redirect to main page button', async () => {
+  test('render redirect to main page button', () => {
     const backToMainPageButton = screen.getByText('На главную');
     fireEvent.click(backToMainPageButton);
-    await waitFor(() => expect(window.location.pathname).toBe('/'));
+    expect(window.location.pathname).toBe('/');
   });
 
-  test('render redirect to login page button', async () => {
+  test('render redirect to login page button', () => {
     const toLoginPageButton = screen.getByText('Войти');
     fireEvent.click(toLoginPageButton);
-    await waitFor(() => expect(window.location.pathname).toBe('/login'));
+    expect(window.location.pathname).toBe('/login');
+  });
+});
+
+describe('Get user data form local storage', () => {
+  const mock = new MockAdapter(axios);
+  const mockLocalStorage = new MockLocalStorage();
+  const originalLocalStorage = global.localStorage;
+
+  const localStorageTokenData: ILocalStorageUserTokenData = {
+    access_token: 'mock access token',
+    refresh_token: 'mock refresh token',
+    expires_in: 10000,
+  };
+
+  beforeAll(() => {
+    jest.spyOn(Object.getPrototypeOf(global.localStorage), 'setItem');
+    mock.onPost(ApiEndpoints.URL_AUTH_CUSTOMERS_TOKEN).reply(200, localStorageTokenData);
+    global.localStorage = mockLocalStorage;
+  });
+
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <RegistrationPage />
+      </BrowserRouter>
+    );
+  });
+
+  afterAll(() => {
+    global.localStorage = originalLocalStorage;
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  test('get null from local storage', () => {
+    const localData = localStorage.getItem('isUserLoggedIn');
+    expect(localData).toBeNull();
+  });
+
+  test('get user token from local storage after new user token was created and saved', async () => {
+    const response = await createNewUserToken('mock email', 'mock password');
+    if (response !== null && typeof response === 'object') {
+      if ('data' in response) {
+        const data = response.data as IUserTokenData;
+        saveUserToken(data);
+
+        const userTokenData: ILocalStorageUserTokenData = JSON.parse(localStorage.getItem('1SortUserToken') as string);
+        expect(localStorage.setItem).toHaveBeenCalledWith('1SortUserToken', JSON.stringify(localStorageTokenData));
+        expect(userTokenData).toEqual(localStorageTokenData);
+      } else {
+        throw new Error('"response do not have the "data" field. Please check the test');
+      }
+    } else {
+      throw new Error('"response" is not a Object. Please check the test');
+    }
   });
 });
