@@ -17,7 +17,8 @@ const AddressFields = ({
     postalCodeErrorValue: '',
     emptyErrorMessage: '',
     defaultErrorMessage: 'Поле обязательно к заполнению',
-    cityErrorMessage: 'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр.',
+    cityErrorMessage:
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов (!@#$%^&*) или цифр.',
     streetErrorMessage: 'Поле должно содержать хотя бы один символ',
   });
 
