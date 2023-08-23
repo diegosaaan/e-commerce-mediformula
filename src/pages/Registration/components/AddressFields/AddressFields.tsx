@@ -37,7 +37,7 @@ const AddressFields = ({
       postalCodeErrorValue:
         matchingItem && matchingItem.postalCode.test(postalCodeValue)
           ? ''
-          : `${matchingItem?.errorMessage}, где Х - цифра` || '',
+          : `${matchingItem?.errorMessage}, где Х - цифра`,
     }));
   };
 
@@ -113,7 +113,8 @@ const AddressFields = ({
 
   const handleChooseAccordionItem = (event: MouseEvent | KeyboardEvent): void => {
     const target = event.target as HTMLLIElement;
-    const newCountry = target.textContent || '';
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const newCountry = target.textContent!;
 
     if (target && target.textContent) {
       if (event.type === 'keydown' && (event as KeyboardEvent).key === 'Enter') {

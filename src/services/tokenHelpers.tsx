@@ -2,7 +2,6 @@
 import axios from 'axios';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { URLENCODED_HEADERS, createUserJSONHeaders } from './headers';
-import { checkResponse } from './userAuth';
 import {
   ILocalStorageUserTokenData,
   IApiIntrospectData,
@@ -40,7 +39,7 @@ export const createNewUserToken = async (email: string, password: string): Promi
     headers: URLENCODED_HEADERS,
   });
 
-  return checkResponse(res);
+  return res;
 };
 
 export const refreshUserToken = async (refreshToken: string): Promise<unknown> => {
@@ -52,7 +51,7 @@ export const refreshUserToken = async (refreshToken: string): Promise<unknown> =
     headers: URLENCODED_HEADERS,
   });
 
-  return checkResponse(res);
+  return res;
 };
 
 export const getUserToken = async (): Promise<string | null> => {
@@ -81,7 +80,7 @@ export const getUserInfoByToken = async (): Promise<unknown> => {
     headers: userJSONHeaders,
   });
 
-  return checkResponse(res);
+  return res;
 };
 
 export const getAdminToken = async (): Promise<string> => {

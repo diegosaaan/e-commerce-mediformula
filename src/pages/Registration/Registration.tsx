@@ -11,7 +11,7 @@ import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/yup/validationSchemes';
 import useAuth from '@/utils/hooks/useAuth';
-import * as userAuth from '@/services/userAuth';
+import { register } from '@/services/userAuth';
 import { IUserTokenData } from '@/types/apiInterfaces';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 
@@ -46,10 +46,11 @@ const RegistrationPage = (): ReactElement => {
   const [shippingAddresses, setShippingAddresses] = useState<AddressType[]>([]);
   const [billingAddresses, setBillingAddresses] = useState<AddressType[]>([]);
 
-  const handleRegister = (values: RegisterSchemaType): void => {
+  const handleRegister = async (values: RegisterSchemaType): Promise<void> => {
     const uniqueArray = Array.from(
       new Set([...shippingAddresses, ...billingAddresses].map((item) => JSON.stringify(item)))
     ).map((i) => JSON.parse(i));
+
     const shippingJson = JSON.stringify(shippingAddresses[Number(values.shipping)]);
     const billingJson = JSON.stringify(billingAddresses[Number(values.billing)]);
 
@@ -74,8 +75,8 @@ const RegistrationPage = (): ReactElement => {
 
     const { email, firstName, lastName, password, date } = values;
 
-    userAuth
-      .register(
+    try {
+      await register(
         email,
         firstName,
         lastName,
@@ -86,27 +87,22 @@ const RegistrationPage = (): ReactElement => {
         indexBilling,
         indexesOfShipping,
         indexesOfBilling
-      )
-      .then(() => {
-        createNewUserToken(values.email, values.password).then((result) => {
-          if (result !== null && typeof result === 'object') {
-            message.info({
-              content: 'Регистрация прошла успешно!',
-            });
-            signIn(() => navigate('/'));
-            saveUserToken(result as IUserTokenData);
-          }
+      );
+      const tokenData: IUserTokenData | unknown = await createNewUserToken(values.email, values.password);
+      if (tokenData !== null && typeof tokenData === 'object') {
+        message.info({
+          content: 'Registration was successful!',
         });
-      })
-      .catch((error) => {
-        const {
-          response: {
-            data: { statusCode, message: errorMessage },
-          },
-        } = error;
-
+        signIn(() => navigate('/'));
+        saveUserToken(tokenData as IUserTokenData);
+      }
+    } catch (error: unknown) {
+      const err = error as { response: { data: { statusCode: number; message: string } } };
+      if (err.response && err.response.data) {
+        const { statusCode, message: errorMessage } = err.response.data;
         handleErrors(statusCode, errorMessage);
-      });
+      }
+    }
   };
 
   const handleAddAddresses = (): void => {
