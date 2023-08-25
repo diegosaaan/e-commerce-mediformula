@@ -201,10 +201,6 @@ const RegistrationPage = (): ReactElement => {
               errors.password ||
               errors.passwordRepeat
             )
-            // ||
-            // errors.shipping ||
-            // errors.billing
-            // )
           }
           isAddAddress={isAddAddress}
           handlePrevRegister={handlePrevRegister}
