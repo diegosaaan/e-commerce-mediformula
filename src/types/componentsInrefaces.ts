@@ -1,12 +1,15 @@
 import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
+import { IUserInfo } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
   isContentLoaded: boolean;
+  isContentLoadedPageUserInfo: boolean;
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
+  userInfo: IUserInfo | null;
 }
 
 export interface IAccordionProps {
@@ -71,6 +74,7 @@ export interface IPropsCard {
   bonus?: number;
   discount?: number;
   onClick: () => void;
+  id?: number;
 }
 
 export interface IPropsTag {
