@@ -57,3 +57,8 @@ export const UserProfilePage = LazyComponent(<LayoutPreloader />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/user-profile/user-profile" */ '@/pages/UserProfile/UserProfile');
 });
+
+export const DetailedProductPage = LazyComponent(<LayoutPreloader />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/product-page/product-page" */ '@/pages/ProductPage/ProductPage');
+});
