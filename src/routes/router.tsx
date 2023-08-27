@@ -13,6 +13,7 @@ import {
   AboutUsPage,
   LoginPage,
   RegistrationPage,
+  DetailedProductPage,
 } from './lazyPages';
 
 const router = createBrowserRouter([
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <NotFoundPage />,
+      },
+      {
+        path: '/product-page',
+        element: <DetailedProductPage />,
       },
     ],
   },
