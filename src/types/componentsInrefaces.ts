@@ -86,10 +86,8 @@ export interface IPropsCardsSection {
   header: string;
   counter: number;
   sectionClassName: string;
-  products?: IPropsProduct[];
+  url: string;
 }
-
-export interface IPropsProduct {}
 
 export interface IPropsAuthInput {
   type: string;
@@ -145,4 +143,51 @@ export interface IPropsAddressFields {
   addressesState: IAuthAddressesState;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+}
+
+export interface IPropsProduct {
+  id: string;
+  name: {
+    ru: string;
+  };
+  description: {
+    ru: string;
+  };
+  categories: Array<{
+    id: string;
+  }>;
+  masterVariant: {
+    prices: Array<{
+      value: {
+        centAmount: number;
+      };
+      discounted: {
+        value: {
+          centAmount: number;
+        };
+      };
+    }>;
+    images: Array<{
+      url: string;
+      label: string;
+    }>;
+    attributes: Array<{
+      value: {
+        ru: string;
+      };
+    }>;
+  };
+}
+
+export interface IPropsDetailedProduct {
+  images: Array<{
+    url: string;
+    label: string;
+  }>;
+  name: string;
+  description: string;
+  price: number;
+  priceBefore: number;
+  brand?: string;
+  bonus?: number;
 }
