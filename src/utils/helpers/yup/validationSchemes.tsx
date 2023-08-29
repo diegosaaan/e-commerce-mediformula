@@ -84,3 +84,41 @@ export const RegisterSchema = Yup.object().shape({
   shipping: Yup.string(),
   billing: Yup.string(),
 });
+
+export const EditUserSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .min(1, 'Поле должно содержать хотя бы один символ')
+    .matches(
+      /^[A-Za-zА-Яа-я]+$/u,
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр'
+    ),
+  lastName: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .min(1, 'Поле должно содержать хотя бы один символ')
+    .matches(
+      /^[A-Za-zА-Яа-я]+$/u,
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр'
+    ),
+  dateOfBirth: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .test('valid-age', `Вы должны быть старше ${MINIMUM_AGE} лет`, (value) => {
+      const currentDate = new Date();
+      const userDate = new Date(value);
+      const age = currentDate.getFullYear() - userDate.getFullYear();
+      return age >= MINIMUM_AGE;
+    }),
+  email: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .matches(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      'Поле должно содержать адрес электронной почты (test@test.com) и не содержать пробелов'
+    )
+    .test(
+      'no-leading-trailing-spaces',
+      'Адрес электронной почты не должен содержать начальных или завершающих пробелов',
+      (value) => {
+        return value === value.trim();
+      }
+    ),
+});

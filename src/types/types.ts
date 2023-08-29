@@ -20,3 +20,10 @@ export type RegisterSchemaType = {
   shipping: string;
   billing: string;
 };
+
+export type EditUserSchemaType = {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  email: string;
+};
