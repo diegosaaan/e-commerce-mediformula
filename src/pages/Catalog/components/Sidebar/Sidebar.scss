@@ -1,0 +1,198 @@
+.catalog {
+  &__sidebar {
+    margin-right: 90px;
+    width: 320px;
+  }
+
+  &__categories {
+    padding-bottom: 28px;
+    border-bottom: 1px solid $grayscale-300;
+  }
+
+  &__category-list-item {
+    @include GolosRegular(16px, 1, $grayscale-900);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
+  &__parent-category-heading {
+    @include GolosMedium(18px, 1.15, $grayscale-900);
+  }
+
+  &__category-list,
+  &__sub-category-list,
+  &__category-heading {
+    margin-top: 15px;
+  }
+
+  &__parent-category-heading {
+    margin-top: 15px;
+  }
+
+  &__category-list {
+    &--padding-bottom-scroll > li:first-child {
+      margin-top: 0;
+    }
+
+    &--padding-bottom-scroll {
+      margin-top: 0;
+      margin-bottom: 28px;
+      max-height: 350px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        height: 100px;
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        height: 100px;
+        background-color: $grayscale-600;
+        border-radius: 100px;
+      }
+
+      &::-webkit-scrollbar-track {
+        height: 100px;
+        background-color: $grayscale-300;
+      }
+    }
+  }
+
+  &__sub-category-list {
+    padding-left: 15px;
+    border-left: 1px solid $grayscale-400;
+  }
+
+  &__filter-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 28px 0px;
+    border-bottom: 1px solid $grayscale-300;
+    border-top: 1px solid $grayscale-300;
+  }
+
+  &__brands-filter-container {
+    display: block;
+  }
+
+  &__filter-input-heading {
+    @include GolosMedium(18px, 1.15, $grayscale-900);
+  }
+
+  &__filter-input {
+    display: none;
+  }
+
+  &__filter-label {
+    display: block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border-radius: 70px;
+    background-color: $grayscale-400;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
+  &__filter-label:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 100px;
+    background-color: $grayscale-50;
+    top: 50%;
+    left: 4px;
+    transform: translate(0%, -50%);
+    transition: all 0.2s ease-in-out;
+  }
+
+  &__filter-input:checked + label {
+    background-color: $color-primary;
+  }
+
+  &__filter-input:checked + label:before {
+    left: 55%;
+  }
+
+  &__price-range-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    width: 320px;
+  }
+
+  &__price-range-input {
+    @include GolosRegular(16px, 1, $grayscale-900);
+    width: 140px;
+    height: 40px;
+    padding-left: 16px;
+    border-radius: 8px;
+    background-color: $grayscale-200;
+    outline: none;
+    border: none;
+  }
+
+  &__range-input-line {
+    width: 20px;
+    height: 2px;
+    background-color: $grayscale-400;
+  }
+
+  &__brands-filter-list-item {
+    margin-top: 16px;
+  }
+
+  &__brand-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  &__brand-checkbox + label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  &__brand-checkbox + label::before {
+    content: '';
+    display: inline-block;
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid $grayscale-400;
+    border-radius: 2px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+  }
+
+  &__brand-checkbox:checked + label::before {
+    border-color: $color-primary;
+    background-color: $color-primary;
+    background-image: url('@/assets/images/svg/catalog-brand-checkbox.svg');
+  }
+
+  &__brand-label {
+    @include GolosRegular(18px, 1, $grayscale-900);
+  }
+}
+
+@media (hover: hover) {
+  .catalog {
+    &__category-list-item:hover {
+      @include GreyLinkHover;
+    }
+  }
+}
+
+.catalog {
+  &__category-list-item:focus,
+  &__category-list-item:focus:active {
+    @extend %GreyLinkActive;
+  }
+}
