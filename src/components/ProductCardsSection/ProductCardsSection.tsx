@@ -3,17 +3,31 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
 import Card from '@/components/Card/Card';
-import { IPropsCardsSection } from '@/types/componentsInrefaces';
-import ProductCardsData from './ProductCardsData';
+import { IPropsCardsSection, IPropsProduct } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
+import TransformProductToCardProps from './TransformProductToCardProps';
+import { getProducts } from '@/services/tokenHelpers';
+import { IGetProductsResponse } from '@/types/apiInterfaces';
 
-const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsSection): ReactElement => {
+const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsCardsSection): ReactElement => {
+  const [products, setProducts] = useState<IPropsProduct[]>([]);
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      const data: IGetProductsResponse = await getProducts(url);
+      const dataResult = data.results;
+      setProducts(dataResult);
+    };
+
+    fetchData();
+  }, []);
+
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -70,18 +84,11 @@ const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsS
             },
           }}
         >
-          {ProductCardsData.map((card, index) => (
+          {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <Card
-                imagePath={card.imagePath}
-                rating={card.rating}
-                text={card.text}
-                price={card.price}
-                priceBefore={card.priceBefore}
-                bonus={card.bonus}
-                discount={card.discount}
-                onClick={(): void => {}}
-              />
+              <Link to={'/product-page'}>
+                <Card {...TransformProductToCardProps(product)} />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
