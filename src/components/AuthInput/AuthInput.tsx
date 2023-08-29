@@ -12,6 +12,8 @@ const AuthInput = ({
   value,
   errors,
   touched,
+  disabled,
+  defaultValue,
 }: IPropsAuthInput): ReactElement => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -41,6 +43,8 @@ const AuthInput = ({
             onBlur={(): void => setIsInputFocused(false)}
             value={value}
             onChange={onChange}
+            disabled={disabled}
+            defaultValue={defaultValue}
           />
         </div>
         {isInputPassword && (isInputFocused || value) && (

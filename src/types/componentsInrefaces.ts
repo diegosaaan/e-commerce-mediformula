@@ -10,6 +10,7 @@ export interface IAuthContextValue {
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
   userInfo: IUserInfo | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | null>>;
 }
 
 export interface IAccordionProps {
@@ -101,6 +102,8 @@ export interface IPropsAuthInput {
   name: string;
   htmlFor: string;
   isInputPassword?: boolean;
+  disabled?: boolean;
+  defaultValue?: string;
   value?: string;
   errors?: string;
   touched?: boolean;
