@@ -10,6 +10,7 @@ const defaultAuthContextValue: IAuthContextValue = {
   signIn: () => {},
   signOut: () => {},
   userInfo: null,
+  setUserInfo: () => {},
 };
 
 export const AuthContext = createContext<IAuthContextValue>(defaultAuthContextValue);
@@ -60,6 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
     signIn,
     signOut,
     userInfo,
+    setUserInfo,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
