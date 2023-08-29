@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import ApiEndpoints from '@/enums/apiEndpoints';
-import { URLENCODED_HEADERS, createUserJSONHeaders } from './headers';
+import { URLENCODED_HEADERS, createAdminJSONHeaders, createUserJSONHeaders } from './headers';
 import {
   ILocalStorageUserTokenData,
   IApiIntrospectData,
   IUserTokenData,
   IAuthResponseTokenAdmin,
+  IGetProductsResponse,
 } from '@/types/apiInterfaces';
 
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
@@ -92,4 +93,11 @@ export const getAdminToken = async (): Promise<string> => {
   });
 
   return res.data.access_token;
+};
+
+export const getProducts = async (url: string): Promise<IGetProductsResponse> => {
+  const headers = await createAdminJSONHeaders();
+  const res = await axios.get(url, { headers });
+
+  return res.data;
 };
