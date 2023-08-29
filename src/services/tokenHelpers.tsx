@@ -9,6 +9,7 @@ import {
   IAuthResponseTokenAdmin,
   IGetProductsResponse,
 } from '@/types/apiInterfaces';
+import { IPropsProduct } from '@/types/componentsInrefaces';
 
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
 
@@ -96,6 +97,13 @@ export const getAdminToken = async (): Promise<string> => {
 };
 
 export const getProducts = async (url: string): Promise<IGetProductsResponse> => {
+  const headers = await createAdminJSONHeaders();
+  const res = await axios.get(url, { headers });
+
+  return res.data;
+};
+
+export const getProductsById = async (url: string): Promise<IPropsProduct> => {
   const headers = await createAdminJSONHeaders();
   const res = await axios.get(url, { headers });
 
