@@ -3,6 +3,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { loader } from '@/components/AuthForm/AuthForm';
+import { catalogLoader } from '@/pages/Catalog/Catalog';
 import PrivateRoute from './PrivateRoute';
 import {
   MainPage,
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       {
         path: '/catalog',
         element: <CatalogPage />,
+        loader: catalogLoader,
       },
       {
         path: '/cart',
