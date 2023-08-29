@@ -39,7 +39,7 @@ export const createNewUserToken = async (email: string, password: string): Promi
     headers: URLENCODED_HEADERS,
   });
 
-  return res;
+  return res.data;
 };
 
 export const refreshUserToken = async (refreshToken: string): Promise<unknown> => {
