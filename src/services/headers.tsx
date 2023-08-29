@@ -1,7 +1,7 @@
 import { getUserToken, getAdminToken } from './tokenHelpers';
 
-export const CLIENT_ID = 'ilGjRPUuSz9INMW6zL1pqJtl';
-export const CLIENT_SECRET = 'hhIZg0aLIDghQAX2aSCyqZ3kZhEsd50K';
+export const CLIENT_ID = 'x1l8wnSux4JIj6QChQOOIkYP';
+export const CLIENT_SECRET = 'DyT73J3nPiD6_1FjcmlPSju1j3oZ0lZ-';
 
 export const URLENCODED_HEADERS = {
   'Content-Type': 'application/x-www-form-urlencoded',
