@@ -20,9 +20,13 @@ const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsC
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const data: IGetProductsResponse = await getProducts(url);
-      const dataResult = data.results;
-      setProducts(dataResult);
+      try {
+        const data: IGetProductsResponse = await getProducts(url);
+        const dataResult = data.results;
+        setProducts(dataResult);
+      } catch (error) {
+        console.error('Error fetching products: ', error);
+      }
     };
 
     fetchData();
@@ -86,7 +90,7 @@ const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsC
         >
           {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <Link to={'/product-page'}>
+              <Link to={`/product-page/${product.id}`}>
                 <Card {...TransformProductToCardProps(product)} />
               </Link>
             </SwiperSlide>
