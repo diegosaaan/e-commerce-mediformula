@@ -1,4 +1,4 @@
-import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
+import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch, ChangeEvent } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
 
@@ -37,14 +37,15 @@ export interface IPropsInput {
   children?: ReactNode;
   checked?: boolean;
   value?: string;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export interface IPropsForm {
   children?: ReactNode;
   className: string;
   name: string;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export interface IMediaItemData {
@@ -100,7 +101,7 @@ export interface IPropsAuthInput {
   value?: string;
   errors?: string;
   touched?: boolean;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
 }
 
 export interface IPropsAuthForm {
@@ -126,7 +127,7 @@ export interface IPropsListAddress {
   value?: string;
   setAddresses?: React.Dispatch<React.SetStateAction<AddressType[]>>;
   setAddressesAnother?: React.Dispatch<React.SetStateAction<AddressType[]>>;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
   isAddress?: boolean;
 }
 
@@ -143,6 +144,12 @@ export interface IAuthAddressesState {
 export interface IPropsAddressFields {
   name: string;
   addressesState: IAuthAddressesState;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+}
+
+export interface IBreadcrumbsData {
+  id?: string;
+  link?: string;
+  name: string;
 }
