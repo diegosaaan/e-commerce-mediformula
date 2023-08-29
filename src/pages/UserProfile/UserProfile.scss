@@ -1,0 +1,170 @@
+.profile {
+
+  &__container {
+    display: flex;
+    // justify-content: center;
+    gap: 40px;
+    padding: 40px 20px 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__container-info {
+    display: flex;
+    flex-direction: column;
+    background-color: $grayscale-200;
+    padding: 20px 38px;
+    border-radius: 16px;
+    gap: 4px;
+  }
+
+  &__name {
+    @include GolosMedium(16px, normal, $grayscale-900);
+  }
+
+  &__email {
+    @include GolosRegular(14px, normal, $grayscale-600);
+  }
+
+  &__categories {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__category {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__container-icon-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__category-name {
+    @include GolosMedium(16px, normal, $grayscale-900);
+  }
+
+  &__category-icon {
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+  }
+
+  &__category-icon_type_home {
+    background-image: url('@/assets/images/svg/profile-home.svg');
+  }
+
+  &__category-icon_type_user {
+    background-image: url('@/assets/images/svg/profile-user.svg');
+  }
+
+  &__subcategories {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 28px;
+  }
+
+  &__subcategory {
+    @include GolosRegular(14px, normal, $grayscale-600);
+  }
+
+  &__subcategory_active {
+    @include GolosRegular(14px, normal, $color-primary);
+  }
+
+  &__title {
+    @include GolosMedium(36px, 1.1, $grayscale-900);
+  }
+
+  &__list {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    width: 220px;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 75px;
+  }
+
+  &__subtitle {
+    @include GolosMedium(28px, 1.1, $grayscale-900);
+  }
+
+  &__container-main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__button {
+    box-sizing: border-box;
+    width: 165px;
+    height: 44px;
+    @include GolosMedium(16px, 1, $grayscale-900);
+    border: 1px solid $grayscale-400;
+    border-radius: 8px;
+    transition: opacity 0.3s;
+  }
+
+  &__button:disabled {
+    background: $grayscale-300;
+    color: $grayscale-600;
+  }
+
+  @media (hover: hover) {
+    &__subcategory:hover {
+      cursor: pointer;
+      @include GreyLinkHover;
+    }
+
+    &__button:hover {
+      @include MainBtnHover;
+    }
+  }
+
+  @media screen and (max-width: $portrait-tablet) {
+    &__container {
+      flex-direction: column;
+    }
+
+    &__info {
+      align-items: center;
+    }
+
+    &__main {
+      align-items: center;
+    }
+
+    &__subtitle {
+      text-align: center;
+    }
+
+    &__list {
+      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__item,
+    &__button {
+      width: 100%;
+    }
+  }
+}
