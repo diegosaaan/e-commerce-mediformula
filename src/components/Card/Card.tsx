@@ -9,9 +9,11 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount }: 
   return (
     <div className="product-card">
       <div className="product-card__image-container">
-        <div className="product-card__discount">
-          <p className="product-card__discount-text">{`-${discount}%`}</p>
-        </div>
+        {discount != null && discount > 0 ? (
+          <div className="product-card__discount">
+            <p className="product-card__discount-text">{`-${discount}%`}</p>
+          </div>
+        ) : null}
         <div className="product-card__image">
           <img className="product-card__image-image" src={imagePath} alt="Product Image" />
         </div>
@@ -24,7 +26,7 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount }: 
       <div className="product-card__price-info">
         <div className="product-card__price-container">
           <p className="product-card__price">{`${price}₽`}</p>
-          <p className="product-card__priceBefore">{priceBefore}</p>
+          {priceBefore !== price ? <p className="product-card__priceBefore">{priceBefore}</p> : null}
         </div>
         <div className="product-card__bonus-container">
           <div className="product-card__bonus-icon"></div>
