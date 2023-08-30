@@ -1,31 +1,19 @@
 import './Sidebar.scss';
-import React, { ChangeEvent, ReactElement, MouseEvent } from 'react';
+import React, { ReactElement } from 'react';
 import { categoriesData, renderCategories } from './categoriesData';
 import CatalogFilter from './CatalogFilter';
 import brandNames from './brandsData';
-
-interface ICatalogSidebarProps {
-  handleChangeCategory: (event: MouseEvent) => Promise<void>;
-  handleChangeDiscountFilter: () => void;
-  handleChangePriceFilter: () => void;
-  handleChangePriceRange: (event: ChangeEvent, range: string) => void;
-  handlePriceInputsOnBlur: () => void;
-  handleChangeBrandsFilter: (event: ChangeEvent<HTMLInputElement>) => void;
-  isDiscountFilter: boolean;
-  isPriceFilter: boolean;
-  priceRangeValue: {
-    minPrice: number;
-    maxPrice: number;
-  };
-}
+import { ICatalogSidebarProps } from '@/types/componentsInrefaces';
 
 const CatalogSidebar = ({
   handleChangeCategory,
+  handleChangeInStockFilter,
   handleChangeDiscountFilter,
   handleChangePriceFilter,
   handleChangePriceRange,
   handlePriceInputsOnBlur,
   handleChangeBrandsFilter,
+  isInStockFilter,
   isDiscountFilter,
   isPriceFilter,
   priceRangeValue,
@@ -36,6 +24,7 @@ const CatalogSidebar = ({
         {renderCategories(categoriesData, true, handleChangeCategory)}
       </ul>
 
+      <CatalogFilter label="Товары в наличии" checked={isInStockFilter} onChange={handleChangeInStockFilter} />
       <CatalogFilter label="Товары по акции" checked={isDiscountFilter} onChange={handleChangeDiscountFilter} />
 
       <CatalogFilter
