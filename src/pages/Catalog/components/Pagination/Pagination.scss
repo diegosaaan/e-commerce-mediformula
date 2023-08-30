@@ -1,0 +1,66 @@
+.catalog {
+  &__product-list-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    width: 340px;
+
+    &-item,
+    &-btn {
+      @include GolosRegular(18px, 1, $grayscale-900);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 100px;
+    }
+
+    &-btn {
+      @include GolosRegular(24px, 1, $grayscale-900);
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      padding: 0;
+      color: $grayscale-50;
+      border: 2px solid $color-secondary;
+      background-color: $color-secondary;
+      transition: 0.3s ease-in-out;
+      cursor: pointer;
+    }
+
+    &-btn:disabled {
+      @include GolosRegular(24px, 1, $grayscale-400);
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      border: 2px solid $grayscale-400;
+      background-color: transparent;
+      pointer-events: none;
+    }
+
+    &-current-page {
+      color: $grayscale-50;
+      background-color: $color-primary;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .catalog {
+    &__product-list-pagination {
+      &-btn:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.catalog {
+  &__product-list-pagination {
+    &-btn:focus,
+    &-btn:focus:active {
+      border-color: $category-type1;
+      background-color: $category-type1;
+      outline: none;
+    }
+  }
+}
