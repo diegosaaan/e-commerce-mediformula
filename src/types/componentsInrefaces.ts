@@ -1,6 +1,17 @@
-import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch, ChangeEvent } from 'react';
+import {
+  MouseEvent,
+  KeyboardEvent,
+  FormEvent,
+  ReactElement,
+  ReactNode,
+  Dispatch,
+  ChangeEvent,
+  MutableRefObject,
+  SetStateAction,
+} from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
+import { IProductData } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
@@ -24,6 +35,7 @@ export interface IPropsButton {
   text?: string;
   children?: ReactNode;
   className: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -152,4 +164,35 @@ export interface IBreadcrumbsData {
   id?: string;
   link?: string;
   name: string;
+}
+
+export interface ICatalogSidebarProps {
+  handleChangeCategory: (event: MouseEvent) => Promise<void>;
+  handleChangeInStockFilter: () => void;
+  handleChangeDiscountFilter: () => void;
+  handleChangePriceFilter: () => void;
+  handleChangePriceRange: (event: ChangeEvent, range: string) => void;
+  handlePriceInputsOnBlur: () => void;
+  handleChangeBrandsFilter: (event: ChangeEvent<HTMLInputElement>) => void;
+  isInStockFilter: boolean;
+  isDiscountFilter: boolean;
+  isPriceFilter: boolean;
+  priceRangeValue: {
+    minPrice: number;
+    maxPrice: number;
+  };
+}
+export interface IPaginationProps {
+  isDataFetching: boolean;
+  currentProductsData: {
+    currentPage: number;
+    currentProductList: IProductData[];
+    totalProducts: number;
+  };
+  getNewProductList: (searchText?: string) => Promise<void>;
+  setCurrentProductList: Dispatch<
+    SetStateAction<{ currentProductList: IProductData[]; totalProducts: number; currentPage: number }>
+  >;
+  pageOffset: MutableRefObject<number>;
+  currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement>;
 }

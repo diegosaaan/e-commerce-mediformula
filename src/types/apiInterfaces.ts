@@ -63,10 +63,12 @@ export interface IProductData {
     }[];
     attributes: {
       name: string;
-      value: {
-        ru: string;
-        'en-US': string;
-      };
+      value:
+        | boolean
+        | {
+            ru: string;
+            'en-US': string;
+          };
     }[];
     assets: [];
     prices: {
