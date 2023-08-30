@@ -52,6 +52,10 @@
     transition: background-color 0.3s ease-in-out;
   }
 
+  &__sort {
+    align-self: start;
+  }
+
   &__sort-list {
     position: absolute;
     margin-top: 16px;
@@ -87,6 +91,9 @@
   }
 
   &__products-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     max-width: 100%;
   }
@@ -100,6 +107,7 @@
 
     &--opacity {
       opacity: 0.5;
+      pointer-events: none;
     }
   }
 

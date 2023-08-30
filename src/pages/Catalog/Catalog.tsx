@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import './Catalog.scss';
-import React, { ChangeEvent, ReactElement, useEffect, useState, MouseEvent, useRef } from 'react';
+import React, { ChangeEvent, ReactElement, useEffect, useState, MouseEvent, useRef, MutableRefObject } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import CatalogSidebar from './components/Sidebar/Sidebar';
@@ -13,34 +13,37 @@ import { createBreadcrumbs, initialBreadCrumbsData, renderBrendcrumbs } from './
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ProductCard from './components/ProductCard/ProductCard';
 import CatalogListPreloader from '@/utils/helpers/Loader/CatalogListPreloader/CatalogListPreloader';
+import Pagination from './components/Pagination/Pagination';
 
-export const catalogLoader = async (): Promise<{ initialData: IAllProductData; isSearchByText: boolean }> => {
+export const catalogLoader = async (): Promise<{ initialData: IAllProductData; wasSearchByText: boolean }> => {
   let url: string;
-  let isSearchByText = false;
+  let wasSearchByText: boolean = false;
   const searchInput = document.querySelector('.header__input-search');
-  if (searchInput && searchInput instanceof HTMLInputElement) {
+  if (searchInput && searchInput instanceof HTMLInputElement && searchInput.value) {
     url = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?fuzzy=true&text.ru=${searchInput.value}&limit=4`;
-    isSearchByText = true;
+    wasSearchByText = true;
   } else {
     url = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?sort=price asc&limit=4`;
   }
-
   const initialData = await getProducts(url);
-  return { initialData, isSearchByText };
+  return { initialData, wasSearchByText };
 };
 
 const CatalogPage = (): ReactElement => {
-  const { initialData, isSearchByText } = useLoaderData() as { initialData: IAllProductData; isSearchByText: boolean };
+  const { initialData, wasSearchByText } = useLoaderData() as {
+    initialData: IAllProductData;
+    wasSearchByText: boolean;
+  };
+  const isSearchByText = useRef(wasSearchByText);
   const [currentProductsData, setCurrentProductList] = useState({
     currentProductList: initialData.results,
     totalProducts: initialData.total,
     currentPage: 1,
-    isNextPage: initialData.total > initialData.results.length,
-    isPrevPage: false,
   });
   const [breadcrumbsData, setBreadcrumbsData] = useState<IBreadcrumbsData[]>(initialBreadCrumbsData);
   const [currentCategory, setCurrentCategory] = useState('Все категории');
   const [categoryId, setCategoryId] = useState('');
+  const [isInStockFilter, setisInStockFilter] = useState(false);
   const [isDiscountFilter, setIsDiscountFilter] = useState(false);
   const [isPriceFilter, setIsPriceFilter] = useState(false);
   const [priceRangeValue, setPriceRangeValue] = useState({
@@ -55,16 +58,14 @@ const CatalogPage = (): ReactElement => {
   const searchButton = document.querySelector('.header__button-search') as HTMLInputElement;
   const searchInput = document.querySelector('.header__input-search') as HTMLButtonElement;
   const pageOffset = useRef(0);
-  console.log(pageOffset);
-  console.log(currentProductsData.currentPage);
 
   const createUrl = (searchText?: string): string => {
     const filters = [];
     const { maxPrice, minPrice } = priceRangeValue;
-
     const filterData: { [key: string]: string } = {
-      searchText: searchText || isSearchByText ? `fuzzy=true&&text.ru=${searchText || searchInput.value}` : '',
+      searchText: searchText || isSearchByText.current ? `fuzzy=true&text.ru=${searchText || searchInput.value}` : '',
       categoryId: categoryId ? `filter=categories.id:"${categoryId}"` : '',
+      inStock: isInStockFilter ? `filter=variants.attributes.in-stock:"${isInStockFilter}"` : '',
       discount: isDiscountFilter ? 'filter=variants.prices.discounted.discount.typeId:"product-discount"' : '',
       priceRange: isPriceFilter
         ? `filter=variants.price.centAmount:range (${minPrice * 100} to ${maxPrice * 100})`
@@ -82,7 +83,6 @@ const CatalogPage = (): ReactElement => {
         filters.push(filterData[key]);
       }
     }
-
     const url = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?${filters.join('&')}&limit=4&offset=${pageOffset.current}`;
     return url;
   };
@@ -92,15 +92,10 @@ const CatalogPage = (): ReactElement => {
     setIsDataFetching(true);
     setTimeout(async () => {
       const { total, results } = await getProducts(url);
-      const { currentPage } = currentProductsData;
-      const isNextPage = (currentPage - 1) * 4 + results.length < total;
-      const isPrevPage = currentPage > 1;
       setCurrentProductList((prevProductsData) => ({
         ...prevProductsData,
         currentProductList: results,
         totalProducts: total,
-        isNextPage,
-        isPrevPage,
       }));
       setIsDataFetching(false);
     }, 1000);
@@ -109,30 +104,40 @@ const CatalogPage = (): ReactElement => {
   const handleChangeCategory = async (event: MouseEvent): Promise<void> => {
     if (event.target) {
       const target = event.target as HTMLLIElement;
-      if (target.id === categoryId && searchInput.value) {
+      isSearchByText.current = false;
+      pageOffset.current = 0;
+      setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
+      if (target.id === categoryId) {
         getNewProductList();
       } else if (target.id !== categoryId) {
-        pageOffset.current = 0;
         const newBreadCrumbsData = await createBreadcrumbs(target.id);
         setCategoryId(target.id);
         setBreadcrumbsData(newBreadCrumbsData);
         setCurrentCategory(target.textContent?.replace('•', '') || '');
-        setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
         setIsDataFetching(true);
       }
     }
   };
 
-  const handleChangeDiscountFilter = (): void => {
+  const openFirstProductListPage = (): void => {
+    isSearchByText.current = false;
     pageOffset.current = 0;
-    setIsDiscountFilter(!isDiscountFilter);
     setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
   };
 
+  const handleChangeInStockFilter = (): void => {
+    openFirstProductListPage();
+    setisInStockFilter(!isInStockFilter);
+  };
+
+  const handleChangeDiscountFilter = (): void => {
+    openFirstProductListPage();
+    setIsDiscountFilter(!isDiscountFilter);
+  };
+
   const handleChangePriceFilter = (): void => {
-    pageOffset.current = 0;
+    openFirstProductListPage();
     setIsPriceFilter(!isPriceFilter);
-    setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
   };
 
   const handleChangePriceRange = (event: ChangeEvent, range: string): void => {
@@ -152,9 +157,8 @@ const CatalogPage = (): ReactElement => {
 
   const handlePriceInputsOnBlur = (): void => {
     if (isPriceFilter) {
+      openFirstProductListPage();
       getNewProductList();
-      pageOffset.current = 0;
-      setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
     }
   };
 
@@ -162,8 +166,7 @@ const CatalogPage = (): ReactElement => {
     if (event.target) {
       const target = event.target as HTMLInputElement;
       const newBrandFilter = target.id;
-      pageOffset.current = 0;
-      setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
+      openFirstProductListPage();
 
       if (brandsFilter.includes(newBrandFilter)) {
         setBrandsFilter(brandsFilter.filter((brand) => brand !== newBrandFilter));
@@ -179,29 +182,22 @@ const CatalogPage = (): ReactElement => {
 
   const handleChangeSortType = (event: MouseEvent): void => {
     const target = event.target as HTMLLIElement;
+    isSearchByText.current = false;
+    pageOffset.current = 0;
     setCurrentSortType(target.textContent || 'Сначала дешевле');
     setIsAccordionOpen(!isAccordionOpen);
   };
 
   const handleSearchButtonClicked = (): void => {
     if (searchInput.value) {
-      pageOffset.current = 0;
+      openFirstProductListPage();
+      isSearchByText.current = true;
       getNewProductList(searchInput.value);
-      setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
     }
   };
 
-  const handleNextPageBtnClicked = async (): Promise<void> => {
-    const { currentPage } = currentProductsData;
-    pageOffset.current += 4;
-    await getNewProductList();
-    setCurrentProductList((prevProductsData) => ({
-      ...prevProductsData,
-      currentPage: currentPage + 1,
-    }));
-  };
-
   searchButton.onclick = handleSearchButtonClicked;
+  const currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement> = useRef(null);
 
   useEffect(() => {
     if (isInitialized) {
@@ -209,21 +205,25 @@ const CatalogPage = (): ReactElement => {
     } else {
       setIsInitialized(true);
     }
-  }, [categoryId, isDiscountFilter, isPriceFilter, brandsFilter, currentSortType]);
+  }, [categoryId, isDiscountFilter, isPriceFilter, brandsFilter, currentSortType, isInStockFilter]);
 
   return (
     <div className="catalog-page catalog">
       <div className="_container catalog__container">
         <ul className="catalog__breadcrumb-list">{renderBrendcrumbs(breadcrumbsData, handleChangeCategory)}</ul>
-        <h2 className="catalog__current-category">{currentCategory}</h2>
+        <h2 ref={currentCategoryRef} className="catalog__current-category">
+          {currentCategory}
+        </h2>
         <div className="catalog__main-content-container">
           <CatalogSidebar
             handleChangeCategory={handleChangeCategory}
+            handleChangeInStockFilter={handleChangeInStockFilter}
             handleChangeDiscountFilter={handleChangeDiscountFilter}
             handleChangePriceFilter={handleChangePriceFilter}
             handleChangePriceRange={handleChangePriceRange}
             handlePriceInputsOnBlur={handlePriceInputsOnBlur}
             handleChangeBrandsFilter={handleChangeBrandsFilter}
+            isInStockFilter={isInStockFilter}
             isDiscountFilter={isDiscountFilter}
             isPriceFilter={isPriceFilter}
             priceRangeValue={priceRangeValue}
@@ -256,15 +256,19 @@ const CatalogPage = (): ReactElement => {
                 ))
               ) : (
                 <li className="catalog__products-empty-list-heading">
-                  К сожалению, товары по такому запросу не найдены
+                  К сожалению, по вашему запросу ничего не найдено. Пожалуйста, попробуйте изменить параметры поиска.
                 </li>
               )}
             </ul>
             <CatalogListPreloader isDataFetching={isDataFetching} />
-            <button disabled={isDataFetching || !currentProductsData.isPrevPage}>Prev page</button>
-            <button onClick={handleNextPageBtnClicked} disabled={isDataFetching || !currentProductsData.isNextPage}>
-              Next page
-            </button>
+            <Pagination
+              isDataFetching={isDataFetching}
+              currentProductsData={currentProductsData}
+              getNewProductList={getNewProductList}
+              setCurrentProductList={setCurrentProductList}
+              pageOffset={pageOffset}
+              currentCategoryRef={currentCategoryRef}
+            />
           </div>
         </div>
       </div>
