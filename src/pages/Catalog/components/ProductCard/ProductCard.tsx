@@ -27,7 +27,14 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
     },
   } = product;
 
-  const brand = attributes.filter((attribute) => attribute.name === 'brand')[0].value.ru;
+  const brandAttribute = attributes.find((attribute) => attribute.name === 'brand');
+  let brand = '';
+
+  if (brandAttribute && typeof brandAttribute.value === 'object' && 'ru' in brandAttribute.value) {
+    brand = brandAttribute.value.ru;
+  }
+
+  const isInStock = attributes.filter((attribute) => attribute.name === 'in-stock')[0].value as boolean;
 
   let discountPrice = 0;
   let discountValue: keyof typeof DiscountsID | string = '';
@@ -53,11 +60,14 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
       }`}
     >
       {discountValue && <div className="catalog__product-discount">{discountValue}</div>}
+      {!isInStock && <div className="catalog__product-no-is-stock">Временно нет в наличии</div>}
       <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} target="_blank">
         <div className="catalog__product-list-item-container">
-          <div className="catalog__product-list-item-left-side">
+          <div className={`catalog__product-list-item-left-side`}>
             <div
-              className="catalog__product-list-item-photo-container"
+              className={`catalog__product-list-item-photo-container ${
+                !isInStock ? 'catalog__product-list-item-photo-container--opacity' : ''
+              }`}
               style={{
                 backgroundImage: `url(${imageUrl})`,
                 backgroundSize: `${imageHeigth > 222 || imageWidth > 222 ? 'contain' : 'cover'}`,
@@ -84,7 +94,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
                 {discountPrice ? `${defaultPrice / 100} ₽` : ''}
               </span>
             </div>
-            <Button type="button" className="button catalog__product-list-item-button">
+            <Button disabled={!isInStock} type="button" className="button catalog__product-list-item-button">
               В корзину
             </Button>
           </div>

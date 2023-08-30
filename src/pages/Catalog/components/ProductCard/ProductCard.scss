@@ -46,6 +46,10 @@
       height: 222px;
       background-repeat: no-repeat;
       background-position: center;
+
+      &--opacity {
+        opacity: 0.7;
+      }
     }
 
     &-description-container {
@@ -106,10 +110,12 @@
 
     &-button {
       margin-top: 16px;
+      background-color: $color-primary;
     }
   }
 
-  &__product-discount {
+  &__product-discount,
+  &__product-no-is-stock {
     @include GolosRegular(14px, 1, $grayscale-50);
     position: absolute;
     display: flex;
@@ -117,12 +123,22 @@
     justify-content: center;
     top: 12px;
     left: 12px;
+  }
+
+  &__product-discount {
     width: 40px;
     height: 20px;
     border-radius: 4px;
     background-image: url('@/assets/images/png/discount-background.png');
     background-repeat: no-repeat;
     background-position: center;
+  }
+
+  &__product-no-is-stock {
+    padding: 0 8px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: $grayscale-600;
   }
 }
 
