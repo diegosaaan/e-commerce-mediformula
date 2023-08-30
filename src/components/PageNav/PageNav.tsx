@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import './PageNav.scss';
 import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import logo from '@/assets/images/svg/header-logo.svg';
@@ -16,6 +16,7 @@ const setActive = ({ isActive }: { isActive: boolean }): string =>
 const PageNav = (): ReactElement => {
   const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
   const [searchInputValue, setSearchInputValue] = useState('');
+  const location = useLocation();
 
   const navigate = useNavigate();
 
@@ -40,7 +41,9 @@ const PageNav = (): ReactElement => {
 
   const handleSearchButtonClicked = (): void => {
     if (searchInputValue) {
-      navigate('/catalog');
+      if (location.pathname !== '/catalog') {
+        navigate('/catalog');
+      }
     }
   };
 
@@ -48,7 +51,9 @@ const PageNav = (): ReactElement => {
     if (event.key === 'Enter') {
       const target = event.target as HTMLInputElement;
       if (target.value) {
-        navigate('/catalog');
+        if (location.pathname !== '/catalog') {
+          navigate('/catalog');
+        }
       }
     }
   };
