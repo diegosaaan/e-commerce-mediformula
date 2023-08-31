@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { createUserJSONHeaders } from './headers';
+import { createUserJSONHeaders } from '../headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { IUserInfo } from '@/types/apiInterfaces';
 
-export const editUserData = async (
+const editUserData = async (
   version: number,
   email: string,
   firstName: string,
