@@ -1,6 +1,5 @@
-/* eslint-disable no-restricted-syntax */
 import './Catalog.scss';
-import React, { ChangeEvent, ReactElement, useEffect, useState, MouseEvent, useRef, MutableRefObject } from 'react';
+import React, { ReactElement, useEffect, useState, MouseEvent, useRef, MutableRefObject } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import CatalogSidebar from './components/Sidebar/Sidebar';
@@ -54,6 +53,7 @@ const CatalogPage = (): ReactElement => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [currentSortType, setCurrentSortType] = useState('Сначала дешевле');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDataFetching, setIsDataFetching] = useState(false);
   const searchButton = document.querySelector('.header__button-search') as HTMLInputElement;
   const searchInput = document.querySelector('.header__input-search') as HTMLButtonElement;
@@ -78,6 +78,7 @@ const CatalogPage = (): ReactElement => {
         'sort=price asc',
     };
 
+    // eslint-disable-next-line no-restricted-syntax
     for (const key in filterData) {
       if (filterData[key]) {
         filters.push(filterData[key]);
@@ -125,57 +126,6 @@ const CatalogPage = (): ReactElement => {
     setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
   };
 
-  const handleChangeInStockFilter = (): void => {
-    openFirstProductListPage();
-    setisInStockFilter(!isInStockFilter);
-  };
-
-  const handleChangeDiscountFilter = (): void => {
-    openFirstProductListPage();
-    setIsDiscountFilter(!isDiscountFilter);
-  };
-
-  const handleChangePriceFilter = (): void => {
-    openFirstProductListPage();
-    setIsPriceFilter(!isPriceFilter);
-  };
-
-  const handleChangePriceRange = (event: ChangeEvent, range: string): void => {
-    if (event.target) {
-      const target = event.target as HTMLInputElement;
-      const newValue = parseFloat(target.value);
-
-      if (!Number.isNaN(newValue) || !newValue) {
-        if (range === 'min') {
-          setPriceRangeValue((prevRange) => ({ ...prevRange, minPrice: newValue || 0 }));
-        } else {
-          setPriceRangeValue((prevRange) => ({ ...prevRange, maxPrice: newValue || 0 }));
-        }
-      }
-    }
-  };
-
-  const handlePriceInputsOnBlur = (): void => {
-    if (isPriceFilter) {
-      openFirstProductListPage();
-      getNewProductList();
-    }
-  };
-
-  const handleChangeBrandsFilter = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target) {
-      const target = event.target as HTMLInputElement;
-      const newBrandFilter = target.id;
-      openFirstProductListPage();
-
-      if (brandsFilter.includes(newBrandFilter)) {
-        setBrandsFilter(brandsFilter.filter((brand) => brand !== newBrandFilter));
-      } else {
-        setBrandsFilter((prevBrandsFilter) => [...prevBrandsFilter, newBrandFilter]);
-      }
-    }
-  };
-
   const handleToogleAccordion = (): void => {
     setIsAccordionOpen(!isAccordionOpen);
   };
@@ -196,6 +146,14 @@ const CatalogPage = (): ReactElement => {
     }
   };
 
+  const handleOpenSidebar = (): void => {
+    setIsMobileSidebarOpen(true);
+  };
+
+  const handleCloseSidebar = (): void => {
+    setIsMobileSidebarOpen(false);
+  };
+
   searchButton.onclick = handleSearchButtonClicked;
   const currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement> = useRef(null);
 
@@ -209,47 +167,64 @@ const CatalogPage = (): ReactElement => {
 
   return (
     <div className="catalog-page catalog">
-      <div className="_container catalog__container">
+      <div
+        className={`catalog__darkened-popup ${isMobileSidebarOpen ? 'catalog__darkened-popup--active' : ''}`}
+        onClick={handleCloseSidebar}
+      ></div>
+      <div className={`_container catalog__container`}>
         <ul className="catalog__breadcrumb-list">{renderBrendcrumbs(breadcrumbsData, handleChangeCategory)}</ul>
         <h2 ref={currentCategoryRef} className="catalog__current-category">
           {currentCategory}
         </h2>
         <div className="catalog__main-content-container">
           <CatalogSidebar
+            getNewProductList={getNewProductList}
+            openFirstProductListPage={openFirstProductListPage}
             handleChangeCategory={handleChangeCategory}
-            handleChangeInStockFilter={handleChangeInStockFilter}
-            handleChangeDiscountFilter={handleChangeDiscountFilter}
-            handleChangePriceFilter={handleChangePriceFilter}
-            handleChangePriceRange={handleChangePriceRange}
-            handlePriceInputsOnBlur={handlePriceInputsOnBlur}
-            handleChangeBrandsFilter={handleChangeBrandsFilter}
+            setisInStockFilter={setisInStockFilter}
+            setIsDiscountFilter={setIsDiscountFilter}
+            setIsPriceFilter={setIsPriceFilter}
+            setPriceRangeValue={setPriceRangeValue}
+            setBrandsFilter={setBrandsFilter}
+            handleCloseSidebar={handleCloseSidebar}
             isInStockFilter={isInStockFilter}
             isDiscountFilter={isDiscountFilter}
             isPriceFilter={isPriceFilter}
             priceRangeValue={priceRangeValue}
+            brandsFilter={brandsFilter}
+            isMobileSidebarOpen={isMobileSidebarOpen}
+            isDataFetching={isDataFetching}
           />
           <div className="catalog__products-container">
-            <Accordion
-              sectionName="catalog"
-              listName="sort"
-              title={currentSortType}
-              isOpen={isAccordionOpen}
-              onClickAccordion={handleToogleAccordion}
-            >
-              {sortData
-                .filter((sort) => sort !== currentSortType)
-                .map((sort, index) => (
-                  <li
-                    key={index}
-                    className="catalog__sort-list-item"
-                    tabIndex={isAccordionOpen ? 0 : -1}
-                    onClick={(event): void => handleChangeSortType(event)}
-                  >
-                    {sort}
-                  </li>
-                ))}
-            </Accordion>
-            <ul className={`catalog__products-list ${isDataFetching ? 'catalog__products-list--opacity' : ''}`}>
+            <div className="catalog__settings-button-container">
+              <Accordion
+                sectionName="catalog"
+                listName="sort"
+                title={currentSortType}
+                isOpen={isAccordionOpen}
+                onClickAccordion={handleToogleAccordion}
+              >
+                {sortData
+                  .filter((sort) => sort !== currentSortType)
+                  .map((sort, index) => (
+                    <li
+                      key={index}
+                      className="catalog__sort-list-item"
+                      tabIndex={isAccordionOpen ? 0 : -1}
+                      onClick={(event): void => handleChangeSortType(event)}
+                    >
+                      {sort}
+                    </li>
+                  ))}
+              </Accordion>
+              <button
+                title="open filters button"
+                className="catalog__open-filters-button"
+                onClick={handleOpenSidebar}
+              ></button>
+            </div>
+
+            <ul className={`catalog__products-list ${isDataFetching ? 'catalog__products-list--pointer-events' : ''}`}>
               {currentProductsData.currentProductList.length > 0 ? (
                 currentProductsData.currentProductList.map((product: IProductData) => (
                   <ProductCard key={product.id} product={product} />

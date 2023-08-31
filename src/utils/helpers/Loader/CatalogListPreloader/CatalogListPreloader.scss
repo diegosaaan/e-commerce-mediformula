@@ -76,3 +76,15 @@
     margin-top: 0;
   }
 }
+
+@media (max-width: $small-desktop) {
+  .catalog__list-preloader {
+    left: 0;
+  }
+}
+
+@media (max-width: $tablet) {
+  .catalog__list-preloader {
+    bottom: 50px;
+  }
+}

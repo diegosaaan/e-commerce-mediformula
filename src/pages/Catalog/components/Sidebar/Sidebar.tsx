@@ -1,25 +1,99 @@
 import './Sidebar.scss';
-import React, { ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 import { categoriesData, renderCategories } from './categoriesData';
 import CatalogFilter from './CatalogFilter';
 import brandNames from './brandsData';
 import { ICatalogSidebarProps } from '@/types/componentsInrefaces';
 
 const CatalogSidebar = ({
+  getNewProductList,
+  openFirstProductListPage,
   handleChangeCategory,
-  handleChangeInStockFilter,
-  handleChangeDiscountFilter,
-  handleChangePriceFilter,
-  handleChangePriceRange,
-  handlePriceInputsOnBlur,
-  handleChangeBrandsFilter,
+  setisInStockFilter,
+  setIsDiscountFilter,
+  setIsPriceFilter,
+  setPriceRangeValue,
+  setBrandsFilter,
+  handleCloseSidebar,
   isInStockFilter,
   isDiscountFilter,
   isPriceFilter,
   priceRangeValue,
+  brandsFilter,
+  isMobileSidebarOpen,
+  isDataFetching,
 }: ICatalogSidebarProps): ReactElement => {
+  const handleChangeInStockFilter = (): void => {
+    openFirstProductListPage();
+    setisInStockFilter(!isInStockFilter);
+  };
+
+  const handleChangeDiscountFilter = (): void => {
+    openFirstProductListPage();
+    setIsDiscountFilter(!isDiscountFilter);
+  };
+
+  const handleChangePriceFilter = (): void => {
+    openFirstProductListPage();
+    setIsPriceFilter(!isPriceFilter);
+  };
+
+  const handlePriceInputsOnBlur = (): void => {
+    if (isPriceFilter) {
+      openFirstProductListPage();
+      getNewProductList();
+    }
+  };
+
+  const handleChangeBrandsFilter = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (event.target) {
+      const target = event.target as HTMLInputElement;
+      const newBrandFilter = target.id;
+      openFirstProductListPage();
+
+      if (brandsFilter.includes(newBrandFilter)) {
+        setBrandsFilter(brandsFilter.filter((brand: string) => brand !== newBrandFilter));
+      } else {
+        setBrandsFilter([...brandsFilter, newBrandFilter]);
+      }
+    }
+  };
+
+  const handleChangePriceRange = (event: ChangeEvent, range: string): void => {
+    if (event.target) {
+      const target = event.target as HTMLInputElement;
+      const newValue = parseFloat(target.value);
+
+      if (!Number.isNaN(newValue) || !newValue) {
+        if (range === 'min') {
+          setPriceRangeValue({
+            ...priceRangeValue,
+            minPrice: newValue || 0,
+          });
+        } else {
+          setPriceRangeValue({
+            ...priceRangeValue,
+            maxPrice: newValue || 0,
+          });
+        }
+      }
+    }
+  };
+
   return (
-    <aside className="catalog__sidebar">
+    <aside
+      className={`catalog__sidebar ${isMobileSidebarOpen ? 'catalog__mobile-sidebar--active' : ''} ${
+        isDataFetching ? 'catalog__sidebar--opacity' : ''
+      }`}
+    >
+      <div className="catalog__sidebar-close-button-container">
+        <button
+          title="sidebar close button"
+          className="catalog__sidebar-close-button"
+          onClick={handleCloseSidebar}
+        ></button>
+      </div>
+
       <ul className="catalog__category-list catalog__category-list--padding-bottom-scroll">
         {renderCategories(categoriesData, true, handleChangeCategory)}
       </ul>
