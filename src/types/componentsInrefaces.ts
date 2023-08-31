@@ -153,3 +153,18 @@ export interface IPropsAddressFields {
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
 }
+
+export interface IPropsPopupAddress {
+  addressesState: IAuthAddressesState;
+  setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+  isOpenPopup: boolean;
+  setIsOpenPopup: Dispatch<React.SetStateAction<boolean>>;
+  address: string;
+  initialState?: {
+    countryValueInitial: string;
+    cityValueInitial: string;
+    streetValueInitial: string;
+    postalCodeValueInitial: string;
+  };
+  isEdit: boolean;
+}
