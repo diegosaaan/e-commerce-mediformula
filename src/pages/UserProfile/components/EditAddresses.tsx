@@ -183,7 +183,7 @@ const EditAddresses = (): ReactElement => {
               Адреса
             </h3>
             <ul className={`profile__addresses ${!isToggleAddresses ? 'profile__addresses_active' : ''}`}>
-              {userInfo && userInfo.addresses ? (
+              {userInfo && userInfo.addresses.length !== 0 ? (
                 userInfo.addresses.map((address) => (
                   <li className="profile__address" key={address.id}>
                     <div className="profile__container-circle-text">
