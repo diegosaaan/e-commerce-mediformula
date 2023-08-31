@@ -50,6 +50,11 @@
   padding: 20px;
 }
 
+.preloader_type_profile {
+  margin-top: 0;
+  width: 900px;
+}
+
 .preloader__container {
   width: 100px;
   height: 100px;
@@ -91,6 +96,11 @@
 @media screen and (max-width: $large-desktop) {
   .preloader {
     margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+
+  .preloader_type_profile {
+    margin-top: 0;
+    width: calc(48px + (900 - 48) * (100vw - 360px) / (1559.9 - 360));
   }
 }
 
