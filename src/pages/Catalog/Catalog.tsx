@@ -132,8 +132,8 @@ const CatalogPage = (): ReactElement => {
 
   const handleChangeSortType = (event: MouseEvent): void => {
     const target = event.target as HTMLLIElement;
-    isSearchByText.current = false;
     pageOffset.current = 0;
+    setCurrentProductList((prevProductsData) => ({ ...prevProductsData, currentPage: 1 }));
     setCurrentSortType(target.textContent || 'Сначала дешевле');
     setIsAccordionOpen(!isAccordionOpen);
   };
