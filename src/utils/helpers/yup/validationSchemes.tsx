@@ -122,3 +122,32 @@ export const EditUserSchema = Yup.object().shape({
       }
     ),
 });
+
+export const EditPasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .min(8, 'Пароль должен содержать не менее 8 символов')
+    .matches(/[A-ZА-ЯЁ]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+    .matches(/[a-zа-яё]/, 'Пароль должен содержать хотя бы одну строчную букву')
+    .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
+    .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ (!@#$%^&*)')
+    .test('no-leading-trailing-spaces', 'Пароль не должен содержать начальных или завершающих пробелов', (value) => {
+      return value === value.trim();
+    }),
+  newPassword: Yup.string()
+    .required('Поле обязательно к заполнению')
+    .min(8, 'Пароль должен содержать не менее 8 символов')
+    .matches(/[A-ZА-ЯЁ]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+    .matches(/[a-zа-яё]/, 'Пароль должен содержать хотя бы одну строчную букву')
+    .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
+    .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ (!@#$%^&*)')
+    .test('no-leading-trailing-spaces', 'Пароль не должен содержать начальных или завершающих пробелов', (value) => {
+      return value === value.trim();
+    }),
+  newPasswordConfirm: Yup.string()
+    .required('Повторите новый пароль')
+    .test('password-match', 'Пароли не совпадают', (value, testContext) => {
+      const parentPassword = testContext.parent.newPassword;
+      return value === parentPassword;
+    }),
+});

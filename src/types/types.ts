@@ -27,3 +27,9 @@ export type EditUserSchemaType = {
   dateOfBirth: string;
   email: string;
 };
+
+export type EditPasswordSchemaType = {
+  password: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};
