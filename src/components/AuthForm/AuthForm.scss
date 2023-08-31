@@ -241,5 +241,10 @@
     &__link_type_notification:hover {
       @include MainBtnHover;
     }
+
+    &__button:disabled:hover {
+      opacity: 1;
+      cursor: default;
+    }
   }
 }
