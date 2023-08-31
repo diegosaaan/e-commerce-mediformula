@@ -60,7 +60,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
       }`}
     >
       {discountValue && <div className="catalog__product-discount">{discountValue}</div>}
-      {!isInStock && <div className="catalog__product-no-is-stock">Временно нет в наличии</div>}
+      {!isInStock && <div className="catalog__product-no-is-stock">Нет в наличии</div>}
       <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} target="_blank">
         <div className="catalog__product-list-item-container">
           <div className={`catalog__product-list-item-left-side`}>
@@ -90,9 +90,11 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
               <span className="catalog__product-list-item-current-price">
                 {discountPrice > 0 ? discountPrice / 100 : defaultPrice / 100} ₽
               </span>
-              <span className="catalog__product-list-item-prev-price">
-                {discountPrice ? `${defaultPrice / 100} ₽` : ''}
-              </span>
+              {discountPrice ? (
+                <span className="catalog__product-list-item-prev-price">{`${defaultPrice / 100} ₽`}</span>
+              ) : (
+                ''
+              )}
             </div>
             <Button disabled={!isInStock} type="button" className="button catalog__product-list-item-button">
               В корзину
