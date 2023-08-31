@@ -1,5 +1,5 @@
 import './ProductCard.scss';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
@@ -43,22 +43,8 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
     discountValue = `${DiscountsID[`${discounted.discount.id}` as keyof typeof DiscountsID]}`;
   }
 
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-  useEffect(() => {
-    const image = new Image();
-    image.src = imageUrl;
-    image.onload = (): void => {
-      setIsImageLoaded(true);
-    };
-  }, [imageUrl]);
-
   return (
-    <li
-      className={`catalog__product-list-item ${
-        isImageLoaded ? 'catalog__product-list-item--active' : ' catalog__product-list-item--hidden'
-      }`}
-    >
+    <li className={`catalog__product-list-item`}>
       {discountValue && <div className="catalog__product-discount">{discountValue}</div>}
       {!isInStock && <div className="catalog__product-no-is-stock">Нет в наличии</div>}
       <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} target="_blank">
@@ -72,9 +58,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
                 backgroundImage: `url(${imageUrl})`,
                 backgroundSize: `${imageHeigth > 222 || imageWidth > 222 ? 'contain' : 'cover'}`,
               }}
-            >
-              {/* <img className="catalog__product-list-item-photo" src={imageUrl} alt={imageAlt} /> */}
-            </div>
+            ></div>
             <div className="catalog__product-list-item-description-container">
               <h3 className="catalog__product-list-item-title">{productName}</h3>
               <h4 className="catalog__product-list-item-description-brand">
