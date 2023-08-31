@@ -194,9 +194,9 @@ const EditAddresses = (): ReactElement => {
                           address.id
                         )}`}
                       ></div>
-                      <p className="profile__address-text">{`${countries[address.country]}, ${address.city}, ${
+                      <p className="profile__address-text">{`${countries[address.country]}, г. ${address.city}, ${
                         address.postalCode
-                      }, ${address.streetName}`}</p>
+                      }, ул. ${address.streetName}`}</p>
                     </div>
                     <div className="profile__container-buttons-edit">
                       <label className="profile__label">
