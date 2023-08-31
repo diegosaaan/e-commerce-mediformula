@@ -108,6 +108,7 @@ export interface IPropsAuthInput {
   errors?: string;
   touched?: boolean;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  isEdit?: boolean;
 }
 
 export interface IPropsAuthForm {

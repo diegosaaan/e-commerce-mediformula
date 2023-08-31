@@ -73,6 +73,7 @@ const EditUserData = (): ReactElement => {
                   disabled={!isEdit}
                   errors={errors.lastName}
                   touched={touched.lastName}
+                  isEdit={isEdit}
                 />
               </li>
               <li className="profile__item">
@@ -87,6 +88,7 @@ const EditUserData = (): ReactElement => {
                   disabled={!isEdit}
                   errors={errors.firstName}
                   touched={touched.firstName}
+                  isEdit={isEdit}
                 />
               </li>
               <li className="profile__item">
@@ -101,6 +103,7 @@ const EditUserData = (): ReactElement => {
                   disabled={!isEdit}
                   errors={errors.dateOfBirth}
                   touched={touched.dateOfBirth}
+                  isEdit={isEdit}
                 />
               </li>
               <li className="profile__item">
@@ -115,6 +118,7 @@ const EditUserData = (): ReactElement => {
                   disabled={!isEdit}
                   errors={errors.email}
                   touched={touched.email}
+                  isEdit={isEdit}
                 />
               </li>
             </ul>

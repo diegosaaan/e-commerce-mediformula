@@ -14,6 +14,7 @@ const AuthInput = ({
   touched,
   disabled,
   defaultValue,
+  isEdit,
 }: IPropsAuthInput): ReactElement => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -28,7 +29,11 @@ const AuthInput = ({
 
   return (
     <>
-      <div className={`auth__container-field ${(isInputFocused || value) && 'auth__container-field_active'}`}>
+      <div
+        className={`auth__container-field ${(isInputFocused || value) && 'auth__container-field_active'} ${
+          isEdit ? 'auth__container-field_type_profile' : ''
+        }`}
+      >
         <div className="auth__container-input">
           <label className={`auth__label ${(isInputFocused || value) && 'auth__label_active'}`} htmlFor={htmlFor}>
             {placeholder}
