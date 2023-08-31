@@ -1,6 +1,23 @@
 .catalog {
   padding-top: 32px;
 
+  &__darkened-popup {
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($grayscale-600, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 15;
+    transition: 0.3s ease-in-out;
+
+    &--active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   &__breadcrumb-list {
     display: flex;
   }
@@ -26,9 +43,26 @@
     margin-top: 44px;
   }
 
+  &__settings-button-container {
+    display: flex;
+    align-self: start;
+    align-items: center;
+  }
+
+  &__open-filters-button {
+    display: none;
+    width: 36px;
+    height: 36px;
+    background-image: url('@/assets/images/svg/catalog-filters-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
   &__sort-accordion {
     position: relative;
-    justify-self: start;
     margin-left: 0;
     max-width: 100%;
   }
@@ -50,10 +84,6 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-  }
-
-  &__sort {
-    align-self: start;
   }
 
   &__sort-list {
@@ -99,13 +129,18 @@
   }
 
   &__products-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 32px;
     padding: 20px;
     width: 100%;
     max-width: 100%;
+    min-height: 200px;
     transition: 0.5s ease-in-out;
 
-    &--opacity {
+    &--pointer-events {
       opacity: 0.5;
       pointer-events: none;
     }
@@ -133,6 +168,10 @@
     &__list-heading:hover {
       @include GreyLinkHover;
     }
+
+    &__open-filters-button:hover {
+      transform: scale(1.2);
+    }
   }
 }
 
@@ -146,5 +185,58 @@
   &__list-heading:focus:active,
   &__sort-list-item:focus:active {
     @extend %GreyLinkActive;
+  }
+}
+
+@media (max-width: $medium-desktop) {
+  .catalog {
+    &__current-category {
+      font-size: 36px;
+    }
+  }
+}
+
+@media (max-width: $small-desktop) {
+  .catalog {
+    &__products-list {
+      padding: 0px;
+    }
+
+    &__breadcrumb-list {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    &__main-content-container,
+    &__current-category {
+      margin-top: 30px;
+    }
+
+    &__settings-button-container {
+      width: 100%;
+      max-width: 100%;
+      justify-content: space-between;
+    }
+
+    &__open-filters-button {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: $portrait-tablet) {
+  .catalog {
+    &__current-category {
+      font-size: 28px;
+    }
+
+    &__breadcrumb-list {
+      flex-direction: column;
+    }
+
+    &__open-filters-button {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
