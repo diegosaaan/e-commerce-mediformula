@@ -74,7 +74,7 @@ const UserProfilePage = (): ReactElement => {
                     type="button"
                     onClick={handleClickEditAddresses}
                   >
-                    Адреса доставки
+                    Изменить адреса
                   </button>
                 </li>
                 <li>
