@@ -167,21 +167,24 @@ export interface IBreadcrumbsData {
 }
 
 export interface ICatalogSidebarProps {
+  getNewProductList: () => void;
+  openFirstProductListPage: () => void;
   handleChangeCategory: (event: MouseEvent) => Promise<void>;
-  handleChangeInStockFilter: () => void;
-  handleChangeDiscountFilter: () => void;
-  handleChangePriceFilter: () => void;
-  handleChangePriceRange: (event: ChangeEvent, range: string) => void;
-  handlePriceInputsOnBlur: () => void;
-  handleChangeBrandsFilter: (event: ChangeEvent<HTMLInputElement>) => void;
+  setisInStockFilter: (value: boolean) => void;
+  setIsDiscountFilter: (value: boolean) => void;
+  setIsPriceFilter: (value: boolean) => void;
+  setPriceRangeValue: (value: { minPrice: number; maxPrice: number }) => void;
+  setBrandsFilter: (value: string[]) => void;
+  handleCloseSidebar: () => void;
   isInStockFilter: boolean;
   isDiscountFilter: boolean;
   isPriceFilter: boolean;
-  priceRangeValue: {
-    minPrice: number;
-    maxPrice: number;
-  };
+  priceRangeValue: { minPrice: number; maxPrice: number };
+  brandsFilter: string[];
+  isMobileSidebarOpen: boolean;
+  isDataFetching: boolean;
 }
+
 export interface IPaginationProps {
   isDataFetching: boolean;
   currentProductsData: {
