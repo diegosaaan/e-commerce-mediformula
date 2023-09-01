@@ -52,12 +52,12 @@ const router = createBrowserRouter([
         element: <UserProfilePage />,
       },
       {
-        path: '*',
-        element: <NotFoundPage />,
+        path: '/catalog/:id',
+        element: <DetailedProductPage />,
       },
       {
-        path: '/product-page/:id',
-        element: <DetailedProductPage />,
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },

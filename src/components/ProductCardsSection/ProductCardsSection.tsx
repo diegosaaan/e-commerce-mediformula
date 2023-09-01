@@ -90,7 +90,7 @@ const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsC
         >
           {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <Link to={`/product-page/${product.id}`}>
+              <Link to={`/catalog/${product.id}`}>
                 <Card {...TransformProductToCardProps(product)} />
               </Link>
             </SwiperSlide>
