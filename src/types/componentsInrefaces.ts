@@ -180,14 +180,16 @@ export interface IPropsProduct {
 }
 
 export interface IPropsDetailedProduct {
-  images: Array<{
-    url: string;
-    label: string;
-  }>;
+  images: ImageDetails[];
   name: string;
   description: string;
   price: number;
   priceBefore: number;
   brand?: string;
   bonus?: number;
+}
+
+export interface ImageDetails {
+  url: string;
+  label: string;
 }
