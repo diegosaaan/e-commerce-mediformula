@@ -4,6 +4,10 @@
   display: flex;
   flex-direction: column;
 
+  &__input-search {
+    @include GolosRegular(16px, 1, $grayscale-900);
+  }
+
   &__nav {
     display: flex;
     flex-direction: column;

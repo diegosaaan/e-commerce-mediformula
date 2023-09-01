@@ -13,6 +13,7 @@ const Input = ({
   children,
   value,
   onChange,
+  onKeyDown,
 }: IPropsInput): ReactElement => {
   return (
     <label className={classNameLabel}>
@@ -23,6 +24,7 @@ const Input = ({
         placeholder={placeholder}
         name={name}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         checked={checked}
         value={value}
       />

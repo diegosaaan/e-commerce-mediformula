@@ -3,6 +3,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { loader } from '@/components/AuthForm/AuthForm';
+import { catalogLoader } from '@/pages/Catalog/Catalog';
 import { PrivateRoute, PrivateRouteForAuthorizedUser } from './PrivateRoute';
 import ProductInfo from '@/components/ProductInfo/ProductInfo';
 import {
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       {
         path: '/catalog',
         element: <CatalogPage />,
+        loader: catalogLoader,
       },
       {
         path: '/catalog/:idCard',

@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import './PageNav.scss';
-import React, { FormEvent, ReactElement } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import logo from '@/assets/images/svg/header-logo.svg';
@@ -15,6 +15,9 @@ const setActive = ({ isActive }: { isActive: boolean }): string =>
 
 const PageNav = (): ReactElement => {
   const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
+  const [searchInputValue, setSearchInputValue] = useState('');
+  const location = useLocation();
+
   const navigate = useNavigate();
 
   message.config({
@@ -36,12 +39,32 @@ const PageNav = (): ReactElement => {
     });
   };
 
-  const handleExampleSumbit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  const handleSearchButtonClicked = (): void => {
+    if (searchInputValue) {
+      if (location.pathname !== '/catalog') {
+        navigate('/catalog');
+      }
+    }
   };
 
-  const handleExampleChange = (e: FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
+  const handleSearchInputKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      const target = event.target as HTMLInputElement;
+      if (target.value) {
+        if (location.pathname !== '/catalog') {
+          navigate('/catalog');
+        }
+      }
+    }
+  };
+
+  const handleExampleSumbit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+  };
+
+  const handleChangeSearchInputValue = (event: ChangeEvent): void => {
+    const target = event.target as HTMLInputElement;
+    setSearchInputValue(target.value || '');
   };
 
   return (
@@ -135,9 +158,11 @@ const PageNav = (): ReactElement => {
                   name="header-search"
                   type="search"
                   placeholder="Поиск оборудования"
-                  onChange={handleExampleChange}
+                  value={searchInputValue}
+                  onChange={handleChangeSearchInputValue}
+                  onKeyDown={(event): void => handleSearchInputKeyDown(event)}
                 />
-                <Button className="header__button-search" type="submit" />
+                <Button className="header__button-search" type="submit" onClick={handleSearchButtonClicked} />
               </Form>
             </li>
             <li className="header__item-cart">
