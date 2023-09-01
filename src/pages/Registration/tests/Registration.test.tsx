@@ -312,7 +312,7 @@ describe('Get user data from local storage', () => {
   beforeAll(() => {
     jest.spyOn(Object.getPrototypeOf(localStorage), 'setItem');
     mock.onPost(ApiEndpoints.URL_AUTH_CUSTOMERS_TOKEN).reply(200, localStorageTokenData);
-    global.localStorage = mockLocalStorage;
+    localStorage = mockLocalStorage;
   });
 
   beforeEach(() => {
@@ -324,7 +324,7 @@ describe('Get user data from local storage', () => {
   });
 
   afterAll(() => {
-    global.localStorage = originalLocalStorage;
+    localStorage = originalLocalStorage;
   });
 
   afterEach(() => {

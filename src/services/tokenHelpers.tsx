@@ -7,6 +7,8 @@ import {
   IApiIntrospectData,
   IUserTokenData,
   IAuthResponseTokenAdmin,
+  ICreateNewUserToken,
+  IUserInfo,
 } from '@/types/apiInterfaces';
 
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
@@ -25,11 +27,15 @@ export const isTokenActive = async (): Promise<boolean> => {
   return false;
 };
 
-export const saveUserToken = ({ access_token, refresh_token, expires_in }: ILocalStorageUserTokenData): void => {
+export const saveUserToken = async ({
+  access_token,
+  refresh_token,
+  expires_in,
+}: ILocalStorageUserTokenData): Promise<void> => {
   localStorage.setItem('1SortUserToken', JSON.stringify({ access_token, refresh_token, expires_in }));
 };
 
-export const createNewUserToken = async (email: string, password: string): Promise<unknown> => {
+export const createNewUserToken = async (email: string, password: string): Promise<ICreateNewUserToken> => {
   const requestData = new URLSearchParams();
   requestData.append('grant_type', 'password');
   requestData.append('username', email);
@@ -73,14 +79,14 @@ export const getUserToken = async (): Promise<string | null> => {
   return tokenData?.access_token || null;
 };
 
-export const getUserInfoByToken = async (): Promise<unknown> => {
+export const getUserInfoByToken = async (): Promise<IUserInfo> => {
   const userJSONHeaders = await createUserJSONHeaders();
 
   const res = await axios.get(ApiEndpoints.URL_API_ME, {
     headers: userJSONHeaders,
   });
 
-  return res;
+  return res.data;
 };
 
 export const getAdminToken = async (): Promise<string> => {

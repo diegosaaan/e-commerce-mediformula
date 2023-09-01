@@ -143,3 +143,47 @@ export interface ICategoryData {
 export interface ICategoryDataResponse {
   data: ICategoryData;
 }
+
+export interface ICreateNewUserToken {
+  access_token: string;
+  expires_in: number;
+  scope: string;
+  refresh_token: string;
+  token_type: string;
+}
+
+export interface IUserInfo {
+  id: string;
+  version: number;
+  versionModifiedAt: string;
+  lastMessageSequenceNumber: number;
+  createdAt: string;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  createdBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  password: string;
+  addresses: {
+    id: string;
+    streetName: string;
+    postalCode: string;
+    city: string;
+    country: string;
+  }[];
+  defaultShippingAddressId?: string;
+  defaultBillingAddressId?: string;
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+  isEmailVerified: boolean;
+  stores: [];
+  authenticationMode: 'Password';
+}

@@ -81,6 +81,7 @@ const ProductCardsSection = ({ header, counter, sectionClassName }: IPropsCardsS
                 bonus={card.bonus}
                 discount={card.discount}
                 onClick={(): void => {}}
+                id={index}
               />
             </SwiperSlide>
           ))}

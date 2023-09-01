@@ -105,7 +105,7 @@ const RegistrationPage = (): ReactElement => {
       const tokenData: IUserTokenData | unknown = await createNewUserToken(values.email, values.password);
       if (tokenData !== null && typeof tokenData === 'object') {
         message.info({
-          content: 'Registration was successful!',
+          content: 'Регистрация прошла успешно!',
         });
         signIn(() => navigate('/'));
         saveUserToken(tokenData as IUserTokenData);
@@ -201,10 +201,6 @@ const RegistrationPage = (): ReactElement => {
               errors.password ||
               errors.passwordRepeat
             )
-            // ||
-            // errors.shipping ||
-            // errors.billing
-            // )
           }
           isAddAddress={isAddAddress}
           handlePrevRegister={handlePrevRegister}
