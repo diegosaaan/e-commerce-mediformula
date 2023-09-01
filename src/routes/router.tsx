@@ -3,7 +3,8 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { loader } from '@/components/AuthForm/AuthForm';
-import PrivateRoute from './PrivateRoute';
+import { PrivateRoute, PrivateRouteForAuthorizedUser } from './PrivateRoute';
+import ProductInfo from '@/components/ProductInfo/ProductInfo';
 import {
   MainPage,
   NotFoundPage,
@@ -18,12 +19,20 @@ import {
 const router = createBrowserRouter([
   {
     path: '/login',
-    element: <PrivateRoute>{<LoginPage />}</PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <LoginPage />
+      </PrivateRoute>
+    ),
     loader,
   },
   {
     path: '/registration',
-    element: <PrivateRoute>{<RegistrationPage />}</PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <RegistrationPage />
+      </PrivateRoute>
+    ),
     loader,
   },
   {
@@ -43,12 +52,16 @@ const router = createBrowserRouter([
         element: <CatalogPage />,
       },
       {
+        path: '/catalog/:idCard',
+        element: <ProductInfo />,
+      },
+      {
         path: '/cart',
         element: <CartPage />,
       },
       {
         path: '/user-profile',
-        element: <UserProfilePage />,
+        element: <PrivateRouteForAuthorizedUser>{<UserProfilePage />}</PrivateRouteForAuthorizedUser>,
       },
       {
         path: '*',

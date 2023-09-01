@@ -99,11 +99,13 @@ const PageNav = (): ReactElement => {
                 </Link>
               </li>
             )}
-            <li className="header__item-profile">
-              <Link className="header__link" to="/user-profile">
-                <ProfileButton />
-              </Link>
-            </li>
+            {isUserLoggedIn && (
+              <li className="header__item-profile">
+                <Link className="header__link" to="/user-profile">
+                  <ProfileButton />
+                </Link>
+              </li>
+            )}
           </ul>
           <ul className="header__nav-container-main">
             <li className="header__item-logo">
@@ -190,14 +192,16 @@ const PageNav = (): ReactElement => {
               </Button>
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/user-profile" className={setActive}>
-              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
-                <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
-                <p className="header__button-text-mobile">Профиль</p>
-              </Button>
-            </NavLink>
-          </li>
+          {isUserLoggedIn && (
+            <li>
+              <NavLink to="/user-profile" className={setActive}>
+                <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
+                  <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
+                  <p className="header__button-text-mobile">Профиль</p>
+                </Button>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </>

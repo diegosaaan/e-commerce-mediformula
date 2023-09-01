@@ -1,12 +1,16 @@
 import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
+import { IUserInfo } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
   isContentLoaded: boolean;
+  isContentLoadedPageUserInfo: boolean;
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
+  userInfo: IUserInfo | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | null>>;
 }
 
 export interface IAccordionProps {
@@ -71,6 +75,7 @@ export interface IPropsCard {
   bonus?: number;
   discount?: number;
   onClick: () => void;
+  id?: number;
 }
 
 export interface IPropsTag {
@@ -97,10 +102,13 @@ export interface IPropsAuthInput {
   name: string;
   htmlFor: string;
   isInputPassword?: boolean;
+  disabled?: boolean;
+  defaultValue?: string;
   value?: string;
   errors?: string;
   touched?: boolean;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  isEdit?: boolean;
 }
 
 export interface IPropsAuthForm {
@@ -145,4 +153,19 @@ export interface IPropsAddressFields {
   addressesState: IAuthAddressesState;
   onChange?: (e: FormEvent<HTMLInputElement>) => void;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+}
+
+export interface IPropsPopupAddress {
+  addressesState: IAuthAddressesState;
+  setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+  isOpenPopup: boolean;
+  setIsOpenPopup: Dispatch<React.SetStateAction<boolean>>;
+  address: string;
+  initialState?: {
+    countryValueInitial: string;
+    cityValueInitial: string;
+    streetValueInitial: string;
+    postalCodeValueInitial: string;
+  };
+  isEdit: boolean;
 }
