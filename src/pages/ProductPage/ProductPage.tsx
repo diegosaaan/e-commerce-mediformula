@@ -16,7 +16,7 @@ function ProductPage(): ReactElement {
         header="Специальные предложения"
         sectionClassName="special-offers"
         counter={15}
-        url={ApiEndpoints.URL_PRODUCTS}
+        url={`${ApiEndpoints.URL_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`}
       />
     </div>
   );
