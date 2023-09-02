@@ -100,7 +100,7 @@ export interface IPropsCarousel {
 }
 
 export interface IPropsCardsSection {
-  header: string;
+  heading: string;
   counter: number;
   sectionClassName: string;
   products?: IPropsProduct[];
