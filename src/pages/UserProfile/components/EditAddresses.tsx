@@ -4,7 +4,7 @@ import useAuth from '@/utils/hooks/useAuth';
 import { editDefaultBillingAddress, editDefaultShippingAddress } from '@/services/profile-services/editDefaultAddress';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 import deleteAddres from '@/services/profile-services/deleteAddress';
-import ProfilePreloader from '@/utils/helpers/Loader/ProfilePreloader/ProfilePreloader';
+import CirclePreloader from '@/utils/helpers/Loader/Circle-preloader/CirclePreloader';
 import PopupAddress from './PopupAddress/PopupAddress';
 
 const EditAddresses = (): ReactElement => {
@@ -256,7 +256,7 @@ const EditAddresses = (): ReactElement => {
             </button>
           </div>
         ) : (
-          <ProfilePreloader />
+          <CirclePreloader pageClassname="user-profile" classModificator="type-profile" />
         )}
         <ul className="profile__container-help">
           <li className="profile__help">

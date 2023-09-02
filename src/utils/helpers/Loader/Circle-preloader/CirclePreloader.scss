@@ -39,7 +39,7 @@
   }
 }
 
-.preloader {
+.circle-preloader {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,18 +50,13 @@
   padding: 20px;
 }
 
-.preloader_type_profile {
-  margin-top: 0;
-  width: 900px;
-}
-
-.preloader__container {
+.circle-preloader-container {
   width: 100px;
   height: 100px;
   position: relative;
 }
 
-.preloader__round {
+.circle-preloader-round {
   width: 100px;
   height: 100px;
   position: absolute;
@@ -71,8 +66,8 @@
   border-radius: 50px;
 }
 
-.preloader__round::after,
-.preloader__round::before {
+.circle-preloader-round::after,
+.circle-preloader-round::before {
   content: '';
   width: 100px;
   height: 100px;
@@ -82,33 +77,59 @@
   border-radius: 50px;
 }
 
-.preloader__round::after {
+.circle-preloader-round::after {
   background: white;
   animation: preloader-inside-white 0.5s ease-in-out infinite;
 }
 
-.preloader__round::before {
+.circle-preloader-round::before {
   z-index: 10;
   background: #ff6838;
   animation: preloader-inside-red 0.5s ease-in-out infinite;
 }
 
+// AUTH CIRCLE PRELOADER
+
+.login__circle-preloader,
+.registration__circle-preloader {
+  display: flex;
+  margin-top: 0px;
+  min-height: calc(101vh);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(0, 102, 255, 0.9);
+  opacity: 0.6;
+  z-index: -9;
+}
+
+// AUTH CIRCLE PRELOADER
+
+// USER-PROFILE PRELOADER
+
+.user-profile__circle-preloader--type-profile {
+  margin-top: 0;
+  width: 900px;
+}
+
+// USER-PROFILE PRELOADER
+
 @media screen and (max-width: $large-desktop) {
-  .preloader {
+  .circle-preloader {
     margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
   }
 
-  .preloader_type_profile {
+  .circle-preloader_type_profile {
     margin-top: 0;
     width: calc(48px + (900 - 48) * (100vw - 360px) / (1559.9 - 360));
   }
 }
 
 @media screen and (max-width: $small-desktop) {
-  .preloader__container,
-  .preloader__round,
-  .preloader__round::after,
-  .preloader__round::before {
+  .circle-preloader-container,
+  .circle-preloader-round,
+  .circle-preloader-round::after,
+  .circle-preloader-round::before {
     width: 60px;
     height: 60px;
   }

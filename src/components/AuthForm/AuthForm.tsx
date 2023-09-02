@@ -12,7 +12,7 @@ import background6 from '@/assets/images/jpg/auth-background-6.jpg';
 
 const backgroundImagesPaths = [background1, background2, background3, background4, background5, background6];
 
-export const loader = (): null => {
+export const authPreloader = (): null => {
   backgroundImagesPaths.map((path) => {
     return new Promise<string>((resolve) => {
       const img = new Image();

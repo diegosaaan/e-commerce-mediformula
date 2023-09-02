@@ -1,7 +1,7 @@
 import './UserProfile.scss';
 import React, { ReactElement, useState } from 'react';
 import useAuth from '@/utils/hooks/useAuth';
-import LayoutPreloader from '@/utils/helpers/Loader/LayoutPreloader/LayoutPreloader';
+import CirclePreloader from '@/utils/helpers/Loader/Circle-preloader/CirclePreloader';
 import EditUserData from './components/EditUserData';
 import EditAddresses from './components/EditAddresses';
 import EditPassword from './components/EditPassword';
@@ -31,7 +31,7 @@ const UserProfilePage = (): ReactElement => {
   };
 
   return isContentLoadedPageUserInfo ? (
-    <LayoutPreloader />
+    <CirclePreloader pageClassname="user-profile" />
   ) : (
     <section className="profile" aria-label="Профиль">
       <div className="profile__container">

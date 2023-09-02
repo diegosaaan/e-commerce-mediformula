@@ -36,9 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
   useEffect(() => {
     setContentLoadedPageUserInfo(true);
     (async (): Promise<void> => {
-      const fetchedUserInfo = await getUserInfoByToken();
-      setUserInfo(fetchedUserInfo);
-      setContentLoadedPageUserInfo(false);
+      if (isUserLoggedIn) {
+        const fetchedUserInfo = await getUserInfoByToken();
+        setUserInfo(fetchedUserInfo);
+        setContentLoadedPageUserInfo(false);
+      }
     })();
   }, [isUserLoggedIn]);
 
