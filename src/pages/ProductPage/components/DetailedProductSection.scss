@@ -1,30 +1,43 @@
 .detailed-product {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 100px;
+  margin-top: 40px;
 
-  &__image-block {
+  &__image-container {
+    order: 1;
     flex: 0 1 38%;
     display: flex;
-    max-width: 460px;
-    max-height: 460px;
-    padding: 40px 36px;
+    justify-content: center;
+  }
+
+  &__image-block {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 560px;
+    max-height: 560px;
+    padding: 40px 20px;
   }
 
   &__image-image {
     width: 100%;
     max-height: 100%;
+    padding: 20px;
     object-fit: contain;
   }
 
   &__description-block {
+    order: 2;
     flex: 0 1 40%;
+    padding-right: 10px;
   }
 
   &__added-block {
+    order: 3;
     flex: 0 1 22%;
-    padding-top: 40px;
+    padding-top: 20px;
+    padding-left: 24px;
+    border-left: 1px solid $grayscale-300;
   }
 
   &__header {
@@ -40,7 +53,7 @@
   &__price-container {
     display: flex;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 48px;
     gap: 40px;
   }
 
@@ -55,6 +68,107 @@
 
   &__button-container {
     margin-top: 20px;
+  }
+
+  &__documentation-header {
+    @include GolosMedium(18px, 100%, $grayscale-900);
+  }
+
+  &__documentation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__documentation-element {
+    @include GolosRegular(16px, 100%, $grayscale-900);
+    display: flex;
+    align-items: center;
+  }
+
+  &__documentation-element:before {
+    content: '';
+    background-image: url('@/assets/images/svg/product-page-documentation.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: $medium-desktop) {
+    &__image-block {
+      max-width: 500px;
+      max-height: 500px;
+    }
+  }
+
+  @media screen and (max-width: $small-desktop) {
+    &__image-block {
+      max-width: 370px;
+      max-height: 370px;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+    margin-top: 32px;
+
+    &__image-container {
+      order: 2;
+    }
+
+    &__image-block {
+      padding: 0;
+    }
+
+    &__image-image {
+      padding: 0 20px;
+    }
+
+    &__description-block {
+      order: 3;
+    }
+
+    &__added-block {
+      order: 1;
+      padding-top: 0;
+      padding-left: 0;
+      border: none;
+    }
+
+    &__header {
+      margin-top: 0;
+      @include GolosMedium(18px, 115%, $grayscale-900);
+    }
+
+    &__description {
+      margin-top: 30px;
+      @include GolosRegular(14px, 140%, $grayscale-900);
+    }
+
+    &__documentation-block {
+      display: none;
+    }
+
+    &__price-container {
+      display: flex;
+      align-items: center;
+      margin-top: 32px;
+      gap: 12px;
+    }
+
+    &__price {
+      @include GolosMedium(18px, 115%, $grayscale-900);
+    }
+
+    &__priceBefore {
+      @include GolosRegular(12px, 100%, $grayscale-600);
+    }
+
+    &__button-container {
+      margin-top: 16px;
+    }
   }
 }
 
