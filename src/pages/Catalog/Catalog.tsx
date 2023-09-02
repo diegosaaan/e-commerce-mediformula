@@ -11,7 +11,7 @@ import SortTypes from '@/enums/sortTypes';
 import { createBreadcrumbs, initialBreadCrumbsData, renderBrendcrumbs } from './breadcrumbsData/breadcrumbsData';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ProductCard from './components/ProductCard/ProductCard';
-import CatalogListPreloader from '@/utils/helpers/Loader/CatalogListPreloader/CatalogListPreloader';
+import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
 import Pagination from './components/Pagination/Pagination';
 
 export const catalogLoader = async (): Promise<{ initialData: IAllProductData; wasSearchByText: boolean }> => {
@@ -111,11 +111,11 @@ const CatalogPage = (): ReactElement => {
       if (target.id === categoryId) {
         getNewProductList();
       } else if (target.id !== categoryId) {
-        const newBreadCrumbsData = await createBreadcrumbs(target.id);
-        setCategoryId(target.id);
-        setBreadcrumbsData(newBreadCrumbsData);
-        setCurrentCategory(target.textContent?.replace('•', '') || '');
         setIsDataFetching(true);
+        setCategoryId(target.id);
+        setCurrentCategory(target.textContent?.replace('•', '') || '');
+        const newBreadCrumbsData = await createBreadcrumbs(target.id);
+        setBreadcrumbsData(newBreadCrumbsData);
       }
     }
   };
@@ -235,7 +235,7 @@ const CatalogPage = (): ReactElement => {
                 </li>
               )}
             </ul>
-            <CatalogListPreloader isDataFetching={isDataFetching} />
+            <SpinnerPreloader pageClassname="catalog" isDataFetching={isDataFetching} />
             <Pagination
               isDataFetching={isDataFetching}
               currentProductsData={currentProductsData}
