@@ -18,9 +18,20 @@
   }
 
   &__nav-container-auth {
-    align-self: flex-end;
     display: flex;
     align-items: center;
+    gap: 20px;
+  }
+
+  &__nav-auth-item,
+  &__login-registration-btn-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &__login-registration-btn-container {
+    display: flex;
+    justify-content: end;
     gap: 20px;
   }
 
@@ -43,10 +54,6 @@
 
   &__item-log {
     grid-area: log;
-  }
-
-  &__item-profile {
-    grid-area: profile;
   }
 
   &__item-logo {
@@ -275,13 +282,6 @@
     justify-content: center;
   }
 
-  &__button-main-mobile:focus {
-    @extend %MainBtnFocus;
-    &:active {
-      @extend %MainBtnActive;
-    }
-  }
-
   &__button-main-mobile_type_cart {
     position: relative;
   }
@@ -385,50 +385,33 @@
   .header {
     max-width: calc(360px + (768 - 360) * (100vw - 360px) / (767 - 360));
 
-    &__item-profile {
-      display: none;
-    }
-
-    &__item-about {
-      display: none;
-    }
-
-    &__item-catalog {
-      display: none;
-    }
-
-    &__item-cart {
-      display: none;
-    }
-
+    &__item-profile,
+    &__item-about,
+    &__item-catalog,
+    &__item-cart,
     &__item-logo {
       display: none;
     }
 
-    &__item-logo-mobile {
+    &__item-logo-mobile,
+    &__nav-container-main,
+    &__nav-extra-mobile {
       display: flex;
-      margin-right: calc(-5px + (390 - 0) * (100vw - 390px) / (767 - 390));
     }
 
-    &__item-logo-mobile_type_login {
-      margin-right: calc(100px + (510 - 130) * (100vw - 390px) / (767 - 390));
-    }
-
-    &__nav-container-main {
-      display: flex;
+    &__login-registration-btn-container {
+      justify-content: baseline;
+      width: auto;
+      gap: 10px;
     }
 
     &__nav-container-auth {
+      justify-content: space-between;
       gap: 10px;
-      align-self: center;
     }
 
     &__input-search {
       width: calc(340px + (727 - 350) * (100vw - 390px) / (767 - 390));
-    }
-
-    &__nav-extra-mobile {
-      display: flex;
     }
   }
 }
@@ -437,14 +420,6 @@
   .header {
     &__nav-container-auth {
       flex-wrap: wrap;
-    }
-
-    &__item-logo-mobile {
-      width: 280px;
-    }
-
-    &__item-logo-mobile_type_login {
-      margin-right: 0;
     }
   }
 }
