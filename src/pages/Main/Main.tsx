@@ -11,12 +11,11 @@ const MainPage = (): ReactElement => {
   return (
     <div className="main-page">
       <Intro />
-      <ProductCardsSection header="Популярное" counter={15} sectionClassName="popular" />
+      <ProductCardsSection heading="Специальные предложения" counter={11} sectionClassName="discounted-products" />
       <CategoryCards />
       <Brends />
       <Advantages />
       <Services />
-      <ProductCardsSection header="Специальные предложения" sectionClassName="special-offers" counter={15} />
       <MediaSection />
     </div>
   );
