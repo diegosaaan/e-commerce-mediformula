@@ -84,7 +84,8 @@
 }
 
 @media (max-width: $tablet) {
-  .catalog__spinner-preloader {
+  .catalog__spinner-preloader,
+  .user-profile__spinner-preloader {
     bottom: 50px;
   }
 }

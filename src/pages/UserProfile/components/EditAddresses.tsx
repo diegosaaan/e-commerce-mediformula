@@ -4,7 +4,7 @@ import useAuth from '@/utils/hooks/useAuth';
 import { editDefaultBillingAddress, editDefaultShippingAddress } from '@/services/profile-services/editDefaultAddress';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 import deleteAddres from '@/services/profile-services/deleteAddress';
-import CirclePreloader from '@/utils/helpers/Loader/Circle-preloader/CirclePreloader';
+import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
 import PopupAddress from './PopupAddress/PopupAddress';
 
 const EditAddresses = (): ReactElement => {
@@ -174,90 +174,94 @@ const EditAddresses = (): ReactElement => {
     <>
       <h2 className="profile__subtitle">Изменить адреса</h2>
       <div className="profile__container-addresses">
-        {!isLoading ? (
-          <div className="profile__container-address">
-            <h3
-              className={`profile__address-heading ${!isToggleAddresses ? 'profile__address-heading_active' : ''}`}
-              onClick={handleToggleAddresses}
-            >
-              Адреса
-            </h3>
-            <ul className={`profile__addresses ${!isToggleAddresses ? 'profile__addresses_active' : ''}`}>
-              {userInfo && userInfo.addresses.length !== 0 ? (
-                userInfo.addresses.map((address) => (
-                  <li className="profile__address" key={address.id}>
-                    <div className="profile__container-circle-text">
-                      <div
-                        className={`profile__circle ${getCircleType(
-                          userInfo.billingAddressIds,
-                          userInfo.shippingAddressIds,
+        <div className="profile__container-address">
+          <h3
+            className={`profile__address-heading ${!isToggleAddresses ? 'profile__address-heading_active' : ''}`}
+            onClick={handleToggleAddresses}
+          >
+            Адреса
+          </h3>
+          <ul
+            className={`profile__addresses ${!isToggleAddresses ? 'profile__addresses_active' : ''} ${
+              isLoading ? 'profile__loading' : ''
+            }`}
+          >
+            {userInfo && userInfo.addresses.length !== 0 ? (
+              userInfo.addresses.map((address) => (
+                <li className="profile__address" key={address.id}>
+                  <div className="profile__container-circle-text">
+                    <div
+                      className={`profile__circle ${getCircleType(
+                        userInfo.billingAddressIds,
+                        userInfo.shippingAddressIds,
+                        address.id
+                      )}`}
+                    ></div>
+                    <p className="profile__address-text">{`${countries[address.country]}, г. ${address.city}, ${
+                      address.postalCode
+                    }, ул. ${address.streetName}`}</p>
+                  </div>
+                  <div className="profile__container-buttons-edit">
+                    <label className="profile__label">
+                      <input
+                        type="radio"
+                        name="shippingRadio"
+                        className="profile__input"
+                        checked={address.id === userInfo.defaultShippingAddressId}
+                        onChange={(e): void => handleChange(e, address.id)}
+                      ></input>
+                      <span className="profile__span profile__span_type_shipping"></span>
+                    </label>
+                    <label className="profile__label">
+                      <input
+                        type="radio"
+                        name="billingRadio"
+                        className="profile__input"
+                        checked={address.id === userInfo.defaultBillingAddressId}
+                        onChange={(e): void => handleChange(e, address.id)}
+                      ></input>
+                      <span className="profile__span profile__span_type_billing"></span>
+                    </label>
+                    <button
+                      className="profile__button-edit profile__button-edit_type_edit"
+                      type="button"
+                      onClick={(): void =>
+                        handleEdit(
+                          countries[address.country],
+                          address.city,
+                          address.postalCode,
+                          address.streetName,
                           address.id
-                        )}`}
-                      ></div>
-                      <p className="profile__address-text">{`${countries[address.country]}, г. ${address.city}, ${
-                        address.postalCode
-                      }, ул. ${address.streetName}`}</p>
-                    </div>
-                    <div className="profile__container-buttons-edit">
-                      <label className="profile__label">
-                        <input
-                          type="radio"
-                          name="shippingRadio"
-                          className="profile__input"
-                          checked={address.id === userInfo.defaultShippingAddressId}
-                          onChange={(e): void => handleChange(e, address.id)}
-                        ></input>
-                        <span className="profile__span profile__span_type_shipping"></span>
-                      </label>
-                      <label className="profile__label">
-                        <input
-                          type="radio"
-                          name="billingRadio"
-                          className="profile__input"
-                          checked={address.id === userInfo.defaultBillingAddressId}
-                          onChange={(e): void => handleChange(e, address.id)}
-                        ></input>
-                        <span className="profile__span profile__span_type_billing"></span>
-                      </label>
-                      <button
-                        className="profile__button-edit profile__button-edit_type_edit"
-                        type="button"
-                        onClick={(): void =>
-                          handleEdit(
-                            countries[address.country],
-                            address.city,
-                            address.postalCode,
-                            address.streetName,
-                            address.id
-                          )
-                        }
-                      >
-                        <p className="profile__button-text">Редактировать</p>
+                        )
+                      }
+                    >
+                      <p className="profile__button-text">Редактировать</p>
+                    </button>
+                    <Popconfirm
+                      title="Вы уверены, что хотите удалить этот адрес?"
+                      onConfirm={(): void => handleDelete(address.id)}
+                      okText="Да"
+                      cancelText="Отмена"
+                    >
+                      <button className="profile__button-edit profile__button-edit_type_delete" type="button">
+                        <p className="profile__button-text">Удалить</p>
                       </button>
-                      <Popconfirm
-                        title="Вы уверены, что хотите удалить этот адрес?"
-                        onConfirm={(): void => handleDelete(address.id)}
-                        okText="Да"
-                        cancelText="Отмена"
-                      >
-                        <button className="profile__button-edit profile__button-edit_type_delete" type="button">
-                          <p className="profile__button-text">Удалить</p>
-                        </button>
-                      </Popconfirm>
-                    </div>
-                  </li>
-                ))
-              ) : (
-                <li className="profile__address-text">Адресов нет</li>
-              )}
-            </ul>
-            <button className="profile__button profile__button_type_edit" type="button" onClick={handleAddAddress}>
-              Добавить адрес
-            </button>
-          </div>
-        ) : (
-          <CirclePreloader pageClassname="user-profile" classModificator="type-profile" />
-        )}
+                    </Popconfirm>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="profile__address-text">Адресов нет</li>
+            )}
+          </ul>
+          <button
+            className={`profile__button profile__button_type_edit ${isLoading ? 'profile__loading' : ''}`}
+            type="button"
+            onClick={handleAddAddress}
+          >
+            Добавить адрес
+          </button>
+        </div>
         <ul className="profile__container-help">
           <li className="profile__help">
             <div className="profile__circle profile__circle_type_billing"></div>
@@ -289,6 +293,7 @@ const EditAddresses = (): ReactElement => {
           </li>
         </ul>
       </div>
+      <SpinnerPreloader pageClassname="user-profile" isDataFetching={isLoading} />
       <PopupAddress
         addressesState={state}
         setAddressesState={setState}
