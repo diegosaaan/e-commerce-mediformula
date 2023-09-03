@@ -25,8 +25,12 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount }: 
       <p className="product-card__text">{text}</p>
       <div className="product-card__price-info">
         <div className="product-card__price-container">
-          <p className="product-card__price">{`${price}₽`}</p>
-          {priceBefore !== price ? <p className="product-card__priceBefore">{priceBefore}</p> : null}
+          <p className="product-card__price">{`${
+            price !== undefined ? Math.round(price).toLocaleString('ru-RU') : 'Не доступно'
+          }₽`}</p>
+          {priceBefore !== price ? (
+            <p className="product-card__priceBefore">{priceBefore?.toLocaleString('ru-RU')}</p>
+          ) : null}
         </div>
         <div className="product-card__bonus-container">
           <div className="product-card__bonus-icon"></div>

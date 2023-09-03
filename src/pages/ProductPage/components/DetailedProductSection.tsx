@@ -134,8 +134,16 @@ const DetailedProductSection = ({ productDetails }: { productDetails: IPropsDeta
             <h4 className="detailed-product__header">{productDetails.name}</h4>
             <p className="detailed-product__description">{productDetails.description}</p>
             <div className="detailed-product__price-container">
-              <p className="detailed-product__price">{`${productDetails.price}₽`}</p>
-              <p className="detailed-product__priceBefore">{`${productDetails.priceBefore}₽`}</p>
+              <p className="detailed-product__price">{`${
+                productDetails.price !== undefined
+                  ? Math.round(productDetails.price).toLocaleString('ru-RU')
+                  : 'Не доступно'
+              }₽`}</p>
+              <p className="detailed-product__priceBefore">{`${
+                productDetails.priceBefore !== undefined
+                  ? Math.round(productDetails.priceBefore).toLocaleString('ru-RU')
+                  : 'Не доступно'
+              }₽`}</p>
             </div>
             <div className="detailed-product__button-container">
               <Button className="button" type="button" text="В корзину" onClick={(): void => {}} />
