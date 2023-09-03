@@ -3,6 +3,7 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
+import Modal from 'react-modal';
 import router from './routes/router';
 import { AuthProvider } from './hoc/AuthProvider';
 
@@ -14,3 +15,4 @@ root.render(
     <RouterProvider router={router} />
   </AuthProvider>
 );
+Modal.setAppElement('#root');

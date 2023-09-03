@@ -3,9 +3,10 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { authPreloader } from '@/components/AuthForm/AuthForm';
+import { MainPageLoader } from '@/pages/Main/Main';
+import { ProductPageLoader } from '@/pages/ProductPage/ProductPage';
 import { catalogLoader } from '@/pages/Catalog/Catalog';
 import { PrivateLoginAndRegistrationRoute, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
-import ProductInfo from '@/components/ProductInfo/ProductInfo';
 import {
   MainPage,
   NotFoundPage,
@@ -15,6 +16,7 @@ import {
   AboutUsPage,
   LoginPage,
   RegistrationPage,
+  DetailedProductPage,
 } from './lazyPages';
 
 const router = createBrowserRouter([
@@ -43,6 +45,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+        loader: MainPageLoader,
       },
       {
         path: '/about-us',
@@ -54,16 +57,17 @@ const router = createBrowserRouter([
         loader: catalogLoader,
       },
       {
-        path: '/catalog/:idCard',
-        element: <ProductInfo />,
-      },
-      {
         path: '/cart',
         element: <CartPage />,
       },
       {
         path: '/user-profile',
         element: <PrivateRouteForAuthorizedUser>{<UserProfilePage />}</PrivateRouteForAuthorizedUser>,
+      },
+      {
+        path: '/catalog/:id',
+        element: <DetailedProductPage />,
+        loader: ProductPageLoader,
       },
       {
         path: '*',

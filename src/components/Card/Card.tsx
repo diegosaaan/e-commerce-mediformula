@@ -25,8 +25,10 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount, id
         <p className="product-card__text">{text}</p>
         <div className="product-card__price-info">
           <div className="product-card__price-container">
-            <p className="product-card__price">{`${price}₽`}</p>
-            <p className="product-card__priceBefore">{priceBefore}</p>
+            <p className="product-card__price">{`${
+              price !== undefined ? Math.round(price).toLocaleString('ru-RU') : 'Не доступно'
+            }₽`}</p>
+            (<p className="product-card__priceBefore">{priceBefore?.toLocaleString('ru-RU')}</p>)
           </div>
           <div className="product-card__bonus-container">
             <div className="product-card__bonus-icon"></div>
@@ -38,9 +40,7 @@ const Card = ({ imagePath, rating, text, price, priceBefore, bonus, discount, id
           <Button
             className={`iconButton ${isSelected ? 'iconButton__selected' : ''}`}
             type="button"
-            onClick={(): void => {
-              setIsSelected(!isSelected);
-            }}
+            onClick={(): void => setIsSelected(!isSelected)}
           />
         </div>
       </div>

@@ -103,7 +103,7 @@ export interface IPropsCardsSection {
   heading: string;
   counter: number;
   sectionClassName: string;
-  products?: IPropsProduct[];
+  products: IProductData[];
 }
 
 export interface IPropsProduct {}
@@ -207,6 +207,16 @@ export interface IPaginationProps {
   currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement>;
 }
 
+export interface IPropsDetailedProduct {
+  images: ImageDetails[];
+  name: string;
+  description: string;
+  price: number;
+  priceBefore: number;
+  brand?: string;
+  bonus?: number;
+}
+
 export interface IPropsPopupAddress {
   addressesState: IAuthAddressesState;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
@@ -220,4 +230,9 @@ export interface IPropsPopupAddress {
     postalCodeValueInitial: string;
   };
   isEdit: boolean;
+}
+
+export interface ImageDetails {
+  url: string;
+  label: string;
 }

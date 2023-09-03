@@ -56,3 +56,8 @@ export const UserProfilePage = LazyComponent(<CirclePreloader pageClassname="use
   await delay(1000);
   return import(/* webpackChunkName: "pages/user-profile/user-profile" */ '@/pages/UserProfile/UserProfile');
 });
+
+export const DetailedProductPage = LazyComponent(<CirclePreloader pageClassname="product-page" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/product-page/product-page" */ '@/pages/ProductPage/ProductPage');
+});
