@@ -8,8 +8,8 @@ import {
   IUserTokenData,
   IAuthResponseTokenAdmin,
   IGetProductsResponse,
+  IProductData,
 } from '@/types/apiInterfaces';
-import { IPropsProduct } from '@/types/componentsInrefaces';
 
 export const isUserToken = (): boolean => localStorage.getItem('1SortUserToken') !== null;
 
@@ -103,7 +103,7 @@ export const getProducts = async (url: string): Promise<IGetProductsResponse> =>
   return res.data;
 };
 
-export const getProductsById = async (url: string): Promise<IPropsProduct> => {
+export const getProductsById = async (url: string): Promise<IProductData> => {
   const headers = await createAdminJSONHeaders();
   const res = await axios.get(url, { headers });
 

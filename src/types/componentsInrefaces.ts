@@ -145,40 +145,6 @@ export interface IPropsAddressFields {
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
 }
 
-export interface IPropsProduct {
-  id: string;
-  name: {
-    ru: string;
-  };
-  description: {
-    ru: string;
-  };
-  categories: Array<{
-    id: string;
-  }>;
-  masterVariant: {
-    prices: Array<{
-      value: {
-        centAmount: number;
-      };
-      discounted: {
-        value: {
-          centAmount: number;
-        };
-      };
-    }>;
-    images: Array<{
-      url: string;
-      label: string;
-    }>;
-    attributes: Array<{
-      value: {
-        ru: string;
-      };
-    }>;
-  };
-}
-
 export interface IPropsDetailedProduct {
   images: ImageDetails[];
   name: string;

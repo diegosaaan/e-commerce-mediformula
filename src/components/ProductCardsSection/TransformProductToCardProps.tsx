@@ -1,6 +1,7 @@
-import { IPropsCard, IPropsProduct } from '@/types/componentsInrefaces';
+import { IProductData } from '@/types/apiInterfaces';
+import { IPropsCard } from '@/types/componentsInrefaces';
 
-const TransformProductToCardProps = (product: IPropsProduct): IPropsCard => {
+const TransformProductToCardProps = (product: IProductData): IPropsCard => {
   return {
     imagePath: product.masterVariant.images[0]?.url || 'default-image.png',
     rating: 4.8,

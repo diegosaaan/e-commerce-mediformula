@@ -8,15 +8,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
 import Card from '@/components/Card/Card';
-import { IPropsCardsSection, IPropsProduct } from '@/types/componentsInrefaces';
+import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import TransformProductToCardProps from './TransformProductToCardProps';
 import { getProducts } from '@/services/tokenHelpers';
-import { IGetProductsResponse } from '@/types/apiInterfaces';
+import { IGetProductsResponse, IProductData } from '@/types/apiInterfaces';
 
 const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsCardsSection): ReactElement => {
-  const [products, setProducts] = useState<IPropsProduct[]>([]);
+  const [products, setProducts] = useState<IProductData[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
