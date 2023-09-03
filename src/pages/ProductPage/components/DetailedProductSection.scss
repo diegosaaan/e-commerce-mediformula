@@ -82,7 +82,7 @@
   }
 
   &__documentation-element {
-    @include GolosRegular(16px, 100%, $grayscale-900);
+    @include GolosRegular(14px, 100%, $grayscale-900);
     display: flex;
     align-items: center;
   }
@@ -91,23 +91,10 @@
     content: '';
     background-image: url('@/assets/images/svg/product-page-documentation.svg');
     background-size: cover;
+    min-width: 20px;
     width: 20px;
     height: 20px;
     margin-right: 10px;
-  }
-
-  @media screen and (max-width: $medium-desktop) {
-    &__image-block {
-      max-width: 500px;
-      max-height: 500px;
-    }
-  }
-
-  @media screen and (max-width: $small-desktop) {
-    &__image-block {
-      max-width: 370px;
-      max-height: 370px;
-    }
   }
 
   @media screen and (max-width: $tablet) {
@@ -244,4 +231,17 @@
 .swiper-slider {
   display: flex;
   align-items: center;
+}
+
+.swiper-slide .detailed-product__image-image {
+  max-height: 560px;
+
+  @media screen and (max-width: $tablet) {
+    max-height: 300px;
+  }
+}
+
+.detailed-product__image-block .swiper-slide {
+  width: 100% !important;
+  max-width: 100%;
 }
