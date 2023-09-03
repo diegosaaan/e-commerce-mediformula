@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
@@ -12,26 +12,8 @@ import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import TransformProductToCardProps from './TransformProductToCardProps';
-import { getProducts } from '@/services/tokenHelpers';
-import { IGetProductsResponse, IProductData } from '@/types/apiInterfaces';
 
-const ProductCardsSection = ({ header, counter, sectionClassName, url }: IPropsCardsSection): ReactElement => {
-  const [products, setProducts] = useState<IProductData[]>([]);
-
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const data: IGetProductsResponse = await getProducts(url);
-        const dataResult = data.results;
-        setProducts(dataResult);
-      } catch (error) {
-        console.error('Error fetching products: ', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+const ProductCardsSection = ({ header, counter, sectionClassName, products }: IPropsCardsSection): ReactElement => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
