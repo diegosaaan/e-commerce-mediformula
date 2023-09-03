@@ -3,46 +3,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Modal from 'react-modal';
 import { Navigation } from 'swiper';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 import { IPropsDetailedProduct } from '@/types/componentsInrefaces';
-import ApiEndpoints from '@/enums/apiEndpoints';
-import { getProductsById } from '@/services/tokenHelpers';
-import TransformToDetailedProduct from './TransformToDetailedProduct';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import BrandIcons from './BrandIcons';
 
-const DetailedProductSection = (): ReactElement => {
-  const { id } = useParams<{ id: string }>();
-  let url = '';
-  if (id !== undefined) {
-    url = ApiEndpoints.URL_PRODUCTS_BY_ID.replace('{id}', id);
-  }
-
-  const [productDetails, setProductDetails] = useState<IPropsDetailedProduct | null>(null);
-
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const response = await getProductsById(url);
-        const data: IPropsDetailedProduct = TransformToDetailedProduct(response);
-        setProductDetails(data);
-      } catch (error) {
-        console.error('Error fetching products: ', error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-
+const DetailedProductSection = ({ productDetails }: { productDetails: IPropsDetailedProduct }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -55,9 +27,6 @@ const DetailedProductSection = (): ReactElement => {
     setIsModalOpen(false);
   };
 
-  const icon = productDetails && productDetails.brand ? BrandIcons[productDetails.brand] : 'Загрузка...';
-  console.log('icon', icon);
-
   return (
     <section className="_container detailed-product">
       {productDetails ? (
@@ -69,7 +38,6 @@ const DetailedProductSection = (): ReactElement => {
                   <img
                     className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
                     src={arrowLeftPath}
-                    ref={prevRef}
                     alt="Shevron Left"
                   />
                 </button>
@@ -108,7 +76,6 @@ const DetailedProductSection = (): ReactElement => {
                             <img
                               className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
                               src={arrowLeftPath}
-                              ref={prevRef}
                               alt="Shevron Left"
                             />
                           </button>
@@ -133,7 +100,6 @@ const DetailedProductSection = (): ReactElement => {
                             ))}
                           </Swiper>
                           <button
-                            ref={nextRef}
                             className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}
                           >
                             <img
@@ -154,10 +120,7 @@ const DetailedProductSection = (): ReactElement => {
                     </div>
                   </Modal>
                 )}
-                <button
-                  ref={nextRef}
-                  className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}
-                >
+                <button className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}>
                   <img
                     className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
                     src={arrowRightPath}
