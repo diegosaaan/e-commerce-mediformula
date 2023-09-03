@@ -176,6 +176,7 @@
   z-index: 1000;
   display: flex;
   align-items: center;
+  width: 80%;
   max-width: 820px;
   max-height: 820px;
   padding: 40px;
@@ -190,6 +191,10 @@
     height: 100%;
     padding: 20px;
     object-fit: contain;
+  }
+
+  @media screen and (max-width: $tablet) {
+    width: 100%;
   }
 }
 
