@@ -3,6 +3,8 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { loader } from '@/components/AuthForm/AuthForm';
+import { MainPageLoader } from '@/pages/Main/Main';
+import { ProductPageLoader } from '@/pages/ProductPage/ProductPage';
 import PrivateRoute from './PrivateRoute';
 import {
   MainPage,
@@ -34,6 +36,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+        loader: MainPageLoader,
       },
       {
         path: '/about-us',
@@ -54,6 +57,7 @@ const router = createBrowserRouter([
       {
         path: '/catalog/:id',
         element: <DetailedProductPage />,
+        loader: ProductPageLoader,
       },
       {
         path: '*',
