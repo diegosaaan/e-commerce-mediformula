@@ -1,6 +1,7 @@
 import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
+import { IProductData } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
@@ -86,7 +87,7 @@ export interface IPropsCardsSection {
   header: string;
   counter: number;
   sectionClassName: string;
-  url: string;
+  products: IProductData[];
 }
 
 export interface IPropsAuthInput {
