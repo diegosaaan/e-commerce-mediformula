@@ -13,12 +13,21 @@ import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import TransformProductToCardProps from './TransformProductToCardProps';
 
-const ProductCardsSection = ({ heading, counter, sectionClassName, products }: IPropsCardsSection): ReactElement => {
+const ProductCardsSection = ({
+  setIsDataFetching,
+  heading,
+  counter,
+  sectionClassName,
+  products,
+}: IPropsCardsSection): ReactElement => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
   const handleCardClick = (): void => {
-    window.scrollTo(0, 0);
+    if (setIsDataFetching) {
+      setIsDataFetching(true);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

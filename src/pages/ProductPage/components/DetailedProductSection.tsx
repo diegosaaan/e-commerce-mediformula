@@ -14,21 +14,29 @@ import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import BrandIcons from './BrandIcons';
 
-const DetailedProductSection = ({ productDetails }: { productDetails: IPropsDetailedProduct }): ReactElement => {
+const DetailedProductSection = ({
+  productDetails,
+  isDataFetching,
+}: {
+  productDetails: IPropsDetailedProduct;
+  isDataFetching: boolean;
+}): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openModal = (index: number): void => {
     setCurrentIndex(index);
     setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = (): void => {
     setIsModalOpen(false);
+    document.body.style.overflow = 'scroll';
   };
 
   return (
-    <section className="_container detailed-product">
+    <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
       {productDetails ? (
         <>
           <div className="detailed-product__image-container">
@@ -150,7 +158,9 @@ const DetailedProductSection = ({ productDetails }: { productDetails: IPropsDeta
             </div>
           </div>
           <div className="detailed-product__added-block">
-            <div>{productDetails.brand ? BrandIcons[productDetails.brand] || productDetails.brand : 'Загрузка...'}</div>
+            <div className="detailed-product__brand-image-container">
+              {productDetails.brand ? BrandIcons[productDetails.brand] || productDetails.brand : 'Загрузка...'}
+            </div>
             <div className="detailed-product__documentation-block">
               <h5 className="detailed-product__documentation-header">В комплекте</h5>
               <ul className="detailed-product__documentation-list">

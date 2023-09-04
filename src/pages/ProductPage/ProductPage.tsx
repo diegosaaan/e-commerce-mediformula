@@ -1,5 +1,5 @@
 import '@/pages/NotFound/NotFound.scss';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import ProductCardsSection from '@/components/ProductCardsSection/ProductCardsSection';
 import DetailedProductSection from './components/DetailedProductSection';
@@ -8,6 +8,7 @@ import { getProducts, getProductsById } from '@/services/tokenHelpers';
 import { IPropsDetailedProduct } from '@/types/componentsInrefaces';
 import TransformToDetailedProduct from './components/TransformToDetailedProduct';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
+import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
 
 export const ProductPageLoader = async ({
   params,
@@ -26,20 +27,24 @@ export const ProductPageLoader = async ({
   return { productDetails, discountedProducts };
 };
 
-function ProductPage(): ReactElement {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const ProductPage = (): ReactElement => {
+  const [isDataFetching, setIsDataFetching] = useState(false);
 
   const { productDetails, discountedProducts } = useLoaderData() as {
     productDetails: IPropsDetailedProduct;
     discountedProducts: IProductData[];
   };
 
+  useEffect(() => {
+    setIsDataFetching(false);
+  }, [productDetails]);
+
   return (
     <div className="product-page">
-      <DetailedProductSection productDetails={productDetails} />
+      <SpinnerPreloader pageClassname="product-page" isDataFetching={isDataFetching} />
+      <DetailedProductSection productDetails={productDetails} isDataFetching={isDataFetching} />
       <ProductCardsSection
+        setIsDataFetching={setIsDataFetching}
         heading="Специальные предложения"
         sectionClassName="special-offers"
         counter={11}
@@ -47,6 +52,6 @@ function ProductPage(): ReactElement {
       />
     </div>
   );
-}
+};
 
 export default ProductPage;
