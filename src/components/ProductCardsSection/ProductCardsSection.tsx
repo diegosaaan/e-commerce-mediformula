@@ -17,6 +17,10 @@ const ProductCardsSection = ({ heading, counter, sectionClassName, products }: I
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
+  const handleCardClick = (): void => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="_container cards-section">
       <div className="cards-section__header-container">
@@ -72,7 +76,7 @@ const ProductCardsSection = ({ heading, counter, sectionClassName, products }: I
         >
           {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <Link to={`/catalog/${product.id}`}>
+              <Link to={`/catalog/${product.id}`} onClick={handleCardClick}>
                 <Card {...TransformProductToCardProps(product)} />
               </Link>
             </SwiperSlide>
