@@ -67,7 +67,7 @@
   &__text {
     display: block;
     height: 50px;
-    margin-top: 12px;
+    margin-top: 20px;
     @include GolosRegular(14px, 100%, $grayscale-900);
   }
 
@@ -183,5 +183,14 @@
       display: flex;
       margin-top: 24px;
     }
+  }
+}
+
+
+@media screen and (max-width: $portrait-tablet) {
+  .product-card {
+    box-shadow:
+      0px 5px 15px 0px rgba(1, 31, 58, 0.1),
+      0px 5px 15px 0px rgba(1, 31, 58, 0.04);
   }
 }
