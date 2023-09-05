@@ -91,6 +91,7 @@
   &__priceBefore {
     @include GolosMedium(12px, 100%, $grayscale-600);
     text-decoration: line-through;
+    margin-top: 3px;
   }
 
   &__bonus-container {
@@ -185,7 +186,6 @@
     }
   }
 }
-
 
 @media screen and (max-width: $portrait-tablet) {
   .product-card {
