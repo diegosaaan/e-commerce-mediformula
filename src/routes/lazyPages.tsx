@@ -32,24 +32,9 @@ export const MainPage = LazyComponent(<CirclePreloader pageClassname="main" />, 
   return import(/* webpackChunkName: "pages/main/main" */ '@/pages/Main/Main');
 });
 
-export const AboutUsPage = LazyComponent(<CirclePreloader pageClassname="about-us" />, async () => {
-  await delay(1000);
-  return import(/* webpackChunkName: "pages/about-us/about-us" */ '@/pages/AboutUs/AboutUs');
-});
-
 export const CatalogPage = LazyComponent(<CirclePreloader pageClassname="catalog" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/catalog/catalog" */ '@/pages/Catalog/Catalog');
-});
-
-export const CartPage = LazyComponent(<CirclePreloader pageClassname="cart" />, async () => {
-  await delay(1000);
-  return import(/* webpackChunkName: "pages/cart/cart" */ '@/pages/Cart/Cart');
-});
-
-export const NotFoundPage = LazyComponent(<CirclePreloader pageClassname="not-found" />, async () => {
-  await delay(1000);
-  return import(/* webpackChunkName: "pages/not-found/not-found" */ '@/pages/NotFound/NotFound');
 });
 
 export const UserProfilePage = LazyComponent(<CirclePreloader pageClassname="user-profile" />, async () => {
@@ -60,4 +45,19 @@ export const UserProfilePage = LazyComponent(<CirclePreloader pageClassname="use
 export const DetailedProductPage = LazyComponent(<CirclePreloader pageClassname="product-page" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/product-page/product-page" */ '@/pages/ProductPage/ProductPage');
+});
+
+export const CartPage = LazyComponent(<CirclePreloader pageClassname="cart" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/cart/cart" */ '@/pages/Cart/Cart');
+});
+
+export const AboutUsPage = LazyComponent(<CirclePreloader pageClassname="about-us" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/about-us/about-us" */ '@/pages/AboutUs/AboutUs');
+});
+
+export const NotFoundPage = LazyComponent(<CirclePreloader pageClassname="not-found" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/not-found/not-found" */ '@/pages/NotFound/NotFound');
 });
