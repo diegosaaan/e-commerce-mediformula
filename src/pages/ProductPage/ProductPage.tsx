@@ -1,7 +1,7 @@
 import '@/pages/NotFound/NotFound.scss';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
-import ProductCardsSection from '@/components/ProductCardsSection/ProductCardsSection';
+import ProductCardsSection from '@/components/SwiperSection/SwiperSection';
 import DetailedProductSection from './components/DetailedProductSection';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { getProducts, getProductsById } from '@/services/tokenHelpers';
@@ -10,7 +10,7 @@ import TransformToDetailedProduct from './components/TransformToDetailedProduct'
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
 
-export const ProductPageLoader = async ({
+export const productPageLoader = async ({
   params,
 }: LoaderFunctionArgs): Promise<{ productDetails: IPropsDetailedProduct; discountedProducts: IProductData[] }> => {
   const { id } = params;

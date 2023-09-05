@@ -2,21 +2,21 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
-import { authPreloader } from '@/components/AuthForm/AuthForm';
-import { MainPageLoader } from '@/pages/Main/Main';
-import { ProductPageLoader } from '@/pages/ProductPage/ProductPage';
+import { authLoader } from '@/components/AuthForm/AuthForm';
+import { mainPageLoader } from '@/pages/Main/Main';
+import { productPageLoader } from '@/pages/ProductPage/ProductPage';
 import { catalogLoader } from '@/pages/Catalog/Catalog';
 import { PrivateLoginAndRegistrationRoute, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
 import {
-  MainPage,
-  NotFoundPage,
-  CartPage,
-  CatalogPage,
-  UserProfilePage,
-  AboutUsPage,
   LoginPage,
   RegistrationPage,
+  MainPage,
+  CatalogPage,
+  UserProfilePage,
   DetailedProductPage,
+  CartPage,
+  AboutUsPage,
+  NotFoundPage,
 } from './lazyPages';
 
 const router = createBrowserRouter([
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         <LoginPage />
       </PrivateLoginAndRegistrationRoute>
     ),
-    loader: authPreloader,
+    loader: authLoader,
   },
   {
     path: '/registration',
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         <RegistrationPage />
       </PrivateLoginAndRegistrationRoute>
     ),
-    loader: authPreloader,
+    loader: authLoader,
   },
   {
     path: '/',
@@ -45,20 +45,12 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
-        loader: MainPageLoader,
-      },
-      {
-        path: '/about-us',
-        element: <AboutUsPage />,
+        loader: mainPageLoader,
       },
       {
         path: '/catalog',
         element: <CatalogPage />,
         loader: catalogLoader,
-      },
-      {
-        path: '/cart',
-        element: <CartPage />,
       },
       {
         path: '/user-profile',
@@ -67,7 +59,15 @@ const router = createBrowserRouter([
       {
         path: '/catalog/:id',
         element: <DetailedProductPage />,
-        loader: ProductPageLoader,
+        loader: productPageLoader,
+      },
+      {
+        path: '/cart',
+        element: <CartPage />,
+      },
+      {
+        path: '/about-us',
+        element: <AboutUsPage />,
       },
       {
         path: '*',
