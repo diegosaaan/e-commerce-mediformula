@@ -104,6 +104,7 @@ export interface IPropsCardsSection {
   counter: number;
   sectionClassName: string;
   products: IProductData[];
+  setIsDataFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IPropsProduct {}
