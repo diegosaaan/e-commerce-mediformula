@@ -3,8 +3,8 @@ import amrusPath from '@/assets/images/svg/brand-amrus.svg';
 import arhMedPath from '@/assets/images/svg/brand-arhmed.svg';
 import beurerPath from '@/assets/images/svg/brand-beurer.svg';
 import bradexPath from '@/assets/images/svg/brand-bradex.svg';
-import omronPath from '@/assets/images/svg/brand-omron.svg';
-import andPath from '@/assets/images/svg/brand-and.svg';
+import omronPath from '@/assets/images/png/main-services-omron-logo.png';
+import andPath from '@/assets/images/png/main-services-and-logo.png';
 
 interface IBrandIcons {
   [key: string]: React.ReactElement;
