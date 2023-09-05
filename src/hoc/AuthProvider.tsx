@@ -18,7 +18,6 @@ export const AuthContext = createContext<IAuthContextValue>(defaultAuthContextVa
 export const AuthProvider = ({ children }: { children: ReactElement }): ReactElement => {
   const wasUserLoggedIn = JSON.parse(localStorage.getItem('isUserLoggedIn') || 'false');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(wasUserLoggedIn);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isContentLoaded, setContentLoaded] = useState(false);
   const [isContentLoadedPageUserInfo, setContentLoadedPageUserInfo] = useState(false);
   const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
