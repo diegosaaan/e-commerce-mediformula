@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import '@/components/Tag/Tag.scss';
+import './CategoryTag.scss';
 import { IPropsTag } from '@/types/componentsInrefaces';
 
-const Tag = ({ title }: IPropsTag): ReactElement => {
+const CategoryTag = ({ title }: IPropsTag): ReactElement => {
   return (
     <>
       <div className="tag">
@@ -12,4 +12,4 @@ const Tag = ({ title }: IPropsTag): ReactElement => {
   );
 };
 
-export default Tag;
+export default CategoryTag;

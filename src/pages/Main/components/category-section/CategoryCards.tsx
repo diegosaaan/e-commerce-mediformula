@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import '@/pages/Main/components/category-section/CategoryCards.scss';
 import '@/pages/App.scss';
-import Tag from '@/components/Tag/Tag';
+import CategoryTag from './CategoryTag/CategoryTag';
 import img1Path from '@/assets/images/png/categories-blood-pressure-cuff.png';
 import img2Path from '@/assets/images/png/categories-insoles.png';
 import img3Path from '@/assets/images/png/categories-massager.png';
@@ -19,11 +19,11 @@ const CategoryCards = (): ReactElement => {
           <div className="category__content">
             <h3 className="category__cardHeader">Медтехника для дома</h3>
             <div className="category__tagsContainer">
-              <Tag title="Тонометры" />
-              <Tag title="Ингаляторы и небулайзеры" />
-              <Tag title="Глюкометры и тест-полоски" />
-              <Tag title="Термометры" />
-              <Tag title="Грелки электрические и солевые" />
+              <CategoryTag title="Тонометры" />
+              <CategoryTag title="Ингаляторы и небулайзеры" />
+              <CategoryTag title="Глюкометры и тест-полоски" />
+              <CategoryTag title="Термометры" />
+              <CategoryTag title="Грелки электрические и солевые" />
             </div>
           </div>
         </div>
@@ -34,11 +34,11 @@ const CategoryCards = (): ReactElement => {
           <div className="category__content">
             <h3 className="category__cardHeader">Ортопедия</h3>
             <div className="category__tagsContainer">
-              <Tag title="Стельки" />
-              <Tag title="Бандажи/фиксаторы суставов" />
-              <Tag title="Подушки" />
-              <Tag title="Детская обувь" />
-              <Tag title="Бинты" />
+              <CategoryTag title="Стельки" />
+              <CategoryTag title="Бандажи/фиксаторы суставов" />
+              <CategoryTag title="Подушки" />
+              <CategoryTag title="Детская обувь" />
+              <CategoryTag title="Бинты" />
             </div>
           </div>
         </div>
@@ -49,11 +49,11 @@ const CategoryCards = (): ReactElement => {
           <div className="category__content">
             <h3 className="category__cardHeader">Массажное оборудование</h3>
             <div className="category__tagsContainer">
-              <Tag title="Для тела" />
-              <Tag title="Для шеи и плеч" />
-              <Tag title="Для ног" />
-              <Tag title="Вакуумный массаж" />
-              <Tag title="Аппликаторы" />
+              <CategoryTag title="Для тела" />
+              <CategoryTag title="Для шеи и плеч" />
+              <CategoryTag title="Для ног" />
+              <CategoryTag title="Вакуумный массаж" />
+              <CategoryTag title="Аппликаторы" />
             </div>
           </div>
         </div>
@@ -64,11 +64,11 @@ const CategoryCards = (): ReactElement => {
           <div className="category__content">
             <h3 className="category__cardHeader">Реабилитационная техника</h3>
             <div className="category__tagsContainer">
-              <Tag title="Медицинские кровати" />
-              <Tag title="Матрасы и подушки" />
-              <Tag title="Костыли" />
-              <Tag title="Трости" />
-              <Tag title="Ходунки, опоры" />
+              <CategoryTag title="Медицинские кровати" />
+              <CategoryTag title="Матрасы и подушки" />
+              <CategoryTag title="Костыли" />
+              <CategoryTag title="Трости" />
+              <CategoryTag title="Ходунки, опоры" />
             </div>
           </div>
         </div>
