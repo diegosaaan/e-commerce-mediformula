@@ -1,28 +1,24 @@
-import './ProductCardsSection.scss';
+import './SwiperSection.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
-import Card from '@/components/Card/Card';
+import SwiperCard from '@/components/SwiperCard/SwiperCard';
 import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
-import TransformProductToCardProps from './TransformProductToCardProps';
 
-const ProductCardsSection = ({
+const SwiperSection = ({
   setIsDataFetching,
   heading,
   counter,
   sectionClassName,
   products,
 }: IPropsCardsSection): ReactElement => {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-
   const handleCardClick = (): void => {
     if (setIsDataFetching) {
       setIsDataFetching(true);
@@ -37,11 +33,7 @@ const ProductCardsSection = ({
           {heading}
           <sup className="cards-section__counter">{counter}</sup>
         </h2>
-        <Link
-          className="text-button"
-          to="/catalog"
-          onClick={(): void => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
+        <Link className="text-button" to="/catalog" onClick={handleCardClick}>
           ⟶ Смотреть все
         </Link>
       </div>
@@ -50,7 +42,6 @@ const ProductCardsSection = ({
           <img
             className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
             src={arrowLeftPath}
-            ref={prevRef}
             alt="Shevron Left"
           />
         </button>
@@ -86,15 +77,12 @@ const ProductCardsSection = ({
           {products.map((product, index) => (
             <SwiperSlide key={index}>
               <Link to={`/catalog/${product.id}`} onClick={handleCardClick}>
-                <Card {...TransformProductToCardProps(product)} />
+                <SwiperCard productData={product} />
               </Link>
             </SwiperSlide>
           ))}
         </Swiper>
-        <button
-          ref={nextRef}
-          className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--next`}
-        >
+        <button className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--next`}>
           <img
             className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
             src={arrowRightPath}
@@ -106,4 +94,4 @@ const ProductCardsSection = ({
   );
 };
 
-export default ProductCardsSection;
+export default SwiperSection;
