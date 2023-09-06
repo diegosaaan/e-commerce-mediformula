@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import amrusPath from '@/assets/images/svg/brand-amrus.svg';
 import arhMedPath from '@/assets/images/svg/brand-arhmed.svg';
 import beurerPath from '@/assets/images/svg/brand-beurer.svg';
@@ -6,11 +6,7 @@ import bradexPath from '@/assets/images/svg/brand-bradex.svg';
 import omronPath from '@/assets/images/png/main-services-omron-logo.png';
 import andPath from '@/assets/images/png/main-services-and-logo.png';
 
-interface IBrandIcons {
-  [key: string]: React.ReactElement;
-}
-
-const BrandIcons: IBrandIcons = {
+const brandIcons: { [key: string]: ReactElement } = {
   Amrus: <img src={amrusPath} alt="AMRUS" />,
   ArhMed: <img src={arhMedPath} alt="ArhMed" />,
   Beurer: <img src={beurerPath} alt="BEURER" />,
@@ -19,4 +15,4 @@ const BrandIcons: IBrandIcons = {
   AND: <img src={andPath} alt="AND" />,
 };
 
-export default BrandIcons;
+export default brandIcons;
