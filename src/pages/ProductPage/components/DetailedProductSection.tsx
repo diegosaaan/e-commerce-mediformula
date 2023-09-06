@@ -110,54 +110,50 @@ const DetailedProductSection = ({
                   onClick={(event: MouseEvent): void => closeModal(event)}
                 >
                   <div className="detailed-product__modal">
-                    {productImages.length > 1 ? (
-                      isModalOpen && (
-                        <>
-                          <button
-                            className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--prev`}
-                          >
-                            <img
-                              className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
-                              src={arrowLeftPath}
-                              alt="Shevron Left"
-                            />
-                          </button>
+                    {isModalOpen && (
+                      <>
+                        <button
+                          className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--prev`}
+                        >
+                          <img
+                            className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
+                            src={arrowLeftPath}
+                            alt="Shevron Left"
+                          />
+                        </button>
 
-                          <Swiper
-                            initialSlide={currentIndex}
-                            modules={[Navigation]}
-                            loop={true}
-                            slidesPerView={1}
-                            navigation={{
-                              prevEl: `.detailed-product__swiper-arrow--prev`,
-                              nextEl: `.detailed-product__swiper-arrow--next`,
-                            }}
-                          >
-                            {productImages.map(({ url }, index) => (
-                              <SwiperSlide
-                                key={index}
-                                style={{
-                                  backgroundImage: `url(${url})`,
-                                  backgroundRepeat: 'no-repeat',
-                                  backgroundPosition: 'center',
-                                  backgroundSize: 'contain',
-                                }}
-                              ></SwiperSlide>
-                            ))}
-                          </Swiper>
-                          <button
-                            className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}
-                          >
-                            <img
-                              className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
-                              src={arrowRightPath}
-                              alt="Shevron Right"
-                            />
-                          </button>
-                        </>
-                      )
-                    ) : (
-                      <img className="modal-window__image" src={productImages[0]?.url} alt={productImages[0]?.label} />
+                        <Swiper
+                          initialSlide={currentIndex}
+                          modules={[Navigation]}
+                          loop={productImages.length > 1}
+                          slidesPerView={1}
+                          navigation={{
+                            prevEl: `.detailed-product__swiper-arrow--prev`,
+                            nextEl: `.detailed-product__swiper-arrow--next`,
+                          }}
+                        >
+                          {productImages.map(({ url }, index) => (
+                            <SwiperSlide
+                              key={index}
+                              style={{
+                                backgroundImage: `url(${url})`,
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center',
+                                backgroundSize: 'contain',
+                              }}
+                            ></SwiperSlide>
+                          ))}
+                        </Swiper>
+                        <button
+                          className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}
+                        >
+                          <img
+                            className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
+                            src={arrowRightPath}
+                            alt="Shevron Right"
+                          />
+                        </button>
+                      </>
                     )}
                     <div className="close-button" onClick={(event: MouseEvent): void => closeModal(event)}></div>
                   </div>
