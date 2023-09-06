@@ -4,7 +4,7 @@ import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import DetailedProductSection from './components/DetailedProductSection';
 import ApiEndpoints from '@/enums/apiEndpoints';
-import { getProducts, getProductsById } from '@/services/tokenHelpers';
+import { getProducts, getProductById } from '@/services/catalog';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 
@@ -19,7 +19,7 @@ export const productPageLoader = async ({
   }
 
   const { results: discountedProductsData }: IAllProductData = await getProducts(discountedProductsUrl);
-  const productData = await getProductsById(productUrl);
+  const productData = await getProductById(productUrl);
   return { productData, discountedProductsData };
 };
 

@@ -7,7 +7,7 @@ import Brends from './components/brends-section/Brends';
 import MediaSection from './components/media-section/Media';
 import Advantages from './components/advantages-section/Advantages';
 import Services from './components/services-section/Services';
-import { getProducts } from '@/services/tokenHelpers';
+import { getProducts } from '@/services/catalog';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
