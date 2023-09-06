@@ -2,29 +2,41 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
-import { loader } from '@/components/AuthForm/AuthForm';
-import PrivateRoute from './PrivateRoute';
+import { authLoader } from '@/components/AuthFormSection/AuthFormSection';
+import { mainPageLoader } from '@/pages/Main/Main';
+import { productPageLoader } from '@/pages/ProductPage/ProductPage';
+import { catalogLoader } from '@/pages/Catalog/Catalog';
+import { PrivateRouteForLoginAndRegistration, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
 import {
-  MainPage,
-  NotFoundPage,
-  CartPage,
-  CatalogPage,
-  UserProfilePage,
-  AboutUsPage,
   LoginPage,
   RegistrationPage,
+  MainPage,
+  CatalogPage,
+  UserProfilePage,
+  DetailedProductPage,
+  CartPage,
+  AboutUsPage,
+  NotFoundPage,
 } from './lazyPages';
 
 const router = createBrowserRouter([
   {
     path: '/login',
-    element: <PrivateRoute>{<LoginPage />}</PrivateRoute>,
-    loader,
+    element: (
+      <PrivateRouteForLoginAndRegistration>
+        <LoginPage />
+      </PrivateRouteForLoginAndRegistration>
+    ),
+    loader: authLoader,
   },
   {
     path: '/registration',
-    element: <PrivateRoute>{<RegistrationPage />}</PrivateRoute>,
-    loader,
+    element: (
+      <PrivateRouteForLoginAndRegistration>
+        <RegistrationPage />
+      </PrivateRouteForLoginAndRegistration>
+    ),
+    loader: authLoader,
   },
   {
     path: '/',
@@ -33,22 +45,29 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
-      },
-      {
-        path: '/about-us',
-        element: <AboutUsPage />,
+        loader: mainPageLoader,
       },
       {
         path: '/catalog',
         element: <CatalogPage />,
+        loader: catalogLoader,
+      },
+      {
+        path: '/user-profile',
+        element: <PrivateRouteForAuthorizedUser>{<UserProfilePage />}</PrivateRouteForAuthorizedUser>,
+      },
+      {
+        path: '/catalog/:id',
+        element: <DetailedProductPage />,
+        loader: productPageLoader,
       },
       {
         path: '/cart',
         element: <CartPage />,
       },
       {
-        path: '/user-profile',
-        element: <UserProfilePage />,
+        path: '/about-us',
+        element: <AboutUsPage />,
       },
       {
         path: '*',

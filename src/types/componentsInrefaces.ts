@@ -1,12 +1,26 @@
-import { MouseEvent, KeyboardEvent, FormEvent, ReactElement, ReactNode, Dispatch } from 'react';
+import {
+  MouseEvent,
+  KeyboardEvent,
+  FormEvent,
+  ReactElement,
+  ReactNode,
+  Dispatch,
+  ChangeEvent,
+  MutableRefObject,
+  SetStateAction,
+} from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
+import { IProductData, IUserInfo } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
   isContentLoaded: boolean;
+  isContentLoadedPageUserInfo: boolean;
   signIn: (cb: () => void) => void;
   signOut: (cb: () => void) => void;
+  userInfo: IUserInfo | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | null>>;
 }
 
 export interface IAccordionProps {
@@ -24,6 +38,7 @@ export interface IPropsButton {
   text?: string;
   children?: ReactNode;
   className: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -37,14 +52,15 @@ export interface IPropsInput {
   children?: ReactNode;
   checked?: boolean;
   value?: string;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export interface IPropsForm {
   children?: ReactNode;
   className: string;
   name: string;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export interface IMediaItemData {
@@ -71,6 +87,7 @@ export interface IPropsCard {
   bonus?: number;
   discount?: number;
   onClick: () => void;
+  id?: number;
 }
 
 export interface IPropsTag {
@@ -83,10 +100,11 @@ export interface IPropsCarousel {
 }
 
 export interface IPropsCardsSection {
-  header: string;
+  heading: string;
   counter: number;
   sectionClassName: string;
-  products?: IPropsProduct[];
+  products: IProductData[];
+  setIsDataFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IPropsProduct {}
@@ -97,10 +115,13 @@ export interface IPropsAuthInput {
   name: string;
   htmlFor: string;
   isInputPassword?: boolean;
+  disabled?: boolean;
+  defaultValue?: string;
   value?: string;
   errors?: string;
   touched?: boolean;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
+  isEdit?: boolean;
 }
 
 export interface IPropsAuthForm {
@@ -114,6 +135,7 @@ export interface IPropsAuthForm {
   isRegister?: boolean;
   disabled?: boolean;
   isAddAddress?: boolean;
+  isDataFetching: boolean;
   validationSchema?: ObjectSchema<LoginSchemaType>;
   initialValues?: LoginSchemaType;
   handlePrevRegister?: () => void;
@@ -126,7 +148,7 @@ export interface IPropsListAddress {
   value?: string;
   setAddresses?: React.Dispatch<React.SetStateAction<AddressType[]>>;
   setAddressesAnother?: React.Dispatch<React.SetStateAction<AddressType[]>>;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
   isAddress?: boolean;
 }
 
@@ -143,6 +165,76 @@ export interface IAuthAddressesState {
 export interface IPropsAddressFields {
   name: string;
   addressesState: IAuthAddressesState;
-  onChange?: (e: FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent) => void;
   setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+}
+
+export interface IBreadcrumbsData {
+  id?: string;
+  link?: string;
+  name: string;
+}
+
+export interface ICatalogSidebarProps {
+  getNewProductList: () => void;
+  openFirstProductListPage: () => void;
+  handleChangeCategory: (event: MouseEvent) => Promise<void>;
+  setisInStockFilter: (value: boolean) => void;
+  setIsDiscountFilter: (value: boolean) => void;
+  setIsPriceFilter: (value: boolean) => void;
+  setPriceRangeValue: (value: { minPrice: number; maxPrice: number }) => void;
+  setBrandsFilter: (value: string[]) => void;
+  handleCloseSidebar: () => void;
+  isInStockFilter: boolean;
+  isDiscountFilter: boolean;
+  isPriceFilter: boolean;
+  priceRangeValue: { minPrice: number; maxPrice: number };
+  brandsFilter: string[];
+  isMobileSidebarOpen: boolean;
+  isDataFetching: boolean;
+}
+
+export interface IPaginationProps {
+  isDataFetching: boolean;
+  currentProductsData: {
+    currentPage: number;
+    currentProductList: IProductData[];
+    totalProducts: number;
+  };
+  getNewProductList: (searchText?: string) => Promise<void>;
+  setCurrentProductList: Dispatch<
+    SetStateAction<{ currentProductList: IProductData[]; totalProducts: number; currentPage: number }>
+  >;
+  pageOffset: MutableRefObject<number>;
+  currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement>;
+}
+
+export interface IPropsDetailedProduct {
+  images: ImageDetails[];
+  name: string;
+  description: string;
+  price: number;
+  priceBefore: number;
+  brand?: string;
+  bonus?: number;
+}
+
+export interface IPropsPopupAddress {
+  addressesState: IAuthAddressesState;
+  setAddressesState: Dispatch<React.SetStateAction<IAuthAddressesState>>;
+  isOpenPopup: boolean;
+  setIsOpenPopup: Dispatch<React.SetStateAction<boolean>>;
+  address: string;
+  initialState?: {
+    countryValueInitial: string;
+    cityValueInitial: string;
+    streetValueInitial: string;
+    postalCodeValueInitial: string;
+  };
+  isEdit: boolean;
+}
+
+export interface ImageDetails {
+  url: string;
+  label: string;
 }

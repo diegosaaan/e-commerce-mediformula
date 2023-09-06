@@ -1,0 +1,67 @@
+.cards-section {
+  margin-top: 100px;
+
+  @media screen and (max-width: $large-desktop) {
+    & {
+      margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+    }
+  }
+
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  &__counter {
+    @include GolosRegular(20px, 100%, $grayscale-600);
+    margin-left: 8px;
+  }
+
+  &__cards-container {
+    display: flex;
+    margin-top: 32px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    margin-top: 40px;
+
+    &__cards-container {
+      margin-top: 16px;
+    }
+  }
+}
+
+.swiper {
+  display: flex;
+  padding: 20px 0px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+}
+
+.swiper-arrow {
+  padding: 0;
+  height: 36px;
+  align-self: center;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus .swiper-arrow-img {
+    transform: scale(1.5);
+  }
+}
+
+.swiper-arrow-img {
+  display: block;
+  transition: 0.3s ease-in-out;
+}
+
+@media (hover: hover) {
+  .swiper-arrow-img:hover {
+    transform: scale(1.5);
+  }
+}

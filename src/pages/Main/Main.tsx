@@ -1,22 +1,43 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import Intro from './components/intro-section/Intro';
-import ProductCardsSection from '@/components/ProductCardsSection/ProductCardsSection';
+import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import CategoryCards from './components/category-section/CategoryCards';
 import Brends from './components/brends-section/Brends';
 import MediaSection from './components/media-section/Media';
 import Advantages from './components/advantages-section/Advantages';
 import Services from './components/services-section/Services';
+import { getProducts } from '@/services/catalog';
+import { IAllProductData, IProductData } from '@/types/apiInterfaces';
+import ApiEndpoints from '@/enums/apiEndpoints';
+import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
+
+export const mainPageLoader = async (): Promise<IProductData[]> => {
+  const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
+  const { results }: IAllProductData = await getProducts(productsUrl);
+  return results;
+};
 
 const MainPage = (): ReactElement => {
+  const results = useLoaderData() as IProductData[];
+  const [isDataFetching, setIsDataFetching] = useState(false);
+
   return (
     <div className="main-page">
+      <SpinnerPreloader pageClassname="main-page" isDataFetching={isDataFetching} />
+
       <Intro />
-      <ProductCardsSection header="Популярное" counter={15} sectionClassName="popular" />
+      <SwiperSection
+        heading="Специальные предложения"
+        counter={11}
+        sectionClassName="discounted-products"
+        products={results}
+        setIsDataFetching={setIsDataFetching}
+      />
       <CategoryCards />
       <Brends />
       <Advantages />
       <Services />
-      <ProductCardsSection header="Специальные предложения" sectionClassName="special-offers" counter={15} />
       <MediaSection />
     </div>
   );

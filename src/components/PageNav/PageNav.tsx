@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import './PageNav.scss';
-import React, { FormEvent, ReactElement } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import logo from '@/assets/images/svg/header-logo.svg';
@@ -15,6 +14,9 @@ const setActive = ({ isActive }: { isActive: boolean }): string =>
 
 const PageNav = (): ReactElement => {
   const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
+  const [searchInputValue, setSearchInputValue] = useState('');
+  const location = useLocation();
+
   const navigate = useNavigate();
 
   message.config({
@@ -36,116 +38,145 @@ const PageNav = (): ReactElement => {
     });
   };
 
-  const handleExampleSumbit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  const handleSearchButtonClicked = (): void => {
+    if (searchInputValue) {
+      if (location.pathname !== '/catalog') {
+        navigate('/catalog');
+      }
+    }
   };
 
-  const handleExampleChange = (e: FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
+  const handleSearchInputKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      const target = event.target as HTMLInputElement;
+      if (target.value) {
+        if (location.pathname !== '/catalog') {
+          navigate('/catalog');
+        }
+      }
+    }
+  };
+
+  const handleExampleSumbit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+  };
+
+  const handleChangeSearchInputValue = (event: ChangeEvent): void => {
+    const target = event.target as HTMLInputElement;
+    setSearchInputValue(target.value || '');
   };
 
   return (
     <>
       <nav>
         <ul className="header__nav">
-          <ul className="header__nav-container-auth">
-            <li className={`header__item-logo-mobile ${isUserLoggedIn ? 'header__item-logo-mobile_type_login' : ''}`}>
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo-mobile" src={logo} alt="Logo" />
-              </Link>
-            </li>
+          <li className="header__nav-auth-item">
+            <ul className="header__nav-container-auth">
+              <li className={`header__item-logo-mobile ${isUserLoggedIn ? 'header__item-logo-mobile_type_login' : ''}`}>
+                <Link className="header__logo-link" to="/">
+                  <img className="header__logo-mobile" src={logo} alt="Logo" />
+                </Link>
+              </li>
+              <li className="header__login-registration-btn-container">
+                <div className="header__item-reg">
+                  <Link className="header__link" to="/registration">
+                    <Button
+                      className={`header__button-nav header__button-nav_type_register ${
+                        isContentLoaded && isUserLoggedIn
+                          ? 'header__button-nav_hidden'
+                          : !isContentLoaded
+                          ? 'header__button-nav-skeleton'
+                          : ''
+                      }`}
+                      type="button"
+                      text="Регистрация"
+                    />
+                  </Link>
+                </div>
+                <div className="header__item-log">
+                  <Link className="header__link" to="/login">
+                    <Button
+                      className={`header__button-nav header__button-nav_type_login ${
+                        isContentLoaded && isUserLoggedIn
+                          ? 'header__button-nav_hidden'
+                          : !isContentLoaded
+                          ? 'header__button-nav-skeleton'
+                          : ''
+                      }`}
+                      type="button"
+                      text="Войти"
+                    />
+                  </Link>
+                </div>
+              </li>
 
-            <>
-              <li className="header__item-reg">
-                <Link className="header__link" to="/registration">
-                  <Button
-                    className={`header__button-nav header__button-nav_type_register ${
-                      isContentLoaded && isUserLoggedIn
-                        ? 'header__button-nav_hidden'
-                        : !isContentLoaded
-                        ? 'header__button-nav-skeleton'
-                        : ''
-                    }`}
-                    type="button"
-                    text="Регистрация"
-                  />
+              {isUserLoggedIn && isContentLoaded && (
+                <li className="header__item-log">
+                  <Link className="header__link" to="/">
+                    <Button
+                      className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
+                      type="button"
+                      onClick={handleLogOut}
+                      text="Выйти"
+                    />
+                  </Link>
+                </li>
+              )}
+              {isUserLoggedIn && (
+                <li className="header__item-profile">
+                  <Link className="header__link" to="/user-profile">
+                    <ProfileButton />
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </li>
+
+          <li>
+            <ul className="header__nav-container-main">
+              <li className="header__item-logo">
+                <Link className="header__logo-link" to="/">
+                  <img className="header__logo" src={logo} alt="Logo" />
                 </Link>
               </li>
-              <li className="header__item-log">
-                <Link className="header__link" to="/login">
-                  <Button
-                    className={`header__button-nav header__button-nav_type_login ${
-                      isContentLoaded && isUserLoggedIn
-                        ? 'header__button-nav_hidden'
-                        : !isContentLoaded
-                        ? 'header__button-nav-skeleton'
-                        : ''
-                    }`}
-                    type="button"
-                    text="Войти"
-                  />
+              <li className="header__item-about">
+                <Link className="header__link" to="/about-us">
+                  <Button className="header__button-main" type="button" text="О нас" />
                 </Link>
               </li>
-            </>
-            {isUserLoggedIn && isContentLoaded && (
-              <li className="header__item-log">
-                <Link className="header__link" to="/">
-                  <Button
-                    className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
-                    type="button"
-                    onClick={handleLogOut}
-                    text="Выйти"
-                  />
+              <li className="header__item-catalog">
+                <Link className="header__link" to="/catalog">
+                  <Button className="header__button-main" type="button">
+                    <div className="header__button-catalog">
+                      <div className="header__button-catalog-icon"></div>
+                      <p className="header__button-catalog-text">Каталог</p>
+                    </div>
+                  </Button>
                 </Link>
               </li>
-            )}
-            <li className="header__item-profile">
-              <Link className="header__link" to="/user-profile">
-                <ProfileButton />
-              </Link>
-            </li>
-          </ul>
-          <ul className="header__nav-container-main">
-            <li className="header__item-logo">
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo" src={logo} alt="Logo" />
-              </Link>
-            </li>
-            <li className="header__item-about">
-              <Link className="header__link" to="/about-us">
-                <Button className="header__button-main" type="button" text="О нас" />
-              </Link>
-            </li>
-            <li className="header__item-catalog">
-              <Link className="header__link" to="/catalog">
-                <Button className="header__button-main" type="button">
-                  <div className="header__button-catalog">
-                    <div className="header__button-catalog-icon"></div>
-                    <p className="header__button-catalog-text">Каталог</p>
-                  </div>
-                </Button>
-              </Link>
-            </li>
-            <li className="header__item-input-search">
-              <Form className="header__form-search" name="form-search" onSubmit={handleExampleSumbit}>
-                <Input
-                  className="header__input-search"
-                  name="header-search"
-                  type="search"
-                  placeholder="Поиск оборудования"
-                  onChange={handleExampleChange}
-                />
-                <Button className="header__button-search" type="submit" />
-              </Form>
-            </li>
-            <li className="header__item-cart">
-              <Link className="header__link" to="/cart">
-                <Button className="header__button-cart" type="button">
-                  <p className="header__button-cart-text">3</p>
-                </Button>
-              </Link>
-            </li>
-          </ul>
+              <li className="header__item-input-search">
+                <Form className="header__form-search" name="form-search" onSubmit={handleExampleSumbit}>
+                  <Input
+                    className="header__input-search"
+                    name="header-search"
+                    type="search"
+                    placeholder="Поиск оборудования"
+                    value={searchInputValue}
+                    onChange={handleChangeSearchInputValue}
+                    onKeyDown={(event): void => handleSearchInputKeyDown(event)}
+                  />
+                  <Button className="header__button-search" type="submit" onClick={handleSearchButtonClicked} />
+                </Form>
+              </li>
+              <li className="header__item-cart">
+                <Link className="header__link" to="/cart">
+                  <Button className="header__button-cart" type="button">
+                    <p className="header__button-cart-text">3</p>
+                  </Button>
+                </Link>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
 
@@ -190,14 +221,16 @@ const PageNav = (): ReactElement => {
               </Button>
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/user-profile" className={setActive}>
-              <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
-                <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
-                <p className="header__button-text-mobile">Профиль</p>
-              </Button>
-            </NavLink>
-          </li>
+          {isUserLoggedIn && (
+            <li>
+              <NavLink to="/user-profile" className={setActive}>
+                <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
+                  <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
+                  <p className="header__button-text-mobile">Профиль</p>
+                </Button>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </>

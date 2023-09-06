@@ -1,6 +1,5 @@
 import React, { ComponentType, ReactElement, Suspense, lazy } from 'react';
-import LoginPreloader from '@/utils/helpers/Loader/LoginPreloader/AuthPreloader';
-import LayoutPreloader from '@/utils/helpers/Loader/LayoutPreloader/LayoutPreloader';
+import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
 // eslint-disable-next-line no-promise-executor-return
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
@@ -18,42 +17,47 @@ const LazyComponent = (
   );
 };
 
-export const LoginPage = LazyComponent(<LoginPreloader />, async () => {
+export const LoginPage = LazyComponent(<CirclePreloader pageClassname="login" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/login/login" */ '@/pages/Login/Login');
 });
 
-export const RegistrationPage = LazyComponent(<LoginPreloader />, async () => {
+export const RegistrationPage = LazyComponent(<CirclePreloader pageClassname="registration" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/registration/registration" */ '@/pages/Registration/Registration');
 });
 
-export const MainPage = LazyComponent(<LayoutPreloader />, async () => {
+export const MainPage = LazyComponent(<CirclePreloader pageClassname="main" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/main/main" */ '@/pages/Main/Main');
 });
 
-export const AboutUsPage = LazyComponent(<LayoutPreloader />, async () => {
-  await delay(1000);
-  return import(/* webpackChunkName: "pages/about-us/about-us" */ '@/pages/AboutUs/AboutUs');
-});
-
-export const CatalogPage = LazyComponent(<LayoutPreloader />, async () => {
+export const CatalogPage = LazyComponent(<CirclePreloader pageClassname="catalog" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/catalog/catalog" */ '@/pages/Catalog/Catalog');
 });
 
-export const CartPage = LazyComponent(<LayoutPreloader />, async () => {
+export const UserProfilePage = LazyComponent(<CirclePreloader pageClassname="user-profile" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/user-profile/user-profile" */ '@/pages/UserProfile/UserProfile');
+});
+
+export const DetailedProductPage = LazyComponent(<CirclePreloader pageClassname="product-page" />, async () => {
+  await delay(1000);
+  return import(/* webpackChunkName: "pages/product-page/product-page" */ '@/pages/ProductPage/ProductPage');
+});
+
+export const CartPage = LazyComponent(<CirclePreloader pageClassname="cart" />, async () => {
   await delay(1000);
   return import(/* webpackChunkName: "pages/cart/cart" */ '@/pages/Cart/Cart');
 });
 
-export const NotFoundPage = LazyComponent(<LayoutPreloader />, async () => {
+export const AboutUsPage = LazyComponent(<CirclePreloader pageClassname="about-us" />, async () => {
   await delay(1000);
-  return import(/* webpackChunkName: "pages/not-found/not-found" */ '@/pages/NotFound/NotFound');
+  return import(/* webpackChunkName: "pages/about-us/about-us" */ '@/pages/AboutUs/AboutUs');
 });
 
-export const UserProfilePage = LazyComponent(<LayoutPreloader />, async () => {
+export const NotFoundPage = LazyComponent(<CirclePreloader pageClassname="not-found" />, async () => {
   await delay(1000);
-  return import(/* webpackChunkName: "pages/user-profile/user-profile" */ '@/pages/UserProfile/UserProfile');
+  return import(/* webpackChunkName: "pages/not-found/not-found" */ '@/pages/NotFound/NotFound');
 });

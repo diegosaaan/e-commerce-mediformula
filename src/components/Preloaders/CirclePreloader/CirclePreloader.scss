@@ -1,0 +1,136 @@
+@keyframes preloader-inside-white {
+  0% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes preloader-inside-red {
+  0% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  30% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+.circle-preloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  padding: 20px;
+}
+
+.circle-preloader-container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.circle-preloader-round {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ff6838;
+  border-radius: 50px;
+}
+
+.circle-preloader-round::after,
+.circle-preloader-round::before {
+  content: '';
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50px;
+}
+
+.circle-preloader-round::after {
+  background: white;
+  animation: preloader-inside-white 0.5s ease-in-out infinite;
+}
+
+.circle-preloader-round::before {
+  z-index: 10;
+  background: #ff6838;
+  animation: preloader-inside-red 0.5s ease-in-out infinite;
+}
+
+// AUTH CIRCLE PRELOADER
+
+.login__circle-preloader,
+.registration__circle-preloader {
+  display: flex;
+  margin-top: 0px !important;
+  min-height: calc(101vh);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(0, 102, 255, 0.9);
+  opacity: 0.6;
+  z-index: -9;
+}
+
+// AUTH CIRCLE PRELOADER
+
+// USER-PROFILE PRELOADER
+
+.user-profile__circle-preloader--type-profile {
+  margin-top: 0;
+  width: 900px;
+}
+
+// USER-PROFILE PRELOADER
+
+@media screen and (max-width: $large-desktop) {
+  .circle-preloader {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+
+  .user-profile__circle-preloader--type-profile {
+    margin-top: 0;
+    width: calc(48px + (900 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .circle-preloader-container,
+  .circle-preloader-round,
+  .circle-preloader-round::after,
+  .circle-preloader-round::before {
+    width: 60px;
+    height: 60px;
+  }
+}
