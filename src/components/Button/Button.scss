@@ -6,6 +6,7 @@
   background-color: $color-secondary;
   text-align: center;
   border-radius: 8px;
+  transition: 0.3s ease-in-out;
 
   @media (hover: hover) {
     &:hover {
