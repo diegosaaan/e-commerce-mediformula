@@ -1,5 +1,7 @@
 .catalog {
   &__sidebar {
+    display: flex;
+    flex-direction: column;
     margin-right: 90px;
     width: 320px;
     transition: 0.3s ease-in-out;
@@ -7,6 +9,11 @@
     &--pointer-events {
       pointer-events: none;
     }
+  }
+
+  &__reset-filters-button {
+    align-self: center;
+    margin: 28px 0px;
   }
 
   &__sidebar-close-button-container {
