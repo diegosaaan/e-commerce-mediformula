@@ -2,11 +2,11 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
-import { authLoader } from '@/components/AuthForm/AuthForm';
+import { authLoader } from '@/components/AuthFormSection/AuthFormSection';
 import { mainPageLoader } from '@/pages/Main/Main';
 import { productPageLoader } from '@/pages/ProductPage/ProductPage';
 import { catalogLoader } from '@/pages/Catalog/Catalog';
-import { PrivateLoginAndRegistrationRoute, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
+import { PrivateRouteForLoginAndRegistration, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
 import {
   LoginPage,
   RegistrationPage,
@@ -23,18 +23,18 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: (
-      <PrivateLoginAndRegistrationRoute>
+      <PrivateRouteForLoginAndRegistration>
         <LoginPage />
-      </PrivateLoginAndRegistrationRoute>
+      </PrivateRouteForLoginAndRegistration>
     ),
     loader: authLoader,
   },
   {
     path: '/registration',
     element: (
-      <PrivateLoginAndRegistrationRoute>
+      <PrivateRouteForLoginAndRegistration>
         <RegistrationPage />
-      </PrivateLoginAndRegistrationRoute>
+      </PrivateRouteForLoginAndRegistration>
     ),
     loader: authLoader,
   },
