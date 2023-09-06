@@ -42,7 +42,7 @@ const CatalogPage = (): ReactElement => {
   const [breadcrumbsData, setBreadcrumbsData] = useState<IBreadcrumbsData[]>(initialBreadCrumbsData);
   const [currentCategory, setCurrentCategory] = useState('Все категории');
   const [categoryId, setCategoryId] = useState('');
-  const [isInStockFilter, setisInStockFilter] = useState(false);
+  const [isInStockFilter, setIsInStockFilter] = useState(false);
   const [isDiscountFilter, setIsDiscountFilter] = useState(false);
   const [isPriceFilter, setIsPriceFilter] = useState(false);
   const [priceRangeValue, setPriceRangeValue] = useState({
@@ -146,6 +146,13 @@ const CatalogPage = (): ReactElement => {
     }
   };
 
+  const handleResetFilters = (): void => {
+    setIsDiscountFilter(false);
+    setIsPriceFilter(false);
+    setIsInStockFilter(false);
+    setBrandsFilter([]);
+  };
+
   const handleOpenSidebar = (): void => {
     setIsMobileSidebarOpen(true);
   };
@@ -181,12 +188,13 @@ const CatalogPage = (): ReactElement => {
             getNewProductList={getNewProductList}
             openFirstProductListPage={openFirstProductListPage}
             handleChangeCategory={handleChangeCategory}
-            setisInStockFilter={setisInStockFilter}
+            setIsInStockFilter={setIsInStockFilter}
             setIsDiscountFilter={setIsDiscountFilter}
             setIsPriceFilter={setIsPriceFilter}
             setPriceRangeValue={setPriceRangeValue}
             setBrandsFilter={setBrandsFilter}
             handleCloseSidebar={handleCloseSidebar}
+            handleResetFilters={handleResetFilters}
             isInStockFilter={isInStockFilter}
             isDiscountFilter={isDiscountFilter}
             isPriceFilter={isPriceFilter}

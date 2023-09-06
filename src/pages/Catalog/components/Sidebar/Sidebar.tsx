@@ -4,17 +4,19 @@ import { categoriesData, renderCategories } from './categoriesData';
 import CatalogFilter from './CatalogFilter';
 import brandNames from './brandsData';
 import { ICatalogSidebarProps } from '@/types/componentsInrefaces';
+import Button from '@/components/Button/Button';
 
 const CatalogSidebar = ({
   getNewProductList,
   openFirstProductListPage,
   handleChangeCategory,
-  setisInStockFilter,
+  setIsInStockFilter,
   setIsDiscountFilter,
   setIsPriceFilter,
   setPriceRangeValue,
   setBrandsFilter,
   handleCloseSidebar,
+  handleResetFilters,
   isInStockFilter,
   isDiscountFilter,
   isPriceFilter,
@@ -25,7 +27,7 @@ const CatalogSidebar = ({
 }: ICatalogSidebarProps): ReactElement => {
   const handleChangeInStockFilter = (): void => {
     openFirstProductListPage();
-    setisInStockFilter(!isInStockFilter);
+    setIsInStockFilter(!isInStockFilter);
   };
 
   const handleChangeDiscountFilter = (): void => {
@@ -133,6 +135,7 @@ const CatalogSidebar = ({
               <li className="catalog__brands-filter-list-item" key={brand}>
                 <input
                   type="checkbox"
+                  checked={!!brandsFilter.includes(brand)}
                   className="catalog__brand-checkbox"
                   id={brand}
                   onChange={handleChangeBrandsFilter}
@@ -145,6 +148,13 @@ const CatalogSidebar = ({
           </ul>
         </div>
       </div>
+
+      <Button
+        onClick={handleResetFilters}
+        type="button"
+        text="Сбросить фильтры"
+        className="button catalog__reset-filters-button"
+      />
     </aside>
   );
 };
