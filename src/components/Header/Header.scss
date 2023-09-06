@@ -22,6 +22,10 @@
     align-items: center;
     gap: 20px;
     height: 40px;
+
+    @media screen and (max-width: $portrait-tablet) {
+      height: auto;
+    }
   }
 
   &__nav-auth-item,
