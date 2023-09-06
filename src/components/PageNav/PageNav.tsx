@@ -132,7 +132,7 @@ const PageNav = (): ReactElement => {
             </ul>
           </li>
 
-          <li>
+          <li className="header__nav-main-item">
             <ul className="header__nav-container-main">
               <li className="header__item-logo">
                 <Link className="header__logo-link" to="/">
