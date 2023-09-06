@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAdminJSONHeaders } from './headers';
-import { IAllProductData } from '@/types/apiInterfaces';
+import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 
 export const getProducts = async (url: string): Promise<IAllProductData> => {
   const headers = await createAdminJSONHeaders();
@@ -11,11 +11,20 @@ export const getProducts = async (url: string): Promise<IAllProductData> => {
   return data;
 };
 
-export const getCategories = async (url: string): Promise<unknown> => {
+export const getProductById = async (url: string): Promise<IProductData> => {
   const headers = await createAdminJSONHeaders();
-  const res = await axios.get(url, {
+  const { data }: { data: IProductData } = await axios.get(url, {
     headers,
   });
 
-  return res;
+  return data;
+};
+
+export const getCategories = async (url: string): Promise<unknown> => {
+  const headers = await createAdminJSONHeaders();
+  const response = await axios.get(url, {
+    headers,
+  });
+
+  return response;
 };
