@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from 'formik';
-import '@/components/AuthForm/AuthForm.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import { IPropsAuthForm } from '@/types/componentsInrefaces';
 import background1 from '@/assets/images/jpg/auth-background-1.jpg';
 import background2 from '@/assets/images/jpg/auth-background-2.jpg';
@@ -27,7 +27,7 @@ export const authLoader = (): null => {
   return null;
 };
 
-const AuthForm = ({
+const AuthFormSection = ({
   children,
   name,
   text,
@@ -37,6 +37,7 @@ const AuthForm = ({
   title,
   disabled,
   isAddAddress,
+  isDataFetching,
   handlePrevRegister,
 }: IPropsAuthForm): ReactElement => {
   const [background, setBackground] = useState('');
@@ -47,7 +48,10 @@ const AuthForm = ({
   }, []);
 
   return (
-    <section className="auth" style={{ backgroundImage: `url(${background})` }}>
+    <section
+      className={`auth ${isDataFetching ? 'auth--opacity' : ''}`}
+      style={{ backgroundImage: `url(${background})` }}
+    >
       <div className="auth__container">
         <div className="auth__container-heading">
           <h1 className="auth__heading">{title}</h1>
@@ -79,4 +83,4 @@ const AuthForm = ({
   );
 };
 
-export default AuthForm;
+export default AuthFormSection;
