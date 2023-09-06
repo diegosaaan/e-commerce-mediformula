@@ -179,11 +179,12 @@ export interface ICatalogSidebarProps {
   getNewProductList: () => void;
   openFirstProductListPage: () => void;
   handleChangeCategory: (event: MouseEvent) => Promise<void>;
-  setisInStockFilter: (value: boolean) => void;
+  setIsInStockFilter: (value: boolean) => void;
   setIsDiscountFilter: (value: boolean) => void;
   setIsPriceFilter: (value: boolean) => void;
   setPriceRangeValue: (value: { minPrice: number; maxPrice: number }) => void;
   setBrandsFilter: (value: string[]) => void;
+  handleResetFilters: () => void;
   handleCloseSidebar: () => void;
   isInStockFilter: boolean;
   isDiscountFilter: boolean;
