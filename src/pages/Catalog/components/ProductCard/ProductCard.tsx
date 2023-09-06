@@ -47,7 +47,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
     <li className={`catalog__product-list-item`}>
       {discountValue && <div className="catalog__product-discount">{discountValue}</div>}
       {!isInStock && <div className="catalog__product-no-is-stock">Нет в наличии</div>}
-      <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} target="_blank">
+      <Link className="catalog__product-list-route-link" to={`/catalog/${id}`}>
         <div className="catalog__product-list-item-container">
           <div className={`catalog__product-list-item-left-side`}>
             <div
