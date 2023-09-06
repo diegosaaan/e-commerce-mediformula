@@ -1,6 +1,6 @@
 .spinner-preloader {
   position: fixed;
-  right: 0;
+  right: 5px;
   bottom: 25px;
   height: 50px;
   width: 50px;
@@ -84,8 +84,7 @@
 }
 
 @media (max-width: $tablet) {
-  .catalog__spinner-preloader,
-  .user-profile__spinner-preloader {
+  .spinner-preloader {
     bottom: 50px;
   }
 }

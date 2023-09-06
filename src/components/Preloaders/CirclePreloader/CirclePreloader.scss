@@ -93,7 +93,7 @@
 .login__circle-preloader,
 .registration__circle-preloader {
   display: flex;
-  margin-top: 0px;
+  margin-top: 0px !important;
   min-height: calc(101vh);
   justify-content: center;
   align-items: center;
