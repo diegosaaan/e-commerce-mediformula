@@ -183,13 +183,12 @@ const DetailedProductSection = ({
             <h4 className="detailed-product__header">{productName}</h4>
             <p className="detailed-product__description">{productDescription}</p>
             <div className="detailed-product__price-container">
-              <p className="detailed-product__price">{`${(discountPrice
-                ? Math.round(discountPrice / 100)
-                : Math.round(defaultPrice / 100)
-              ).toLocaleString('ru-RU')}₽`}</p>
-              <p className="detailed-product__priceBefore">{`${
-                discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''
-              }`}</p>
+              <p className="detailed-product__price">
+                {defaultPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+              </p>
+              <p className="detailed-product__priceBefore">
+                {discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+              </p>
             </div>
             <div className="detailed-product__button-container">
               <Button
