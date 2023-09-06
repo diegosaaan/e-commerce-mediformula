@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Intro from './components/intro-section/Intro';
-import ProductCardsSection from '@/components/SwiperSection/SwiperSection';
+import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import CategoryCards from './components/category-section/CategoryCards';
 import Brends from './components/brends-section/Brends';
 import MediaSection from './components/media-section/Media';
@@ -10,7 +10,7 @@ import Services from './components/services-section/Services';
 import { getProducts } from '@/services/tokenHelpers';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ApiEndpoints from '@/enums/apiEndpoints';
-import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
+import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 
 export const mainPageLoader = async (): Promise<IProductData[]> => {
   const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
@@ -27,7 +27,7 @@ const MainPage = (): ReactElement => {
       <SpinnerPreloader pageClassname="main-page" isDataFetching={isDataFetching} />
 
       <Intro />
-      <ProductCardsSection
+      <SwiperSection
         heading="Специальные предложения"
         counter={11}
         sectionClassName="discounted-products"

@@ -4,7 +4,7 @@ import useAuth from '@/utils/hooks/useAuth';
 import { editDefaultBillingAddress, editDefaultShippingAddress } from '@/services/profile-services/editDefaultAddress';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 import deleteAddres from '@/services/profile-services/deleteAddress';
-import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
+import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 import PopupAddress from './PopupAddress/PopupAddress';
 
 const EditAddresses = (): ReactElement => {

@@ -6,12 +6,12 @@ import CatalogSidebar from './components/Sidebar/Sidebar';
 import { IBreadcrumbsData } from '@/types/componentsInrefaces';
 import { getProducts } from '@/services/catalog';
 import Accordion from '@/components/Accordion/Accrodion';
-import sortData from './sortData/sortData';
+import sortData from './sortData';
 import SortTypes from '@/enums/sortTypes';
-import { createBreadcrumbs, initialBreadCrumbsData, renderBrendcrumbs } from './breadcrumbsData/breadcrumbsData';
+import { createBreadcrumbs, initialBreadCrumbsData, renderBrendcrumbs } from './breadcrumbs';
 import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ProductCard from './components/ProductCard/ProductCard';
-import SpinnerPreloader from '@/utils/helpers/Loader/SpinnerPreloader/SpinnerPreloader';
+import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 import Pagination from './components/Pagination/Pagination';
 
 export const catalogLoader = async (): Promise<{ initialData: IAllProductData; wasSearchByText: boolean }> => {

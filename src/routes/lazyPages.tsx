@@ -1,5 +1,5 @@
 import React, { ComponentType, ReactElement, Suspense, lazy } from 'react';
-import CirclePreloader from '@/utils/helpers/Loader/Circle-preloader/CirclePreloader';
+import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
 // eslint-disable-next-line no-promise-executor-return
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
