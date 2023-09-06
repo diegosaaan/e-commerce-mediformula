@@ -58,11 +58,11 @@ const UserProfilePage = (): ReactElement => {
             </li>
           </ul>
         </div>
-        <div className="profile__main">
-          {userProfileSectionsData.map((section) => (
-            <div key={section.id}>{activeSection === section.id && section.component}</div>
-          ))}
-        </div>
+        {userProfileSectionsData.map((section) => (
+          <div className="profile__main" key={section.id}>
+            {activeSection === section.id && section.component}
+          </div>
+        ))}
       </div>
     </section>
   );
