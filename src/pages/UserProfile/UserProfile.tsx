@@ -1,33 +1,15 @@
 import './UserProfile.scss';
 import React, { ReactElement, useState } from 'react';
 import useAuth from '@/utils/hooks/useAuth';
-import CirclePreloader from '@/utils/helpers/Loader/Circle-preloader/CirclePreloader';
-import EditUserData from './components/EditUserData';
-import EditAddresses from './components/EditAddresses';
-import EditPassword from './components/EditPassword';
+import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
+import userProfileSectionsData from './userProfileSectionsData';
 
 const UserProfilePage = (): ReactElement => {
   const { userInfo, isContentLoadedPageUserInfo } = useAuth();
-  const [isUserData, setIsUserData] = useState(true);
-  const [isEditAddresses, setIsEditAddresses] = useState(false);
-  const [isEditPassword, setIsEditPassword] = useState(false);
+  const [activeSection, setActiveSection] = useState('userData');
 
-  const handleClickEditUser = (): void => {
-    setIsUserData(true);
-    setIsEditAddresses(false);
-    setIsEditPassword(false);
-  };
-
-  const handleClickEditAddresses = (): void => {
-    setIsUserData(false);
-    setIsEditAddresses(true);
-    setIsEditPassword(false);
-  };
-
-  const handleClickEditPassword = (): void => {
-    setIsUserData(false);
-    setIsEditAddresses(false);
-    setIsEditPassword(true);
+  const handleClickSection = (sectionId: string): void => {
+    setActiveSection(sectionId);
   };
 
   return isContentLoadedPageUserInfo ? (
@@ -59,41 +41,27 @@ const UserProfilePage = (): ReactElement => {
                 <p className="profile__category-name">Профиль</p>
               </div>
               <ul className="profile__subcategories">
-                <li>
-                  <button
-                    className={`profile__subcategory ${isUserData ? 'profile__subcategory_active' : ''}`}
-                    type="button"
-                    onClick={handleClickEditUser}
-                  >
-                    Личные данные
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className={`profile__subcategory ${isEditAddresses ? 'profile__subcategory_active' : ''}`}
-                    type="button"
-                    onClick={handleClickEditAddresses}
-                  >
-                    Изменить адреса
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className={`profile__subcategory ${isEditPassword ? 'profile__subcategory_active' : ''}`}
-                    type="button"
-                    onClick={handleClickEditPassword}
-                  >
-                    Изменить пароль
-                  </button>
-                </li>
+                {userProfileSectionsData.map((section) => (
+                  <li key={section.id}>
+                    <button
+                      className={`profile__subcategory ${
+                        activeSection === section.id ? 'profile__subcategory_active' : ''
+                      }`}
+                      type="button"
+                      onClick={(): void => handleClickSection(section.id)}
+                    >
+                      {section.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </li>
           </ul>
         </div>
         <div className="profile__main">
-          {isUserData && <EditUserData />}
-          {isEditAddresses && <EditAddresses />}
-          {isEditPassword && <EditPassword />}
+          {userProfileSectionsData.map((section) => (
+            <div key={section.id}>{activeSection === section.id && section.component}</div>
+          ))}
         </div>
       </div>
     </section>
