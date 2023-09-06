@@ -91,7 +91,7 @@
   &__priceBefore {
     @include GolosMedium(12px, 100%, $grayscale-600);
     text-decoration: line-through;
-    margin-top: 3px;
+    margin-top: 2px;
   }
 
   &__bonus-container {
@@ -150,24 +150,20 @@
     }
 
     &__text {
-      margin-top: 6px;
+      margin-top: 15px;
       height: calc(42px + (50 - 42) * (100vw - 360px) / (767.9 - 360));
       @include GolosRegular(12px, 100%, $grayscale-900);
     }
 
     &__price-info {
-      display: flex;
-      gap: 8px;
+      gap: 12px;
       margin-top: 8px;
-      align-items: flex-end;
     }
 
     &__price-container {
       display: flex;
-      flex-direction: column-reverse;
-      gap: 4px;
-      justify-content: flex-start;
-      align-items: flex-start;
+      gap: 12px;
+      align-items: center;
     }
 
     &__priceBefore {
@@ -190,7 +186,7 @@
 @media screen and (max-width: $portrait-tablet) {
   .product-card {
     box-shadow:
-      0px 5px 15px 0px rgba(1, 31, 58, 0.1),
-      0px 5px 15px 0px rgba(1, 31, 58, 0.04);
+      0px 5px 10px 0px rgba(1, 31, 58, 0.1),
+      0px 5px 10px 0px rgba(1, 31, 58, 0.04);
   }
 }
