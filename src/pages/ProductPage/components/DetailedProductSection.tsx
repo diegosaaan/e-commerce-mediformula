@@ -9,7 +9,7 @@ import { Navigation } from 'swiper';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
-import brandIcons from './brandIcons';
+import brandIcons from './BrandIcons';
 import { IProductData } from '@/types/apiInterfaces';
 
 const DetailedProductSection = ({
