@@ -9,8 +9,8 @@ import { Navigation } from 'swiper';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
-import brandIcons from './BrandIcons';
 import { IProductData } from '@/types/apiInterfaces';
+import brandsIcons from './brandsIcons';
 
 const DetailedProductSection = ({
   productData,
@@ -202,7 +202,7 @@ const DetailedProductSection = ({
             </div>
           </div>
           <div className="detailed-product__added-block">
-            <div className="detailed-product__brand-image-container">{brandIcons[brand]}</div>
+            <div className="detailed-product__brand-image-container">{brandsIcons[brand]}</div>
             <div className="detailed-product__documentation-block">
               <h5 className="detailed-product__documentation-header">В комплекте</h5>
               <ul className="detailed-product__documentation-list">

@@ -6,7 +6,7 @@ import bradexPath from '@/assets/images/svg/brand-bradex.svg';
 import omronPath from '@/assets/images/png/main-services-omron-logo.png';
 import andPath from '@/assets/images/png/main-services-and-logo.png';
 
-const brandIcons: { [key: string]: ReactElement } = {
+const brandsIcons: { [key: string]: ReactElement } = {
   Amrus: <img src={amrusPath} alt="AMRUS" />,
   ArhMed: <img src={arhMedPath} alt="ArhMed" />,
   Beurer: <img src={beurerPath} alt="BEURER" />,
@@ -15,4 +15,4 @@ const brandIcons: { [key: string]: ReactElement } = {
   AND: <img src={andPath} alt="AND" />,
 };
 
-export default brandIcons;
+export default brandsIcons;
