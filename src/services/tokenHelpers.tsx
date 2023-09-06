@@ -57,7 +57,7 @@ export const refreshUserToken = async (refreshToken: string): Promise<unknown> =
     headers: URLENCODED_HEADERS,
   });
 
-  return res;
+  return res.data;
 };
 
 export const getUserToken = async (): Promise<string | null> => {
