@@ -184,10 +184,10 @@ const DetailedProductSection = ({
             <p className="detailed-product__description">{productDescription}</p>
             <div className="detailed-product__price-container">
               <p className="detailed-product__price">
-                {defaultPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''}
               </p>
               <p className="detailed-product__priceBefore">
-                {discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {defaultPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
               </p>
             </div>
             <div className="detailed-product__button-container">
