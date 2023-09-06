@@ -8,6 +8,10 @@
     @include GolosRegular(16px, 1, $grayscale-900);
   }
 
+  &__nav-main-item {
+    width: 100%;
+  }
+
   &__nav {
     display: flex;
     flex-direction: column;
