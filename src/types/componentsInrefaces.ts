@@ -135,6 +135,7 @@ export interface IPropsAuthForm {
   isRegister?: boolean;
   disabled?: boolean;
   isAddAddress?: boolean;
+  isDataFetching: boolean;
   validationSchema?: ObjectSchema<LoginSchemaType>;
   initialValues?: LoginSchemaType;
   handlePrevRegister?: () => void;
