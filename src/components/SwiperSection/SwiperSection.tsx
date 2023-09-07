@@ -92,16 +92,15 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
             >
               {discountedProductsData.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <Link
-                    to={`/catalog/${product.id}`}
+                  <div
                     onClick={(): void => {
                       if (handleCardCliked) {
-                        handleCardCliked();
+                        handleCardCliked(product.id);
                       }
                     }}
                   >
                     <SwiperCard productData={product} />
-                  </Link>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>

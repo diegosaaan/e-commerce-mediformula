@@ -21,21 +21,34 @@ export const productPageLoader = async ({ params }: LoaderFunctionArgs): Promise
 
 const ProductPage = (): ReactElement => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
   const navigation = useNavigation();
 
   if (navigation.state === 'loading') {
-    return <CirclePreloader pageClassname="catalog" />;
+    return <CirclePreloader pageClassname="detailet-product" />;
   }
-
-  const [isDataFetching, setIsDataFetching] = useState(false);
 
   const { productData } = useLoaderData() as {
     productData: IProductData;
   };
 
-  const handleDiscountSwiperProductCliked = (): void => {
-    setIsDataFetching(true);
+  const [isDataFetching, setIsDataFetching] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState(productData);
+
+  const handleDiscountSwiperProductCliked = async (productId: string): Promise<void> => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    const currentPath = window.location.pathname;
+    window.history.pushState(null, '', currentPath);
+    const newPath = currentPath.replace(/\/catalog\/[^/]+/, `/catalog/${productId}`);
+    window.history.replaceState(null, '', newPath);
+    setIsDataFetching(true);
+    const productUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/${productId}`;
+
+    setTimeout(async () => {
+      const newProductData = await getProductById(productUrl);
+      setCurrentProduct(newProductData);
+      setIsDataFetching(false);
+    }, 500);
   };
 
   useEffect(() => {
@@ -45,7 +58,7 @@ const ProductPage = (): ReactElement => {
   return (
     <div className="product-page">
       <SpinnerPreloader pageClassname="product-page" isDataFetching={isDataFetching} />
-      <DetailedProductSection productData={productData} isDataFetching={isDataFetching} />
+      <DetailedProductSection productData={currentProduct} isDataFetching={isDataFetching} />
       <SwiperSection
         setIsDataFetching={setIsDataFetching}
         heading="Специальные предложения"

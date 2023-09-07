@@ -124,7 +124,7 @@ const DetailedProductSection = ({
                         <Swiper
                           initialSlide={currentIndex}
                           modules={[Navigation]}
-                          loop={productImages.length > 1}
+                          loop={true}
                           slidesPerView={1}
                           navigation={{
                             prevEl: `.detailed-product__swiper-arrow--prev`,
