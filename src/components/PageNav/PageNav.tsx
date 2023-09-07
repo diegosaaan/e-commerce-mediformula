@@ -11,7 +11,7 @@ import Form from '@/components/Form/Form';
 
 const setActiveClass = ({ isActive }: { isActive: boolean }): string => {
   const currentPath = window.location.pathname;
-  if (isActive && currentPath === '/catalog') {
+  if (isActive && !currentPath.match(/^\/catalog\/[a-zA-Z0-9-]+$/)) {
     return 'header__link header__link--active';
   }
   return 'header__link';
