@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { ReactElement } from 'react';
+import { useNavigation } from 'react-router-dom';
 import Intro from './components/intro-section/Intro';
 import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import CategoryCards from './components/category-section/CategoryCards';
@@ -7,33 +7,20 @@ import Brends from './components/brends-section/Brends';
 import MediaSection from './components/media-section/Media';
 import Advantages from './components/advantages-section/Advantages';
 import Services from './components/services-section/Services';
-import { getProducts } from '@/services/catalog';
-import { IAllProductData, IProductData } from '@/types/apiInterfaces';
-import ApiEndpoints from '@/enums/apiEndpoints';
-import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
-
-export const mainPageLoader = async (): Promise<IProductData[]> => {
-  const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
-  const { results }: IAllProductData = await getProducts(productsUrl);
-  return results;
-};
+import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
 const MainPage = (): ReactElement => {
-  const results = useLoaderData() as IProductData[];
-  const [isDataFetching, setIsDataFetching] = useState(false);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const navigation = useNavigation();
+
+  if (navigation.state === 'loading') {
+    return <CirclePreloader pageClassname="catalog" />;
+  }
 
   return (
     <div className="main-page">
-      <SpinnerPreloader pageClassname="main-page" isDataFetching={isDataFetching} />
-
       <Intro />
-      <SwiperSection
-        heading="Специальные предложения"
-        counter={11}
-        sectionClassName="discounted-products"
-        products={results}
-        setIsDataFetching={setIsDataFetching}
-      />
+      <SwiperSection heading="Специальные предложения" counter={11} sectionClassName="discounted-products" />
       <CategoryCards />
       <Brends />
       <Advantages />

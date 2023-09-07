@@ -1,7 +1,7 @@
 import '@/pages/Registration/Registration.scss';
 import { Formik } from 'formik';
 import React, { ReactElement, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import { AddressType, RegisterSchemaType } from '@/types/types';
@@ -20,6 +20,7 @@ import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPr
 const RegistrationPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const [isAddAddress, setIsAddAddress] = useState(false);
   const [isShippingAddress, setIsShippingAddress] = useState(false);
@@ -174,7 +175,12 @@ const RegistrationPage = (): ReactElement => {
 
   return (
     <>
-      {isDataFetching && <SpinnerPreloader pageClassname="registration" isDataFetching={isDataFetching} />}
+      {(isDataFetching || navigation.state === 'loading') && (
+        <SpinnerPreloader
+          pageClassname="registration"
+          isDataFetching={isDataFetching || navigation.state === 'loading'}
+        />
+      )}
       <Formik
         initialValues={{
           firstName: '',

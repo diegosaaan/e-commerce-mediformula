@@ -1,7 +1,7 @@
 import '@/pages/Login/Login.scss';
 import React, { ReactElement, useState } from 'react';
 import { message } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { Formik } from 'formik';
 import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
 import { LoginSchema } from '@/utils/helpers/yup/validationSchemes';
@@ -17,6 +17,7 @@ import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPr
 const LoginPage = (): ReactElement => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const [isDataFetching, setIsDataFetching] = useState(false);
 
   const handleLogin = async (values: LoginSchemaType): Promise<void> => {
@@ -48,7 +49,12 @@ const LoginPage = (): ReactElement => {
 
   return (
     <>
-      {isDataFetching && <SpinnerPreloader pageClassname="login" isDataFetching={isDataFetching} />}
+      {(isDataFetching || navigation.state === 'loading') && (
+        <SpinnerPreloader
+          pageClassname="registration"
+          isDataFetching={isDataFetching || navigation.state === 'loading'}
+        />
+      )}
       <Formik
         initialValues={{
           email: '',

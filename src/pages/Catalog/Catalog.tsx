@@ -1,6 +1,6 @@
 import './Catalog.scss';
 import React, { ReactElement, useEffect, useState, MouseEvent, useRef, MutableRefObject } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigation } from 'react-router-dom';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import CatalogSidebar from './components/Sidebar/Sidebar';
 import { IBreadcrumbsData } from '@/types/componentsInrefaces';
@@ -13,8 +13,14 @@ import { IAllProductData, IProductData } from '@/types/apiInterfaces';
 import ProductCard from './components/ProductCard/ProductCard';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 import Pagination from './components/Pagination/Pagination';
+import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
-export const catalogLoader = async (): Promise<{ initialData: IAllProductData; wasSearchByText: boolean }> => {
+export const catalogLoader = async (): Promise<{
+  initialProductsData: IAllProductData;
+  wasSearchByText: boolean;
+} | null> => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
   let url: string;
   let wasSearchByText: boolean = false;
   const searchInput = document.querySelector('.header__input-search');
@@ -24,19 +30,41 @@ export const catalogLoader = async (): Promise<{ initialData: IAllProductData; w
   } else {
     url = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?sort=price asc&limit=4`;
   }
-  const initialData = await getProducts(url);
-  return { initialData, wasSearchByText };
+
+  try {
+    const initialProductsData = await new Promise<IAllProductData>((resolve) => {
+      setTimeout(async () => {
+        const data = await getProducts(url);
+        resolve(data);
+      }, 500);
+    });
+
+    return {
+      wasSearchByText,
+      initialProductsData,
+    };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 const CatalogPage = (): ReactElement => {
-  const { initialData, wasSearchByText } = useLoaderData() as {
-    initialData: IAllProductData;
+  const navigation = useNavigation();
+
+  if (navigation.state === 'loading') {
+    return <CirclePreloader pageClassname="catalog" />;
+  }
+
+  const { initialProductsData, wasSearchByText } = useLoaderData() as {
+    initialProductsData: IAllProductData;
     wasSearchByText: boolean;
   };
+
   const isSearchByText = useRef(wasSearchByText);
   const [currentProductsData, setCurrentProductList] = useState({
-    currentProductList: initialData.results,
-    totalProducts: initialData.total,
+    currentProductList: initialProductsData.results,
+    totalProducts: initialProductsData.total,
     currentPage: 1,
   });
   const [breadcrumbsData, setBreadcrumbsData] = useState<IBreadcrumbsData[]>(initialBreadCrumbsData);
@@ -161,7 +189,9 @@ const CatalogPage = (): ReactElement => {
     setIsMobileSidebarOpen(false);
   };
 
-  searchButton.onclick = handleSearchButtonClicked;
+  if (searchButton) {
+    searchButton.onclick = handleSearchButtonClicked;
+  }
   const currentCategoryRef: MutableRefObject<null> | MutableRefObject<HTMLHeadingElement> = useRef(null);
 
   useEffect(() => {

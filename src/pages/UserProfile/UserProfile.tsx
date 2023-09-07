@@ -1,10 +1,17 @@
 import './UserProfile.scss';
 import React, { ReactElement, useState } from 'react';
+import { useNavigation } from 'react-router-dom';
 import useAuth from '@/utils/hooks/useAuth';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 import userProfileSectionsData from './userProfileSectionsData';
 
 const UserProfilePage = (): ReactElement => {
+  const navigation = useNavigation();
+
+  if (navigation.state === 'loading') {
+    return <CirclePreloader pageClassname="catalog" />;
+  }
+
   const { userInfo, isContentLoadedPageUserInfo } = useAuth();
   const [activeSection, setActiveSection] = useState('userData');
 
