@@ -103,7 +103,7 @@ export interface IPropsCardsSection {
   heading: string;
   counter: number;
   sectionClassName: string;
-  handleCardCliked?: () => void;
+  handleCardCliked?: (productId: string) => Promise<void>;
   setIsDataFetching?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
