@@ -2,8 +2,6 @@ import '@/pages/App.scss';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
-import { authLoader } from '@/components/AuthFormSection/AuthFormSection';
-import { mainPageLoader } from '@/pages/Main/Main';
 import { productPageLoader } from '@/pages/ProductPage/ProductPage';
 import { catalogLoader } from '@/pages/Catalog/Catalog';
 import { PrivateRouteForLoginAndRegistration, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
@@ -27,7 +25,6 @@ const router = createBrowserRouter([
         <LoginPage />
       </PrivateRouteForLoginAndRegistration>
     ),
-    loader: authLoader,
   },
   {
     path: '/registration',
@@ -36,7 +33,6 @@ const router = createBrowserRouter([
         <RegistrationPage />
       </PrivateRouteForLoginAndRegistration>
     ),
-    loader: authLoader,
   },
   {
     path: '/',
@@ -45,7 +41,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
-        loader: mainPageLoader,
       },
       {
         path: '/catalog',
