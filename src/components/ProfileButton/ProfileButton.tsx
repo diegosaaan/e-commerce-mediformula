@@ -7,10 +7,6 @@ const ProfileButton = (): ReactElement => {
     <>
       <Button className="header__profile-button" type="button">
         <div className="header__profile-icon"></div>
-        <div className="header__profile-bonus">
-          <div className="header__profile-bonus-icon"></div>
-          <p className="header__profile-bonus-price">2 000 ₽</p>
-        </div>
       </Button>
     </>
   );
