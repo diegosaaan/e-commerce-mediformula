@@ -36,8 +36,6 @@ const DetailedProductSection = ({
     },
   } = productData;
 
-  console.log(currentIndex);
-
   const brandAttribute = attributes.find((attribute) => attribute.name === 'brand');
   let brand = '';
 
@@ -73,14 +71,7 @@ const DetailedProductSection = ({
           <div className="detailed-product__image-container">
             <div className="detailed-product__image-block">
               <>
-                <button
-                  className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--prev`}
-                  onClick={(): void => setCurrentIndex((prevIndex) => prevIndex - 1)}
-                  style={{
-                    visibility: `${!productImages[currentIndex - 1] ? 'hidden' : 'visible'}`,
-                    opacity: `${!productImages[currentIndex - 1] ? '0' : '1'}`,
-                  }}
-                >
+                <button className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--prev`}>
                   <img
                     className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
                     src={arrowLeftPath}
@@ -166,14 +157,7 @@ const DetailedProductSection = ({
                     <div className="close-button" onClick={(event: MouseEvent): void => closeModal(event)}></div>
                   </div>
                 </div>
-                <button
-                  className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}
-                  onClick={(): void => setCurrentIndex((prevIndex) => prevIndex + 1)}
-                  style={{
-                    visibility: `${!productImages[currentIndex + 1] ? 'hidden' : 'visible'}`,
-                    opacity: `${!productImages[currentIndex + 1] ? '0' : '1'}`,
-                  }}
-                >
+                <button className={`swiper-arrow detailed-product__swiper-arrow detailed-product__swiper-arrow--next`}>
                   <img
                     className={`swiper-arrow-img detailed-product__swiper-arrow-img`}
                     src={arrowRightPath}
