@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { Link } from 'react-router-dom';
@@ -11,20 +11,32 @@ import SwiperCard from '@/components/SwiperCard/SwiperCard';
 import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
+import ApiEndpoints from '@/enums/apiEndpoints';
+import { IProductData } from '@/types/apiInterfaces';
+import { getProducts } from '@/services/catalog';
+import SpinnerPreloader from '../Preloaders/SpinnerPreloader/SpinnerPreloader';
 
-const SwiperSection = ({
-  setIsDataFetching,
-  heading,
-  counter,
-  sectionClassName,
-  products,
-}: IPropsCardsSection): ReactElement => {
-  const handleCardClick = (): void => {
-    if (setIsDataFetching) {
-      setIsDataFetching(true);
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }: IPropsCardsSection): ReactElement => {
+  const [isProductsDataFetching, setIsProductsDataFetching] = useState(true);
+  const [discountedProductsData, setDiscountedProductsData] = useState<IProductData[]>([]);
+  const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
+
+  useEffect(() => {
+    const fetchProductData = async (): Promise<void> => {
+      try {
+        const { results } = await getProducts(productsUrl);
+        setTimeout(() => {
+          setDiscountedProductsData(results);
+          setIsProductsDataFetching(false);
+        }, 1500);
+      } catch (error) {
+        console.log(error);
+        setIsProductsDataFetching(false);
+      }
+    };
+
+    fetchProductData();
+  }, []);
 
   return (
     <section className="_container cards-section">
@@ -33,63 +45,80 @@ const SwiperSection = ({
           {heading}
           <sup className="cards-section__counter">{counter}</sup>
         </h2>
-        <Link className="text-button" to="/catalog" onClick={handleCardClick}>
+        <Link className="text-button" to="/catalog">
           ⟶ Смотреть все
         </Link>
       </div>
-      <div className="cards-section__cards-container">
-        <button className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--prev`}>
-          <img
-            className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
-            src={arrowLeftPath}
-            alt="Shevron Left"
-          />
-        </button>
-        <Swiper
-          modules={[Navigation]}
-          loop={true}
-          slidesPerView={4}
-          navigation={{
-            prevEl: `.${sectionClassName}__swiper-arrow--prev`,
-            nextEl: `.${sectionClassName}__swiper-arrow--next`,
-          }}
-          breakpoints={{
-            320: {
-              slidesPerView: 1,
-            },
-            467: {
-              slidesPerView: 1.5,
-            },
-            567: {
-              slidesPerView: 2,
-            },
-            767: {
-              slidesPerView: 2.5,
-            },
-            1023: {
-              slidesPerView: 3,
-            },
-            1279: {
-              slidesPerView: 4,
-            },
-          }}
-        >
-          {products.map((product, index) => (
-            <SwiperSlide key={index}>
-              <Link to={`/catalog/${product.id}`} onClick={handleCardClick}>
-                <SwiperCard productData={product} />
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <button className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--next`}>
-          <img
-            className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
-            src={arrowRightPath}
-            alt="Shevron Right"
-          />
-        </button>
-      </div>
+      {discountedProductsData.length ? (
+        <>
+          <div className="cards-section__cards-container">
+            <button
+              className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--prev`}
+            >
+              <img
+                className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
+                src={arrowLeftPath}
+                alt="Shevron Left"
+              />
+            </button>
+            <Swiper
+              modules={[Navigation]}
+              loop={true}
+              slidesPerView={4}
+              navigation={{
+                prevEl: `.${sectionClassName}__swiper-arrow--prev`,
+                nextEl: `.${sectionClassName}__swiper-arrow--next`,
+              }}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                },
+                467: {
+                  slidesPerView: 1.5,
+                },
+                567: {
+                  slidesPerView: 2,
+                },
+                767: {
+                  slidesPerView: 2.5,
+                },
+                1023: {
+                  slidesPerView: 3,
+                },
+                1279: {
+                  slidesPerView: 4,
+                },
+              }}
+            >
+              {discountedProductsData.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <Link
+                    to={`/catalog/${product.id}`}
+                    onClick={(): void => {
+                      if (handleCardCliked) {
+                        handleCardCliked();
+                      }
+                    }}
+                  >
+                    <SwiperCard productData={product} />
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <button
+              className={`swiper-arrow ${sectionClassName}__swiper-arrow ${sectionClassName}__swiper-arrow--next`}
+            >
+              <img
+                className={`swiper-arrow-img ${sectionClassName}__swiper-arrow-img`}
+                src={arrowRightPath}
+                alt="Shevron Right"
+              />
+            </button>
+          </div>
+        </>
+      ) : (
+        <SpinnerPreloader pageClassname="cards-section" isDataFetching={isProductsDataFetching} />
+      )}
     </section>
   );
 };
