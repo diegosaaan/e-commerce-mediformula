@@ -117,7 +117,7 @@ const PageNav = (): ReactElement => {
 
               {isUserLoggedIn && isContentLoaded && (
                 <li className="header__item-log">
-                  <NavLink className={setActiveClass} to="/">
+                  <NavLink className="header__link" to="/">
                     <Button
                       className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
                       type="button"
