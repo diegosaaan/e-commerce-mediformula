@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
-import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
 import logo from '@/assets/images/svg/header-logo.svg';
@@ -10,7 +10,7 @@ import Input from '@/components/Input/Input';
 import Form from '@/components/Form/Form';
 
 const setActive = ({ isActive }: { isActive: boolean }): string =>
-  isActive ? 'header__link header__link_active' : 'header__link';
+  isActive ? 'header__link header__link--active' : 'header__link';
 
 const PageNav = (): ReactElement => {
   const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
@@ -73,13 +73,13 @@ const PageNav = (): ReactElement => {
           <li className="header__nav-auth-item">
             <ul className="header__nav-container-auth">
               <li className={`header__item-logo-mobile ${isUserLoggedIn ? 'header__item-logo-mobile_type_login' : ''}`}>
-                <Link className="header__logo-link" to="/">
+                <NavLink className={`header__logo-link ${setActive}`} to="/">
                   <img className="header__logo-mobile" src={logo} alt="Logo" />
-                </Link>
+                </NavLink>
               </li>
               <li className="header__login-registration-btn-container">
                 <div className="header__item-reg">
-                  <Link className="header__link" to="/registration">
+                  <NavLink className="header__link" to="/registration">
                     <Button
                       className={`header__button-nav header__button-nav_type_register ${
                         isContentLoaded && isUserLoggedIn
@@ -91,10 +91,10 @@ const PageNav = (): ReactElement => {
                       type="button"
                       text="Регистрация"
                     />
-                  </Link>
+                  </NavLink>
                 </div>
                 <div className="header__item-log">
-                  <Link className="header__link" to="/login">
+                  <NavLink className="header__link" to="/login">
                     <Button
                       className={`header__button-nav header__button-nav_type_login ${
                         isContentLoaded && isUserLoggedIn
@@ -106,27 +106,27 @@ const PageNav = (): ReactElement => {
                       type="button"
                       text="Войти"
                     />
-                  </Link>
+                  </NavLink>
                 </div>
               </li>
 
               {isUserLoggedIn && isContentLoaded && (
                 <li className="header__item-log">
-                  <Link className="header__link" to="/">
+                  <NavLink className={setActive} to="/">
                     <Button
                       className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
                       type="button"
                       onClick={handleLogOut}
                       text="Выйти"
                     />
-                  </Link>
+                  </NavLink>
                 </li>
               )}
               {isUserLoggedIn && (
                 <li className="header__item-profile">
-                  <Link className="header__link" to="/user-profile">
+                  <NavLink className={setActive} to="/user-profile">
                     <ProfileButton />
-                  </Link>
+                  </NavLink>
                 </li>
               )}
             </ul>
@@ -135,24 +135,24 @@ const PageNav = (): ReactElement => {
           <li className="header__nav-main-item">
             <ul className="header__nav-container-main">
               <li className="header__item-logo">
-                <Link className="header__logo-link" to="/">
+                <NavLink className="header__logo-link" to="/">
                   <img className="header__logo" src={logo} alt="Logo" />
-                </Link>
+                </NavLink>
               </li>
               <li className="header__item-about">
-                <Link className="header__link" to="/about-us">
+                <NavLink className={setActive} to="/about-us">
                   <Button className="header__button-main" type="button" text="О нас" />
-                </Link>
+                </NavLink>
               </li>
               <li className="header__item-catalog">
-                <Link className="header__link" to="/catalog">
+                <NavLink className={setActive} to="/catalog">
                   <Button className="header__button-main" type="button">
                     <div className="header__button-catalog">
                       <div className="header__button-catalog-icon"></div>
                       <p className="header__button-catalog-text">Каталог</p>
                     </div>
                   </Button>
-                </Link>
+                </NavLink>
               </li>
               <li className="header__item-input-search">
                 <Form className="header__form-search" name="form-search" onSubmit={handleExampleSumbit}>
@@ -169,11 +169,11 @@ const PageNav = (): ReactElement => {
                 </Form>
               </li>
               <li className="header__item-cart">
-                <Link className="header__link" to="/cart">
+                <NavLink className={setActive} to="/cart">
                   <Button className="header__button-cart" type="button">
                     <p className="header__button-cart-text">3</p>
                   </Button>
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </li>
