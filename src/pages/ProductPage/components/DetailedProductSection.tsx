@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-import React, { ReactElement, MouseEvent, useState } from 'react';
+import React, { ReactElement, MouseEvent, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import Button from '@/components/Button/Button';
@@ -21,7 +21,6 @@ const DetailedProductSection = ({
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const {
     name: { ru: productName },
     description: { ru: productDescription },
@@ -36,6 +35,12 @@ const DetailedProductSection = ({
       ],
     },
   } = productData;
+
+  const [images, setImages] = useState([{}]);
+
+  useEffect(() => {
+    setImages(productImages);
+  }, [productImages]);
 
   const brandAttribute = attributes.find((attribute) => attribute.name === 'brand');
   let brand = '';
@@ -81,7 +86,7 @@ const DetailedProductSection = ({
                 </button>
                 <Swiper
                   modules={[Navigation]}
-                  loop={productImages.length > 1}
+                  loop={images.length > 1}
                   slidesPerView={1}
                   navigation={{
                     prevEl: `.detailed-product__swiper-arrow--prev`,
