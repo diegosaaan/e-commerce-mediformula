@@ -103,8 +103,8 @@ export interface IPropsCardsSection {
   heading: string;
   counter: number;
   sectionClassName: string;
-  products: IProductData[];
-  setIsDataFetching: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCardCliked?: () => void;
+  setIsDataFetching?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IPropsProduct {}
