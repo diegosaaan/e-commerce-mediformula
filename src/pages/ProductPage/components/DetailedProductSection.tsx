@@ -80,7 +80,7 @@ const DetailedProductSection = ({
                 </button>
                 <Swiper
                   modules={[Navigation]}
-                  loop={false}
+                  loop={true}
                   slidesPerView={1}
                   navigation={{
                     prevEl: `.detailed-product__swiper-arrow--prev`,
