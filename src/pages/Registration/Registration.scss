@@ -98,8 +98,8 @@
   }
 
   &__help {
-    @include GolosRegular(10px, normal, $grayscale-900);
-    height: 12px;
+    @include GolosRegular(11px, normal, $plus-button-hover);
+    padding: 10px 0 0;
   }
 
   @media (hover: hover) {

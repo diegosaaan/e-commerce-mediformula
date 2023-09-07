@@ -320,9 +320,11 @@ const RegistrationPage = (): ReactElement => {
                       setAddressesAnother={setBillingAddresses}
                       isAddress={isBillingAddress}
                     />
-                    <p className="auth__help">
-                      Чтобы выбрать адрес для доставки по умолчанию кликните на карточку с адресом
-                    </p>
+                    {shippingAddresses.length > 0 && (
+                      <p className="auth__help">
+                        Чтобы выбрать адрес для доставки по умолчанию кликните на карточку с адресом
+                      </p>
+                    )}
                   </>
                 )}
               </li>
@@ -361,9 +363,11 @@ const RegistrationPage = (): ReactElement => {
                       setAddressesAnother={setShippingAddresses}
                       isAddress={isShippingAddress}
                     />
-                    <p className="auth__help">
-                      Чтобы выбрать адрес для выставления счета по умолчанию кликните на карточку с адресом
-                    </p>
+                    {billingAddresses.length > 0 && (
+                      <p className="auth__help">
+                        Чтобы выбрать адрес для выставления счета по умолчанию кликните на карточку с адресом
+                      </p>
+                    )}
                   </>
                 )}
               </li>
