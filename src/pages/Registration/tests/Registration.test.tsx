@@ -22,6 +22,11 @@ import { ILocalStorageUserTokenData, IUserTokenData } from '@/types/apiInterface
 import ApiEndpoints from '@/enums/apiEndpoints';
 import MockLocalStorage from '@/__mocks__/mockLocalStorage';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigation: jest.fn().mockReturnValue({}),
+}));
+
 const addDataToFieldAndCheckBtnWorkCorrect = (
   registrationFormData: IFormData[],
   addressFormData: IFormData[],

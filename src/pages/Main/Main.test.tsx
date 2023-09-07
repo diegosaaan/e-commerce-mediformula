@@ -9,6 +9,11 @@ import Layout from '@/components/Layout/Layout';
 import Accordion from '@/components/Accordion/Accrodion';
 import Footer from '@/components/Footer/Footer';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigation: jest.fn().mockReturnValue({}),
+}));
+
 afterEach(cleanup);
 
 jest.mock('swiper/react', () => swiperMocks);

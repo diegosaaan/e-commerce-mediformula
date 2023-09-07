@@ -1,9 +1,14 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { notification } from 'antd';
 import LoginPage from '@/pages/Login/Login';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigation: jest.fn().mockReturnValue({}),
+}));
 
 describe('Login Page', () => {
   let mockErrorNotification: jest.SpyInstance;
@@ -18,9 +23,9 @@ describe('Login Page', () => {
 
   test('inputs for email and password are displayed', () => {
     const { getByPlaceholderText } = render(
-      <MemoryRouter>
+      <BrowserRouter>
         <LoginPage />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     expect(getByPlaceholderText('Email*')).toBeInTheDocument();
@@ -29,9 +34,9 @@ describe('Login Page', () => {
 
   test('Login button is disabled if the fields are empty', async () => {
     const { getByPlaceholderText, getByText } = render(
-      <MemoryRouter>
+      <BrowserRouter>
         <LoginPage />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     waitFor(() => {
@@ -44,9 +49,9 @@ describe('Login Page', () => {
 
   test('allows the user to log in with valid credentials', () => {
     const { getByPlaceholderText, getByText } = render(
-      <MemoryRouter>
+      <BrowserRouter>
         <LoginPage />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     waitFor(() => {
@@ -58,9 +63,9 @@ describe('Login Page', () => {
 
   test('does not allow the user to log in with invalid credentials', () => {
     const { getByPlaceholderText, getByText } = render(
-      <MemoryRouter>
+      <BrowserRouter>
         <LoginPage />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     waitFor(() => {
