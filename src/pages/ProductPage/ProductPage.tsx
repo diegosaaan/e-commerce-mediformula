@@ -37,10 +37,6 @@ const ProductPage = (): ReactElement => {
 
   const handleDiscountSwiperProductCliked = async (productId: string): Promise<void> => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    const currentPath = window.location.pathname;
-    window.history.pushState(null, '', currentPath);
-    const newPath = currentPath.replace(/\/catalog\/[^/]+/, `/catalog/${productId}`);
-    window.history.replaceState(null, '', newPath);
     setIsDataFetching(true);
     const productUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/${productId}`;
 
@@ -48,6 +44,10 @@ const ProductPage = (): ReactElement => {
       const newProductData = await getProductById(productUrl);
       setCurrentProduct(newProductData);
       setIsDataFetching(false);
+      const currentPath = window.location.pathname;
+      window.history.pushState(null, '', currentPath);
+      const newPath = currentPath.replace(/\/catalog\/[^/]+/, `/catalog/${productId}`);
+      window.history.replaceState(null, '', newPath);
     }, 500);
   };
 
