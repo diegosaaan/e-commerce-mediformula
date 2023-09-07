@@ -4,6 +4,13 @@
   display: flex;
   flex-direction: column;
 
+  &__link {
+    &--active {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
   &__input-search {
     @include GolosRegular(16px, 1, $grayscale-900);
   }
