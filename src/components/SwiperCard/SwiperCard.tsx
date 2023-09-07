@@ -42,7 +42,7 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
             'ru-RU'
           )}₽`}</p>
           <p className="product-card__priceBefore">{`${
-            discountPrice ? `${(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''
+            discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''
           }`}</p>
         </div>
       </div>
