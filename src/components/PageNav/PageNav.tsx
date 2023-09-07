@@ -9,8 +9,13 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import Form from '@/components/Form/Form';
 
-const setActive = ({ isActive }: { isActive: boolean }): string =>
-  isActive ? 'header__link header__link--active' : 'header__link';
+const setActiveClass = ({ isActive }: { isActive: boolean }): string => {
+  const currentPath = window.location.pathname;
+  if (isActive && currentPath === '/catalog') {
+    return 'header__link header__link--active';
+  }
+  return 'header__link';
+};
 
 const PageNav = (): ReactElement => {
   const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
@@ -73,7 +78,7 @@ const PageNav = (): ReactElement => {
           <li className="header__nav-auth-item">
             <ul className="header__nav-container-auth">
               <li className={`header__item-logo-mobile ${isUserLoggedIn ? 'header__item-logo-mobile_type_login' : ''}`}>
-                <NavLink className={`header__logo-link ${setActive}`} to="/">
+                <NavLink className={`header__logo-link ${setActiveClass}`} to="/">
                   <img className="header__logo-mobile" src={logo} alt="Logo" />
                 </NavLink>
               </li>
@@ -112,7 +117,7 @@ const PageNav = (): ReactElement => {
 
               {isUserLoggedIn && isContentLoaded && (
                 <li className="header__item-log">
-                  <NavLink className={setActive} to="/">
+                  <NavLink className={setActiveClass} to="/">
                     <Button
                       className="header__button-nav header__button-nav_type_login header__button-nav_type_logout"
                       type="button"
@@ -124,7 +129,7 @@ const PageNav = (): ReactElement => {
               )}
               {isUserLoggedIn && (
                 <li className="header__item-profile">
-                  <NavLink className={setActive} to="/user-profile">
+                  <NavLink className={setActiveClass} to="/user-profile">
                     <ProfileButton />
                   </NavLink>
                 </li>
@@ -140,12 +145,12 @@ const PageNav = (): ReactElement => {
                 </NavLink>
               </li>
               <li className="header__item-about">
-                <NavLink className={setActive} to="/about-us">
+                <NavLink className={setActiveClass} to="/about-us">
                   <Button className="header__button-main" type="button" text="О нас" />
                 </NavLink>
               </li>
               <li className="header__item-catalog">
-                <NavLink className={setActive} to="/catalog">
+                <NavLink className={setActiveClass} to="/catalog">
                   <Button className="header__button-main" type="button">
                     <div className="header__button-catalog">
                       <div className="header__button-catalog-icon"></div>
@@ -169,7 +174,7 @@ const PageNav = (): ReactElement => {
                 </Form>
               </li>
               <li className="header__item-cart">
-                <NavLink className={setActive} to="/cart">
+                <NavLink className={setActiveClass} to="/cart">
                   <Button className="header__button-cart" type="button">
                     <p className="header__button-cart-text">3</p>
                   </Button>
@@ -185,7 +190,7 @@ const PageNav = (): ReactElement => {
       <nav>
         <ul className="header__nav-extra-mobile">
           <li>
-            <NavLink to="/" className={setActive}>
+            <NavLink to="/" className={setActiveClass}>
               <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-icon-mobile_type_main"></div>
                 <p className="header__button-text-mobile">Главная</p>
@@ -193,7 +198,7 @@ const PageNav = (): ReactElement => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/about-us" className={setActive}>
+            <NavLink to="/about-us" className={setActiveClass}>
               <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-icon-mobile_type_about"></div>
                 <p className="header__button-text-mobile">О нас</p>
@@ -201,7 +206,7 @@ const PageNav = (): ReactElement => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/catalog" className={setActive}>
+            <NavLink to="/catalog" className={setActiveClass}>
               <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                 <div className="header__button-icon-mobile header__button-catalog-icon-mobile_type_catalogue"></div>
                 <p className="header__button-text-mobile">Каталог</p>
@@ -209,7 +214,7 @@ const PageNav = (): ReactElement => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/cart" className={setActive}>
+            <NavLink to="/cart" className={setActiveClass}>
               <Button
                 onClick={handleScrollToTop}
                 className="header__button-main-mobile header__button-main-mobile_type_cart"
@@ -223,7 +228,7 @@ const PageNav = (): ReactElement => {
           </li>
           {isUserLoggedIn && (
             <li>
-              <NavLink to="/user-profile" className={setActive}>
+              <NavLink to="/user-profile" className={setActiveClass}>
                 <Button onClick={handleScrollToTop} className="header__button-main-mobile" type="button">
                   <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_profile"></div>
                   <p className="header__button-text-mobile">Профиль</p>
