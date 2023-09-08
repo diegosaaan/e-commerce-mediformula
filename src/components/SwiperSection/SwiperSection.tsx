@@ -20,6 +20,7 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
   const [isProductsDataFetching, setIsProductsDataFetching] = useState(true);
   const [discountedProductsData, setDiscountedProductsData] = useState<IProductData[]>([]);
   const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const fetchProductData = async (): Promise<void> => {
@@ -28,7 +29,7 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
         setTimeout(() => {
           setDiscountedProductsData(results);
           setIsProductsDataFetching(false);
-        }, 1500);
+        }, 1000);
       } catch (error) {
         console.log(error);
         setIsProductsDataFetching(false);
@@ -92,7 +93,7 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
             >
               {discountedProductsData.map((product, index) => (
                 <SwiperSlide key={index}>
-                  {useLocation().pathname === '/' ? (
+                  {pathname === '/' ? (
                     <Link to={`/catalog/${product.id}`}>
                       <SwiperCard productData={product} />
                     </Link>
