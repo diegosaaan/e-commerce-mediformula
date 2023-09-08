@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
+import React, { FormEvent, ReactElement, ChangeEvent, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
@@ -43,27 +43,11 @@ const PageNav = (): ReactElement => {
     });
   };
 
-  const handleSearchButtonClicked = (): void => {
-    if (searchInputValue) {
-      if (location.pathname !== '/catalog') {
-        navigate('/catalog');
-      }
-    }
-  };
-
-  const handleSearchInputKeyDown = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter') {
-      const target = event.target as HTMLInputElement;
-      if (target.value) {
-        if (location.pathname !== '/catalog') {
-          navigate('/catalog');
-        }
-      }
-    }
-  };
-
   const handleExampleSumbit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    if (location.pathname !== '/catalog') {
+      navigate('/catalog');
+    }
   };
 
   const handleChangeSearchInputValue = (event: ChangeEvent): void => {
@@ -168,9 +152,9 @@ const PageNav = (): ReactElement => {
                     placeholder="Поиск оборудования"
                     value={searchInputValue}
                     onChange={handleChangeSearchInputValue}
-                    onKeyDown={(event): void => handleSearchInputKeyDown(event)}
+                    // onKeyDown={(event): void => handleSearchInputKeyDown(event)}
                   />
-                  <Button className="header__button-search" type="submit" onClick={handleSearchButtonClicked} />
+                  <Button className="header__button-search" type="submit" />
                 </Form>
               </li>
               <li className="header__item-cart">
