@@ -1,16 +1,28 @@
 .profile {
   &__container {
     display: flex;
-    gap: 40px;
     padding: 40px 20px 0;
     max-width: 1560px;
     margin: 0 auto;
+  }
+
+  .auth__button {
+    @include GolosRegular(16px, 1, $grayscale-900);
+  }
+
+  .auth__button:disabled {
+    color: $grayscale-400;
+  }
+
+  .auth__select {
+    margin-bottom: 5px;
   }
 
   &__info {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    margin-right: 130px;
   }
 
   &__container-info {
@@ -395,6 +407,10 @@
   }
 
   @media screen and (max-width: $small-desktop) {
+    &__info {
+      margin-right: 60px;
+    }
+
     &__container-address {
       width: calc(460px + (600 - 460) * (100vw - 768px) / (1024 - 768));
     }
@@ -441,6 +457,8 @@
 
     &__info {
       align-items: center;
+      margin-right: 0;
+      margin-bottom: 25px;
     }
 
     &__main {
@@ -450,6 +468,7 @@
 
     &__subtitle {
       text-align: center;
+      font-size: 24px;
     }
 
     &__list {
