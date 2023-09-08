@@ -15,7 +15,7 @@ export const initialBreadCrumbsData = [
     name: 'Каталог',
   },
   {
-    id: ' ',
+    id: '',
     name: 'Все категории',
   },
 ];
