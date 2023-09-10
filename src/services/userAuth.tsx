@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AddressType } from '@/types/types';
 import { createAdminJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
+import { getActiveCart } from './cart';
 
 export const register = async (
   email: string,
@@ -15,19 +16,6 @@ export const register = async (
   shippingAddresses: number[],
   billingAddresses: number[]
 ): Promise<unknown> => {
-  // let requestData = {
-  //   email,
-  //   firstName,
-  //   lastName,
-  //   password,
-  //   dateOfBirth,
-  //   addresses,
-  //   defaultShippingAddress,
-  //   defaultBillingAddress,
-  //   shippingAddresses,
-  //   billingAddresses,
-  // };
-
   let requestData;
   if (defaultShippingAddress === '' && defaultBillingAddress === '') {
     requestData = {
@@ -83,18 +71,37 @@ export const register = async (
     headers: await createAdminJSONHeaders(),
   });
 
-  return res;
+  return res.data;
 };
 
 export const login = async (email: string, password: string): Promise<unknown> => {
-  const requestData = {
-    email,
-    password,
-  };
+  let requestData;
+
+  try {
+    const activeCart = await getActiveCart(false);
+    requestData = {
+      email,
+      password,
+      anonymousCart: {
+        id: activeCart.id,
+        typeId: 'cart',
+      },
+    };
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response && axiosError.response.status === 404) {
+      requestData = {
+        email,
+        password,
+      };
+    } else {
+      console.error('Произошла ошибка:', error);
+    }
+  }
 
   const res = await axios.post(ApiEndpoints.URL_LOGIN, requestData, {
     headers: await createAdminJSONHeaders(),
   });
 
-  return res;
+  return res.data;
 };
