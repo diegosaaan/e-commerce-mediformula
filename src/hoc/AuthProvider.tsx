@@ -2,6 +2,7 @@ import React, { ReactElement, createContext, useEffect, useState } from 'react';
 import { isUserToken, getUserToken, getUserInfoByToken } from '@/services/tokenHelpers';
 import { IAuthContextValue } from '@/types/componentsInrefaces';
 import { IUserInfo } from '@/types/apiInterfaces';
+import ApiEndpoints from '@/enums/apiEndpoints';
 
 const defaultAuthContextValue: IAuthContextValue = {
   isUserLoggedIn: false,
@@ -25,8 +26,12 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
   useEffect(() => {
     if (wasUserLoggedIn) {
       (async (): Promise<void> => {
-        const userToken = await getUserToken();
+        const userToken = await getUserToken('1SortUserToken', ApiEndpoints.URL_AUTH_TOKEN);
         setIsUserLoggedIn(isUserToken() && wasUserLoggedIn && userToken);
+      })();
+    } else {
+      (async (): Promise<void> => {
+        await getUserToken('1SortAnonymousToken', ApiEndpoints.URL_ANONYMOUS_TOKEN);
       })();
     }
     setContentLoaded(true);
