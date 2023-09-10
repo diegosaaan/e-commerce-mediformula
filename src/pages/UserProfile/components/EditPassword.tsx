@@ -30,7 +30,7 @@ const EditPassword = (): ReactElement => {
           resetForm();
           createNewUserToken(userInfo.email, values.newPassword).then((result) => {
             if (result !== null && typeof result === 'object') {
-              saveUserToken(result as IUserTokenData);
+              saveUserToken(result as IUserTokenData, '1SortUserToken');
             }
           });
         })
