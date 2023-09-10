@@ -27,16 +27,67 @@ export const addProductInCart = async (
   idCart: string,
   versionCart: number,
   idProduct: string,
-  isUser: boolean
+  lineItemId: string,
+  isUser: boolean,
+  isAddProduct: boolean
 ): Promise<ICart> => {
   const requestData = {
     version: versionCart,
     actions: [
       {
-        action: 'addLineItem',
-        productId: idProduct,
+        action: isAddProduct ? 'addLineItem' : 'removeLineItem',
+        [isAddProduct ? 'productId' : 'lineItemId']: isAddProduct ? idProduct : lineItemId,
         variantId: 1,
         quantity: 1,
+      },
+    ],
+  };
+
+  const res = await axios.post(`${ApiEndpoints.URL_API_ME_CART}/${idCart}`, requestData, {
+    headers: isUser ? await createUserJSONHeaders() : await createAnonymousJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const addDiscountCode = async (
+  idCart: string,
+  versionCart: number,
+  isUser: boolean,
+  code: string = '3562Y5'
+): Promise<ICart> => {
+  const requestData = {
+    version: versionCart,
+    actions: [
+      {
+        action: 'addDiscountCode',
+        code,
+      },
+    ],
+  };
+
+  const res = await axios.post(`${ApiEndpoints.URL_API_ME_CART}/${idCart}`, requestData, {
+    headers: isUser ? await createUserJSONHeaders() : await createAnonymousJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const deleteDiscountCode = async (
+  idCart: string,
+  versionCart: number,
+  isUser: boolean,
+  codeId: string = '6a807303-da92-48b2-aa59-57b52c334bcf'
+): Promise<ICart> => {
+  const requestData = {
+    version: versionCart,
+    actions: [
+      {
+        action: 'removeDiscountCode',
+        discountCode: {
+          typeId: 'discount-code',
+          id: codeId,
+        },
       },
     ],
   };

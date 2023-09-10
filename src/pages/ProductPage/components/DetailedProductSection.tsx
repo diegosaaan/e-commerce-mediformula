@@ -24,6 +24,7 @@ const DetailedProductSection = ({
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAddProduct, setIsAddProduct] = useState(true);
   const {
     id,
     name: { ru: productName },
@@ -68,26 +69,52 @@ const DetailedProductSection = ({
     }
   };
 
-  const handleAddProduct = async (): Promise<void> => {
+  const handleProductInCart = async (): Promise<void> => {
     const userToken = localStorage.getItem('1SortUserToken');
     const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+    setIsAddProduct((prev) => !prev);
+    console.log(isAddProduct);
     console.log(id);
 
     try {
       if (userToken) {
         const cartActive = await getActiveCart(true);
-        const cart = await addProductInCart(cartActive.id, cartActive.version, id, true);
+        const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+        const cart = await addProductInCart(
+          cartActive.id,
+          cartActive.version,
+          id,
+          lineItemsId[0].id,
+          true,
+          isAddProduct
+        );
         console.log(cart);
       } else if (anonymousToken) {
         const cartActive = await getActiveCart(false);
-        const cart = await addProductInCart(cartActive.id, cartActive.version, id, false);
+        const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+        const cart = await addProductInCart(
+          cartActive.id,
+          cartActive.version,
+          id,
+          lineItemsId[0].id,
+          false,
+          isAddProduct
+        );
         console.log(cart);
       } else {
         const result = await createAnonymousToken();
         if (result !== null && typeof result === 'object') {
           saveUserToken(result as IUserTokenData, '1SortAnonymousToken');
           const cartCreated = await createCart(false);
-          const cart = await addProductInCart(cartCreated.id, cartCreated.version, id, false);
+          const lineItemsId = cartCreated.lineItems.filter((item) => item.productId === id);
+          const cart = await addProductInCart(
+            cartCreated.id,
+            cartCreated.version,
+            id,
+            lineItemsId[0].id,
+            false,
+            isAddProduct
+          );
           console.log(cart);
         }
       }
@@ -95,13 +122,33 @@ const DetailedProductSection = ({
       const axiosError = error as AxiosError;
       if (axiosError.response && axiosError.response.status === 404) {
         const cartCreated = await createCart(true);
-        const cart = await addProductInCart(cartCreated.id, cartCreated.version, id, true);
+        const lineItemsId = cartCreated.lineItems.filter((item) => item.productId === id);
+        const cart = await addProductInCart(
+          cartCreated.id,
+          cartCreated.version,
+          id,
+          lineItemsId[0].id,
+          true,
+          isAddProduct
+        );
         console.log(cart);
       } else {
         console.error('Произошла ошибка:', error);
       }
     }
   };
+
+  // const handleAddDiscount = async (): Promise<void> => {
+  //   const cartActive = await getActiveCart(true);
+  //   const res = await addDiscountCode(cartActive.id, cartActive.version, true);
+  //   console.log(res);
+  // };
+
+  // const handleDeleteDiscount = async (): Promise<void> => {
+  //   const cartActive = await getActiveCart(true);
+  //   const res = await deleteDiscountCode(cartActive.id, cartActive.version, true);
+  //   console.log(res);
+  // };
 
   return (
     <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
@@ -231,7 +278,7 @@ const DetailedProductSection = ({
                 className="button"
                 type="button"
                 text="В корзину"
-                onClick={handleAddProduct}
+                onClick={handleProductInCart}
                 disabled={!isInStock}
               />
             </div>
