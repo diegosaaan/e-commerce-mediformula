@@ -203,7 +203,7 @@ export interface ICart {
   lastMessageSequenceNumber: number;
   lastModifiedAt: string;
   lastModifiedBy: { clientId: string; isPlatformClient: boolean; customer: { typeId: string; id: string } };
-  lineItems: [];
+  lineItems: { id: string; productId: string }[];
   origin: string;
   refusedGifts: [];
   shipping: [];
