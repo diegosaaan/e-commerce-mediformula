@@ -147,7 +147,7 @@
   }
 
   &__products-empty-list-heading {
-    @include GolosRegular(18px, 1, $grayscale-900);
+    @include GolosRegular(18px, 1.5, $grayscale-900);
     text-align: center;
   }
 }
