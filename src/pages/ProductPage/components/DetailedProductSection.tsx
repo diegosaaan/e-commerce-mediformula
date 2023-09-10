@@ -6,11 +6,14 @@ import 'swiper/css/free-mode';
 import React, { ReactElement, MouseEvent, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import { AxiosError } from 'axios';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
-import { IProductData } from '@/types/apiInterfaces';
+import { IProductData, IUserTokenData } from '@/types/apiInterfaces';
 import brandsIcons from './brandsIcons';
+import { addProductInCart, createCart, getActiveCart } from '@/services/cart';
+import { createAnonymousToken, saveUserToken } from '@/services/tokenHelpers';
 
 const DetailedProductSection = ({
   productData,
@@ -22,6 +25,7 @@ const DetailedProductSection = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
+    id,
     name: { ru: productName },
     description: { ru: productDescription },
     masterVariant: {
@@ -60,6 +64,41 @@ const DetailedProductSection = ({
       const target = event.target as HTMLDivElement;
       if (target.classList.contains('detailed-product__modal-container') || target.classList.contains('close-button')) {
         setIsModalOpen(false);
+      }
+    }
+  };
+
+  const handleAddProduct = async (): Promise<void> => {
+    const userToken = localStorage.getItem('1SortUserToken');
+    const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+    console.log(id);
+
+    try {
+      if (userToken) {
+        const cartActive = await getActiveCart(true);
+        const cart = await addProductInCart(cartActive.id, cartActive.version, id, true);
+        console.log(cart);
+      } else if (anonymousToken) {
+        const cartActive = await getActiveCart(false);
+        const cart = await addProductInCart(cartActive.id, cartActive.version, id, false);
+        console.log(cart);
+      } else {
+        const result = await createAnonymousToken();
+        if (result !== null && typeof result === 'object') {
+          saveUserToken(result as IUserTokenData, '1SortAnonymousToken');
+          const cartCreated = await createCart(false);
+          const cart = await addProductInCart(cartCreated.id, cartCreated.version, id, false);
+          console.log(cart);
+        }
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 404) {
+        const cartCreated = await createCart(true);
+        const cart = await addProductInCart(cartCreated.id, cartCreated.version, id, true);
+        console.log(cart);
+      } else {
+        console.error('Произошла ошибка:', error);
       }
     }
   };
@@ -179,10 +218,12 @@ const DetailedProductSection = ({
             <p className="detailed-product__description">{productDescription}</p>
             <div className="detailed-product__price-container">
               <p className="detailed-product__price">
-                {discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {discountPrice
+                  ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽`
+                  : `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽`}
               </p>
               <p className="detailed-product__priceBefore">
-                {defaultPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
               </p>
             </div>
             <div className="detailed-product__button-container">
@@ -190,7 +231,7 @@ const DetailedProductSection = ({
                 className="button"
                 type="button"
                 text="В корзину"
-                onClick={(): void => {}}
+                onClick={handleAddProduct}
                 disabled={!isInStock}
               />
             </div>
