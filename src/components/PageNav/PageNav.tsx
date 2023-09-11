@@ -18,7 +18,7 @@ const setActiveClass = ({ isActive }: { isActive: boolean }): string => {
 };
 
 const PageNav = (): ReactElement => {
-  const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
+  const { isUserLoggedIn, isContentLoaded, signOut, userCart } = useAuth();
   const [searchInputValue, setSearchInputValue] = useState('');
   const location = useLocation();
 
@@ -160,7 +160,11 @@ const PageNav = (): ReactElement => {
               <li className="header__item-cart">
                 <NavLink className={setActiveClass} to="/cart">
                   <Button className="header__button-cart" type="button">
-                    <p className="header__button-cart-text">3</p>
+                    {userCart && (
+                      <p className="header__button-cart-text">
+                        {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
+                      </p>
+                    )}
                   </Button>
                 </NavLink>
               </li>
@@ -206,7 +210,11 @@ const PageNav = (): ReactElement => {
               >
                 <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_cart"></div>
                 <p className="header__button-text-mobile">Корзина</p>
-                <p className="header__button-cart-text header__button-cart-text_type_mobile">3</p>
+                {userCart && (
+                  <p className="header__button-cart-text header__button-cart-text_type_mobile">
+                    {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
+                  </p>
+                )}
               </Button>
             </NavLink>
           </li>
