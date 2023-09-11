@@ -37,20 +37,15 @@ const InfoCard = (): ReactElement => {
   const [finalCartPrice, setFinalCartPrice] = useState(cartPrice);
   const [promoCodeInputValue, setPromoCodeInputValue] = useState('');
 
-  const productQuantity = productsArray.reduce((acc, item) => acc + item.quantity, 0);
-
   const handleAddPromoCode = async (): Promise<void> => {
     const isUserToken = !!localStorage.getItem('1SortUserToken');
     const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
     setIsPromoCodeActive(true);
     setFinalCartPrice(updatedCart.totalPrice.centAmount);
     setUserCart(updatedCart);
-    console.log(updatedCart);
   };
 
   const handleDeletePromoCode = async (): Promise<void> => {
-    console.log(userCart?.discountCodes);
-    console.log(discountCodes);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
     const discountCodeID = discountCodes[0].discountCode.id;
     const updatedCart = await deleteDiscountCode(cartId, cartVersion, isUserToken, discountCodeID);
@@ -59,37 +54,43 @@ const InfoCard = (): ReactElement => {
     setFinalCartPrice(updatedCart.totalPrice.centAmount);
   };
 
-  const setInitialAndFinalCartPrices = async (discountCodeID: string): Promise<void> => {
-    const isUserToken = !!localStorage.getItem('1SortUserToken');
-    const cartWithouthDiscount = await deleteDiscountCode(cartId, cartVersion, isUserToken, discountCodeID);
-    setInitialCartPrice(cartWithouthDiscount.totalPrice.centAmount);
-    setUserCart(cartWithouthDiscount);
-    setPromoCodeInputValue('3562Y5');
+  const setInitialAndFinalCartPrices = async (): Promise<void> => {
+    if (discountCodes.length) {
+      const discountCodeID = discountCodes[0].discountCode.id;
+      const isUserToken = !!localStorage.getItem('1SortUserToken');
+      const cartWithouthDiscount = await deleteDiscountCode(cartId, cartVersion, isUserToken, discountCodeID);
+      setInitialCartPrice(cartWithouthDiscount.totalPrice.centAmount);
+      setUserCart(cartWithouthDiscount);
+      setPromoCodeInputValue('3562Y5');
 
-    const currentCart = await addDiscountCode(
-      cartWithouthDiscount.id,
-      cartWithouthDiscount.version,
-      isUserToken,
-      '3562Y5'
-    );
+      const currentCart = await addDiscountCode(
+        cartWithouthDiscount.id,
+        cartWithouthDiscount.version,
+        isUserToken,
+        '3562Y5'
+      );
 
-    setFinalCartPrice(currentCart.totalPrice.centAmount);
-    setIsPromoCodeActive(true);
-    setUserCart(currentCart);
+      setFinalCartPrice(currentCart.totalPrice.centAmount);
+      setIsPromoCodeActive(true);
+      setUserCart(currentCart);
+    } else {
+      setIsPromoCodeActive(false);
+      setInitialCartPrice(cartPrice);
+      setFinalCartPrice(cartPrice);
+    }
   };
 
   useEffect(() => {
-    if (discountCodes.length) {
-      const discountCodeID = discountCodes[0].discountCode.id;
-      setInitialAndFinalCartPrices(discountCodeID);
-    }
-  }, [userCart]);
+    setInitialAndFinalCartPrices();
+  }, []);
 
   return (
     <div className="cart__info-card-container">
       <div className="cart__info-card">
         <div className="cart__info-card-products-info">
-          <div className="cart__info-card-products-count">{declensionOfTheWordCommodity(productQuantity)}</div>
+          <div className="cart__info-card-products-count">
+            {declensionOfTheWordCommodity(productsArray.reduce((acc, item) => acc + item.quantity, 0))}
+          </div>
           <div className="cart__info-card-products-price">
             {Math.round(initialCartPrice / 100).toLocaleString('ru-RU')}₽
           </div>
