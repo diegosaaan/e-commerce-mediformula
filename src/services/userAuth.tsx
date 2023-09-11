@@ -89,7 +89,7 @@ export const login = async (email: string, password: string): Promise<unknown> =
     };
   } catch (error) {
     const axiosError = error as AxiosError;
-    if (axiosError.response && axiosError.response.status === 404) {
+    if (axiosError.response && axiosError.response.status === 401) {
       requestData = {
         email,
         password,
