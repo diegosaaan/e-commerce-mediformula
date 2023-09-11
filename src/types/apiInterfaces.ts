@@ -225,7 +225,7 @@ export interface ICart {
   customerId: string;
   deleteDaysAfterLastModification: number;
   directDiscounts: [];
-  discountCodes: [];
+  discountCodes: { discountCode: { id: string; typeId: string } }[];
   id: string;
   inventoryMode: string;
   itemShippingAddresses: [];
