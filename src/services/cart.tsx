@@ -23,22 +23,47 @@ export const getActiveCart = async (isUser: boolean): Promise<ICart> => {
   return res.data;
 };
 
-export const addProductInCart = async (
+export const addProduct = async (
   idCart: string,
   versionCart: number,
-  idProduct: string,
-  lineItemId: string,
+  productId: string,
   isUser: boolean,
-  isAddProduct: boolean
+  quantity: number = 1
 ): Promise<ICart> => {
   const requestData = {
     version: versionCart,
     actions: [
       {
-        action: isAddProduct ? 'addLineItem' : 'removeLineItem',
-        [isAddProduct ? 'productId' : 'lineItemId']: isAddProduct ? idProduct : lineItemId,
+        action: 'addLineItem',
+        productId,
         variantId: 1,
-        quantity: 1,
+        quantity,
+      },
+    ],
+  };
+
+  const res = await axios.post(`${ApiEndpoints.URL_API_ME_CART}/${idCart}`, requestData, {
+    headers: isUser ? await createUserJSONHeaders() : await createAnonymousJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const deleteProduct = async (
+  idCart: string,
+  versionCart: number,
+  lineItemId: string,
+  isUser: boolean,
+  quantity: number = 1
+): Promise<ICart> => {
+  const requestData = {
+    version: versionCart,
+    actions: [
+      {
+        action: 'removeLineItem',
+        lineItemId,
+        variantId: 1,
+        quantity,
       },
     ],
   };

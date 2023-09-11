@@ -12,7 +12,7 @@ import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import { IProductData, IUserTokenData } from '@/types/apiInterfaces';
 import brandsIcons from './brandsIcons';
-import { addProductInCart, createCart, getActiveCart } from '@/services/cart';
+import { addProduct, createCart, getActiveCart } from '@/services/cart';
 import { createAnonymousToken, saveUserToken } from '@/services/tokenHelpers';
 
 const DetailedProductSection = ({
@@ -24,7 +24,7 @@ const DetailedProductSection = ({
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAddProduct, setIsAddProduct] = useState(true);
+
   const {
     id,
     name: { ru: productName },
@@ -69,52 +69,26 @@ const DetailedProductSection = ({
     }
   };
 
-  const handleProductInCart = async (): Promise<void> => {
+  const handleAddProduct = async (): Promise<void> => {
     const userToken = localStorage.getItem('1SortUserToken');
     const anonymousToken = localStorage.getItem('1SortAnonymousToken');
-    setIsAddProduct((prev) => !prev);
-    console.log(isAddProduct);
     console.log(id);
 
     try {
       if (userToken) {
         const cartActive = await getActiveCart(true);
-        const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-        const cart = await addProductInCart(
-          cartActive.id,
-          cartActive.version,
-          id,
-          lineItemsId[0].id,
-          true,
-          isAddProduct
-        );
+        const cart = await addProduct(cartActive.id, cartActive.version, id, true);
         console.log(cart);
       } else if (anonymousToken) {
         const cartActive = await getActiveCart(false);
-        const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-        const cart = await addProductInCart(
-          cartActive.id,
-          cartActive.version,
-          id,
-          lineItemsId[0].id,
-          false,
-          isAddProduct
-        );
+        const cart = await addProduct(cartActive.id, cartActive.version, id, false);
         console.log(cart);
       } else {
         const result = await createAnonymousToken();
         if (result !== null && typeof result === 'object') {
           saveUserToken(result as IUserTokenData, '1SortAnonymousToken');
           const cartCreated = await createCart(false);
-          const lineItemsId = cartCreated.lineItems.filter((item) => item.productId === id);
-          const cart = await addProductInCart(
-            cartCreated.id,
-            cartCreated.version,
-            id,
-            lineItemsId[0].id,
-            false,
-            isAddProduct
-          );
+          const cart = await addProduct(cartCreated.id, cartCreated.version, id, false);
           console.log(cart);
         }
       }
@@ -122,21 +96,31 @@ const DetailedProductSection = ({
       const axiosError = error as AxiosError;
       if (axiosError.response && axiosError.response.status === 404) {
         const cartCreated = await createCart(true);
-        const lineItemsId = cartCreated.lineItems.filter((item) => item.productId === id);
-        const cart = await addProductInCart(
-          cartCreated.id,
-          cartCreated.version,
-          id,
-          lineItemsId[0].id,
-          true,
-          isAddProduct
-        );
+        const cart = await addProduct(cartCreated.id, cartCreated.version, id, true);
         console.log(cart);
       } else {
         console.error('Произошла ошибка:', error);
       }
     }
   };
+
+  // const handleDeleteProduct = async (): Promise<void> => {
+  //   const userToken = localStorage.getItem('1SortUserToken');
+  //   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+  //   console.log(id);
+
+  //   if (userToken) {
+  //     const cartActive = await getActiveCart(true);
+  //     const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+  //     const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, true);
+  //     console.log(cart);
+  //   } else if (anonymousToken) {
+  //     const cartActive = await getActiveCart(false);
+  //     const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+  //     const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false);
+  //     console.log(cart);
+  //   }
+  // };
 
   // const handleAddDiscount = async (): Promise<void> => {
   //   const cartActive = await getActiveCart(true);
@@ -278,7 +262,7 @@ const DetailedProductSection = ({
                 className="button"
                 type="button"
                 text="В корзину"
-                onClick={handleProductInCart}
+                onClick={handleAddProduct}
                 disabled={!isInStock}
               />
             </div>
