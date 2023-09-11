@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '@/components/Layout/Layout';
 import { productPageLoader } from '@/pages/ProductPage/ProductPage';
 import { catalogLoader } from '@/pages/Catalog/Catalog';
+import { cartLoader } from '@/pages/Cart/Cart';
 import { PrivateRouteForLoginAndRegistration, PrivateRouteForAuthorizedUser } from './PrivateRoutes';
 import {
   LoginPage,
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <CartPage />,
+        loader: cartLoader,
       },
       {
         path: '/about-us',

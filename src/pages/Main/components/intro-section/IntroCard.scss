@@ -66,8 +66,8 @@
   }
 
   @media screen and (max-width: $tablet) {
-    border-radius: 12px;
     padding: 16px;
+    border-radius: 12px;
 
     &__header-container {
       gap: 4px;
@@ -103,5 +103,11 @@
   @media screen and (max-width: $mobile) {
     flex: 1 0 100%;
     max-width: 100%;
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .intro__cards-block {
+    margin-top: 24px;
   }
 }

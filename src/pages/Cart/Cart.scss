@@ -1,0 +1,13 @@
+.cart {
+  &__heading {
+    @include GolosMedium(60px, 1, $grayscale-900);
+    margin-top: 100px;
+  }
+
+  &__content-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 50px;
+  }
+}

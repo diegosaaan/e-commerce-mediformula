@@ -5,6 +5,7 @@ import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
 import Button from '@/components/Button/Button';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
+// import { addProductToCart } from '@/services/cart';
 
 const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
   const [isDataFetching, setIsDataFetcing] = useState(false);
@@ -50,14 +51,22 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
     setIsDataFetcing(true);
   };
 
+  // const handleAddProductToCard = async (event?: MouseEvent): Promise<void> => {
+  //   if (event && event.target) {
+  //     const target = event.target as HTMLButtonElement;
+  //     const productID = target.id;
+  //     await addProductToCart(productID);
+  //   }
+  // };
+
   return (
     <>
       {isDataFetching && <SpinnerPreloader pageClassname="catalog" isDataFetching={isDataFetching} />}
       <li className={`catalog__product-list-item`}>
         {discountValue && <div className="catalog__product-discount">{discountValue}</div>}
         {!isInStock && <div className="catalog__product-no-is-stock">Нет в наличии</div>}
-        <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} onClick={handleCardCliked}>
-          <div className="catalog__product-list-item-container">
+        <div className="catalog__product-list-item-container">
+          <Link className="catalog__product-list-route-link" to={`/catalog/${id}`} onClick={handleCardCliked}>
             <div className={`catalog__product-list-item-left-side`}>
               <div
                 className={`catalog__product-list-item-photo-container ${
@@ -78,23 +87,29 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
                 <p className="catalog__product-list-item-description">{productDescription}</p>
               </div>
             </div>
-            <div className="catalog__product-list-item-right-side">
-              <div className="catalog__product-list-item-price-container">
-                <span className="catalog__product-list-item-current-price">
-                  {Math.round(discountPrice > 0 ? discountPrice / 100 : defaultPrice / 100)} ₽
-                </span>
-                {discountPrice ? (
-                  <span className="catalog__product-list-item-prev-price">{`${Math.round(defaultPrice / 100)} ₽`}</span>
-                ) : (
-                  ''
-                )}
-              </div>
-              <Button disabled={!isInStock} type="button" className="button catalog__product-list-item-button">
-                В корзину
-              </Button>
+          </Link>
+          <div className="catalog__product-list-item-right-side">
+            <div className="catalog__product-list-item-price-container">
+              <span className="catalog__product-list-item-current-price">
+                {Math.round(discountPrice > 0 ? discountPrice / 100 : defaultPrice / 100)} ₽
+              </span>
+              {discountPrice ? (
+                <span className="catalog__product-list-item-prev-price">{`${Math.round(defaultPrice / 100)} ₽`}</span>
+              ) : (
+                ''
+              )}
             </div>
+            <Button
+              id={id}
+              disabled={!isInStock}
+              type="button"
+              className="button catalog__product-list-item-button"
+              // onClick={(event): Promise<void> => handleAddProductToCard(event)}
+            >
+              В корзину
+            </Button>
           </div>
-        </Link>
+        </div>
       </li>
     </>
   );

@@ -266,6 +266,12 @@
       }
     }
 
+    &__category-list {
+      &--padding-bottom-scroll {
+        min-height: 350px;
+      }
+    }
+
     &__mobile-sidebar--active {
       bottom: 0;
       z-index: 20;
@@ -275,6 +281,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    &__reset-filters-button {
+      min-height: 44px;
     }
   }
 }
