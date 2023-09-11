@@ -71,32 +71,27 @@ const DetailedProductSection = ({
 
   const handleAddProduct = async (): Promise<void> => {
     const userToken = localStorage.getItem('1SortUserToken');
-    const anonymousToken = localStorage.getItem('1SortAnonymousToken');
     console.log(id);
 
     try {
       if (userToken) {
-        const cartActive = await getActiveCart(true);
-        const cart = await addProduct(cartActive.id, cartActive.version, id, true);
-        console.log(cart);
-      } else if (anonymousToken) {
-        const cartActive = await getActiveCart(false);
-        const cart = await addProduct(cartActive.id, cartActive.version, id, false);
+        const cartActive = await getActiveCart(!!userToken);
+        const cart = await addProduct(cartActive.id, cartActive.version, id, !!userToken);
         console.log(cart);
       } else {
         const result = await createAnonymousToken();
         if (result !== null && typeof result === 'object') {
           saveUserToken(result as IUserTokenData, '1SortAnonymousToken');
-          const cartCreated = await createCart(false);
-          const cart = await addProduct(cartCreated.id, cartCreated.version, id, false);
+          const cartCreated = await createCart(!!userToken);
+          const cart = await addProduct(cartCreated.id, cartCreated.version, id, !!userToken);
           console.log(cart);
         }
       }
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response && axiosError.response.status === 404) {
-        const cartCreated = await createCart(true);
-        const cart = await addProduct(cartCreated.id, cartCreated.version, id, true);
+        const cartCreated = await createCart(!!userToken);
+        const cart = await addProduct(cartCreated.id, cartCreated.version, id, !!userToken);
         console.log(cart);
       } else {
         console.error('Произошла ошибка:', error);
@@ -106,18 +101,12 @@ const DetailedProductSection = ({
 
   // const handleDeleteProduct = async (): Promise<void> => {
   //   const userToken = localStorage.getItem('1SortUserToken');
-  //   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
   //   console.log(id);
 
   //   if (userToken) {
   //     const cartActive = await getActiveCart(true);
   //     const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-  //     const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, true);
-  //     console.log(cart);
-  //   } else if (anonymousToken) {
-  //     const cartActive = await getActiveCart(false);
-  //     const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-  //     const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false);
+  //     const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, !!userToken);
   //     console.log(cart);
   //   }
   // };
