@@ -3,6 +3,8 @@ enum ApiEndpoints {
   URL_API_ME = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/me',
   URL_API_ME_PASSWORD = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/me/password',
   URL_API_ME_CART = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/me/carts',
+  URL_API_DISCOUNT_CODE = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/discount-codes',
+  URL_API_CART_DISCOUNT = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/cart-discounts',
   URL_API_ME_CART_ACTIVE = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/me/active-cart',
   URL_LOGIN = 'https://api.europe-west1.gcp.commercetools.com/e-shop230731/login',
   URL_AUTH = 'https://auth.europe-west1.gcp.commercetools.com/oauth/e-shop230731',
