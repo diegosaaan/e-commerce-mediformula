@@ -1,5 +1,5 @@
 import './Cart.scss';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 import EmptyCart from './components/EmptyCart/EmptyCart';
@@ -46,21 +46,28 @@ export const cartLoader = async (): Promise<ICart | null> => {
 
 const CartPage = (): ReactElement => {
   const navigation = useNavigation();
+  const initialCartData = useLoaderData() as ICart;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cartState, setCartState] = useState(initialCartData);
 
   if (navigation.state === 'loading') {
     return <CirclePreloader pageClassname="catalog" />;
   }
 
-  const cartActive = useLoaderData() as ICart;
-
   return (
     <div className="cart-page _container">
-      <h2 className="cart__heading">Корзина</h2>
-      <div className="cart__content-container">
-        <ProductsList cart={cartActive} />
-        <InfoCard />
-      </div>
-      <EmptyCart />
+      {!initialCartData || !initialCartData.lineItems.length ? (
+        <EmptyCart />
+      ) : (
+        <>
+          <h2 className="cart__heading">Корзина</h2>
+          <div className="cart__content-container">
+            <ProductsList cartState={cartState} />
+            <InfoCard />
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -247,7 +247,7 @@ export interface ICart {
 }
 
 export interface IProductList {
-  cart: ICart;
+  cartState: ICart;
 }
 
 export interface IProductListItem {
