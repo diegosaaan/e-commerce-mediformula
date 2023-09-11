@@ -4,6 +4,7 @@ import { useNavigation } from 'react-router-dom';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 import EmptyCart from './components/EmptyCart/EmptyCart';
 import ProductsList from './components/ProductsList/ProductsList';
+import InfoCard from './components/InfoCard/InfoCard';
 
 export const cartLoader = async (): Promise<null> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,6 +44,7 @@ const CartPage = (): ReactElement => {
       <h2 className="cart__heading">Корзина</h2>
       <div className="cart__content-container">
         <ProductsList />
+        <InfoCard />
       </div>
       <EmptyCart />
     </div>
