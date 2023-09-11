@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { createAnonymousJSONHeaders, createUserJSONHeaders } from './headers';
+import { createAdminJSONHeaders, createAnonymousJSONHeaders, createUserJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { ICart, IUserTokenData } from '@/types/apiInterfaces';
 import { createAnonymousToken, saveUserToken } from './tokenHelpers';
@@ -71,6 +71,22 @@ export const deleteProduct = async (
 
   const res = await axios.post(`${ApiEndpoints.URL_API_ME_CART}/${idCart}`, requestData, {
     headers: isUser ? await createUserJSONHeaders() : await createAnonymousJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const getDiscountCodeByID = async (id: string): Promise<unknown> => {
+  const res = await axios.get(`${ApiEndpoints.URL_API_DISCOUNT_CODE}/${id}`, {
+    headers: await createAdminJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const getCartDiscountByID = async (id: string): Promise<unknown> => {
+  const res = await axios.get(`${ApiEndpoints.URL_API_CART_DISCOUNT}/${id}`, {
+    headers: await createAdminJSONHeaders(),
   });
 
   return res.data;
