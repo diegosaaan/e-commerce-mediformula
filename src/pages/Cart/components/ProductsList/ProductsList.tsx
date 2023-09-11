@@ -2,8 +2,9 @@ import React, { ReactElement } from 'react';
 import './ProductsList.scss';
 import Button from '@/components/Button/Button';
 import ProductListItem from '../ProductListItem.tsx/ProductListItem';
+import { IProductList } from '@/types/apiInterfaces';
 
-const ProductsList = (/* productsData */): ReactElement => {
+const ProductsList = ({ cart }: IProductList): ReactElement => {
   return (
     <section className="cart__product-list-container">
       <header className="cart__product-list-header">
@@ -12,13 +13,13 @@ const ProductsList = (/* productsData */): ReactElement => {
         </Button>
       </header>
       <ul className="cart__product-list">
-        {/* productsData.map((product) => {
-          <ProductListItem productData={product}/>
-        }) */}
+        {cart.lineItems.map((product, index) => (
+          <ProductListItem productData={product} key={index} />
+        ))}
+        {/* <ProductListItem />
         <ProductListItem />
         <ProductListItem />
-        <ProductListItem />
-        <ProductListItem />
+        <ProductListItem /> */}
       </ul>
     </section>
   );

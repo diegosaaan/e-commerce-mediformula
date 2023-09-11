@@ -2,23 +2,23 @@
 import React, { ReactElement, useState } from 'react';
 import Button from '@/components/Button/Button';
 import './ProductListItem.scss';
+import { IProductListItem } from '@/types/apiInterfaces';
 
-const ProductListItem = (
-  {
-    /* productData */
-  }
-): ReactElement => {
-  const [productCount, setProductCount] = useState(1);
+const ProductListItem = ({ productData }: IProductListItem): ReactElement => {
+  const [productCount, setProductCount] = useState(productData.quantity);
 
   const handleCounterButtonsClicked = (changeAmount: number): void => {
-    setProductCount((prevValue) => prevValue + changeAmount);
+    setProductCount((prevValue: number) => prevValue + changeAmount);
   };
 
   return (
     <li className="cart__product-list-item">
       <div className="cart__product-list-item-description">
-        <div className="cart__product-list-item-image-container"></div>
-        <h3 className="cart__product-list-item-heading">Тонометр AND UA-1300 с речевым выходом и сетевым адаптером</h3>
+        <div
+          className="cart__product-list-item-image-container"
+          style={{ backgroundImage: `url(${productData.variant.images[0].url})` }}
+        ></div>
+        <h3 className="cart__product-list-item-heading">{productData.name.ru}</h3>
       </div>
       <div className="cart__product-list-item-buttons-container">
         <div className="cart__product-list-item-counter-container">
@@ -39,8 +39,10 @@ const ProductListItem = (
           </Button>
         </div>
         <div className="cart__product-list-item-price-container">
-          <div className="cart__product-list-item-current-price">1 520₽</div>
-          <div className="cart__product-list-item-prev-price">1 600₽</div>
+          <div className="cart__product-list-item-current-price">{`${productData.price.value.centAmount}₽`}</div>
+          <div className="cart__product-list-item-prev-price">
+            {(productData.price.discounted && `${productData.price.discounted.value.centAmount}₽`) || ''}
+          </div>
         </div>
         <Button className="cart__product-list-item-delete-button" type="button" />
       </div>
