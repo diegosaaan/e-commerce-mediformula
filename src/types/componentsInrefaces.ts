@@ -34,12 +34,13 @@ export interface IAccordionProps {
 }
 
 export interface IPropsButton {
+  id?: string;
   type: 'button' | 'submit' | 'reset';
   text?: string;
   children?: ReactNode;
   className: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (event?: MouseEvent) => void | Promise<void>;
 }
 
 export interface IPropsInput {
