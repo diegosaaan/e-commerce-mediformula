@@ -33,7 +33,7 @@ const ProductListItem = (
           <Button
             className="cart__product-list-item-increase-count"
             type="button"
-            onClick={(): void => handleCounterButtonsClicked(-1)}
+            onClick={(): void => handleCounterButtonsClicked(1)}
           >
             +
           </Button>

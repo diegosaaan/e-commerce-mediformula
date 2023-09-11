@@ -18,6 +18,26 @@
 
     &-clear-btn {
       @include GolosRegular(16px, 1, $grayscale-600);
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    &-clear-btn:focus {
+      @extend %GreyLinkFocus;
+    }
+
+    &-clear-btn:focus:active {
+      @extend %GreyLinkActive;
+    }
+  }
+}
+
+@media (hover:hover) {
+  .cart {
+    &__product-list-header {
+      &-clear-btn:hover {
+        color: $color-primary;
+      }
     }
   }
 }

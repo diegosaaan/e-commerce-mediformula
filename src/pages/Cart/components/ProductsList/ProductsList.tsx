@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
 import './ProductsList.scss';
-import { Button } from 'antd';
+import Button from '@/components/Button/Button';
 import ProductListItem from '../ProductListItem.tsx/ProductListItem';
 
 const ProductsList = (/* productsData */): ReactElement => {
   return (
     <section className="cart__product-list-container">
       <header className="cart__product-list-header">
-        <Button className="cart__product-list-header-clear-btn" type="text">
+        <Button className="cart__product-list-header-clear-btn" type="button">
           Очистить корзину
         </Button>
       </header>
