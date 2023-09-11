@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createAnonymousJSONHeaders, createUserJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
-import { ICart } from '@/types/apiInterfaces';
+import { ICart, IUserTokenData } from '@/types/apiInterfaces';
+import { createAnonymousToken, saveUserToken } from './tokenHelpers';
 
 export const createCart = async (isUser: boolean): Promise<ICart> => {
   const requestData = {
@@ -122,4 +123,153 @@ export const deleteDiscountCode = async (
   });
 
   return res.data;
+};
+
+export const handleDeleteProduct = async (id: string, quantity: number = 1): Promise<ICart> => {
+  const userToken = localStorage.getItem('1SortUserToken');
+  const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+
+  if (userToken) {
+    const cartActive = await getActiveCart(true);
+    const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+    const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, true, quantity);
+    return cart;
+  }
+
+  if (anonymousToken) {
+    const cartActive = await getActiveCart(false);
+    const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+    const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false, quantity);
+    return cart;
+  }
+
+  return Promise.resolve({
+    cartState: '',
+    createdAt: '',
+    createdBy: {
+      clientId: '',
+      isPlatformClient: false,
+      customer: {
+        typeId: '',
+        id: '',
+      },
+    },
+    customLineItems: [],
+    customerId: '',
+    deleteDaysAfterLastModification: 0,
+    directDiscounts: [],
+    discountCodes: [],
+    id: '',
+    inventoryMode: '',
+    itemShippingAddresses: [],
+    lastMessageSequenceNumber: 0,
+    lastModifiedAt: '',
+    lastModifiedBy: {
+      clientId: '',
+      isPlatformClient: false,
+      customer: {
+        typeId: '',
+        id: '',
+      },
+    },
+    lineItems: [],
+    origin: '',
+    refusedGifts: [],
+    shipping: [],
+    shippingMode: '',
+    taxCalculationMode: '',
+    taxMode: '',
+    taxRoundingMode: '',
+    totalPrice: {
+      type: '',
+      currencyCode: '',
+      centAmount: 0,
+      fractionDigits: 0,
+    },
+    type: '',
+    version: 0,
+    versionModifiedAt: '',
+  });
+};
+
+export const handleAddProduct = async (id: string, quantity: number = 1): Promise<ICart> => {
+  const userToken = localStorage.getItem('1SortUserToken');
+  const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+
+  try {
+    if (userToken) {
+      const cartActive = await getActiveCart(true);
+      const cart = await addProduct(cartActive.id, cartActive.version, id, true, quantity);
+      return cart;
+    }
+
+    if (anonymousToken) {
+      const cartActive = await getActiveCart(false);
+      const cart = await addProduct(cartActive.id, cartActive.version, id, false, quantity);
+      return cart;
+    }
+
+    const result = await createAnonymousToken();
+    if (result !== null && typeof result === 'object') {
+      saveUserToken(result as IUserTokenData, '1SortAnonymousToken');
+      const cartCreated = await createCart(false);
+      const cart = await addProduct(cartCreated.id, cartCreated.version, id, false, quantity);
+      return cart;
+    }
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response && axiosError.response.status === 404) {
+      const cartCreated = await createCart(true);
+      const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
+      return cart;
+    }
+  }
+
+  return Promise.resolve({
+    cartState: '',
+    createdAt: '',
+    createdBy: {
+      clientId: '',
+      isPlatformClient: false,
+      customer: {
+        typeId: '',
+        id: '',
+      },
+    },
+    customLineItems: [],
+    customerId: '',
+    deleteDaysAfterLastModification: 0,
+    directDiscounts: [],
+    discountCodes: [],
+    id: '',
+    inventoryMode: '',
+    itemShippingAddresses: [],
+    lastMessageSequenceNumber: 0,
+    lastModifiedAt: '',
+    lastModifiedBy: {
+      clientId: '',
+      isPlatformClient: false,
+      customer: {
+        typeId: '',
+        id: '',
+      },
+    },
+    lineItems: [],
+    origin: '',
+    refusedGifts: [],
+    shipping: [],
+    shippingMode: '',
+    taxCalculationMode: '',
+    taxMode: '',
+    taxRoundingMode: '',
+    totalPrice: {
+      type: '',
+      currencyCode: '',
+      centAmount: 0,
+      fractionDigits: 0,
+    },
+    type: '',
+    version: 0,
+    versionModifiedAt: '',
+  });
 };
