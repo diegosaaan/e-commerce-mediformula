@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import './PopupAddress.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import { message } from 'antd';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { IPropsPopupAddress } from '@/types/componentsInrefaces';
