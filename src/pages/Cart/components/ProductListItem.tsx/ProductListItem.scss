@@ -1,0 +1,114 @@
+.cart {
+  &__product-list {
+    width: 100%;
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 29px 0px;
+      width: 100%;
+      border-top: 1px solid $grayscale-400;
+
+      &-description {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      &-image-container {
+        width: 88px;
+        height: 88px;
+        background-image: url('@/assets/images/png/card-product-image-example.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      &-heading {
+        @include GolosMedium(16px, 1, $grayscale-900);
+        max-width: 370px;
+      }
+
+      &-buttons-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      &-counter-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100px;
+        height: 44px;
+        background-color: $grayscale-300;
+        border-radius: 8px;
+      }
+
+      &-decrease-count,
+      &-increase-count,
+      &-counter {
+        @include GolosMedium(20px, 1, $grayscale-900);
+        padding: 0;
+      }
+
+      &-counter {
+        width: 30px;
+        text-align: center;
+      }
+
+      &-decrease-count,
+      &-increase-count {
+        font-size: 24px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+      }
+
+      &-price-container {
+        display: flex;
+        gap: 15px;
+      }
+
+      &-current-price {
+        @include GolosMedium(18px, 1, $grayscale-900);
+      }
+
+      &-prev-price {
+        @include GolosRegular(16px, 1, $grayscale-600);
+        text-decoration: line-through;
+      }
+
+      &-delete-button {
+        width: 20px;
+        height: 20px;
+        background-image: url('@/assets/images/png/cart-delete-product.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        // opacity: 0;
+        // visibility: hidden;
+        transition: 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .cart {
+    &__product-list {
+      // &-item:hover &-item-delete-button {
+      //   opacity: 1;
+      //   visibility: visible;
+      // }
+
+      &-item {
+        &-decrease-count:hover,
+        &-increase-count:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+}
