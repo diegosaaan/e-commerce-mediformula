@@ -245,11 +245,3 @@ export interface ICart {
   version: number;
   versionModifiedAt: string;
 }
-
-export interface IProductList {
-  cartState: ICart;
-}
-
-export interface IProductListItem {
-  productData: ILineItem;
-}
