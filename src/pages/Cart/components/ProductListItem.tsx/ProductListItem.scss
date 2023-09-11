@@ -66,6 +66,11 @@
         transition: 0.3s ease-in-out;
       }
 
+      &-decrease-count:disabled,
+      &-increase-count:disabled {
+        color: $grayscale-600;
+      }
+
       &-price-container {
         display: flex;
         gap: 15px;
@@ -98,15 +103,23 @@
 @media (hover: hover) {
   .cart {
     &__product-list {
-      // &-item:hover &-item-delete-button {
-      //   opacity: 1;
-      //   visibility: visible;
-      // }
+      &-item:hover &-item-delete-button {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
 
       &-item {
         &-decrease-count:hover,
         &-increase-count:hover {
           transform: scale(1.2);
+        }
+      }
+
+      &-item {
+        &-decrease-count:hover:disabled,
+        &-increase-count:hover:disabled {
+          transform: scale(1);
+          cursor: default;
         }
       }
     }
