@@ -160,7 +160,7 @@ const PageNav = (): ReactElement => {
               <li className="header__item-cart">
                 <NavLink className={setActiveClass} to="/cart">
                   <Button className="header__button-cart" type="button">
-                    {userCart && (
+                    {userCart && userCart.lineItems.length > 0 && (
                       <p className="header__button-cart-text">
                         {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
                       </p>
@@ -210,7 +210,7 @@ const PageNav = (): ReactElement => {
               >
                 <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_cart"></div>
                 <p className="header__button-text-mobile">Корзина</p>
-                {userCart && (
+                {userCart && userCart.lineItems.length > 0 && (
                   <p className="header__button-cart-text header__button-cart-text_type_mobile">
                     {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
                   </p>
