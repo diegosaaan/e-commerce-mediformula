@@ -1,0 +1,238 @@
+.about-page {
+  margin-top: 40px;
+
+  &__intro-text {
+    @include GolosRegular(
+      clamp(16px, calc(16px + (24 - 16) * (100vw - 360px) / (1560 - 360)), 24px),
+      140%,
+      $grayscale-900
+    );
+  }
+
+  &__intro-first {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  &__school-icon {
+    display: block;
+    width: 240px;
+    height: 80px;
+    background-size: contain;
+    background-image: url('@/assets/images/svg/about-rs-school-icon.svg');
+    background-repeat: no-repeat;
+  }
+
+  &__mentors {
+    color: $color-login;
+  }
+
+  &__title-about {
+    position: relative;
+    margin-top: 100px;
+    padding: 1em 0.25em;
+    @include GolosBold(clamp(20px, calc(20px + (36 - 20) * (100vw - 360px) / (1560 - 360)), 36px), 110%, $grayscale-50);
+    text-align: center;
+    color: $grayscale-50;
+    background-color: $color-primary;
+  }
+
+  &__title-about:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 20px solid $color-primary;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  &__person-section {
+    display: grid;
+    grid-gap: clamp(20px, calc(20px + (40 - 20) * (100vw - 360px) / (1560 - 360)), 40px);
+    grid-template-columns: 40% calc(60% - 40px);
+  }
+
+  &__person-section--reverse {
+    grid-template-columns: calc(60% - 40px) 40%;
+  }
+
+  &__person-section--reverse &__person-photo {
+    order: 2;
+  }
+
+  &__person-section--reverse &__person-info {
+    order: 1;
+  }
+
+  &__person-photo {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center 56px;
+  }
+
+  &__person-info {
+    padding: 56px 0;
+  }
+
+  &__bio-heading {
+    @include GolosMedium(
+      clamp(18px, calc(18px + (28 - 18) * (100vw - 360px) / (1560 - 360)), 28px),
+      110%,
+      $grayscale-900
+    );
+    text-transform: uppercase;
+  }
+
+  &__bio-role {
+    margin-top: 0.5em;
+    @include GolosMedium(
+      clamp(14px, calc(14px + (18 - 14) * (100vw - 360px) / (1560 - 360)), 18px),
+      110%,
+      $grayscale-600
+    );
+    text-transform: uppercase;
+  }
+
+  &__bio-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 1.25em;
+  }
+
+  &__bio-text {
+    @include GolosRegular(
+      clamp(14px, calc(14px + (18 - 14) * (100vw - 360px) / (1560 - 360)), 18px),
+      160%,
+      $grayscale-900
+    );
+  }
+
+  &__bio-list {
+    margin-left: 20px;
+    @include GolosRegular(
+      clamp(14px, calc(14px + (18 - 14) * (100vw - 360px) / (1560 - 360)), 18px),
+      160%,
+      $grayscale-900
+    );
+    list-style-type: disc;
+  }
+
+  &__social {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 2.25em;
+  }
+
+  &__social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-image: url('@/assets/images/svg/about-github-logo.svg');
+    background-repeat: no-repeat;
+  }
+
+  &__social-link {
+    @include GolosMedium(
+      clamp(14px, calc(14px + (18 - 14) * (100vw - 360px) / (1560 - 360)), 18px),
+      100%,
+      $grayscale-900
+    );
+    text-transform: lowercase;
+  }
+
+  @media (max-width: $tablet) {
+    &__intro-first {
+      flex-direction: column-reverse;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    &__title-about {
+      margin-top: 40px;
+    }
+
+    &__person-section,
+    &__person-section--reverse {
+      grid-gap: 20px;
+      grid-template-columns: 100%;
+      grid-template-rows: auto auto;
+      margin-top: 40px;
+    }
+
+    &__person-section &__person-photo,
+    &__person-section--reverse &__person-photo {
+      grid-column-start: 1;
+      grid-row-start: 1;
+    }
+
+    &__person-section &__person-info,
+    &__person-section--reverse &__person-info {
+      grid-column-start: 1;
+      grid-row-start: 2;
+    }
+
+    &__person-photo {
+      min-height: 320px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &__person-info {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: $mobile) {
+    &__person-photo {
+      background-size: cover;
+    }
+  }
+}
+
+.photo-alexander {
+  background-image: url('@/assets/photos/Alexander.jpg');
+}
+
+.photo-evgeniya {
+  background-image: url('@/assets/photos/Evgenia.jpg');
+}
+
+.photo-julia {
+  background-image: url('@/assets/photos/Julia.jpg');
+}
+
+.about-page {
+  @media (hover: hover) {
+    &__school-icon:hover {
+      background-image: url('@/assets/images/svg/about-rs-school-icon-hover.svg');
+    }
+
+    &__mentors:hover,
+    &__social-link:hover {
+      @include GreyLinkHover;
+    }
+  }
+
+  &__school-icon:focus,
+  &__mentors:focus,
+  &__social-link:focus {
+    @extend %GreyLinkFocus;
+  }
+
+  &__school-icon:focus:active,
+  &__mentors:focus:active,
+  &__social-link:focus:active {
+    @extend %GreyLinkActive;
+  }
+}
