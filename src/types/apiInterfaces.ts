@@ -188,6 +188,35 @@ export interface IUserInfo {
   authenticationMode: 'Password';
 }
 
+export interface ILineItem {
+  id: string;
+  productId: string;
+  name: { ru: string };
+  price: {
+    id: string;
+    value: {
+      centAmount: number;
+      currencyCode: string;
+      fractionDigits: number;
+      type: string;
+    };
+    discounted?: {
+      discount: {
+        id: string;
+        typeId: string;
+      };
+      value: {
+        centAmount: number;
+        currencyCode: string;
+        fractionDigits: number;
+        type: string;
+      };
+    };
+  };
+  quantity: number;
+  variant: { images: { url: string }[] };
+}
+
 export interface ICart {
   cartState: string;
   createdAt: string;
@@ -203,7 +232,7 @@ export interface ICart {
   lastMessageSequenceNumber: number;
   lastModifiedAt: string;
   lastModifiedBy: { clientId: string; isPlatformClient: boolean; customer: { typeId: string; id: string } };
-  lineItems: { id: string; productId: string }[];
+  lineItems: ILineItem[];
   origin: string;
   refusedGifts: [];
   shipping: [];
@@ -215,4 +244,12 @@ export interface ICart {
   type: string;
   version: number;
   versionModifiedAt: string;
+}
+
+export interface IProductList {
+  cart: ICart;
+}
+
+export interface IProductListItem {
+  productData: ILineItem;
 }
