@@ -5,9 +5,12 @@ import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
 import Button from '@/components/Button/Button';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
+import { handleAddProduct } from '@/services/cart';
+import useAuth from '@/utils/hooks/useAuth';
 // import { addProductToCart } from '@/services/cart';
 
 const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
+  const { setUserCart } = useAuth();
   const [isDataFetching, setIsDataFetcing] = useState(false);
   const {
     id,
@@ -59,6 +62,10 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
   //   }
   // };
 
+  const handleAddProductInCart = async (): Promise<void> => {
+    setUserCart(await handleAddProduct(id));
+  };
+
   return (
     <>
       {isDataFetching && <SpinnerPreloader pageClassname="catalog" isDataFetching={isDataFetching} />}
@@ -104,7 +111,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
               disabled={!isInStock}
               type="button"
               className="button catalog__product-list-item-button"
-              // onClick={(event): Promise<void> => handleAddProductToCard(event)}
+              onClick={handleAddProductInCart}
             >
               В корзину
             </Button>

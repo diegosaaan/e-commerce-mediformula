@@ -3,9 +3,13 @@ import './SwiperCard.scss';
 import Button from '../Button/Button';
 import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
+import { handleAddProduct } from '@/services/cart';
+import useAuth from '@/utils/hooks/useAuth';
 
 const SwiperCard = ({ productData }: { productData: IProductData }): ReactElement => {
+  const { setUserCart } = useAuth();
   const {
+    id,
     name: { ru: productName },
     masterVariant: {
       images: [{ url: imageUrl, label: imageAltText }],
@@ -24,6 +28,10 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
     discountPrice = discounted.value.centAmount;
     discountValue = `${DiscountsID[`${discounted.discount.id}` as keyof typeof DiscountsID]}`;
   }
+
+  const handleAddProductInCart = async (): Promise<void> => {
+    setUserCart(await handleAddProduct(id));
+  };
 
   return (
     <div className="product-card">
@@ -47,7 +55,17 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
         </div>
       </div>
       <div className="product-card__button-container">
-        <Button className="button" type="button" text="В корзину" onClick={(): void => {}} />
+        <Button
+          className="button"
+          type="button"
+          text="В корзину"
+          onClick={(event?: React.MouseEvent<Element, MouseEvent>): void => {
+            if (event) {
+              event.preventDefault();
+            }
+            handleAddProductInCart();
+          }}
+        />
       </div>
     </div>
   );
