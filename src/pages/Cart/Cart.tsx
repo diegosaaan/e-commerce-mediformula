@@ -12,26 +12,6 @@ import { getActiveCart } from '@/services/cart';
 export const cartLoader = async (): Promise<ICart | null> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // const url = `${ApiEndpoints.URL_CART}`;
-
-  // try {
-  //   const cartData = await new Promise((resolve) => {
-  //     setTimeout(async () => {
-  //       const data = await getCart(url);
-  //       resolve(data);
-  //     }, 500);
-  //   });
-
-  //   console.log(cartData);
-
-  //   return {
-  //     cartData,
-  //   };
-  // } catch (error) {
-  //   console.log(error);
-  //   return null;
-  // }
-
   const userToken = localStorage.getItem('1SortUserToken');
   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
 

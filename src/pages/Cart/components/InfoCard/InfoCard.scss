@@ -13,6 +13,62 @@
   &__info-card {
     padding-bottom: 16px;
 
+    &-promo-code-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-left: 16px;
+      padding-right: 8px;
+      width: 100%;
+      height: 44px;
+      background-color: $grayscale-200;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    &-promo-code-input {
+      @include GolosRegular(16px, 1, $grayscale-900);
+      max-width: 200px;
+      height: 100%;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      transition: 0.3s ease-in-out;
+    }
+
+    &-promo-code-input:focus {
+      outline: none;
+      border: none;
+    }
+
+    &-use-promo-code-button {
+      @include GolosMedium(16px, 1, $grayscale-900);
+      padding: 9px 12px;
+      border-radius: 4px;
+      background-color: $grayscale-50;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    &-used-promo-code {
+      @include GolosRegular(16px, 1, $grayscale-900);
+      padding-left: 25px;
+      background-image: url('@/assets/images/png/cart-active-promo.png');
+      background-repeat: no-repeat;
+      background-position: left center;
+    }
+
+    &-delete-promo-code {
+      width: 18px;
+      height: 18px;
+      background-image: url('@/assets/images/png/cart-delete-promo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
     &-products-info,
     &-discount-info,
     &-products-final-price-container {
@@ -23,6 +79,12 @@
 
     &-discount-info {
       margin-top: 12px;
+      transition: 0.15s ease-in-out;
+
+      &--hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
     &-products-count,
@@ -51,6 +113,21 @@
       margin-top: 24px;
       width: 100%;
       max-width: 100%;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .cart {
+    &__info-card {
+      &-delete-promo-code:hover {
+        transform: scale(1.2);
+      }
+
+      &-use-promo-code-button:hover {
+        color: $grayscale-50;
+        background-color: $color-primary;
+      }
     }
   }
 }
