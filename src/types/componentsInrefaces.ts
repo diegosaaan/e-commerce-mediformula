@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { ObjectSchema } from 'yup';
 import { AddressType, LoginSchemaType } from './types';
-import { IProductData, IUserInfo } from './apiInterfaces';
+import { ICart, IProductData, IUserInfo } from './apiInterfaces';
 
 export interface IAuthContextValue {
   isUserLoggedIn: Promise<boolean> | boolean;
@@ -21,6 +21,8 @@ export interface IAuthContextValue {
   signOut: (cb: () => void) => void;
   userInfo: IUserInfo | null;
   setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | null>>;
+  userCart: ICart | null;
+  setUserCart: React.Dispatch<React.SetStateAction<ICart | null>>;
 }
 
 export interface IAccordionProps {
