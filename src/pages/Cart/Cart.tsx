@@ -48,7 +48,7 @@ export const cartLoader = async (): Promise<ICart | null> => {
 const CartPage = (): ReactElement => {
   const navigation = useNavigation();
   const initialCartData = useLoaderData() as ICart;
-  const { setUserCart } = useAuth();
+  const { userCart, setUserCart } = useAuth();
 
   useEffect(() => {
     setUserCart(initialCartData);
@@ -60,7 +60,7 @@ const CartPage = (): ReactElement => {
 
   return (
     <div className="cart-page _container">
-      {!initialCartData || !initialCartData.lineItems.length ? (
+      {!userCart || !userCart.lineItems.length ? (
         <EmptyCart />
       ) : (
         <>
