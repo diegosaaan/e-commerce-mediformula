@@ -1,12 +1,13 @@
 import './Cart.scss';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 import EmptyCart from './components/EmptyCart/EmptyCart';
 import ProductsList from './components/ProductsList/ProductsList';
 import InfoCard from './components/InfoCard/InfoCard';
-import { getActiveCart } from '@/services/cart';
 import { ICart } from '@/types/apiInterfaces';
+import useAuth from '@/utils/hooks/useAuth';
+import { getActiveCart } from '@/services/cart';
 
 export const cartLoader = async (): Promise<ICart | null> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -47,9 +48,11 @@ export const cartLoader = async (): Promise<ICart | null> => {
 const CartPage = (): ReactElement => {
   const navigation = useNavigation();
   const initialCartData = useLoaderData() as ICart;
+  const { setUserCart } = useAuth();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cartState, setCartState] = useState(initialCartData);
+  useEffect(() => {
+    setUserCart(initialCartData);
+  }, []);
 
   if (navigation.state === 'loading') {
     return <CirclePreloader pageClassname="catalog" />;
@@ -63,7 +66,7 @@ const CartPage = (): ReactElement => {
         <>
           <h2 className="cart__heading">Корзина</h2>
           <div className="cart__content-container">
-            <ProductsList cartState={cartState} />
+            <ProductsList />
             <InfoCard />
           </div>
         </>

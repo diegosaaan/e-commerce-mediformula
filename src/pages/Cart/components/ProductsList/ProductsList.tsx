@@ -2,9 +2,12 @@ import React, { ReactElement } from 'react';
 import './ProductsList.scss';
 import Button from '@/components/Button/Button';
 import ProductListItem from '../ProductListItem.tsx/ProductListItem';
-import { IProductList } from '@/types/apiInterfaces';
+import { ILineItem } from '@/types/apiInterfaces';
+import useAuth from '@/utils/hooks/useAuth';
 
-const ProductsList = ({ cartState }: IProductList): ReactElement => {
+const ProductsList = (): ReactElement => {
+  const { userCart } = useAuth();
+
   return (
     <section className="cart__product-list-container">
       <header className="cart__product-list-header">
@@ -13,13 +16,8 @@ const ProductsList = ({ cartState }: IProductList): ReactElement => {
         </Button>
       </header>
       <ul className="cart__product-list">
-        {cartState.lineItems.map((product, index) => (
-          <ProductListItem productData={product} key={index} />
-        ))}
-        {/* <ProductListItem />
-        <ProductListItem />
-        <ProductListItem />
-        <ProductListItem /> */}
+        {userCart &&
+          userCart.lineItems.map((product: ILineItem) => <ProductListItem productData={product} key={product.id} />)}
       </ul>
     </section>
   );
