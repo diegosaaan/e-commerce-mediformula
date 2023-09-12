@@ -177,7 +177,7 @@ export const handleDeleteProduct = async (id: string, quantity: number = 1): Pro
     }
   }
 
-  return Promise.resolve(null);
+  return null;
 };
 
 export const handleAddProduct = async (id: string, quantity: number = 1): Promise<ICart | null> => {
@@ -227,5 +227,5 @@ export const handleAddProduct = async (id: string, quantity: number = 1): Promis
     }
   }
 
-  return Promise.resolve(null);
+  return null;
 };
