@@ -3,7 +3,7 @@ import './InfoCard.scss';
 import React, { ReactElement, useState, useEffect } from 'react';
 import Button from '@/components/Button/Button';
 import { ICart } from '@/types/apiInterfaces';
-import { addDiscountCode, deleteDiscountCode } from '@/services/cart';
+import { addDiscountCode, deleteDiscountCode, getActiveCart } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 
 const declensionOfTheWordCommodity = (quantity: number): string => {
@@ -34,7 +34,9 @@ const InfoCard = (): ReactElement => {
 
   const [isPromoCodeActive, setIsPromoCodeActive] = useState(!!discountCodes.length);
   const [initialCartPrice, setInitialCartPrice] = useState(cartPrice);
+  const [finalCartPrice, setFinalCartPrice] = useState(cartPrice);
   const [promoCodeInputValue, setPromoCodeInputValue] = useState('');
+  const [isInitialMount, setIsInitialMount] = useState(true);
 
   const handleAddPromoCode = async (): Promise<void> => {
     const isUserToken = !!localStorage.getItem('1SortUserToken');
@@ -44,35 +46,54 @@ const InfoCard = (): ReactElement => {
   };
 
   const handleDeletePromoCode = async (): Promise<void> => {
-    const isUserToken = !!localStorage.getItem('1SortUserToken');
-    const discountCodeID = discountCodes[0].discountCode.id;
-    const updatedCart = await deleteDiscountCode(cartId, cartVersion, isUserToken, discountCodeID);
-    setIsPromoCodeActive(false);
-    setUserCart(updatedCart);
+    let currentCart;
+    if (localStorage.getItem('1SortUserToken')) {
+      const updatedUserCart = await getActiveCart(true);
+      currentCart = updatedUserCart;
+    } else if (localStorage.getItem('1SortAnonymousToken')) {
+      const updatedUserCart = await getActiveCart(false);
+      currentCart = updatedUserCart;
+    }
+    if (currentCart) {
+      const isUserToken = !!localStorage.getItem('1SortUserToken');
+      const discountCodeID = currentCart.discountCodes[0].discountCode.id;
+      const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
+      setIsPromoCodeActive(false);
+      setUserCart(updatedCart);
+      setFinalCartPrice(updatedCart.totalPrice.centAmount);
+    }
   };
 
   const setInitialAndFinalCartPrices = async (): Promise<void> => {
-    if (discountCodes.length) {
-      const absoluteDiscountValue = ((cartPrice / 95) * 5) / 100;
-      const prevPrice = absoluteDiscountValue + cartPrice / 100;
-
-      if (prevPrice > absoluteDiscountValue + cartPrice / 100) {
-        setInitialCartPrice(Math.floor(prevPrice * 100));
-      } else {
-        setInitialCartPrice(Math.ceil(prevPrice * 100));
-      }
-
+    if (discountCodes.length && userCart) {
+      const discountCodeID = userCart.discountCodes[0].discountCode.id;
+      const isUserToken = !!localStorage.getItem('1SortUserToken');
+      const cartWithouthDiscount = await deleteDiscountCode(userCart.id, userCart.version, isUserToken, discountCodeID);
+      setInitialCartPrice(cartWithouthDiscount.totalPrice.centAmount);
       setPromoCodeInputValue('3562Y5');
 
+      const currentCart = await addDiscountCode(
+        cartWithouthDiscount.id,
+        cartWithouthDiscount.version,
+        isUserToken,
+        '3562Y5'
+      );
+
+      setFinalCartPrice(currentCart.totalPrice.centAmount);
       setIsPromoCodeActive(true);
     } else {
       setIsPromoCodeActive(false);
       setInitialCartPrice(cartPrice);
+      setFinalCartPrice(cartPrice);
     }
   };
 
   useEffect(() => {
-    setInitialAndFinalCartPrices();
+    if (isInitialMount) {
+      setIsInitialMount(false);
+    } else {
+      setInitialAndFinalCartPrices();
+    }
   }, [userCart]);
 
   return (
@@ -93,7 +114,7 @@ const InfoCard = (): ReactElement => {
         >
           <div className="cart__info-card-products-relative-discount">Промокод 3562Y5</div>
           <div className="cart__info-card-products-absolute-discount">
-            - {Math.round((initialCartPrice - cartPrice) / 100)}₽
+            - {Math.round((initialCartPrice - finalCartPrice) / 100).toLocaleString('ru-RU')}₽
           </div>
         </div>
         <div className="cart__info-card-promo-code-container">
