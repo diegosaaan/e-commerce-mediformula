@@ -1,4 +1,5 @@
 import './DetailedProductSection.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
@@ -6,12 +7,13 @@ import 'swiper/css/free-mode';
 import React, { ReactElement, MouseEvent, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import { notification } from 'antd';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import { IProductData } from '@/types/apiInterfaces';
 import brandsIcons from './brandsIcons';
-import { handleAddProduct } from '@/services/cart';
+import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 
 const DetailedProductSection = ({
@@ -21,7 +23,7 @@ const DetailedProductSection = ({
   productData: IProductData;
   isDataFetching: boolean;
 }): ReactElement => {
-  const { setUserCart } = useAuth();
+  const { userCart, setUserCart } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -70,20 +72,29 @@ const DetailedProductSection = ({
   };
 
   const handleAddProductInCart = async (): Promise<void> => {
-    setUserCart(await handleAddProduct(id));
+    const result = await handleAddProduct(id);
+    if (result) {
+      setUserCart(result);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
+        description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
+      });
+    }
   };
 
-  // const handleAddDiscount = async (): Promise<void> => {
-  //   const cartActive = await getActiveCart(true);
-  //   const res = await addDiscountCode(cartActive.id, cartActive.version, true);
-  //   console.log(res);
-  // };
-
-  // const handleDeleteDiscount = async (): Promise<void> => {
-  //   const cartActive = await getActiveCart(true);
-  //   const res = await deleteDiscountCode(cartActive.id, cartActive.version, true);
-  //   console.log(res);
-  // };
+  const handleDeleteProductInCart = async (): Promise<void> => {
+    const product = userCart?.lineItems.filter((item) => item.productId === id);
+    if (product) {
+      const result = await handleDeleteProduct(id, product[0].quantity);
+      if (result) {
+        setUserCart(result);
+        notification.success({
+          message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+          description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
+        });
+      }
+    }
+  };
 
   return (
     <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
@@ -212,8 +223,12 @@ const DetailedProductSection = ({
               <Button
                 className="button"
                 type="button"
-                text="В корзину"
-                onClick={handleAddProductInCart}
+                text={userCart?.lineItems.some((product) => product.productId === id) ? 'Удалить' : 'В корзину'}
+                onClick={
+                  userCart?.lineItems.some((product) => product.productId === id)
+                    ? handleDeleteProductInCart
+                    : handleAddProductInCart
+                }
                 disabled={!isInStock}
               />
             </div>

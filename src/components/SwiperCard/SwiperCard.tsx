@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
 import './SwiperCard.scss';
+import { notification } from 'antd';
 import Button from '../Button/Button';
 import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
-import { handleAddProduct } from '@/services/cart';
+import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 
 const SwiperCard = ({ productData }: { productData: IProductData }): ReactElement => {
-  const { setUserCart } = useAuth();
+  const { userCart, setUserCart } = useAuth();
   const {
     id,
     name: { ru: productName },
@@ -30,7 +31,28 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
   }
 
   const handleAddProductInCart = async (): Promise<void> => {
-    setUserCart(await handleAddProduct(id));
+    const result = await handleAddProduct(id);
+    if (result) {
+      setUserCart(result);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
+        description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
+      });
+    }
+  };
+
+  const handleDeleteProductInCart = async (): Promise<void> => {
+    const artifact = userCart?.lineItems.filter((item) => item.productId === id);
+    if (artifact) {
+      const result = await handleDeleteProduct(id, artifact[0].quantity);
+      if (result) {
+        setUserCart(result);
+        notification.success({
+          message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+          description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
+        });
+      }
+    }
   };
 
   return (
@@ -58,12 +80,19 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
         <Button
           className="button"
           type="button"
-          text="В корзину"
+          text={userCart?.lineItems.some((item) => item.productId === id) ? 'Удалить' : 'В корзину'}
           onClick={(event?: React.MouseEvent<Element, MouseEvent>): void => {
             if (event) {
               event.preventDefault();
             }
-            handleAddProductInCart();
+            if (userCart) {
+              const shouldDelete = userCart.lineItems.some((item) => item.productId === id);
+              if (shouldDelete) {
+                handleDeleteProductInCart();
+              } else {
+                handleAddProductInCart();
+              }
+            }
           }}
         />
       </div>
