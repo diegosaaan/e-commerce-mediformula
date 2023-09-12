@@ -11,15 +11,20 @@ const errorMessages: ErrorMessages = {
   [CommonErrors.CredentialsNotFound]: 'Вы ввели неправильный логин или пароль',
   [CommonErrors.ServerError]: 'Ошибка сервера, повторите запрос позднее',
   [CommonErrors.ServiceUnavailable]: 'На данный момент сервер перегружен, повторите запрос позднее',
+  DiscountCodeNonApplicable: 'Введенного промокода не существует',
 };
 
-const getErrorMessage = (status: number, errorMessage: string): string => {
+const getErrorMessage = (status: number, errorMessage: string, code: string): string => {
   if (errorMessage in errorMessages) {
     return errorMessages[errorMessage];
   }
 
   if (status.toString() in errorMessages) {
     return errorMessages[status.toString()];
+  }
+
+  if (code in errorMessages) {
+    return errorMessages[code];
   }
 
   return 'Произошла ошибка';
@@ -32,8 +37,8 @@ const showNotification = (description: string): void => {
   });
 };
 
-const handleErrors = (status: number, errorMessage: string): void => {
-  const description = getErrorMessage(status, errorMessage);
+const handleErrors = (status: number, errorMessage: string, code: string = ''): void => {
+  const description = getErrorMessage(status, errorMessage, code);
   showNotification(description);
 };
 
