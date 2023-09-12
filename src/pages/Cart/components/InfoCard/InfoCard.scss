@@ -96,6 +96,7 @@
 
     &-discount-info {
       margin-top: 12px;
+      height: 20px;
       transition: 0.15s ease-in-out;
 
       &--hidden {
@@ -106,7 +107,7 @@
 
     &-products-count,
     &-products-price,
-    &-products-relative-discount,
+    &-products-discount-name,
     &-products-absolute-discount {
       @include GolosRegular(16px, 1, $grayscale-900);
     }
@@ -133,6 +134,7 @@
     &-products-final-price_type_loading {
       min-width: 70px;
       color: transparent;
+      border-radius: 4px;
       animation: loading 1s infinite;
     }
 
@@ -148,6 +150,40 @@
       background-image: url('@/assets/images/svg/cart-help.svg');
       background-repeat: no-repeat;
       background-position: center;
+    }
+
+    &-delivery-discount-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
+
+    &-circle-progressbar-container {
+      width: 50px;
+      height: 50px;
+    }
+
+    &-delivery-icon {
+      width: 24px;
+      max-width: 24px;
+    }
+
+    &-delivery-discount-description {
+      @include GolosRegular(16px, 1, $grayscale-900);
+
+      &-apply {
+        padding-left: 25px;
+        background-image: url('@/assets/images/png/cart-active-promo.png');
+        background-repeat: no-repeat;
+        background-position: left center;
+      }
+    }
+
+    &-delivery-discount-value {
+      @include GolosMedium(16px, 1, $grayscale-900);
     }
   }
 }

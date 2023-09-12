@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import './InfoCard.scss';
 import '@/components/AuthFormSection/AuthFormSection.scss';
+import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
 import { notification, Popover } from 'antd';
 import Button from '@/components/Button/Button';
@@ -8,6 +10,7 @@ import { ICart } from '@/types/apiInterfaces';
 import { addDiscountCode, deleteDiscountCode, getActiveCart } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
+import deliveryDiscountIcon from '@/assets/images/png/cart-delivery-discount.png';
 
 const declensionOfTheWordCommodity = (quantity: number): string => {
   const remainder10 = quantity % 10;
@@ -44,6 +47,8 @@ const InfoCard = ({
     totalPrice: { centAmount: cartPrice },
   } = userCart as ICart;
 
+  const DELIVERY_DISCOUNT_THRESHOLD = 10000;
+  const [isDeliveryDiscount, setIsDeliveryDiscount] = useState(cartPrice / 100 > DELIVERY_DISCOUNT_THRESHOLD);
   const [isPromoCodeActive, setIsPromoCodeActive] = useState(!!discountCodes.length);
   const [initialCartPrice, setInitialCartPrice] = useState(cartPrice);
   const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('promocode') || '');
@@ -137,6 +142,12 @@ const InfoCard = ({
   };
 
   const setInitialAndFinalCartPrices = async (): Promise<void> => {
+    if (cartPrice / 100 > DELIVERY_DISCOUNT_THRESHOLD) {
+      setIsDeliveryDiscount(true);
+    } else {
+      setIsDeliveryDiscount(false);
+    }
+
     if (discountCodes.length && userCart) {
       const discountCodeID = userCart.discountCodes[0].discountCode.id;
       const isUserToken = !!localStorage.getItem('1SortUserToken');
@@ -185,7 +196,7 @@ const InfoCard = ({
               isLoadingPrice ? 'cart__info-card-products-price_type_loading' : ''
             }`}
           >
-            {Math.round(initialCartPrice / 100).toLocaleString('ru-RU')}₽
+            {Math.round(initialCartPrice / 100).toLocaleString('ru-RU')} ₽
           </div>
         </div>
         <div
@@ -193,22 +204,36 @@ const InfoCard = ({
             !isPromoCodeActive ? 'cart__info-card-discount-info--hidden' : ''
           }`}
         >
-          <div className="cart__info-card-products-relative-discount">{`Промокод ${promoCodeInputValue}`}</div>
+          <div className="cart__info-card-products-discount-name">{`Промокод ${promoCodeInputValue}`}</div>
           <div
             className={`cart__info-card-products-absolute-discount ${
               isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
             }`}
           >
             {Math.round((initialCartPrice - cartPrice) / 100) ? (
-              `${Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')}₽`
+              `${Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽`
             ) : (
               <>
-                {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')}₽
+                {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽
                 <Popover content={content} title="Скидка отсутствует" overlayStyle={{ maxWidth: '300px' }}>
                   <button className="cart__info-card-products-help-icon" onClick={provideInfo}></button>
                 </Popover>
               </>
             )}
+          </div>
+        </div>
+        <div
+          className={`cart__info-card-discount-info ${
+            !isDeliveryDiscount ? 'cart__info-card-discount-info--hidden' : ''
+          }`}
+        >
+          <div className="cart__info-card-products-discount-name">Бесплатная доставка</div>
+          <div
+            className={`cart__info-card-products-absolute-discount ${
+              isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+            }`}
+          >
+            - 500 ₽
           </div>
         </div>
         <div className="cart__info-card-promo-code-container">
@@ -248,12 +273,40 @@ const InfoCard = ({
               isLoadingPrice ? 'cart__info-card-products-final-price_type_loading' : ''
             }`}
           >
-            {Math.round(cartPrice / 100).toLocaleString('ru-RU')}₽
+            {(Math.round(cartPrice / 100) - (isDeliveryDiscount ? 500 : 0)).toLocaleString('ru-RU')} ₽
           </div>
         </div>
         <Button className="cart__info-card-products-order-button button" type="button">
           Перейти к оформлению
         </Button>
+      </div>
+      <div className="cart__info-card-delivery-discount-container">
+        <div className="cart__info-card-circle-progressbar-container">
+          <CircularProgressbarWithChildren
+            value={(Math.round(cartPrice / 100) / 10000) * 100}
+            strokeWidth={6}
+            styles={buildStyles({
+              pathColor: `#1ED498`,
+              trailColor: '#E0E4EB',
+            })}
+          >
+            <div className="cart__info-card-delivery-icon-container">
+              <img className="cart__info-card-delivery-icon" src={deliveryDiscountIcon} alt="delivery car icon" />
+            </div>
+          </CircularProgressbarWithChildren>
+        </div>
+        {!isDeliveryDiscount ? (
+          <p className="cart__info-card-delivery-discount-description">
+            До бесплатной доставки{' '}
+            <span className="cart__info-card-delivery-discount-value">
+              {(DELIVERY_DISCOUNT_THRESHOLD - Math.round(cartPrice / 100)).toLocaleString('ru-RU')} ₽
+            </span>
+          </p>
+        ) : (
+          <p className="cart__info-card-delivery-discount-description cart__info-card-delivery-discount-description-apply">
+            Бесплатная доставка
+          </p>
+        )}
       </div>
     </div>
   );
