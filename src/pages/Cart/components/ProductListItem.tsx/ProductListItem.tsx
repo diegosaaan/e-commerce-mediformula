@@ -47,7 +47,7 @@ const ProductListItem = ({
 
   const handleDeleteProductCounter = async (changeAmount: number): Promise<void> => {
     setIsLoading(true);
-    const result = await handleAddProduct(productData.productId);
+    const result = await handleDeleteProduct(productData.productId);
     if (result) {
       setUserCart(result);
       setIsLoading(false);
