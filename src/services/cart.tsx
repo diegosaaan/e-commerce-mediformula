@@ -3,6 +3,7 @@ import { createAdminJSONHeaders, createAnonymousJSONHeaders, createUserJSONHeade
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { ICart, IUserTokenData } from '@/types/apiInterfaces';
 import { createAnonymousToken, saveUserToken } from './tokenHelpers';
+import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 
 export const createCart = async (isUser: boolean): Promise<ICart> => {
   const requestData = {
@@ -141,74 +142,45 @@ export const deleteDiscountCode = async (
   return res.data;
 };
 
-export const handleDeleteProduct = async (id: string, quantity: number = 1): Promise<ICart> => {
+export const handleDeleteProduct = async (id: string, quantity: number = 1): Promise<ICart | null> => {
   const userToken = localStorage.getItem('1SortUserToken');
   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
 
-  if (userToken) {
-    const cartActive = await getActiveCart(true);
-    const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-    const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, true, quantity);
-    return cart;
+  try {
+    if (userToken) {
+      const cartActive = await getActiveCart(true);
+      const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+      const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, true, quantity);
+      return cart;
+    }
+
+    if (anonymousToken) {
+      const cartActive = await getActiveCart(false);
+      const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
+      const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false, quantity);
+      return cart;
+    }
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (
+      axiosError.response &&
+      axiosError.response.data &&
+      typeof axiosError.response.data === 'object' &&
+      'statusCode' in axiosError.response.data &&
+      'message' in axiosError.response.data
+    ) {
+      const { statusCode, message: errorMessage } = axiosError.response.data;
+
+      if (typeof statusCode === 'number' && typeof errorMessage === 'string') {
+        handleErrors(statusCode, errorMessage);
+      }
+    }
   }
 
-  if (anonymousToken) {
-    const cartActive = await getActiveCart(false);
-    const lineItemsId = cartActive.lineItems.filter((item) => item.productId === id);
-    const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false, quantity);
-    return cart;
-  }
-
-  return Promise.resolve({
-    cartState: '',
-    createdAt: '',
-    createdBy: {
-      clientId: '',
-      isPlatformClient: false,
-      customer: {
-        typeId: '',
-        id: '',
-      },
-    },
-    customLineItems: [],
-    customerId: '',
-    deleteDaysAfterLastModification: 0,
-    directDiscounts: [],
-    discountCodes: [],
-    id: '',
-    inventoryMode: '',
-    itemShippingAddresses: [],
-    lastMessageSequenceNumber: 0,
-    lastModifiedAt: '',
-    lastModifiedBy: {
-      clientId: '',
-      isPlatformClient: false,
-      customer: {
-        typeId: '',
-        id: '',
-      },
-    },
-    lineItems: [],
-    origin: '',
-    refusedGifts: [],
-    shipping: [],
-    shippingMode: '',
-    taxCalculationMode: '',
-    taxMode: '',
-    taxRoundingMode: '',
-    totalPrice: {
-      type: '',
-      currencyCode: '',
-      centAmount: 0,
-      fractionDigits: 0,
-    },
-    type: '',
-    version: 0,
-    versionModifiedAt: '',
-  });
+  return Promise.resolve(null);
 };
 
-export const handleAddProduct = async (id: string, quantity: number = 1): Promise<ICart> => {
+export const handleAddProduct = async (id: string, quantity: number = 1): Promise<ICart | null> => {
   const userToken = localStorage.getItem('1SortUserToken');
   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
 
@@ -234,58 +206,26 @@ export const handleAddProduct = async (id: string, quantity: number = 1): Promis
     }
   } catch (error) {
     const axiosError = error as AxiosError;
-    if (axiosError.response && axiosError.response.status === 404) {
-      const cartCreated = await createCart(true);
-      const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
-      return cart;
+    if (
+      axiosError.response &&
+      axiosError.response.data &&
+      typeof axiosError.response.data === 'object' &&
+      'statusCode' in axiosError.response.data &&
+      'message' in axiosError.response.data
+    ) {
+      const { statusCode, message: errorMessage } = axiosError.response.data;
+
+      if (typeof statusCode === 'number' && typeof errorMessage === 'string') {
+        if (statusCode === 404) {
+          const cartCreated = await createCart(true);
+          const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
+          return cart;
+        }
+
+        handleErrors(statusCode, errorMessage);
+      }
     }
   }
 
-  return Promise.resolve({
-    cartState: '',
-    createdAt: '',
-    createdBy: {
-      clientId: '',
-      isPlatformClient: false,
-      customer: {
-        typeId: '',
-        id: '',
-      },
-    },
-    customLineItems: [],
-    customerId: '',
-    deleteDaysAfterLastModification: 0,
-    directDiscounts: [],
-    discountCodes: [],
-    id: '',
-    inventoryMode: '',
-    itemShippingAddresses: [],
-    lastMessageSequenceNumber: 0,
-    lastModifiedAt: '',
-    lastModifiedBy: {
-      clientId: '',
-      isPlatformClient: false,
-      customer: {
-        typeId: '',
-        id: '',
-      },
-    },
-    lineItems: [],
-    origin: '',
-    refusedGifts: [],
-    shipping: [],
-    shippingMode: '',
-    taxCalculationMode: '',
-    taxMode: '',
-    taxRoundingMode: '',
-    totalPrice: {
-      type: '',
-      currencyCode: '',
-      centAmount: 0,
-      fractionDigits: 0,
-    },
-    type: '',
-    version: 0,
-    versionModifiedAt: '',
-  });
+  return Promise.resolve(null);
 };
