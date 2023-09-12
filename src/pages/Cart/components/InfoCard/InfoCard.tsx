@@ -34,6 +34,8 @@ const InfoCard = ({
   const { userCart, setUserCart } = useAuth();
   const [isLoadingPrice, setIsLoadingPrice] = useState(false);
 
+  // const discounts = { everything: '3562Y5', tonometres: 'GESS7' };
+
   const {
     id: cartId,
     version: cartVersion,
@@ -45,15 +47,15 @@ const InfoCard = ({
   const [isPromoCodeActive, setIsPromoCodeActive] = useState(!!discountCodes.length);
   const [initialCartPrice, setInitialCartPrice] = useState(cartPrice);
   const [finalCartPrice, setFinalCartPrice] = useState(cartPrice);
-  const [promoCodeInputValue, setPromoCodeInputValue] = useState('');
+  const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('promocode') || '');
   const [isInitialMount, setIsInitialMount] = useState(true);
 
   const handleAddPromoCode = async (): Promise<void> => {
     setIsLoading(true);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
+    localStorage.setItem('promocode', promoCodeInputValue);
     try {
       const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
-      setIsLoading(false);
       setIsPromoCodeActive(true);
       setUserCart(updatedCart);
       notification.success({
@@ -62,6 +64,7 @@ const InfoCard = ({
           <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно применен к корзине`}</p>
         ),
       });
+      setIsLoading(false);
     } catch (e) {
       const error = e as { response: { data: { statusCode: number; message: string; errors: { code: string }[] } } };
       const {
@@ -70,9 +73,9 @@ const InfoCard = ({
         },
       } = error;
       const code = errors[0]?.code;
-      setIsLoading(false);
       setPromoCodeInputValue('');
       handleErrors(statusCode, errorMessage, code);
+      setIsLoading(false);
     }
   };
 
@@ -89,9 +92,9 @@ const InfoCard = ({
       setIsLoading(true);
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const discountCodeID = currentCart.discountCodes[0].discountCode.id;
+      localStorage.removeItem('promocode');
       try {
         const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
-        setIsLoading(false);
         setIsPromoCodeActive(false);
         setUserCart(updatedCart);
         setFinalCartPrice(updatedCart.totalPrice.centAmount);
@@ -101,6 +104,7 @@ const InfoCard = ({
             <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно удален из корзины`}</p>
           ),
         });
+        setIsLoading(false);
       } catch (e) {
         const error = e as { response: { data: { statusCode: number; message: string } } };
         const {
@@ -108,8 +112,8 @@ const InfoCard = ({
             data: { statusCode, message: errorMessage },
           },
         } = error;
-        setIsLoading(false);
         handleErrors(statusCode, errorMessage);
+        setIsLoading(false);
       }
     }
   };
@@ -120,20 +124,19 @@ const InfoCard = ({
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const cartWithouthDiscount = await deleteDiscountCode(userCart.id, userCart.version, isUserToken, discountCodeID);
       setInitialCartPrice(cartWithouthDiscount.totalPrice.centAmount);
-      setPromoCodeInputValue('3562Y5');
 
       const currentCart = await addDiscountCode(
         cartWithouthDiscount.id,
         cartWithouthDiscount.version,
         isUserToken,
-        '3562Y5'
+        promoCodeInputValue
       );
       setFinalCartPrice(currentCart.totalPrice.centAmount);
       setIsPromoCodeActive(true);
     } else {
-      setIsPromoCodeActive(false);
       setInitialCartPrice(cartPrice);
       setFinalCartPrice(cartPrice);
+      setIsPromoCodeActive(false);
     }
   };
 
@@ -180,13 +183,15 @@ const InfoCard = ({
             !isPromoCodeActive ? 'cart__info-card-discount-info--hidden' : ''
           }`}
         >
-          <div className="cart__info-card-products-relative-discount">Промокод 3562Y5</div>
+          <div className="cart__info-card-products-relative-discount">{`Промокод ${promoCodeInputValue}`}</div>
           <div
             className={`cart__info-card-products-absolute-discount ${
               isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
             }`}
           >
-            - {Math.round((initialCartPrice - finalCartPrice) / 100).toLocaleString('ru-RU')}₽
+            {Math.round((initialCartPrice - finalCartPrice) / 100)
+              ? `- ${Math.round((initialCartPrice - finalCartPrice) / 100).toLocaleString('ru-RU')}₽`
+              : 'Нет скидки'}
           </div>
         </div>
         <div className="cart__info-card-promo-code-container">
@@ -210,7 +215,7 @@ const InfoCard = ({
             </>
           ) : (
             <>
-              <div className="cart__info-card-used-promo-code">3562Y5</div>
+              <div className="cart__info-card-used-promo-code">{promoCodeInputValue}</div>
               <Button
                 className="cart__info-card-delete-promo-code"
                 type="button"
