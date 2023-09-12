@@ -1,3 +1,15 @@
+@keyframes loading {
+  0% {
+    background-color: $grayscale-200;
+  }
+  50% {
+    background-color: $grayscale-300;
+  }
+  100% {
+    background-color: $grayscale-200;
+  }
+}
+
 .cart {
   &__info-card-container {
     padding: 24px 32px;
@@ -8,6 +20,11 @@
     box-shadow:
       0px 5px 20px 0px rgba(1, 31, 58, 0.1),
       0px 2px 10px 0px rgba(1, 31, 58, 0.1);
+  }
+
+  &__info-card-container_type_loading {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   &__info-card {
@@ -107,6 +124,14 @@
     &-products-final-price-heading,
     &-products-final-price {
       @include GolosMedium(28px, 1, $grayscale-900);
+    }
+
+    &-products-price_type_loading,
+    &-products-absolute-discount_type_loading,
+    &-products-final-price_type_loading {
+      min-width: 70px;
+      color: transparent;
+      animation: loading 1s infinite;
     }
 
     &-products-order-button {
