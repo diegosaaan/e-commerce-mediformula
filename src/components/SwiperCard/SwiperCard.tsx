@@ -1,14 +1,51 @@
 import React, { ReactElement } from 'react';
 import './SwiperCard.scss';
 import { notification } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import { IProductData } from '@/types/apiInterfaces';
 import DiscountsID from '@/enums/discountsID';
 import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 
-const SwiperCard = ({ productData }: { productData: IProductData }): ReactElement => {
+interface CardWrapperProps {
+  children: ReactElement;
+  id: string;
+  cb?: (id: string) => void;
+}
+
+const CardWrapper = ({ children, id, cb }: CardWrapperProps): ReactElement => {
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+  console.log(`/catalog/${id}`);
+
+  return pathname === '/' || pathname === '/cart' ? (
+    <Link to={`/catalog/${id}`}>{children}</Link>
+  ) : (
+    <>
+      <div
+        onClick={(): void => {
+          if (cb) {
+            cb(id);
+          }
+        }}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
+
+const SwiperCard = ({
+  productData,
+  handleCardCliked,
+}: {
+  productData: IProductData;
+  handleCardCliked?: ((productId: string) => Promise<void>) | undefined;
+}): ReactElement => {
   const { userCart, setUserCart } = useAuth();
+
   const {
     id,
     name: { ru: productName },
@@ -57,25 +94,30 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
 
   return (
     <div className="product-card">
-      <div className="product-card__image-container">
-        <div className="product-card__discount">
-          {discountValue && <p className="product-card__discount-text">{discountValue}</p>}
-        </div>
-        <div className="product-card__image">
-          <img className="product-card__image-image" src={imageUrl} alt={imageAltText} />
-        </div>
-      </div>
-      <p className="product-card__text">{productName}</p>
-      <div className="product-card__price-info">
-        <div className="product-card__price-container">
-          <p className="product-card__price">{`${Math.round(discountPrice / 100 || defaultPrice / 100).toLocaleString(
-            'ru-RU'
-          )}₽`}</p>
-          <p className="product-card__priceBefore">{`${
-            discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''
-          }`}</p>
-        </div>
-      </div>
+      <CardWrapper id={id} cb={handleCardCliked}>
+        <>
+          <div className="product-card__image-container">
+            <div className="product-card__discount">
+              {discountValue && <p className="product-card__discount-text">{discountValue}</p>}
+            </div>
+            <div className="product-card__image">
+              <img className="product-card__image-image" src={imageUrl} alt={imageAltText} />
+            </div>
+          </div>
+          <p className="product-card__text">{productName}</p>
+          <div className="product-card__price-info">
+            <div className="product-card__price-container">
+              <p className="product-card__price">{`${Math.round(
+                discountPrice / 100 || defaultPrice / 100
+              ).toLocaleString('ru-RU')}₽`}</p>
+              <p className="product-card__priceBefore">{`${
+                discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''
+              }`}</p>
+            </div>
+          </div>
+        </>
+      </CardWrapper>
+
       <div className="product-card__button-container">
         <Button
           className={`${

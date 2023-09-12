@@ -6,7 +6,7 @@ import 'swiper/css/free-mode';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SwiperCard from '@/components/SwiperCard/SwiperCard';
 import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
@@ -20,7 +20,6 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
   const [isProductsDataFetching, setIsProductsDataFetching] = useState(true);
   const [discountedProductsData, setDiscountedProductsData] = useState<IProductData[]>([]);
   const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
-  const { pathname } = useLocation();
 
   useEffect(() => {
     const fetchProductData = async (): Promise<void> => {
@@ -93,21 +92,7 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
             >
               {discountedProductsData.map((product, index) => (
                 <SwiperSlide key={index}>
-                  {pathname === '/' ? (
-                    <Link to={`/catalog/${product.id}`}>
-                      <SwiperCard productData={product} />
-                    </Link>
-                  ) : (
-                    <div
-                      onClick={(): void => {
-                        if (handleCardCliked) {
-                          handleCardCliked(product.id);
-                        }
-                      }}
-                    >
-                      <SwiperCard productData={product} />
-                    </div>
-                  )}
+                  <SwiperCard productData={product} handleCardCliked={handleCardCliked} />
                 </SwiperSlide>
               ))}
             </Swiper>
