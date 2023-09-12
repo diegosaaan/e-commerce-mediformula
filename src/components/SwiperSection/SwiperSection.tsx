@@ -16,7 +16,13 @@ import { IProductData } from '@/types/apiInterfaces';
 import { getProducts } from '@/services/catalog';
 import SpinnerPreloader from '../Preloaders/SpinnerPreloader/SpinnerPreloader';
 
-const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }: IPropsCardsSection): ReactElement => {
+const SwiperSection = ({
+  heading,
+  counter,
+  sectionClassName,
+  handleCardCliked,
+  setIsDataFetching,
+}: IPropsCardsSection): ReactElement => {
   const [isProductsDataFetching, setIsProductsDataFetching] = useState(true);
   const [discountedProductsData, setDiscountedProductsData] = useState<IProductData[]>([]);
   const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
@@ -92,7 +98,11 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
             >
               {discountedProductsData.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <SwiperCard productData={product} handleCardCliked={handleCardCliked} />
+                  <SwiperCard
+                    productData={product}
+                    handleCardCliked={handleCardCliked}
+                    setIsDataFetching={setIsDataFetching}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

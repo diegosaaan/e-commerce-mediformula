@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import './SwiperCard.scss';
 import { notification } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
@@ -16,9 +16,6 @@ interface CardWrapperProps {
 
 const CardWrapper = ({ children, id, cb }: CardWrapperProps): ReactElement => {
   const { pathname } = useLocation();
-
-  console.log(pathname);
-  console.log(`/catalog/${id}`);
 
   return pathname === '/' || pathname === '/cart' ? (
     <Link to={`/catalog/${id}`}>{children}</Link>
@@ -40,9 +37,11 @@ const CardWrapper = ({ children, id, cb }: CardWrapperProps): ReactElement => {
 const SwiperCard = ({
   productData,
   handleCardCliked,
+  setIsDataFetching,
 }: {
   productData: IProductData;
   handleCardCliked?: ((productId: string) => Promise<void>) | undefined;
+  setIsDataFetching: Dispatch<React.SetStateAction<boolean>> | undefined;
 }): ReactElement => {
   const { userCart, setUserCart } = useAuth();
   const [isDisabled, setIsDisabled] = useState(false);
@@ -69,6 +68,10 @@ const SwiperCard = ({
   }
 
   const handleAddProductInCart = async (): Promise<void> => {
+    if (setIsDataFetching) {
+      setIsDataFetching(true);
+    }
+
     setIsDisabled(true);
     const result = await handleAddProduct(id);
     if (result) {
@@ -81,9 +84,17 @@ const SwiperCard = ({
     } else {
       setIsDisabled(false);
     }
+
+    if (setIsDataFetching) {
+      setIsDataFetching(false);
+    }
   };
 
   const handleDeleteProductInCart = async (): Promise<void> => {
+    if (setIsDataFetching) {
+      setIsDataFetching(true);
+    }
+
     setIsDisabled(true);
     const artifact = userCart?.lineItems.filter((item) => item.productId === id);
     if (artifact) {
@@ -100,6 +111,10 @@ const SwiperCard = ({
       }
     } else {
       setIsDisabled(false);
+    }
+
+    if (setIsDataFetching) {
+      setIsDataFetching(false);
     }
   };
 
