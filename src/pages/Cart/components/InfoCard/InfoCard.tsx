@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import './InfoCard.scss';
 import '@/components/AuthFormSection/AuthFormSection.scss';
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
 import { notification } from 'antd';
 import Button from '@/components/Button/Button';
 import { ICart } from '@/types/apiInterfaces';
@@ -23,8 +23,15 @@ const declensionOfTheWordCommodity = (quantity: number): string => {
   return `${quantity} товаров`;
 };
 
-const InfoCard = (): ReactElement => {
+const InfoCard = ({
+  isLoading,
+  setIsLoading,
+}: {
+  isLoading: boolean;
+  setIsLoading: Dispatch<React.SetStateAction<boolean>>;
+}): ReactElement => {
   const { userCart, setUserCart } = useAuth();
+  const [isLoadingPrice, setIsLoadingPrice] = useState(false);
 
   const {
     id: cartId,
@@ -41,8 +48,10 @@ const InfoCard = (): ReactElement => {
   const [isInitialMount, setIsInitialMount] = useState(true);
 
   const handleAddPromoCode = async (): Promise<void> => {
+    setIsLoading(true);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
     const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
+    setIsLoading(false);
     setIsPromoCodeActive(true);
     setUserCart(updatedCart);
     notification.success({
@@ -61,9 +70,11 @@ const InfoCard = (): ReactElement => {
       currentCart = updatedUserCart;
     }
     if (currentCart) {
+      setIsLoading(true);
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const discountCodeID = currentCart.discountCodes[0].discountCode.id;
       const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
+      setIsLoading(false);
       setIsPromoCodeActive(false);
       setUserCart(updatedCart);
       setFinalCartPrice(updatedCart.totalPrice.centAmount);
@@ -90,7 +101,6 @@ const InfoCard = (): ReactElement => {
         isUserToken,
         '3562Y5'
       );
-
       setFinalCartPrice(currentCart.totalPrice.centAmount);
       setIsPromoCodeActive(true);
     } else {
@@ -104,18 +114,26 @@ const InfoCard = (): ReactElement => {
     if (isInitialMount) {
       setIsInitialMount(false);
     } else {
-      setInitialAndFinalCartPrices();
+      (async (): Promise<void> => {
+        setIsLoadingPrice(true);
+        await setInitialAndFinalCartPrices();
+        setIsLoadingPrice(false);
+      })();
     }
   }, [userCart]);
 
   return (
-    <div className="cart__info-card-container">
+    <div className={`cart__info-card-container ${isLoading ? 'cart__info-card-container_type_loading' : ''}`}>
       <div className="cart__info-card">
         <div className="cart__info-card-products-info">
           <div className="cart__info-card-products-count">
             {declensionOfTheWordCommodity(productsArray.reduce((acc, item) => acc + item.quantity, 0))}
           </div>
-          <div className="cart__info-card-products-price">
+          <div
+            className={`cart__info-card-products-price ${
+              isLoadingPrice ? 'cart__info-card-products-price_type_loading' : ''
+            }`}
+          >
             {Math.round(initialCartPrice / 100).toLocaleString('ru-RU')}₽
           </div>
         </div>
@@ -125,7 +143,11 @@ const InfoCard = (): ReactElement => {
           }`}
         >
           <div className="cart__info-card-products-relative-discount">Промокод 3562Y5</div>
-          <div className="cart__info-card-products-absolute-discount">
+          <div
+            className={`cart__info-card-products-absolute-discount ${
+              isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+            }`}
+          >
             - {Math.round((initialCartPrice - finalCartPrice) / 100).toLocaleString('ru-RU')}₽
           </div>
         </div>
@@ -156,7 +178,11 @@ const InfoCard = (): ReactElement => {
         </div>
         <div className="cart__info-card-products-final-price-container">
           <div className="cart__info-card-products-final-price-heading">Итого</div>
-          <div className="cart__info-card-products-final-price">
+          <div
+            className={`cart__info-card-products-final-price ${
+              isLoadingPrice ? 'cart__info-card-products-final-price_type_loading' : ''
+            }`}
+          >
             {Math.round(cartPrice / 100).toLocaleString('ru-RU')}₽
           </div>
         </div>
