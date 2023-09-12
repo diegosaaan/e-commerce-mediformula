@@ -302,6 +302,10 @@
     position: relative;
   }
 
+  &__link_active {
+    pointer-events: none;
+  }
+
   &__link_active &__button-icon-mobile,
   &__link_active &__button-text-mobile {
     filter: brightness(0.4);
