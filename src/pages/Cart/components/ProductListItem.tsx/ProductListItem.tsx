@@ -1,8 +1,9 @@
 /* eslint-disable no-empty-pattern */
 import React, { ReactElement, useState } from 'react';
-import { Popconfirm } from 'antd';
+import { Popconfirm, notification } from 'antd';
 import Button from '@/components/Button/Button';
 import './ProductListItem.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 import { ILineItem } from '@/types/apiInterfaces';
@@ -13,6 +14,10 @@ const ProductListItem = ({ productData }: { productData: ILineItem }): ReactElem
 
   const handleDeleteProductInCart = async (): Promise<void> => {
     setUserCart(await handleDeleteProduct(productData.productId, productData.quantity));
+    notification.success({
+      message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+      description: <p className="auth__notification">{`Товар ${productData.name.ru} успешно удален из корзины`}</p>,
+    });
   };
 
   const handleAddProductCounter = async (changeAmount: number): Promise<void> => {

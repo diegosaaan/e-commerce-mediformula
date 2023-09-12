@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import './InfoCard.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState, useEffect } from 'react';
+import { notification } from 'antd';
 import Button from '@/components/Button/Button';
 import { ICart } from '@/types/apiInterfaces';
 import { addDiscountCode, deleteDiscountCode, getActiveCart } from '@/services/cart';
@@ -43,6 +45,10 @@ const InfoCard = (): ReactElement => {
     const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
     setIsPromoCodeActive(true);
     setUserCart(updatedCart);
+    notification.success({
+      message: <p className="auth__notification auth__notification_type_success">Промокод добавлен!</p>,
+      description: <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно применен к корзине`}</p>,
+    });
   };
 
   const handleDeletePromoCode = async (): Promise<void> => {
@@ -61,6 +67,12 @@ const InfoCard = (): ReactElement => {
       setIsPromoCodeActive(false);
       setUserCart(updatedCart);
       setFinalCartPrice(updatedCart.totalPrice.centAmount);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Промокд удален!</p>,
+        description: (
+          <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно удален из корзины`}</p>
+        ),
+      });
     }
   };
 
