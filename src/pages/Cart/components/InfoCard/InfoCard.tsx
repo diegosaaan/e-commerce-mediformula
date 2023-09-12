@@ -7,6 +7,7 @@ import Button from '@/components/Button/Button';
 import { ICart } from '@/types/apiInterfaces';
 import { addDiscountCode, deleteDiscountCode, getActiveCart } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
+import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 
 const declensionOfTheWordCommodity = (quantity: number): string => {
   const remainder10 = quantity % 10;
@@ -50,14 +51,29 @@ const InfoCard = ({
   const handleAddPromoCode = async (): Promise<void> => {
     setIsLoading(true);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
-    const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
-    setIsLoading(false);
-    setIsPromoCodeActive(true);
-    setUserCart(updatedCart);
-    notification.success({
-      message: <p className="auth__notification auth__notification_type_success">Промокод добавлен!</p>,
-      description: <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно применен к корзине`}</p>,
-    });
+    try {
+      const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
+      setIsLoading(false);
+      setIsPromoCodeActive(true);
+      setUserCart(updatedCart);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Промокод добавлен!</p>,
+        description: (
+          <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно применен к корзине`}</p>
+        ),
+      });
+    } catch (e) {
+      const error = e as { response: { data: { statusCode: number; message: string; errors: { code: string }[] } } };
+      const {
+        response: {
+          data: { statusCode, message: errorMessage, errors },
+        },
+      } = error;
+      const code = errors[0]?.code;
+      setIsLoading(false);
+      setPromoCodeInputValue('');
+      handleErrors(statusCode, errorMessage, code);
+    }
   };
 
   const handleDeletePromoCode = async (): Promise<void> => {
@@ -73,17 +89,28 @@ const InfoCard = ({
       setIsLoading(true);
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const discountCodeID = currentCart.discountCodes[0].discountCode.id;
-      const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
-      setIsLoading(false);
-      setIsPromoCodeActive(false);
-      setUserCart(updatedCart);
-      setFinalCartPrice(updatedCart.totalPrice.centAmount);
-      notification.success({
-        message: <p className="auth__notification auth__notification_type_success">Промокд удален!</p>,
-        description: (
-          <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно удален из корзины`}</p>
-        ),
-      });
+      try {
+        const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
+        setIsLoading(false);
+        setIsPromoCodeActive(false);
+        setUserCart(updatedCart);
+        setFinalCartPrice(updatedCart.totalPrice.centAmount);
+        notification.success({
+          message: <p className="auth__notification auth__notification_type_success">Промокд удален!</p>,
+          description: (
+            <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно удален из корзины`}</p>
+          ),
+        });
+      } catch (e) {
+        const error = e as { response: { data: { statusCode: number; message: string } } };
+        const {
+          response: {
+            data: { statusCode, message: errorMessage },
+          },
+        } = error;
+        setIsLoading(false);
+        handleErrors(statusCode, errorMessage);
+      }
     }
   };
 
@@ -116,7 +143,18 @@ const InfoCard = ({
     } else {
       (async (): Promise<void> => {
         setIsLoadingPrice(true);
-        await setInitialAndFinalCartPrices();
+        try {
+          await setInitialAndFinalCartPrices();
+        } catch (e) {
+          const error = e as { response: { data: { statusCode: number; message: string } } };
+          const {
+            response: {
+              data: { statusCode, message: errorMessage },
+            },
+          } = error;
+          setIsLoadingPrice(false);
+          handleErrors(statusCode, errorMessage);
+        }
         setIsLoadingPrice(false);
       })();
     }
@@ -161,7 +199,12 @@ const InfoCard = ({
                 value={promoCodeInputValue}
                 onChange={(event): void => setPromoCodeInputValue(event.target.value)}
               />
-              <Button className="cart__info-card-use-promo-code-button" type="button" onClick={handleAddPromoCode}>
+              <Button
+                className="cart__info-card-use-promo-code-button"
+                type="button"
+                onClick={handleAddPromoCode}
+                disabled={promoCodeInputValue === ''}
+              >
                 Применить
               </Button>
             </>
