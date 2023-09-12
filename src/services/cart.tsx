@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { createAdminJSONHeaders, createAnonymousJSONHeaders, createUserJSONHeaders } from './headers';
 import ApiEndpoints from '@/enums/apiEndpoints';
 import { ICart, IUserTokenData } from '@/types/apiInterfaces';
@@ -160,21 +160,14 @@ export const handleDeleteProduct = async (id: string, quantity: number = 1): Pro
       const cart = await deleteProduct(cartActive.id, cartActive.version, lineItemsId[0].id, false, quantity);
       return cart;
     }
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    if (
-      axiosError.response &&
-      axiosError.response.data &&
-      typeof axiosError.response.data === 'object' &&
-      'statusCode' in axiosError.response.data &&
-      'message' in axiosError.response.data
-    ) {
-      const { statusCode, message: errorMessage } = axiosError.response.data;
-
-      if (typeof statusCode === 'number' && typeof errorMessage === 'string') {
-        handleErrors(statusCode, errorMessage);
-      }
-    }
+  } catch (e) {
+    const error = e as { response: { data: { statusCode: number; message: string } } };
+    const {
+      response: {
+        data: { statusCode, message: errorMessage },
+      },
+    } = error;
+    handleErrors(statusCode, errorMessage);
   }
 
   return null;
@@ -204,27 +197,19 @@ export const handleAddProduct = async (id: string, quantity: number = 1): Promis
       const cart = await addProduct(cartCreated.id, cartCreated.version, id, false, quantity);
       return cart;
     }
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    if (
-      axiosError.response &&
-      axiosError.response.data &&
-      typeof axiosError.response.data === 'object' &&
-      'statusCode' in axiosError.response.data &&
-      'message' in axiosError.response.data
-    ) {
-      const { statusCode, message: errorMessage } = axiosError.response.data;
-
-      if (typeof statusCode === 'number' && typeof errorMessage === 'string') {
-        if (statusCode === 404) {
-          const cartCreated = await createCart(true);
-          const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
-          return cart;
-        }
-
-        handleErrors(statusCode, errorMessage);
-      }
+  } catch (e) {
+    const error = e as { response: { data: { statusCode: number; message: string } } };
+    const {
+      response: {
+        data: { statusCode, message: errorMessage },
+      },
+    } = error;
+    if (statusCode === 404) {
+      const cartCreated = await createCart(true);
+      const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
+      return cart;
     }
+    handleErrors(statusCode, errorMessage);
   }
 
   return null;
