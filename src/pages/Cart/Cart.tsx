@@ -1,5 +1,5 @@
 import './Cart.scss';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 import EmptyCart from './components/EmptyCart/EmptyCart';
@@ -8,6 +8,7 @@ import InfoCard from './components/InfoCard/InfoCard';
 import { ICart } from '@/types/apiInterfaces';
 import useAuth from '@/utils/hooks/useAuth';
 import { getActiveCart } from '@/services/cart';
+import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 
 export const cartLoader = async (): Promise<ICart | null> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -29,6 +30,7 @@ const CartPage = (): ReactElement => {
   const navigation = useNavigation();
   const initialCartData = useLoaderData() as ICart;
   const { userCart, setUserCart } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setUserCart(initialCartData);
@@ -46,11 +48,12 @@ const CartPage = (): ReactElement => {
         <>
           <h2 className="cart__heading">Корзина</h2>
           <div className="cart__content-container">
-            <ProductsList />
-            <InfoCard />
+            <ProductsList isLoading={isLoading} setIsLoading={setIsLoading} />
+            <InfoCard isLoading={isLoading} setIsLoading={setIsLoading} />
           </div>
         </>
       )}
+      <SpinnerPreloader pageClassname="cart" isDataFetching={isLoading} />
     </div>
   );
 };

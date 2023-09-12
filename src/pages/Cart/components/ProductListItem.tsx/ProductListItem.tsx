@@ -1,5 +1,5 @@
 /* eslint-disable no-empty-pattern */
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import { Popconfirm, notification } from 'antd';
 import Button from '@/components/Button/Button';
 import './ProductListItem.scss';
@@ -8,26 +8,53 @@ import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
 import useAuth from '@/utils/hooks/useAuth';
 import { ILineItem } from '@/types/apiInterfaces';
 
-const ProductListItem = ({ productData }: { productData: ILineItem }): ReactElement => {
+const ProductListItem = ({
+  productData,
+  setIsLoading,
+}: {
+  productData: ILineItem;
+  setIsLoading: Dispatch<React.SetStateAction<boolean>>;
+}): ReactElement => {
   const [productCount, setProductCount] = useState(productData.quantity);
   const { setUserCart } = useAuth();
 
   const handleDeleteProductInCart = async (): Promise<void> => {
-    setUserCart(await handleDeleteProduct(productData.productId, productData.quantity));
-    notification.success({
-      message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
-      description: <p className="auth__notification">{`Товар ${productData.name.ru} успешно удален из корзины`}</p>,
-    });
+    setIsLoading(true);
+    const result = await handleDeleteProduct(productData.productId, productData.quantity);
+    if (result) {
+      setUserCart(result);
+      setIsLoading(false);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+        description: <p className="auth__notification">{`Товар ${productData.name.ru} успешно удален из корзины`}</p>,
+      });
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const handleAddProductCounter = async (changeAmount: number): Promise<void> => {
-    setProductCount((prevValue: number) => prevValue + changeAmount);
-    setUserCart(await handleAddProduct(productData.productId));
+    setIsLoading(true);
+    const result = await handleAddProduct(productData.productId);
+    if (result) {
+      setUserCart(result);
+      setIsLoading(false);
+      setProductCount((prevValue: number) => prevValue + changeAmount);
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteProductCounter = async (changeAmount: number): Promise<void> => {
-    setProductCount((prevValue: number) => prevValue + changeAmount);
-    setUserCart(await handleDeleteProduct(productData.productId));
+    setIsLoading(true);
+    const result = await handleAddProduct(productData.productId);
+    if (result) {
+      setUserCart(result);
+      setIsLoading(false);
+      setProductCount((prevValue: number) => prevValue + changeAmount);
+    } else {
+      setIsLoading(false);
+    }
   };
 
   return (
