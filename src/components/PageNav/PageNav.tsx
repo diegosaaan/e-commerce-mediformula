@@ -12,7 +12,7 @@ import Form from '@/components/Form/Form';
 const setActiveClass = ({ isActive }: { isActive: boolean }): string => {
   const currentPath = window.location.pathname;
   if (isActive && !currentPath.match(/^\/catalog\/[a-zA-Z0-9-]+$/)) {
-    return 'header__link header__link--active';
+    return 'header__link header__link_active';
   }
   return 'header__link';
 };
@@ -43,7 +43,7 @@ const PageNav = (): ReactElement => {
     });
   };
 
-  const handleExampleSumbit = (event: FormEvent<HTMLFormElement>): void => {
+  const handleSumbit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     if (location.pathname !== '/catalog') {
       navigate('/catalog');
@@ -144,7 +144,7 @@ const PageNav = (): ReactElement => {
                 </NavLink>
               </li>
               <li className="header__item-input-search">
-                <Form className="header__form-search" name="form-search" onSubmit={handleExampleSumbit}>
+                <Form className="header__form-search" name="form-search" onSubmit={handleSumbit}>
                   <Input
                     className="header__input-search"
                     name="header-search"
@@ -152,7 +152,6 @@ const PageNav = (): ReactElement => {
                     placeholder="Поиск оборудования"
                     value={searchInputValue}
                     onChange={handleChangeSearchInputValue}
-                    // onKeyDown={(event): void => handleSearchInputKeyDown(event)}
                   />
                   <Button className="header__button-search" type="submit" />
                 </Form>
