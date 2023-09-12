@@ -113,6 +113,8 @@
 
     &-products-absolute-discount {
       color: #eb5757;
+      display: flex;
+      gap: 5px;
     }
 
     &-products-final-price-container {
@@ -139,6 +141,14 @@
       width: 100%;
       max-width: 100%;
     }
+
+    &-products-help-icon {
+      width: 18px;
+      height: 18px;
+      background-image: url('@/assets/images/svg/cart-help.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 }
 
@@ -152,6 +162,10 @@
       &-use-promo-code-button:hover {
         color: $grayscale-50;
         background-color: $color-primary;
+      }
+
+      &-products-help-icon:hover {
+        cursor: pointer;
       }
     }
   }

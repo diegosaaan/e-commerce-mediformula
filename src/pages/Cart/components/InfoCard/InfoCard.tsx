@@ -2,7 +2,7 @@
 import './InfoCard.scss';
 import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
-import { notification } from 'antd';
+import { notification, Popover } from 'antd';
 import Button from '@/components/Button/Button';
 import { ICart } from '@/types/apiInterfaces';
 import { addDiscountCode, deleteDiscountCode, getActiveCart } from '@/services/cart';
@@ -49,6 +49,22 @@ const InfoCard = ({
   const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('promocode') || '');
   const [isInitialMount, setIsInitialMount] = useState(true);
 
+  const content = (
+    <p className="auth__notification">
+      Внимательно прочитайте условия акции на <a href="/">главной странице</a> и добавьте нужные товары из
+      <a href="/catalog"> каталога</a>
+    </p>
+  );
+
+  const provideInfo = (): void => {
+    notification.info({
+      message: (
+        <p className="auth__notification auth__notification_type_success">В корзине не найдено товаров для скидки</p>
+      ),
+      description: content,
+    });
+  };
+
   const handleAddPromoCode = async (): Promise<void> => {
     setIsLoading(true);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
@@ -65,19 +81,7 @@ const InfoCard = ({
       });
 
       if (cartPrice === updatedCart.totalPrice.centAmount) {
-        notification.info({
-          message: (
-            <p className="auth__notification auth__notification_type_success">
-              В корзине не найдено товаров для скидки
-            </p>
-          ),
-          description: (
-            <p className="auth__notification">
-              Внимательно прочитайте условия акции на <a href="/">главной странице</a> и добавьте нужные товары из
-              <a href="/catalog">каталога</a>
-            </p>
-          ),
-        });
+        provideInfo();
       }
       setIsLoading(false);
     } catch (e) {
@@ -195,7 +199,16 @@ const InfoCard = ({
               isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
             }`}
           >
-            {Math.round((initialCartPrice - cartPrice) / 100)}₽
+            {Math.round((initialCartPrice - cartPrice) / 100) ? (
+              `${Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')}₽`
+            ) : (
+              <>
+                {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')}₽
+                <Popover content={content} title="Скидка отсутствует" overlayStyle={{ maxWidth: '300px' }}>
+                  <button className="cart__info-card-products-help-icon" onClick={provideInfo}></button>
+                </Popover>
+              </>
+            )}
           </div>
         </div>
         <div className="cart__info-card-promo-code-container">
