@@ -1,3 +1,4 @@
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState } from 'react';
 import { message, Popconfirm } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';

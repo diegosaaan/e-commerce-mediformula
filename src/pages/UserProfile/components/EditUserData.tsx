@@ -1,3 +1,4 @@
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { message } from 'antd';
