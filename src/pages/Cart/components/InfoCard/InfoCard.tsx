@@ -169,6 +169,7 @@ const InfoCard = ({
         setIsLoadingPrice(true);
         try {
           await setInitialAndFinalCartPrices();
+          setIsLoadingPrice(false);
         } catch (e) {
           const error = e as { response: { data: { statusCode: number; message: string } } };
           const {
@@ -176,10 +177,9 @@ const InfoCard = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
-          setIsLoadingPrice(false);
           handleErrors(statusCode, errorMessage);
+          setIsLoadingPrice(false);
         }
-        setIsLoadingPrice(false);
       })();
     }
   }, [userCart]);
@@ -216,7 +216,12 @@ const InfoCard = ({
               <>
                 {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽
                 <Popover content={content} title="Скидка отсутствует" overlayStyle={{ maxWidth: '300px' }}>
-                  <button className="cart__info-card-products-help-icon" onClick={provideInfo}></button>
+                  <button
+                    className={`cart__info-card-products-help-icon ${
+                      isLoadingPrice ? 'cart__info-card-products-help-icon_type_loading' : ''
+                    }`}
+                    onClick={provideInfo}
+                  ></button>
                 </Popover>
               </>
             )}

@@ -152,6 +152,11 @@
       background-position: center;
     }
 
+    &-products-help-icon_type_loading {
+      visibility: hidden;
+      opacity: 0;
+    }
+
     &-delivery-discount-container {
       display: flex;
       align-items: center;
