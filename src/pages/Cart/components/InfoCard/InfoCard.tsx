@@ -46,7 +46,6 @@ const InfoCard = ({
 
   const [isPromoCodeActive, setIsPromoCodeActive] = useState(!!discountCodes.length);
   const [initialCartPrice, setInitialCartPrice] = useState(cartPrice);
-  const [finalCartPrice, setFinalCartPrice] = useState(cartPrice);
   const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('promocode') || '');
   const [isInitialMount, setIsInitialMount] = useState(true);
 
@@ -64,6 +63,21 @@ const InfoCard = ({
           <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно применен к корзине`}</p>
         ),
       });
+
+      if (cartPrice === updatedCart.totalPrice.centAmount) {
+        notification.info({
+          message: (
+            <p className="auth__notification auth__notification_type_success">
+              В корзине не найдено товаров для скидки
+            </p>
+          ),
+          description: (
+            <p className="auth__notification">
+              Внимательно прочитайте условия акции и добавьте нужные товары из <a href="/catalog">каталога</a>
+            </p>
+          ),
+        });
+      }
       setIsLoading(false);
     } catch (e) {
       const error = e as { response: { data: { statusCode: number; message: string; errors: { code: string }[] } } };
@@ -97,9 +111,8 @@ const InfoCard = ({
         const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
         setIsPromoCodeActive(false);
         setUserCart(updatedCart);
-        setFinalCartPrice(updatedCart.totalPrice.centAmount);
         notification.success({
-          message: <p className="auth__notification auth__notification_type_success">Промокд удален!</p>,
+          message: <p className="auth__notification auth__notification_type_success">Промокод удален!</p>,
           description: (
             <p className="auth__notification">{`Промокод ${promoCodeInputValue} успешно удален из корзины`}</p>
           ),
@@ -124,18 +137,10 @@ const InfoCard = ({
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const cartWithouthDiscount = await deleteDiscountCode(userCart.id, userCart.version, isUserToken, discountCodeID);
       setInitialCartPrice(cartWithouthDiscount.totalPrice.centAmount);
-
-      const currentCart = await addDiscountCode(
-        cartWithouthDiscount.id,
-        cartWithouthDiscount.version,
-        isUserToken,
-        promoCodeInputValue
-      );
-      setFinalCartPrice(currentCart.totalPrice.centAmount);
+      await addDiscountCode(cartWithouthDiscount.id, cartWithouthDiscount.version, isUserToken, promoCodeInputValue);
       setIsPromoCodeActive(true);
     } else {
       setInitialCartPrice(cartPrice);
-      setFinalCartPrice(cartPrice);
       setIsPromoCodeActive(false);
     }
   };
@@ -189,9 +194,7 @@ const InfoCard = ({
               isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
             }`}
           >
-            {Math.round((initialCartPrice - finalCartPrice) / 100)
-              ? `- ${Math.round((initialCartPrice - finalCartPrice) / 100).toLocaleString('ru-RU')}₽`
-              : 'Нет скидки'}
+            {Math.round((initialCartPrice - cartPrice) / 100)}₽
           </div>
         </div>
         <div className="cart__info-card-promo-code-container">
