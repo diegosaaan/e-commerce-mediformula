@@ -127,7 +127,11 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
               disabled={!isInStock}
               text={userCart?.lineItems.some((item) => item.productId === id) ? 'Удалить' : 'В корзину'}
               type="button"
-              className="button catalog__product-list-item-button"
+              className={`button ${
+                userCart?.lineItems.some((item) => item.productId === id)
+                  ? 'catalog__product-list-item-button catalog__product-list-item-button_type_delete'
+                  : 'catalog__product-list-item-button'
+              }`}
               onClick={
                 userCart?.lineItems.some((item) => item.productId === id)
                   ? handleDeleteProductInCart

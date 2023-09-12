@@ -221,7 +221,9 @@ const DetailedProductSection = ({
             </div>
             <div className="detailed-product__button-container">
               <Button
-                className="button"
+                className={`${
+                  userCart?.lineItems.some((item) => item.productId === id) ? 'button button_type_primary' : 'button'
+                }`}
                 type="button"
                 text={userCart?.lineItems.some((product) => product.productId === id) ? 'Удалить' : 'В корзину'}
                 onClick={

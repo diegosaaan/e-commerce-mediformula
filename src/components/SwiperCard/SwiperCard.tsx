@@ -78,7 +78,9 @@ const SwiperCard = ({ productData }: { productData: IProductData }): ReactElemen
       </div>
       <div className="product-card__button-container">
         <Button
-          className="button"
+          className={`${
+            userCart?.lineItems.some((item) => item.productId === id) ? 'button button_type_primary' : 'button'
+          }`}
           type="button"
           text={userCart?.lineItems.some((item) => item.productId === id) ? 'Удалить' : 'В корзину'}
           onClick={(event?: React.MouseEvent<Element, MouseEvent>): void => {
