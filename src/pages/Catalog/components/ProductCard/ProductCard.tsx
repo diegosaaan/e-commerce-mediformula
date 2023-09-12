@@ -13,6 +13,8 @@ import useAuth from '@/utils/hooks/useAuth';
 const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
   const { userCart, setUserCart } = useAuth();
   const [isDataFetching, setIsDataFetcing] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const {
     id,
     name: { ru: productName },
@@ -56,6 +58,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
   };
 
   const handleAddProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const result = await handleAddProduct(id);
     if (result) {
       setUserCart(result);
@@ -63,10 +66,14 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
         message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
         description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
       });
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(false);
     }
   };
 
   const handleDeleteProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const artifact = userCart?.lineItems.filter((item) => item.productId === id);
     if (artifact) {
       const result = await handleDeleteProduct(id, artifact[0].quantity);
@@ -76,6 +83,9 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
           message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
           description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
         });
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(false);
       }
     }
   };
@@ -124,7 +134,7 @@ const ProductCard = ({ product }: { product: IProductData }): ReactElement => {
             </div>
             <Button
               id={id}
-              disabled={!isInStock}
+              disabled={!isInStock || isDisabled}
               text={userCart?.lineItems.some((item) => item.productId === id) ? 'Удалить' : 'В корзину'}
               type="button"
               className={`button ${

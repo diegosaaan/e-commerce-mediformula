@@ -26,6 +26,7 @@ const DetailedProductSection = ({
   const { userCart, setUserCart } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const {
     id,
@@ -72,6 +73,7 @@ const DetailedProductSection = ({
   };
 
   const handleAddProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const result = await handleAddProduct(id);
     if (result) {
       setUserCart(result);
@@ -79,10 +81,14 @@ const DetailedProductSection = ({
         message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
         description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
       });
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(false);
     }
   };
 
   const handleDeleteProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const product = userCart?.lineItems.filter((item) => item.productId === id);
     if (product) {
       const result = await handleDeleteProduct(id, product[0].quantity);
@@ -92,6 +98,9 @@ const DetailedProductSection = ({
           message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
           description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
         });
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(false);
       }
     }
   };
@@ -231,7 +240,7 @@ const DetailedProductSection = ({
                     ? handleDeleteProductInCart
                     : handleAddProductInCart
                 }
-                disabled={!isInStock}
+                disabled={!isInStock || isDisabled}
               />
             </div>
           </div>

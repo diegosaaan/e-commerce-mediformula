@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import './SwiperCard.scss';
 import { notification } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
@@ -45,6 +45,7 @@ const SwiperCard = ({
   handleCardCliked?: ((productId: string) => Promise<void>) | undefined;
 }): ReactElement => {
   const { userCart, setUserCart } = useAuth();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const {
     id,
@@ -68,6 +69,7 @@ const SwiperCard = ({
   }
 
   const handleAddProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const result = await handleAddProduct(id);
     if (result) {
       setUserCart(result);
@@ -75,10 +77,14 @@ const SwiperCard = ({
         message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
         description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
       });
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(false);
     }
   };
 
   const handleDeleteProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
     const artifact = userCart?.lineItems.filter((item) => item.productId === id);
     if (artifact) {
       const result = await handleDeleteProduct(id, artifact[0].quantity);
@@ -88,7 +94,12 @@ const SwiperCard = ({
           message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
           description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
         });
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(false);
       }
+    } else {
+      setIsDisabled(false);
     }
   };
 
@@ -125,6 +136,7 @@ const SwiperCard = ({
           }`}
           type="button"
           text={userCart?.lineItems.some((item) => item.productId === id) ? 'Удалить' : 'В корзину'}
+          disabled={isDisabled}
           onClick={(event?: React.MouseEvent<Element, MouseEvent>): void => {
             if (event) {
               event.preventDefault();
