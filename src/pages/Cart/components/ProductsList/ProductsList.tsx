@@ -48,7 +48,7 @@ const ProductsList = ({
       <ul className="cart__product-list">
         {userCart &&
           userCart.lineItems.map((product: ILineItem) => (
-            <ProductListItem productData={product} key={product.id} setIsLoading={setIsLoading} />
+            <ProductListItem productData={product} key={product.id} isLoading={isLoading} setIsLoading={setIsLoading} />
           ))}
       </ul>
     </section>

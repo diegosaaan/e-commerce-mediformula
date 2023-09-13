@@ -163,6 +163,8 @@ const SwiperCard = ({
               } else {
                 handleAddProductInCart();
               }
+            } else {
+              handleAddProductInCart();
             }
           }}
         />

@@ -98,6 +98,7 @@ const InfoCard = ({
       } = error;
       const code = errors[0]?.code;
       setPromoCodeInputValue('');
+      localStorage.removeItem('promocode');
       handleErrors(statusCode, errorMessage, code);
       setIsLoading(false);
     }
