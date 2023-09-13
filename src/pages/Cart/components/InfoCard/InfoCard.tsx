@@ -199,48 +199,65 @@ const InfoCard = ({
             {Math.round(initialCartPrice / 100).toLocaleString('ru-RU')} ₽
           </div>
         </div>
-        <div
-          className={`cart__info-card-discount-info ${
-            !isPromoCodeActive ? 'cart__info-card-discount-info--hidden' : ''
-          }`}
-        >
-          <div className="cart__info-card-products-discount-name">{`Промокод ${promoCodeInputValue}`}</div>
+
+        <div className="cart__info-card-discount-info-container">
+          {!isDeliveryDiscount ? (
+            <div className={`cart__info-card-discount-info `}>
+              <div className="cart__info-card-products-discount-name">Доставка</div>
+              <div
+                className={`cart__info-card-products-absolute-discount ${
+                  isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+                }`}
+              >
+                + 500 ₽
+              </div>
+            </div>
+          ) : (
+            <div
+              className={`cart__info-card-discount-info ${
+                !isDeliveryDiscount ? 'cart__info-card-discount-info--hidden' : ''
+              }`}
+            >
+              <div className="cart__info-card-products-discount-name">Доставка</div>
+              <div
+                className={`cart__info-card-products-absolute-discount ${
+                  isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+                }`}
+              >
+                бесплатно
+              </div>
+            </div>
+          )}
           <div
-            className={`cart__info-card-products-absolute-discount ${
-              isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+            className={`cart__info-card-discount-info ${
+              !isPromoCodeActive ? 'cart__info-card-discount-info--hidden' : ''
             }`}
           >
-            {Math.round((initialCartPrice - cartPrice) / 100) ? (
-              `${Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽`
-            ) : (
-              <>
-                {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽
-                <Popover content={content} title="Скидка отсутствует" overlayStyle={{ maxWidth: '300px' }}>
-                  <button
-                    className={`cart__info-card-products-help-icon ${
-                      isLoadingPrice ? 'cart__info-card-products-help-icon_type_loading' : ''
-                    }`}
-                    onClick={provideInfo}
-                  ></button>
-                </Popover>
-              </>
-            )}
+            <div className="cart__info-card-products-discount-name">{`Промокод ${promoCodeInputValue}`}</div>
+            <div
+              className={`cart__info-card-products-absolute-discount ${
+                isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
+              }`}
+            >
+              {Math.round((initialCartPrice - cartPrice) / 100) ? (
+                `- ${Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽`
+              ) : (
+                <>
+                  {Math.round((initialCartPrice - cartPrice) / 100).toLocaleString('ru-RU')} ₽
+                  <Popover content={content} title="Скидка отсутствует" overlayStyle={{ maxWidth: '300px' }}>
+                    <button
+                      className={`cart__info-card-products-help-icon ${
+                        isLoadingPrice ? 'cart__info-card-products-help-icon_type_loading' : ''
+                      }`}
+                      onClick={provideInfo}
+                    ></button>
+                  </Popover>
+                </>
+              )}
+            </div>
           </div>
         </div>
-        <div
-          className={`cart__info-card-discount-info ${
-            !isDeliveryDiscount ? 'cart__info-card-discount-info--hidden' : ''
-          }`}
-        >
-          <div className="cart__info-card-products-discount-name">Бесплатная доставка</div>
-          <div
-            className={`cart__info-card-products-absolute-discount ${
-              isLoadingPrice ? 'cart__info-card-products-absolute-discount_type_loading' : ''
-            }`}
-          >
-            - 500 ₽
-          </div>
-        </div>
+
         <div className="cart__info-card-promo-code-container">
           {!isPromoCodeActive ? (
             <>
@@ -278,7 +295,7 @@ const InfoCard = ({
               isLoadingPrice ? 'cart__info-card-products-final-price_type_loading' : ''
             }`}
           >
-            {(Math.round(cartPrice / 100) - (isDeliveryDiscount ? 500 : 0)).toLocaleString('ru-RU')} ₽
+            {(Math.round(cartPrice / 100) + (isDeliveryDiscount ? 0 : 500)).toLocaleString('ru-RU')} ₽
           </div>
         </div>
         <Button className="cart__info-card-products-order-button button" type="button">
