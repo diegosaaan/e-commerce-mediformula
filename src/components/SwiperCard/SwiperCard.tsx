@@ -135,9 +135,9 @@ const SwiperCard = ({
             <div className="product-card__price-container">
               <p className="product-card__price">{`${Math.round(
                 discountPrice / 100 || defaultPrice / 100
-              ).toLocaleString('ru-RU')}₽`}</p>
+              ).toLocaleString('ru-RU')} ₽`}</p>
               <p className="product-card__priceBefore">{`${
-                discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''
+                discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')} ₽` : ''
               }`}</p>
             </div>
           </div>
