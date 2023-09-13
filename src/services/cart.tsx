@@ -214,3 +214,54 @@ export const handleAddProduct = async (id: string, quantity: number = 1): Promis
 
   return null;
 };
+
+export const deleteAllProducts = async (idCart: string, versionCart: number, isUser: boolean): Promise<ICart> => {
+  const cartActive = await getActiveCart(isUser);
+  const { lineItems } = cartActive;
+
+  const actions = lineItems.map((item) => ({
+    action: 'removeLineItem',
+    lineItemId: item.id,
+    quantity: item.quantity,
+  }));
+
+  const requestData = {
+    version: versionCart,
+    actions,
+  };
+
+  const res = await axios.post(`${ApiEndpoints.URL_API_ME_CART}/${idCart}`, requestData, {
+    headers: isUser ? await createUserJSONHeaders() : await createAnonymousJSONHeaders(),
+  });
+
+  return res.data;
+};
+
+export const handleDeleteAllProducts = async (): Promise<ICart | null> => {
+  const userToken = localStorage.getItem('1SortUserToken');
+  const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+
+  try {
+    if (userToken) {
+      const cartActive = await getActiveCart(true);
+      const cart = await deleteAllProducts(cartActive.id, cartActive.version, true);
+      return cart;
+    }
+
+    if (anonymousToken) {
+      const cartActive = await getActiveCart(false);
+      const cart = await deleteAllProducts(cartActive.id, cartActive.version, false);
+      return cart;
+    }
+  } catch (e) {
+    const error = e as { response: { data: { statusCode: number; message: string } } };
+    const {
+      response: {
+        data: { statusCode, message: errorMessage },
+      },
+    } = error;
+    handleErrors(statusCode, errorMessage);
+  }
+
+  return null;
+};
