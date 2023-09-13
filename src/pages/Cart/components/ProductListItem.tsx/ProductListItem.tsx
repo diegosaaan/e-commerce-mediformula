@@ -10,9 +10,11 @@ import { ILineItem } from '@/types/apiInterfaces';
 
 const ProductListItem = ({
   productData,
+  isLoading,
   setIsLoading,
 }: {
   productData: ILineItem;
+  isLoading: boolean;
   setIsLoading: Dispatch<React.SetStateAction<boolean>>;
 }): ReactElement => {
   const [productCount, setProductCount] = useState(productData.quantity);
@@ -74,7 +76,7 @@ const ProductListItem = ({
             onClick={async (): Promise<void> => {
               await handleDeleteProductCounter(-1);
             }}
-            disabled={productCount === 1}
+            disabled={productCount === 1 || isLoading}
           >
             –
           </Button>
@@ -85,6 +87,7 @@ const ProductListItem = ({
             onClick={async (): Promise<void> => {
               await handleAddProductCounter(1);
             }}
+            disabled={isLoading}
           >
             +
           </Button>
@@ -113,7 +116,7 @@ const ProductListItem = ({
           okText="Да"
           cancelText="Отмена"
         >
-          <Button className="cart__product-list-item-delete-button" type="button" />
+          <Button className="cart__product-list-item-delete-button" type="button" disabled={isLoading} />
         </Popconfirm>
       </div>
     </li>
