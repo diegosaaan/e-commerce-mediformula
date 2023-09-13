@@ -8,6 +8,7 @@ import InfoCard from './components/InfoCard/InfoCard';
 import { ICart } from '@/types/apiInterfaces';
 import useAuth from '@/utils/hooks/useAuth';
 import { getActiveCart } from '@/services/cart';
+import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 
 export const cartLoader = async (): Promise<ICart | null> => {
@@ -53,6 +54,12 @@ const CartPage = (): ReactElement => {
           </div>
         </>
       )}
+      <SwiperSection
+        heading="Рекомендуем"
+        counter={11}
+        sectionClassName="cart__swiper"
+        setIsDataFetching={setIsLoading}
+      />
       <SpinnerPreloader pageClassname="cart" isDataFetching={isLoading} />
     </div>
   );
