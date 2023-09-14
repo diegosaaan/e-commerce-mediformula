@@ -1,13 +1,23 @@
 .cart {
   &__product-list {
+    display: flex;
+    flex-direction: column;
     width: 100%;
 
     &-item {
       display: flex;
       justify-content: space-between;
+      gap: 25px;
       padding: 29px 0px;
       width: 100%;
       border-top: 1px solid $grayscale-400;
+
+      &-description-text-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 15px;
+      }
 
       &-description {
         display: flex;
@@ -16,8 +26,10 @@
       }
 
       &-image-container {
-        width: 88px;
-        height: 88px;
+        max-width: 88px;
+        max-height: 88px;
+        min-width: 88px;
+        min-height: 88px;
         background-image: url('@/assets/images/png/card-product-image-example.png');
         background-repeat: no-repeat;
         background-position: center;
@@ -26,7 +38,7 @@
 
       &-heading {
         @include GolosMedium(16px, 1, $grayscale-900);
-        max-width: 370px;
+        max-width: 100%;
       }
 
       &-buttons-container {
@@ -73,16 +85,25 @@
 
       &-price-container {
         display: flex;
+        align-items: center;
         gap: 15px;
       }
 
       &-current-price {
         @include GolosMedium(18px, 1, $grayscale-900);
+
+        &--small-font-size {
+          font-size: 16px;
+        }
       }
 
       &-prev-price {
         @include GolosRegular(16px, 1, $grayscale-600);
         text-decoration: line-through;
+
+        &--small-font-size {
+          font-size: 14px;
+        }
       }
 
       &-delete-button {
@@ -92,8 +113,6 @@
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
-        // opacity: 0;
-        // visibility: hidden;
         transition: 0.3s ease-in-out;
       }
     }
@@ -121,6 +140,137 @@
           transform: scale(1);
           cursor: default;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .cart {
+    &__product-list {
+      &-item {
+        flex-wrap: wrap;
+
+        &-description,
+        &-buttons-container {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        &-description {
+          gap: 40px;
+        }
+
+        &-buttons-container {
+          justify-content: start;
+          gap: 28px;
+          width: 100%;
+        }
+
+        &-delete-button {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .cart {
+    &__product-list-item {
+      flex-direction: column;
+      gap: 30px;
+
+      &-image-container {
+        max-width: 100px;
+        max-height: 100px;
+        min-width: 100px;
+        min-height: 100px;
+      }
+
+      &-counter-container {
+        width: 100px;
+        height: 36px;
+      }
+
+      &-buttons-container {
+        justify-content: start;
+        gap: 38px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .cart {
+    &__product-list-item {
+      gap: 20px;
+      padding: 16px 0px;
+
+      &-heading {
+        @include GolosRegular(16px, 1, $grayscale-900);
+      }
+
+      &-description {
+        gap: 20px;
+      }
+
+      &-current-price {
+        font-size: 16px;
+        &--small-font-size {
+          font-size: 12px;
+        }
+      }
+
+      &-image-container {
+        max-width: 88px;
+        max-height: 88px;
+        min-width: 88px;
+        min-height: 88px;
+      }
+
+      &-buttons-container {
+        flex-wrap: wrap;
+        justify-content: start;
+        align-self: flex-end;
+        gap: 28px;
+        width: calc(100% - 88px - 20px);
+      }
+
+      &-buttons-container > &-price-container {
+        min-width: 180px;
+        order: -1;
+      }
+
+      &-prev-price {
+        font-size: 14px;
+        &--small-font-size {
+          font-size: 12px;
+        }
+      }
+
+      &-decrease-count,
+      &-increase-count {
+        font-size: 20px;
+      }
+
+      &-counter {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .cart {
+    &__product-list-item {
+      &-buttons-container {
+        gap: 15px;
+      }
+
+      &-buttons-container > &-price-container {
+        flex-wrap: wrap;
+        min-width: 100px;
       }
     }
   }

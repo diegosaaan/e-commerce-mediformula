@@ -72,3 +72,47 @@
     }
   }
 }
+
+@media screen and (max-width: $medium-desktop) {
+  .cart {
+    &__product-list {
+      height: 650px;
+    }
+  }
+}
+
+@media screen and (max-width: $portrait-tablet) {
+  .cart {
+    &__product-list-container {
+      padding: 17px;
+    }
+
+    &__product-list {
+      &::-webkit-scrollbar-thumb {
+        background-color: $grayscale-400;
+      }
+    }
+
+    &__product-list-header,
+    &__product-list {
+      padding-right: 17px;
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .cart {
+    &__product-list-container {
+      padding: 8px;
+    }
+
+    &__product-list {
+      height: 600px;
+    }
+
+    &__product-list-header,
+    &__product-list {
+      padding-right: 8px;
+    }
+  }
+}
