@@ -8,9 +8,8 @@ const EmptyCart = (): ReactElement => {
   const { isUserLoggedIn } = useAuth();
 
   return (
-    <div className="_container cart__empty-cart-section">
+    <div className="cart__empty-cart-section">
       <div className="cart__empty-cart-text-block">
-        <h2 className="cart__empty-cart-heading">Корзина пуста</h2>
         <div className="cart__empty-cart-description-container">
           <p className="cart__empty-cart-description">
             Воспользуйтесь каталогом или поиском, чтобы найти нужный товар.

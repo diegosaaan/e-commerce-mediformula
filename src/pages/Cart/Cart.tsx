@@ -42,18 +42,23 @@ const CartPage = (): ReactElement => {
   }
 
   return (
-    <div className="cart-page _container">
-      {!userCart || !userCart.lineItems.length ? (
-        <EmptyCart />
-      ) : (
-        <>
-          <h2 className="cart__heading">Корзина</h2>
-          <div className="cart__content-container">
-            <ProductsList isLoading={isLoading} setIsLoading={setIsLoading} />
-            <InfoCard isLoading={isLoading} setIsLoading={setIsLoading} />
-          </div>
-        </>
-      )}
+    <div className="cart-page">
+      <div className="_container cart__section-container">
+        {!userCart || !userCart.lineItems.length ? (
+          <>
+            <h2 className="cart__heading">Корзина пуста</h2>
+            <EmptyCart />
+          </>
+        ) : (
+          <>
+            <h2 className="cart__heading">Корзина</h2>
+            <div className="cart__content-container">
+              <ProductsList isLoading={isLoading} setIsLoading={setIsLoading} />
+              <InfoCard isLoading={isLoading} setIsLoading={setIsLoading} />
+            </div>
+          </>
+        )}
+      </div>
       <SwiperSection
         heading="Рекомендуем"
         counter={11}
