@@ -17,18 +17,31 @@ const ProductListItem = ({
   isLoading: boolean;
   setIsLoading: Dispatch<React.SetStateAction<boolean>>;
 }): ReactElement => {
-  const [productCount, setProductCount] = useState(productData.quantity);
+  const {
+    productId,
+    quantity: productQuantity,
+    name: { ru: productName },
+    variant: {
+      images: [{ url: productURL }],
+    },
+    price: {
+      discounted: productDiscounted,
+      value: { centAmount: productCentAmount },
+    },
+  } = productData;
+
+  const [productCount, setProductCount] = useState(productQuantity);
   const { setUserCart } = useAuth();
 
   const handleDeleteProductInCart = async (): Promise<void> => {
     setIsLoading(true);
-    const result = await handleDeleteProduct(productData.productId, productData.quantity);
+    const result = await handleDeleteProduct(productId, productQuantity);
     if (result) {
       setUserCart(result);
       setIsLoading(false);
       notification.success({
         message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
-        description: <p className="auth__notification">{`Товар ${productData.name.ru} успешно удален из корзины`}</p>,
+        description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
       });
     } else {
       setIsLoading(false);
@@ -37,7 +50,7 @@ const ProductListItem = ({
 
   const handleAddProductCounter = async (changeAmount: number): Promise<void> => {
     setIsLoading(true);
-    const result = await handleAddProduct(productData.productId);
+    const result = await handleAddProduct(productId);
     if (result) {
       setUserCart(result);
       setIsLoading(false);
@@ -49,7 +62,7 @@ const ProductListItem = ({
 
   const handleDeleteProductCounter = async (changeAmount: number): Promise<void> => {
     setIsLoading(true);
-    const result = await handleDeleteProduct(productData.productId);
+    const result = await handleDeleteProduct(productId);
     if (result) {
       setUserCart(result);
       setIsLoading(false);
@@ -64,9 +77,21 @@ const ProductListItem = ({
       <div className="cart__product-list-item-description">
         <div
           className="cart__product-list-item-image-container"
-          style={{ backgroundImage: `url(${productData.variant.images[0].url})` }}
+          style={{ backgroundImage: `url(${productURL})` }}
         ></div>
-        <h3 className="cart__product-list-item-heading">{productData.name.ru}</h3>
+        <div className="cart__product-list-item-description-text-container">
+          <h3 className="cart__product-list-item-heading">{productName}</h3>
+          <div className="cart__product-list-item-price-container">
+            <div className="cart__product-list-item-current-price cart__product-list-item-current-price--small-font-size">
+              {productDiscounted
+                ? `${Math.round(productDiscounted.value.centAmount / 100).toLocaleString('ru-RU')} ₽`
+                : `${Math.round(productCentAmount / 100).toLocaleString('ru-RU')} ₽`}
+            </div>
+            <div className="cart__product-list-item-prev-price cart__product-list-item-prev-price--small-font-size">
+              {productData.price.discounted ? `${Math.round(productCentAmount / 100).toLocaleString('ru-RU')} ₽` : ''}
+            </div>
+          </div>
+        </div>
       </div>
       <div className="cart__product-list-item-buttons-container">
         <div className="cart__product-list-item-counter-container">
@@ -94,19 +119,13 @@ const ProductListItem = ({
         </div>
         <div className="cart__product-list-item-price-container">
           <div className="cart__product-list-item-current-price">
-            {productData.price.discounted
-              ? `${Math.round(
-                  (productData.price.discounted.value.centAmount / 100) * productData.quantity
-                ).toLocaleString('ru-RU')}₽`
-              : `${Math.round((productData.price.value.centAmount / 100) * productData.quantity).toLocaleString(
-                  'ru-RU'
-                )}₽`}
+            {productDiscounted
+              ? `${Math.round((productDiscounted.value.centAmount / 100) * productQuantity).toLocaleString('ru-RU')} ₽`
+              : `${Math.round((productCentAmount / 100) * productQuantity).toLocaleString('ru-RU')} ₽`}
           </div>
           <div className="cart__product-list-item-prev-price">
             {productData.price.discounted
-              ? `${Math.round((productData.price.value.centAmount / 100) * productData.quantity).toLocaleString(
-                  'ru-RU'
-                )}₽`
+              ? `${Math.round((productCentAmount / 100) * productQuantity).toLocaleString('ru-RU')} ₽`
               : ''}
           </div>
         </div>
