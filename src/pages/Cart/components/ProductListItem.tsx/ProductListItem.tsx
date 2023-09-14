@@ -84,8 +84,8 @@ const ProductListItem = ({
           <div className="cart__product-list-item-price-container">
             <div className="cart__product-list-item-current-price cart__product-list-item-current-price--small-font-size">
               {productDiscounted
-                ? `${Math.round(productDiscounted.value.centAmount / 100).toLocaleString('ru-RU')} ₽`
-                : `${Math.round(productCentAmount / 100).toLocaleString('ru-RU')} ₽`}
+                ? `${Math.round(productDiscounted.value.centAmount / 100).toLocaleString('ru-RU')} ₽ / шт.`
+                : `${Math.round(productCentAmount / 100).toLocaleString('ru-RU')} ₽ / шт.`}
             </div>
             <div className="cart__product-list-item-prev-price cart__product-list-item-prev-price--small-font-size">
               {productData.price.discounted ? `${Math.round(productCentAmount / 100).toLocaleString('ru-RU')} ₽` : ''}
