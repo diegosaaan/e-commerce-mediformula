@@ -188,6 +188,7 @@
 
     &__image {
       width: 100%;
+      object-fit: contain;
     }
 
     &__cards-block {
