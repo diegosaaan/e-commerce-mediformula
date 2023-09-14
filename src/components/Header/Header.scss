@@ -281,10 +281,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 16px;
+    padding: 8px 16px 4px 16px;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid $grayscale-200;
+    border-top: 2px solid $grayscale-300;
     background-color: $grayscale-50;
     z-index: 15;
   }
