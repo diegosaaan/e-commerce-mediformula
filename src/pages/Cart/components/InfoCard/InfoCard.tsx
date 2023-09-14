@@ -168,9 +168,11 @@ const InfoCard = ({
     } else {
       (async (): Promise<void> => {
         setIsLoadingPrice(true);
+        setIsLoading(true);
         try {
           await setInitialAndFinalCartPrices();
           setIsLoadingPrice(false);
+          setIsLoading(false);
         } catch (e) {
           const error = e as { response: { data: { statusCode: number; message: string } } };
           const {
@@ -180,6 +182,7 @@ const InfoCard = ({
           } = error;
           handleErrors(statusCode, errorMessage);
           setIsLoadingPrice(false);
+          setIsLoading(false);
         }
       })();
     }
