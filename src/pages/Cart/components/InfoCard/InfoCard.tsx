@@ -170,7 +170,6 @@ const InfoCard = ({
     } else {
       (async (): Promise<void> => {
         setIsLoadingPrice(true);
-        setIsLoading(true);
         try {
           await setInitialAndFinalCartPrices();
           setIsLoadingPrice(false);

@@ -53,10 +53,7 @@ const ProductListItem = ({
     const result = await handleAddProduct(productId);
     if (result) {
       setUserCart(result);
-      setIsLoading(false);
       setProductCount((prevValue: number) => prevValue + changeAmount);
-    } else {
-      setIsLoading(false);
     }
   };
 
@@ -65,10 +62,7 @@ const ProductListItem = ({
     const result = await handleDeleteProduct(productId);
     if (result) {
       setUserCart(result);
-      setIsLoading(false);
       setProductCount((prevValue: number) => prevValue + changeAmount);
-    } else {
-      setIsLoading(false);
     }
   };
 
