@@ -18,7 +18,7 @@ const PromoCodes = ({ className }: { className: string }): ReactElement => (
       <li className="intro__promo-list-item">
         <div className="intro__promo-code">GESS7</div>
         <p className="intro__promo-code-description">
-          Промокод предоставляет скидку 5% на все товары категории "Тонометры"
+          Промокод предоставляет скидку 10% на все товары категории "Тонометры"
         </p>
       </li>
     </ul>
