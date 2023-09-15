@@ -167,6 +167,7 @@ export const handleDeleteProduct = async (id: string, quantity: number = 1): Pro
         data: { statusCode, message: errorMessage },
       },
     } = error;
+    console.error('Произошла ошибка:', e);
     handleErrors(statusCode, errorMessage);
   }
 
@@ -209,6 +210,7 @@ export const handleAddProduct = async (id: string, quantity: number = 1): Promis
       const cart = await addProduct(cartCreated.id, cartCreated.version, id, true, quantity);
       return cart;
     }
+    console.error('Произошла ошибка:', e);
     handleErrors(statusCode, errorMessage);
   }
 
@@ -260,6 +262,7 @@ export const handleDeleteAllProducts = async (): Promise<ICart | null> => {
         data: { statusCode, message: errorMessage },
       },
     } = error;
+    console.error('Произошла ошибка:', e);
     handleErrors(statusCode, errorMessage);
   }
 

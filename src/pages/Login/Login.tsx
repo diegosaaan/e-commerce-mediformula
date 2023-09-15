@@ -43,7 +43,7 @@ const LoginPage = (): ReactElement => {
           data: { statusCode, message: errorMessage },
         },
       } = error;
-
+      console.error('Произошла ошибка:', e);
       handleErrors(statusCode, errorMessage);
     }
   };

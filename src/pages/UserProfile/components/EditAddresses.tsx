@@ -70,6 +70,7 @@ const EditAddresses = (): ReactElement => {
               },
             } = error;
             setIsLoading(false);
+            console.error('Произошла ошибка:', e);
             handleErrors(statusCode, errorMessage);
           });
       } else if (e.target.name === 'billingRadio') {
@@ -88,6 +89,7 @@ const EditAddresses = (): ReactElement => {
               },
             } = error;
             setIsLoading(false);
+            console.error('Произошла ошибка:', error);
             handleErrors(statusCode, errorMessage);
           });
       }
@@ -112,6 +114,7 @@ const EditAddresses = (): ReactElement => {
             },
           } = error;
           setIsLoading(false);
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }

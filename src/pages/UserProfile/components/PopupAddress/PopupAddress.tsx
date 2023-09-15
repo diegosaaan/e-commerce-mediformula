@@ -55,6 +55,7 @@ const PopupAddress = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }
@@ -140,6 +141,7 @@ const PopupAddress = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }

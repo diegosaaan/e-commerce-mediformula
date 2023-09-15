@@ -42,6 +42,7 @@ const EditPassword = (): ReactElement => {
             },
           } = error;
           setIsDisabled(false);
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }

@@ -99,6 +99,7 @@ const InfoCard = ({
       const code = errors[0]?.code;
       setPromoCodeInputValue('');
       localStorage.removeItem('promocode');
+      console.error('Произошла ошибка:', e);
       handleErrors(statusCode, errorMessage, code);
       setIsLoading(false);
     }
@@ -136,6 +137,7 @@ const InfoCard = ({
             data: { statusCode, message: errorMessage },
           },
         } = error;
+        console.error('Произошла ошибка:', e);
         handleErrors(statusCode, errorMessage);
         setIsLoading(false);
       }
@@ -180,6 +182,7 @@ const InfoCard = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
+          console.error('Произошла ошибка:', e);
           handleErrors(statusCode, errorMessage);
           setIsLoadingPrice(false);
           setIsLoading(false);

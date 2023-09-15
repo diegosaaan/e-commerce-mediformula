@@ -117,11 +117,12 @@ const RegistrationPage = (): ReactElement => {
         saveUserToken(tokenData as IUserTokenData, '1SortUserToken');
         localStorage.removeItem('1SortAnonymousToken');
       }
-    } catch (e: unknown) {
+    } catch (e) {
       setIsDataFetching(false);
       const error = e as { response: { data: { statusCode: number; message: string } } };
       if (error.response && error.response.data) {
         const { statusCode, message: errorMessage } = error.response.data;
+        console.error('Произошла ошибка:', e);
         handleErrors(statusCode, errorMessage);
       }
     }

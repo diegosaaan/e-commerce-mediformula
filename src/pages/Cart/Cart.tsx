@@ -7,7 +7,7 @@ import ProductsList from './components/ProductsList/ProductsList';
 import InfoCard from './components/InfoCard/InfoCard';
 import { ICart } from '@/types/apiInterfaces';
 import useAuth from '@/utils/hooks/useAuth';
-import { getActiveCart } from '@/services/cart';
+import { createCart, getActiveCart } from '@/services/cart';
 import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 
@@ -18,10 +18,16 @@ export const cartLoader = async (): Promise<ICart | null> => {
   const anonymousToken = localStorage.getItem('1SortAnonymousToken');
 
   let cartActive = null;
-  if (userToken) {
-    cartActive = await getActiveCart(true);
-  } else if (anonymousToken) {
-    cartActive = await getActiveCart(false);
+  try {
+    if (userToken) {
+      cartActive = await getActiveCart(true);
+    } else if (anonymousToken) {
+      cartActive = await getActiveCart(false);
+    }
+  } catch (error) {
+    cartActive = await createCart(true);
+    console.error('Произошла ошибка:', error);
+    return cartActive;
   }
 
   return cartActive;

@@ -46,22 +46,30 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
   useEffect(() => {
     setContentLoadedPageUserInfo(true);
     (async (): Promise<void> => {
-      if (isUserLoggedIn) {
-        const fetchedUserInfo = await getUserInfoByToken();
-        setUserInfo(fetchedUserInfo);
-        setContentLoadedPageUserInfo(false);
+      try {
+        if (isUserLoggedIn) {
+          const fetchedUserInfo = await getUserInfoByToken();
+          setUserInfo(fetchedUserInfo);
+          setContentLoadedPageUserInfo(false);
+        }
+      } catch (error) {
+        console.error('Произошла ошибка:', error);
       }
     })();
 
     (async (): Promise<void> => {
-      if (userTokenLocalStorage) {
-        const activeCart = await getActiveCart(true);
-        setUserCart(activeCart);
-      } else if (anonymousTokenLocalStorage) {
-        const activeCart = await getActiveCart(false);
-        setUserCart(activeCart);
-      } else {
-        setUserCart(null);
+      try {
+        if (userTokenLocalStorage) {
+          const activeCart = await getActiveCart(true);
+          setUserCart(activeCart);
+        } else if (anonymousTokenLocalStorage) {
+          const activeCart = await getActiveCart(false);
+          setUserCart(activeCart);
+        } else {
+          setUserCart(null);
+        }
+      } catch (error) {
+        console.error('Произошла ошибка:', error);
       }
     })();
   }, [isUserLoggedIn]);
