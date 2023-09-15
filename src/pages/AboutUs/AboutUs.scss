@@ -24,6 +24,7 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    transition: background-image 0.3s linear;
   }
 
   &__mentors {
@@ -232,7 +233,7 @@
 .about-page {
   @media (hover: hover) {
     &__school-icon:hover {
-      background-image: url('@/assets/images/svg/about-rs-school-icon-hover.svg');
+      background-image: url('@/assets/images/svg/about-us-rss-logo-hover.svg');
     }
 
     &__mentors:hover,
