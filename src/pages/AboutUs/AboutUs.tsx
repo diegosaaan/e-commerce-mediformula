@@ -14,29 +14,29 @@ const AboutUsPage = (): ReactElement => {
             Регулярные созвоны и взаимная проверка работы позволили нам оперативно находить и устранять баги. Каждый
             член команды активно участвовал в обсуждении задач и предлагал конструктивные решения. Эта координированная
             работа обеспечила качественное и своевременное выполнение проекта.
+            <br />
+            <br />
+            Мы также хотим выразить нашу искреннюю благодарность двум замечательным менторам, которые предоставили
+            неоценимую помощь и поддержку на протяжении всего проекта
+            <a href="https://github.com/artsiomfando">
+              <span className="about-page__mentors"> Артём Фандо </span>
+            </a>
+            и
+            <a href="https://github.com/malyshkin-vitali">
+              <span className="about-page__mentors"> Виталий Малышкин</span>
+            </a>
+            .
           </p>
-          <a href="https://rs.school/">
+          <a className="about-page__intro-logo" href="https://rs.school/">
             <span className="about-page__school-icon"></span>
           </a>
         </div>
-        <p className="about-page__intro-text">
-          Мы также хотим выразить нашу искреннюю благодарность двум замечательным менторам, которые предоставили
-          неоценимую помощь и поддержку на протяжении всего проекта
-          <a href="https://github.com/artsiomfando">
-            <span className="about-page__mentors">Артём Фандо</span>
-          </a>
-          и
-          <a href="https://github.com/malyshkin-vitali">
-            <span className="about-page__mentors">Виталий Малышкин</span>
-          </a>
-          .
-        </p>
       </section>
       <section>
         <h2 className="about-page__title-about">Наша команда</h2>
 
         <article className="about-page__person-section">
-          <div className="about-page__person-photo photo-alexander"></div>
+          <div className="about-page__person-photo photo-aleksandr"></div>
           <div className="about-page__person-info">
             <h3 className="about-page__bio-heading">Александр</h3>
             <p className="about-page__bio-role">Тимлид</p>
