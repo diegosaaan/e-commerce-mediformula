@@ -17,7 +17,7 @@ const AboutUsPage = (): ReactElement => {
             <br />
             <br />
             Мы также хотим выразить нашу искреннюю благодарность двум замечательным менторам, которые предоставили
-            неоценимую помощь и поддержку на протяжении всего проекта
+            неоценимую помощь и поддержку на протяжении всего обучения -
             <a href="https://github.com/artsiomfando">
               <span className="about-page__mentors"> Артём Фандо </span>
             </a>
@@ -29,6 +29,7 @@ const AboutUsPage = (): ReactElement => {
           </p>
           <a className="about-page__intro-logo" href="https://rs.school/">
             <span className="about-page__school-icon"></span>
+            <span className="about-page__school-hover-icon"></span>
           </a>
         </div>
       </section>
