@@ -37,8 +37,6 @@ const InfoCard = ({
   const { userCart, setUserCart } = useAuth();
   const [isLoadingPrice, setIsLoadingPrice] = useState(false);
 
-  // const discounts = { everything: '3562Y5', tonometres: 'GESS7' };
-
   const {
     id: cartId,
     version: cartVersion,
@@ -51,7 +49,7 @@ const InfoCard = ({
   const [isDeliveryDiscount, setIsDeliveryDiscount] = useState(cartPrice / 100 > DELIVERY_DISCOUNT_THRESHOLD);
   const [isPromoCodeActive, setIsPromoCodeActive] = useState(!!discountCodes.length);
   const [initialCartPrice, setInitialCartPrice] = useState(cartPrice);
-  const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('promocode') || '');
+  const [promoCodeInputValue, setPromoCodeInputValue] = useState(localStorage.getItem('1SortPromoCode') || '');
   const [isInitialMount, setIsInitialMount] = useState(true);
 
   const content = (
@@ -73,7 +71,7 @@ const InfoCard = ({
   const handleAddPromoCode = async (): Promise<void> => {
     setIsLoading(true);
     const isUserToken = !!localStorage.getItem('1SortUserToken');
-    localStorage.setItem('promocode', promoCodeInputValue);
+    localStorage.setItem('1SortPromoCode', promoCodeInputValue);
     try {
       const updatedCart = await addDiscountCode(cartId, cartVersion, isUserToken, promoCodeInputValue);
       setIsPromoCodeActive(true);
@@ -98,7 +96,7 @@ const InfoCard = ({
       } = error;
       const code = errors[0]?.code;
       setPromoCodeInputValue('');
-      localStorage.removeItem('promocode');
+      localStorage.removeItem('1SortPromoCode');
       console.error('Произошла ошибка:', e);
       handleErrors(statusCode, errorMessage, code);
       setIsLoading(false);
@@ -118,7 +116,7 @@ const InfoCard = ({
       setIsLoading(true);
       const isUserToken = !!localStorage.getItem('1SortUserToken');
       const discountCodeID = currentCart.discountCodes[0].discountCode.id;
-      localStorage.removeItem('promocode');
+      localStorage.removeItem('1SortPromoCode');
       try {
         const updatedCart = await deleteDiscountCode(currentCart.id, currentCart.version, isUserToken, discountCodeID);
         setIsPromoCodeActive(false);
