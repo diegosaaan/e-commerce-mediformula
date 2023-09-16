@@ -5,29 +5,39 @@ import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePrelo
 import EmptyCart from './components/EmptyCart/EmptyCart';
 import ProductsList from './components/ProductsList/ProductsList';
 import InfoCard from './components/InfoCard/InfoCard';
-import { ICart } from '@/types/apiInterfaces';
+import { ICart, IUserTokenData } from '@/types/apiInterfaces';
 import useAuth from '@/utils/hooks/useAuth';
 import { createCart, getActiveCart } from '@/services/cart';
 import SwiperSection from '@/components/SwiperSection/SwiperSection';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
+import { createAnonymousToken, saveUserToken } from '@/services/tokenHelpers';
 
 export const cartLoader = async (): Promise<ICart | null> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const userToken = localStorage.getItem('1SortUserToken');
-  const anonymousToken = localStorage.getItem('1SortAnonymousToken');
+  const isUserToken = localStorage.getItem('1SortUserToken');
+  const isAnonymousToken = localStorage.getItem('1SortAnonymousToken');
 
   let cartActive = null;
+
   try {
-    if (userToken) {
+    if (isUserToken) {
       cartActive = await getActiveCart(true);
-    } else if (anonymousToken) {
+    } else if (isAnonymousToken) {
       cartActive = await getActiveCart(false);
     }
   } catch (error) {
-    cartActive = await createCart(true);
-    console.error('Произошла ошибка:', error);
-    return cartActive;
+    if (isUserToken) {
+      cartActive = await createCart(true);
+    } else if (isAnonymousToken) {
+      cartActive = await createCart(false);
+    }
+
+    const anonymousTokenData = await createAnonymousToken();
+    if (anonymousTokenData !== null && typeof anonymousTokenData === 'object') {
+      saveUserToken(anonymousTokenData as IUserTokenData, '1SortAnonymousToken');
+      cartActive = await createCart(false);
+    }
   }
 
   return cartActive;
