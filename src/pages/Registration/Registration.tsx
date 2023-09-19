@@ -11,7 +11,7 @@ import AuthFormSection from '@/components/AuthFormSection/AuthFormSection';
 import ListAddress from '@/pages/Registration/components/ListAddress/ListAddress';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { RegisterSchema } from '@/utils/helpers/yup/validationSchemes';
-import { register } from '@/services/userAuth';
+import { login, register } from '@/services/userAuth';
 import { IUserTokenData } from '@/types/apiInterfaces';
 import handleErrors from '@/utils/helpers/errorHandlers/errorHandlers';
 import getMinDateForRegister from '@/utils/helpers/getMinDateForRegister';
@@ -107,19 +107,22 @@ const RegistrationPage = (): ReactElement => {
         indexesOfShipping,
         indexesOfBilling
       );
+      await login(email, password);
       const tokenData: IUserTokenData | unknown = await createNewUserToken(values.email, values.password);
       if (tokenData !== null && typeof tokenData === 'object') {
         message.info({
           content: 'Регистрация прошла успешно!',
         });
         signIn(() => navigate('/'));
-        saveUserToken(tokenData as IUserTokenData);
+        saveUserToken(tokenData as IUserTokenData, '1SortUserToken');
+        localStorage.removeItem('1SortAnonymousToken');
       }
-    } catch (e: unknown) {
+    } catch (e) {
       setIsDataFetching(false);
       const error = e as { response: { data: { statusCode: number; message: string } } };
       if (error.response && error.response.data) {
         const { statusCode, message: errorMessage } = error.response.data;
+        console.error('Произошла ошибка:', e);
         handleErrors(statusCode, errorMessage);
       }
     }

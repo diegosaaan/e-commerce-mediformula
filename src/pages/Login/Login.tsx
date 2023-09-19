@@ -32,7 +32,8 @@ const LoginPage = (): ReactElement => {
           content: 'Добро пожаловать!',
         });
         signIn(() => navigate('/'));
-        saveUserToken(userTokenData as IUserTokenData);
+        saveUserToken(userTokenData as IUserTokenData, '1SortUserToken');
+        localStorage.removeItem('1SortAnonymousToken');
       }
     } catch (e) {
       setIsDataFetching(false);
@@ -42,7 +43,7 @@ const LoginPage = (): ReactElement => {
           data: { statusCode, message: errorMessage },
         },
       } = error;
-
+      console.error('Произошла ошибка:', e);
       handleErrors(statusCode, errorMessage);
     }
   };

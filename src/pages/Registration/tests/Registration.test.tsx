@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-global-assign */
-/* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@testing-library/jest-dom';
 import React from 'react';
@@ -12,10 +12,10 @@ import {
   validRegistrationFormData,
   validAddressFormData,
   invalidRegistrationFormData,
-  // invalidAddressFormData,
   IFormData,
+  invalidAddressFormData,
 } from './testCases';
-import { createNewUserToken } from '@/services/tokenHelpers';
+import { createNewUserToken, saveUserToken } from '@/services/tokenHelpers';
 import { createAdminJSONHeaders } from '@/services/headers';
 import { register } from '@/services/userAuth';
 import { ILocalStorageUserTokenData, IUserTokenData } from '@/types/apiInterfaces';
@@ -137,26 +137,29 @@ describe('Check the possibility of registration with various options for filling
     });
   });
 
-  // test('Check the impossibility of add address when the fields are filled incorrectly', async () => {
-  //   await waitFor(() => {
-  //     const openAddressFormButton = screen.getByText('Добавить адреса');
-  //     fireEvent.click(openAddressFormButton);
+  test('Check the impossibility of add address when the fields are filled incorrectly', async () => {
+    const openAddressFormButton = screen.getByText('Добавить адреса');
 
-  //     const addAddressButtons = document.querySelectorAll('.auth__button-add');
-  //     fireEvent.click(addAddressButtons[0]);
+    await waitFor(() => {
+      fireEvent.click(openAddressFormButton);
+    });
 
-  //     validAddressFormData.forEach((__, index) => {
-  //       const { fieldName, fieldValue } = invalidAddressFormData[index];
-  //       fireEvent.change(screen.getByLabelText(`${fieldName}`), { target: { value: `${fieldValue}` } });
-  //     });
+    const addAddressButtons = document.querySelectorAll('.auth__button-add')[0];
 
-  //     const cityErrorMessage = screen.getByText(
-  //       'Поле должно содержать хотя бы один символ и не содержать специальных символов или цифр.'
-  //     );
+    await waitFor(() => {
+      fireEvent.click(addAddressButtons);
+      validAddressFormData.forEach((__, index) => {
+        const { fieldName, fieldValue } = invalidAddressFormData[index];
+        fireEvent.change(screen.getByLabelText(`${fieldName}`), { target: { value: `${fieldValue}` } });
+      });
+    });
 
-  //     expect(cityErrorMessage).toBeInTheDocument();
-  //   });
-  // });
+    const cityErrorMessage = screen.getByText(
+      'Поле должно содержать хотя бы один символ и не содержать специальных символов (!@#$%^&*) или цифр.'
+    );
+
+    expect(cityErrorMessage).toBeInTheDocument();
+  });
 
   test('Check the correct operation of the delete address button', async () => {
     await waitFor(() => {
@@ -341,21 +344,20 @@ describe('Get user data from local storage', () => {
     expect(localData).toBeNull();
   });
 
-  // test('get user token from local storage after new user token was created and saved', async () => {
-  //   const response = await createNewUserToken('mock email', 'mock password');
-  //   if (response !== null && typeof response === 'object') {
-  //     if ('data' in response) {
-  //       const data = response.data as IUserTokenData;
-  //       saveUserToken(data);
+  test('get user token from local storage after new user token was created and saved', async () => {
+    const userTokenData = (await createNewUserToken('mock email', 'mock password')) as IUserTokenData;
+    if (userTokenData !== null && typeof userTokenData === 'object') {
+      saveUserToken(userTokenData, '1SortUserToken');
+      const userTokenDataFromLocalStorage: ILocalStorageUserTokenData = JSON.parse(
+        localStorage.getItem('1SortUserToken') as string
+      );
 
-  //       const userTokenData: ILocalStorageUserTokenData = JSON.parse(localStorage.getItem('1SortUserToken') as string);
-  //       expect(localStorage.setItem).toHaveBeenCalledWith('1SortUserToken', JSON.stringify(localStorageTokenData));
-  //       expect(userTokenData).toEqual(localStorageTokenData);
-  //     } else {
-  //       throw new Error('"response do not have the "data" field. Please check the test');
-  //     }
-  //   } else {
-  //     throw new Error('"response" is not a Object. Please check the test');
-  //   }
-  // });
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        '1SortUserToken',
+        JSON.stringify(userTokenDataFromLocalStorage)
+      );
+
+      expect(userTokenData).toEqual(userTokenDataFromLocalStorage);
+    }
+  });
 });

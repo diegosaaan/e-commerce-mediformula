@@ -1,4 +1,5 @@
 import { getUserToken, getAdminToken } from './tokenHelpers';
+import ApiEndpoints from '@/enums/apiEndpoints';
 
 export const CLIENT_ID = 'x1l8wnSux4JIj6QChQOOIkYP';
 export const CLIENT_SECRET = 'DyT73J3nPiD6_1FjcmlPSju1j3oZ0lZ-';
@@ -18,7 +19,16 @@ export const createAdminJSONHeaders = async (): Promise<Record<string, string>> 
 };
 
 export const createUserJSONHeaders = async (): Promise<Record<string, string>> => {
-  const userToken = await getUserToken();
+  const userToken = await getUserToken('1SortUserToken', ApiEndpoints.URL_AUTH_TOKEN);
+
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
+};
+
+export const createAnonymousJSONHeaders = async (): Promise<Record<string, string>> => {
+  const userToken = await getUserToken('1SortAnonymousToken', ApiEndpoints.URL_ANONYMOUS_TOKEN);
 
   return {
     'Content-Type': 'application/json',

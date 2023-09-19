@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { FormEvent, ReactElement, KeyboardEvent, ChangeEvent, useState } from 'react';
+import React, { FormEvent, ReactElement, ChangeEvent, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import useAuth from '@/utils/hooks/useAuth';
@@ -12,13 +12,13 @@ import Form from '@/components/Form/Form';
 const setActiveClass = ({ isActive }: { isActive: boolean }): string => {
   const currentPath = window.location.pathname;
   if (isActive && !currentPath.match(/^\/catalog\/[a-zA-Z0-9-]+$/)) {
-    return 'header__link header__link--active';
+    return 'header__link header__link_active';
   }
   return 'header__link';
 };
 
 const PageNav = (): ReactElement => {
-  const { isUserLoggedIn, isContentLoaded, signOut } = useAuth();
+  const { isUserLoggedIn, isContentLoaded, signOut, userCart } = useAuth();
   const [searchInputValue, setSearchInputValue] = useState('');
   const location = useLocation();
 
@@ -43,27 +43,11 @@ const PageNav = (): ReactElement => {
     });
   };
 
-  const handleSearchButtonClicked = (): void => {
-    if (searchInputValue) {
-      if (location.pathname !== '/catalog') {
-        navigate('/catalog');
-      }
-    }
-  };
-
-  const handleSearchInputKeyDown = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter') {
-      const target = event.target as HTMLInputElement;
-      if (target.value) {
-        if (location.pathname !== '/catalog') {
-          navigate('/catalog');
-        }
-      }
-    }
-  };
-
-  const handleExampleSumbit = (event: FormEvent<HTMLFormElement>): void => {
+  const handleSumbit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    if (location.pathname !== '/catalog') {
+      navigate('/catalog');
+    }
   };
 
   const handleChangeSearchInputValue = (event: ChangeEvent): void => {
@@ -160,7 +144,7 @@ const PageNav = (): ReactElement => {
                 </NavLink>
               </li>
               <li className="header__item-input-search">
-                <Form className="header__form-search" name="form-search" onSubmit={handleExampleSumbit}>
+                <Form className="header__form-search" name="form-search" onSubmit={handleSumbit}>
                   <Input
                     className="header__input-search"
                     name="header-search"
@@ -168,15 +152,18 @@ const PageNav = (): ReactElement => {
                     placeholder="Поиск оборудования"
                     value={searchInputValue}
                     onChange={handleChangeSearchInputValue}
-                    onKeyDown={(event): void => handleSearchInputKeyDown(event)}
                   />
-                  <Button className="header__button-search" type="submit" onClick={handleSearchButtonClicked} />
+                  <Button className="header__button-search" type="submit" />
                 </Form>
               </li>
               <li className="header__item-cart">
                 <NavLink className={setActiveClass} to="/cart">
                   <Button className="header__button-cart" type="button">
-                    <p className="header__button-cart-text">3</p>
+                    {userCart && userCart.lineItems.length > 0 && (
+                      <p className="header__button-cart-text">
+                        {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
+                      </p>
+                    )}
                   </Button>
                 </NavLink>
               </li>
@@ -222,7 +209,11 @@ const PageNav = (): ReactElement => {
               >
                 <div className="header__button-icon-mobile header__button-cart-icon-mobile_type_cart"></div>
                 <p className="header__button-text-mobile">Корзина</p>
-                <p className="header__button-cart-text header__button-cart-text_type_mobile">3</p>
+                {userCart && userCart.lineItems.length > 0 && (
+                  <p className="header__button-cart-text header__button-cart-text_type_mobile">
+                    {userCart?.lineItems.reduce((acc, item) => acc + item.quantity, 0)}
+                  </p>
+                )}
               </Button>
             </NavLink>
           </li>

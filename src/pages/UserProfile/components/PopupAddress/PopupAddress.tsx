@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import './PopupAddress.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import { message } from 'antd';
 import AddressFields from '@/pages/Registration/components/AddressFields/AddressFields';
 import { IPropsPopupAddress } from '@/types/componentsInrefaces';
@@ -54,6 +55,7 @@ const PopupAddress = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }
@@ -139,6 +141,7 @@ const PopupAddress = ({
               data: { statusCode, message: errorMessage },
             },
           } = error;
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }

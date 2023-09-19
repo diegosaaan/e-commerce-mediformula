@@ -1,3 +1,4 @@
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { message } from 'antd';
@@ -40,6 +41,7 @@ const EditUserData = (): ReactElement => {
             },
           } = error;
           setIsDisabled(false);
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }

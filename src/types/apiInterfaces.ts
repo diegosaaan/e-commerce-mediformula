@@ -187,3 +187,61 @@ export interface IUserInfo {
   stores: [];
   authenticationMode: 'Password';
 }
+
+export interface ILineItem {
+  id: string;
+  productId: string;
+  name: { ru: string };
+  price: {
+    id: string;
+    value: {
+      centAmount: number;
+      currencyCode: string;
+      fractionDigits: number;
+      type: string;
+    };
+    discounted?: {
+      discount: {
+        id: string;
+        typeId: string;
+      };
+      value: {
+        centAmount: number;
+        currencyCode: string;
+        fractionDigits: number;
+        type: string;
+      };
+    };
+  };
+  quantity: number;
+  variant: { images: { url: string }[] };
+}
+
+export interface ICart {
+  cartState: string;
+  createdAt: string;
+  createdBy: { clientId: string; isPlatformClient: boolean; customer: { typeId: string; id: string } };
+  customLineItems: [];
+  customerId: string;
+  deleteDaysAfterLastModification: number;
+  directDiscounts: [];
+  discountCodes: { discountCode: { id: string; typeId: string } }[];
+  id: string;
+  inventoryMode: string;
+  itemShippingAddresses: [];
+  lastMessageSequenceNumber: number;
+  lastModifiedAt: string;
+  lastModifiedBy: { clientId: string; isPlatformClient: boolean; customer: { typeId: string; id: string } };
+  lineItems: ILineItem[];
+  origin: string;
+  refusedGifts: [];
+  shipping: [];
+  shippingMode: string;
+  taxCalculationMode: string;
+  taxMode: string;
+  taxRoundingMode: string;
+  totalPrice: { type: string; currencyCode: string; centAmount: number; fractionDigits: number };
+  type: string;
+  version: number;
+  versionModifiedAt: string;
+}

@@ -6,7 +6,7 @@ import 'swiper/css/free-mode';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SwiperCard from '@/components/SwiperCard/SwiperCard';
 import { IPropsCardsSection } from '@/types/componentsInrefaces';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
@@ -16,7 +16,13 @@ import { IProductData } from '@/types/apiInterfaces';
 import { getProducts } from '@/services/catalog';
 import SpinnerPreloader from '../Preloaders/SpinnerPreloader/SpinnerPreloader';
 
-const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }: IPropsCardsSection): ReactElement => {
+const SwiperSection = ({
+  heading,
+  counter,
+  sectionClassName,
+  handleCardCliked,
+  setIsDataFetching,
+}: IPropsCardsSection): ReactElement => {
   const [isProductsDataFetching, setIsProductsDataFetching] = useState(true);
   const [discountedProductsData, setDiscountedProductsData] = useState<IProductData[]>([]);
   const productsUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/search?filter=variants.prices.discounted.discount.typeId:"product-discount"`;
@@ -28,7 +34,7 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
         setTimeout(() => {
           setDiscountedProductsData(results);
           setIsProductsDataFetching(false);
-        }, 1500);
+        }, 1000);
       } catch (error) {
         console.log(error);
         setIsProductsDataFetching(false);
@@ -92,21 +98,11 @@ const SwiperSection = ({ heading, counter, sectionClassName, handleCardCliked }:
             >
               {discountedProductsData.map((product, index) => (
                 <SwiperSlide key={index}>
-                  {useLocation().pathname === '/' ? (
-                    <Link to={`/catalog/${product.id}`}>
-                      <SwiperCard productData={product} />
-                    </Link>
-                  ) : (
-                    <div
-                      onClick={(): void => {
-                        if (handleCardCliked) {
-                          handleCardCliked(product.id);
-                        }
-                      }}
-                    >
-                      <SwiperCard productData={product} />
-                    </div>
-                  )}
+                  <SwiperCard
+                    productData={product}
+                    handleCardCliked={handleCardCliked}
+                    setIsDataFetching={setIsDataFetching}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

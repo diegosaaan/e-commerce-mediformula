@@ -211,6 +211,10 @@
     @include GolosRegular(18px, 1, $error-input);
   }
 
+  &__notification_type_success {
+    @include GolosRegular(18px, 1, $color-secondary);
+  }
+
   @media screen and (max-width: $portrait-tablet) {
     &__container {
       padding: 16px 16px 24px;

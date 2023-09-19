@@ -10,6 +10,7 @@ import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPr
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
 export const productPageLoader = async ({ params }: LoaderFunctionArgs): Promise<{ productData: IProductData }> => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   const { id } = params;
   let productUrl = '';
   if (id !== undefined) {
@@ -20,8 +21,6 @@ export const productPageLoader = async ({ params }: LoaderFunctionArgs): Promise
 };
 
 const ProductPage = (): ReactElement => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
   const navigation = useNavigation();
 
   if (navigation.state === 'loading') {

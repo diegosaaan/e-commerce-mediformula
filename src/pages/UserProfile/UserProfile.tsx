@@ -1,4 +1,5 @@
 import './UserProfile.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState } from 'react';
 import { useNavigation } from 'react-router-dom';
 import useAuth from '@/utils/hooks/useAuth';

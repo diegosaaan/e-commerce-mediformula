@@ -1,0 +1,43 @@
+.cart {
+  &__section-container {
+    margin-top: 100px;
+  }
+
+  &__heading {
+    @include GolosMedium(60px, 1, $grayscale-900);
+  }
+
+  &__content-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: $large-desktop) {
+  .cart__section-container {
+    margin-top: calc(48px + (100 - 48) * (100vw - 360px) / (1559.9 - 360));
+  }
+}
+
+@media screen and (max-width: $medium-desktop) {
+  .cart__heading {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: $small-desktop) {
+  .cart {
+    &__content-container {
+      flex-direction: column;
+      align-items: end;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .cart__heading {
+    font-size: 32px;
+  }
+}

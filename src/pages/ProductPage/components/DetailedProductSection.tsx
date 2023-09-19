@@ -1,4 +1,5 @@
 import './DetailedProductSection.scss';
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
@@ -6,11 +7,14 @@ import 'swiper/css/free-mode';
 import React, { ReactElement, MouseEvent, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import { notification } from 'antd';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
 import { IProductData } from '@/types/apiInterfaces';
 import brandsIcons from './brandsIcons';
+import { handleAddProduct, handleDeleteProduct } from '@/services/cart';
+import useAuth from '@/utils/hooks/useAuth';
 
 const DetailedProductSection = ({
   productData,
@@ -19,9 +23,13 @@ const DetailedProductSection = ({
   productData: IProductData;
   isDataFetching: boolean;
 }): ReactElement => {
+  const { userCart, setUserCart } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const {
+    id,
     name: { ru: productName },
     description: { ru: productDescription },
     masterVariant: {
@@ -60,6 +68,39 @@ const DetailedProductSection = ({
       const target = event.target as HTMLDivElement;
       if (target.classList.contains('detailed-product__modal-container') || target.classList.contains('close-button')) {
         setIsModalOpen(false);
+      }
+    }
+  };
+
+  const handleAddProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
+    const result = await handleAddProduct(id);
+    if (result) {
+      setUserCart(result);
+      notification.success({
+        message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
+        description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
+      });
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(false);
+    }
+  };
+
+  const handleDeleteProductInCart = async (): Promise<void> => {
+    setIsDisabled(true);
+    const product = userCart?.lineItems.filter((item) => item.productId === id);
+    if (product) {
+      const result = await handleDeleteProduct(id, product[0].quantity);
+      if (result) {
+        setUserCart(result);
+        notification.success({
+          message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+          description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
+        });
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(false);
       }
     }
   };
@@ -179,19 +220,27 @@ const DetailedProductSection = ({
             <p className="detailed-product__description">{productDescription}</p>
             <div className="detailed-product__price-container">
               <p className="detailed-product__price">
-                {discountPrice ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {discountPrice
+                  ? `${Math.round(discountPrice / 100).toLocaleString('ru-RU')}₽`
+                  : `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽`}
               </p>
               <p className="detailed-product__priceBefore">
-                {defaultPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
+                {discountPrice ? `${Math.round(defaultPrice / 100).toLocaleString('ru-RU')}₽` : ''}
               </p>
             </div>
             <div className="detailed-product__button-container">
               <Button
-                className="button"
+                className={`${
+                  userCart?.lineItems.some((item) => item.productId === id) ? 'button button_type_primary' : 'button'
+                }`}
                 type="button"
-                text="В корзину"
-                onClick={(): void => {}}
-                disabled={!isInStock}
+                text={userCart?.lineItems.some((product) => product.productId === id) ? 'Удалить' : 'В корзину'}
+                onClick={
+                  userCart?.lineItems.some((product) => product.productId === id)
+                    ? handleDeleteProductInCart
+                    : handleAddProductInCart
+                }
+                disabled={!isInStock || isDisabled}
               />
             </div>
           </div>

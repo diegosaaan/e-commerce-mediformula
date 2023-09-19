@@ -1,3 +1,4 @@
+import '@/components/AuthFormSection/AuthFormSection.scss';
 import React, { ReactElement, useState } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { message } from 'antd';
@@ -30,7 +31,7 @@ const EditPassword = (): ReactElement => {
           resetForm();
           createNewUserToken(userInfo.email, values.newPassword).then((result) => {
             if (result !== null && typeof result === 'object') {
-              saveUserToken(result as IUserTokenData);
+              saveUserToken(result as IUserTokenData, '1SortUserToken');
             }
           });
         })
@@ -41,6 +42,7 @@ const EditPassword = (): ReactElement => {
             },
           } = error;
           setIsDisabled(false);
+          console.error('Произошла ошибка:', error);
           handleErrors(statusCode, errorMessage);
         });
     }
