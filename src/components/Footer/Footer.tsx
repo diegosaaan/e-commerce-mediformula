@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import '@/components/Footer/Footer.scss';
 import { Link } from 'react-router-dom';
-import YandexMap from './YandexMap';
+// import YandexMap from './YandexMap';
 import Accordion from '../Accordion/Accrodion';
 import { accordionListData, socialIconsListData } from './linksData';
 
@@ -69,9 +69,7 @@ const Footer = (): ReactElement => {
             <p className="footer__map-heading">Мы на карте</p>
             <div className="footer__map-label-icon"></div>
           </div>
-          <div className="footer__map">
-            <YandexMap />
-          </div>
+          <div className="footer__map">{/* <YandexMap /> */}</div>
         </div>
         <ul className="footer__legal-list-info">
           <li className="footer__legal-list-info-item">© Все права защищены 2023</li>
