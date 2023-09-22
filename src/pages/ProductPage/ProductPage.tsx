@@ -9,14 +9,22 @@ import { IProductData } from '@/types/apiInterfaces';
 import SpinnerPreloader from '@/components/Preloaders/SpinnerPreloader/SpinnerPreloader';
 import CirclePreloader from '@/components/Preloaders/CirclePreloader/CirclePreloader';
 
-export const productPageLoader = async ({ params }: LoaderFunctionArgs): Promise<{ productData: IProductData }> => {
+export const productPageLoader = async ({
+  params,
+}: LoaderFunctionArgs): Promise<{ productData: IProductData | null }> => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   const { id } = params;
   let productUrl = '';
   if (id !== undefined) {
     productUrl = `${ApiEndpoints.URL_CATALOG_PRODUCTS}/${id}`;
   }
-  const productData = await getProductById(productUrl);
+  let productData;
+  try {
+    productData = await getProductById(productUrl);
+  } catch (e) {
+    productData = null;
+    console.error('Произошла ошибка:', e);
+  }
   return { productData };
 };
 
@@ -28,7 +36,7 @@ const ProductPage = (): ReactElement => {
   }
 
   const { productData } = useLoaderData() as {
-    productData: IProductData;
+    productData: IProductData | null;
   };
 
   const [isDataFetching, setIsDataFetching] = useState(false);

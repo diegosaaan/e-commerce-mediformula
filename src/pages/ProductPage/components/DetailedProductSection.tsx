@@ -8,6 +8,7 @@ import React, { ReactElement, MouseEvent, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import { notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 import arrowRightPath from '@/assets/images/svg/arrow-ahead.svg';
 import arrowLeftPath from '@/assets/images/svg/arrow-back.svg';
@@ -20,94 +21,98 @@ const DetailedProductSection = ({
   productData,
   isDataFetching,
 }: {
-  productData: IProductData;
+  productData: IProductData | null;
   isDataFetching: boolean;
 }): ReactElement => {
   const { userCart, setUserCart } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
+  const navigate = useNavigate();
 
-  const {
-    id,
-    name: { ru: productName },
-    description: { ru: productDescription },
-    masterVariant: {
-      attributes,
-      images: productImages,
-      prices: [
-        {
-          value: { centAmount: defaultPrice },
-          discounted,
-        },
-      ],
-    },
-  } = productData;
+  if (productData !== null) {
+    const {
+      id,
+      name: { ru: productName },
+      description: { ru: productDescription },
+      masterVariant: {
+        attributes,
+        images: productImages,
+        prices: [
+          {
+            value: { centAmount: defaultPrice },
+            discounted,
+          },
+        ],
+      },
+    } = productData;
 
-  const brandAttribute = attributes.find((attribute) => attribute.name === 'brand');
-  let brand = '';
+    const brandAttribute = attributes.find((attribute) => attribute.name === 'brand');
+    let brand = '';
 
-  if (brandAttribute && typeof brandAttribute.value === 'object' && 'ru' in brandAttribute.value) {
-    brand = brandAttribute.value.ru;
-  }
+    if (brandAttribute && typeof brandAttribute.value === 'object' && 'ru' in brandAttribute.value) {
+      brand = brandAttribute.value.ru;
+    }
 
-  const isInStock = attributes.filter((attribute) => attribute.name === 'in-stock')[0].value as boolean;
+    const isInStock = attributes.filter((attribute) => attribute.name === 'in-stock')[0].value as boolean;
 
-  let discountPrice = 0;
-  if (discounted) {
-    discountPrice = discounted.value.centAmount;
-  }
+    let discountPrice = 0;
+    if (discounted) {
+      discountPrice = discounted.value.centAmount;
+    }
 
-  const openModal = (index: number): void => {
-    setCurrentIndex(index);
-    setIsModalOpen(true);
-  };
+    const openModal = (index: number): void => {
+      setCurrentIndex(index);
+      setIsModalOpen(true);
+    };
 
-  const closeModal = (event: MouseEvent): void => {
-    if (event.target) {
-      const target = event.target as HTMLDivElement;
-      if (target.classList.contains('detailed-product__modal-container') || target.classList.contains('close-button')) {
-        setIsModalOpen(false);
+    const closeModal = (event: MouseEvent): void => {
+      if (event.target) {
+        const target = event.target as HTMLDivElement;
+        if (
+          target.classList.contains('detailed-product__modal-container') ||
+          target.classList.contains('close-button')
+        ) {
+          setIsModalOpen(false);
+        }
       }
-    }
-  };
+    };
 
-  const handleAddProductInCart = async (): Promise<void> => {
-    setIsDisabled(true);
-    const result = await handleAddProduct(id);
-    if (result) {
-      setUserCart(result);
-      notification.success({
-        message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
-        description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
-      });
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(false);
-    }
-  };
-
-  const handleDeleteProductInCart = async (): Promise<void> => {
-    setIsDisabled(true);
-    const product = userCart?.lineItems.filter((item) => item.productId === id);
-    if (product) {
-      const result = await handleDeleteProduct(id, product[0].quantity);
+    const handleAddProductInCart = async (): Promise<void> => {
+      setIsDisabled(true);
+      const result = await handleAddProduct(id);
       if (result) {
         setUserCart(result);
         notification.success({
-          message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
-          description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
+          message: <p className="auth__notification auth__notification_type_success">Товар добавлен!</p>,
+          description: <p className="auth__notification">{`Товар ${productName} успешно добавлен в корзину`}</p>,
         });
         setIsDisabled(false);
       } else {
         setIsDisabled(false);
       }
-    }
-  };
+    };
 
-  return (
-    <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
-      {productData ? (
+    const handleDeleteProductInCart = async (): Promise<void> => {
+      setIsDisabled(true);
+      const product = userCart?.lineItems.filter((item) => item.productId === id);
+      if (product) {
+        const result = await handleDeleteProduct(id, product[0].quantity);
+        if (result) {
+          setUserCart(result);
+          notification.success({
+            message: <p className="auth__notification auth__notification_type_success">Товар удален!</p>,
+            description: <p className="auth__notification">{`Товар ${productName} успешно удален из корзины`}</p>,
+          });
+          setIsDisabled(false);
+        } else {
+          setIsDisabled(false);
+        }
+      }
+    };
+
+    return (
+      <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
         <>
           <div className="detailed-product__image-container">
             <div className="detailed-product__image-block">
@@ -257,7 +262,19 @@ const DetailedProductSection = ({
             </div>
           </div>
         </>
-      ) : null}
+      </section>
+    );
+  }
+
+  return (
+    <section className={`_container detailed-product ${isDataFetching ? 'detailed-product--opacity' : ''}`}>
+      <div className="detailed-product__description-block">
+        <p className="detailed-product__header">Такого товара не существует.</p>
+        <p className="detailed-product__description">Воспользуйтесь каталогом или поиском, чтобы найти нужный товар.</p>
+        <div className="detailed-product__button-container">
+          <Button className="button" type="button" onClick={(): void => navigate('/catalog')} text="Каталог" />
+        </div>
+      </div>
     </section>
   );
 };
