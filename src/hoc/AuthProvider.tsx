@@ -30,15 +30,19 @@ export const AuthProvider = ({ children }: { children: ReactElement }): ReactEle
   const [userCart, setUserCart] = useState<ICart | null>(null);
 
   useEffect(() => {
-    if (wasUserLoggedIn) {
-      (async (): Promise<void> => {
-        const userToken = await getUserToken('1SortUserToken', ApiEndpoints.URL_AUTH_TOKEN);
-        setIsUserLoggedIn(isUserToken() && wasUserLoggedIn && userToken);
-      })();
-    } else {
-      (async (): Promise<void> => {
-        await getUserToken('1SortAnonymousToken', ApiEndpoints.URL_ANONYMOUS_TOKEN);
-      })();
+    try {
+      if (wasUserLoggedIn) {
+        (async (): Promise<void> => {
+          const userToken = await getUserToken('1SortUserToken', ApiEndpoints.URL_AUTH_TOKEN);
+          setIsUserLoggedIn(isUserToken() && wasUserLoggedIn && userToken);
+        })();
+      } else {
+        (async (): Promise<void> => {
+          await getUserToken('1SortAnonymousToken', ApiEndpoints.URL_ANONYMOUS_TOKEN);
+        })();
+      }
+    } catch (error) {
+      console.error('Произошла ошибка:', error);
     }
     setContentLoaded(true);
   }, []);
